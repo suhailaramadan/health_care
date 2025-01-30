@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const HealthCareApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
+class HealthCareApp extends StatelessWidget {
+  const HealthCareApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp();
+    return const ScreenUtilInit(
+        designSize: Size(420, 874),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+        ));
   }
 }
