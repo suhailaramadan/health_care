@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:graduation_project/core/routes/routes.dart';
+import 'package:graduation_project/core/routes/routes_generators.dart';
 
 void main() {
   runApp(const HealthCareApp());
@@ -15,6 +17,8 @@ class HealthCareApp extends StatelessWidget {
         splitScreenMode: true,
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
+          onGenerateRoute: RouteGenerator.getRoute,
+          initialRoute: Routes.home,
         ));
   }
 }
