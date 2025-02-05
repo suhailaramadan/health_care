@@ -23,10 +23,13 @@ class DoctorItem extends StatelessWidget {
             Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              "assets/images/doctor_image2.png",
-              height: 150,
-              width: 150,
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: Image.asset(
+                "assets/images/doctor_image2.png",
+                height: 150,
+                width: 150,
+              ),
             ),
             Text(
               "د. محمد رمضان",

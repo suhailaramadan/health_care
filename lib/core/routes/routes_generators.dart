@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/core/routes/routes.dart';
 import 'package:graduation_project/features/home/presentation/screens/home_screen.dart';
+import 'package:graduation_project/features/onBoarding/presentation/screen/on_boarding_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
@@ -10,6 +11,8 @@ class RouteGenerator {
     switch (settings.name) {
       case Routes.home:
         return _buildRoute(const HomeScreen(), isIOS);
+      case Routes.onBoarding:
+        return _buildRoute(const OnBoardingScreen(), isIOS);
       default:
         return _undefinedRoute();
     }

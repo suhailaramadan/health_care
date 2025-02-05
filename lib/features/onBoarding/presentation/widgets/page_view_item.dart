@@ -1,0 +1,45 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:graduation_project/core/resources/font_manager.dart';
+import 'package:graduation_project/core/resources/styles_manager.dart';
+
+class PageViewItem extends StatelessWidget {
+  const PageViewItem({
+    super.key,
+    required this.image,
+    required this.text,
+    // required this.subtext
+  });
+  final String image;
+  final String text;
+  // final String subtext;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(width: double.infinity, child: Image.asset(image)),
+        // SvgPicture.asset(
+        //   image,
+        //   width: MediaQuery.of(context).size.width,
+        //   // height: MediaQuery.of(context).size.height,
+        // ),
+        SizedBox(
+          height: 25,
+        ),
+        Text(
+            textAlign: TextAlign.center,
+            text,
+            style: getBoldStyle(
+                color: Color.fromARGB(223, 46, 119, 141),
+                fontSize: FontSize.s22)),
+        // Text(
+        //     textAlign: TextAlign.center,
+        //     subtext,
+        //     style: getSemiBoldStyle(
+        //         color: Color.fromARGB(224, 22, 112, 139),
+        //         fontSize: FontSize.s24)),
+      ],
+    );
+  }
+}

@@ -40,7 +40,8 @@ class HomeSlider extends StatelessWidget {
               child: Text(
                 "الإدارة الطبية \nشريككم في رحلة صحية\nآمنة داخل الحرم الجامعي",
                 style: getBoldStyle(
-                    color: Color(0xff01984A5), fontSize: FontSize.s15),
+                    color: Color.fromARGB(239, 26, 101, 123),
+                    fontSize: FontSize.s15),
               ),
             ),
             SizedBox(
@@ -60,7 +61,7 @@ class HomeSlider extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: currentIndex == index
-                          ? Color(0xff01984A5)
+                          ? Color.fromARGB(239, 26, 101, 123)
                           : Colors.grey,
                     ),
                   );

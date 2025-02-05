@@ -28,19 +28,14 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  cupertino_icons: ^1.0.6
+  dots_indicator: ^3.0.0
   flutter:
     sdk: flutter
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.6
-  flutter_screenutil: ^5.9.3 
+  flutter_screenutil: ^5.9.3
   flutter_svg: ^2.0.10+1
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -48,10 +43,11 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
+  flutter_test:
+    sdk: flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter packages.
 flutter:
 
@@ -69,26 +65,22 @@ flutter:
   fonts:
     - family: Cairo
       fonts:
-        -  asset: assets/font/static/Cairo-Black.ttf
-        -  asset: assets/font/static/Cairo-Bold.ttf
-        -  asset: assets/font/static/Cairo-ExtraBold.ttf
-        -  asset: assets/font/static/Cairo-ExtraLight.ttf
-        -  asset: assets/font/static/Cairo-Light.ttf
-        -  asset: assets/font/static/Cairo-Medium.ttf
-        -  asset: assets/font/static/Cairo-Regular.ttf
-        -  asset: assets/font/static/Cairo-SemiBold.ttf
-        -  asset: assets/font/Cairo-VariableFont_slnt,wght.ttf
+        - asset: assets/font/static/Cairo-Black.ttf
+        - asset: assets/font/static/Cairo-Bold.ttf
+        - asset: assets/font/static/Cairo-ExtraBold.ttf
+        - asset: assets/font/static/Cairo-ExtraLight.ttf
+        - asset: assets/font/static/Cairo-Light.ttf
+        - asset: assets/font/static/Cairo-Medium.ttf
+        - asset: assets/font/static/Cairo-Regular.ttf
+        - asset: assets/font/static/Cairo-SemiBold.ttf
+        - asset: assets/font/Cairo-VariableFont_slnt,wght.ttf
         # - asset: assets/font/Cairo/Cairo-VariableFont_slnt,wght.ttf
         # - asset: assets/font/Cairo/static/Cairo-ExtraBold.ttf
         # - asset: assets/font/Cairo/Cairo-VariableFont_slnt,wght.ttf
         # - asset: assets/font/Cairo/static/Cairo-ExtraLight.ttf
-
         # - asset: assets/font/Cairo/static/Cairo-Light.ttf
-
         # - asset: assets/font/Cairo/static/Cairo-Medium.ttf
-
         # - asset: assets/font/Cairo/static/Cairo-Regular.ttf
-
         # - asset: assets/font/Cairo/static/Cairo-SemiBold.ttf
   #       # - asset: fonts/Schyler-Italic.ttf
   #         style: italic

@@ -25,7 +25,7 @@ class ClinicItem extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: Sizes.s10),
             decoration: const BoxDecoration(
               shape: BoxShape.rectangle,
-              color: ColorManager.blue,
+              color: Color.fromARGB(255, 137, 183, 206),
               borderRadius: BorderRadius.all(Radius.circular(15)),
             ),
             child: Center(
