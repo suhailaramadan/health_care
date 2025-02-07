@@ -13,16 +13,15 @@ class CustomPageView extends StatelessWidget {
         controller: pageController!,
         children: [
           PageViewItem(
-            image: "assets/images/Health professional team-amico.png",
+            image: "assets/images/Doctors.gif",
             text: "أهلاً بكم في الإدارة الطبية الخاصة \nبجامعة طنطا",
           ),
           PageViewItem(
-            image: "assets/images/Insurance-pana (1).png",
-            text:
-                "لا داعي للإنتظار بعد الآن !\n تطبيقنا يوفر لك سهولة الحجز \nوالوصول للخدمات الطبية",
+            image: "assets/images/Date picker.gif",
+            text: "تطبيقنا يوفر لك سهولة الحجز والوصول\n للخدمات الطبية",
           ),
           PageViewItem(
-            image: "assets/images/Mobile login-bro.png",
+            image: "assets/images/Mobile login-bro (4).png",
             text:
                 "سجل معنا الآن للاستفادة من خدماتنا \n الطبية مع أفضل الأطباء",
           ),

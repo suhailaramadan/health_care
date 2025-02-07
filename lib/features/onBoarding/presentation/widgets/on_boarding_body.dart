@@ -76,7 +76,8 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
                 child: Text(
                   "تخطي",
                   style: getBoldStyle(
-                      color: Color.fromARGB(223, 14, 83, 104),
+                      color: Color(0xff2C2D3F),
+                      // Color.fromARGB(223, 21, 119, 149),
                       fontSize: Sizes.s20),
                 ),
               )),
@@ -109,6 +110,8 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
           //         // }
           //       },
           child: CustomButton(
+            backgroundColor: Color(0xff4D9EF5),
+            // Color.fromARGB(223, 26, 147, 184),
             label: pageController!.hasClients
                 ? (pageController!.page == 2 ? "ابدأ الآن" : "التالي")
                 : "التالى",
@@ -118,7 +121,7 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
                     duration: Duration(milliseconds: 500),
                     curve: Curves.easeIn);
               } else {
-                Navigator.of(context).pushNamed(Routes.home);
+                Navigator.of(context).pushNamed(Routes.register);
               }
             },
             // height: 50.h,

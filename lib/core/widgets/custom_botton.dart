@@ -42,7 +42,7 @@ class CustomButton extends StatelessWidget {
         padding: MaterialStatePropertyAll(
             EdgeInsets.symmetric(horizontal: 10.w, vertical: 14.h)),
         backgroundColor: MaterialStatePropertyAll(
-            backgroundColor ?? Color.fromARGB(223, 66, 131, 153)),
+            backgroundColor ?? Color.fromARGB(223, 24, 133, 167)),
       ),
       // style:
       // // // ElevatedButton.styleFrom(

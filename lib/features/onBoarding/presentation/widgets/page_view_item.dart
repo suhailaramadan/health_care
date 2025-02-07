@@ -31,7 +31,8 @@ class PageViewItem extends StatelessWidget {
             textAlign: TextAlign.center,
             text,
             style: getBoldStyle(
-                color: Color.fromARGB(223, 46, 119, 141),
+                color: Color(0xff2C2D3F),
+                // color: Color.fromARGB(223, 46, 119, 141),
                 fontSize: FontSize.s22)),
         // Text(
         //     textAlign: TextAlign.center,

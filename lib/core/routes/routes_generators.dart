@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/core/routes/routes.dart';
+import 'package:graduation_project/features/auth/presentation/screens/login_screen.dart';
+import 'package:graduation_project/features/auth/presentation/screens/register_screen.dart';
 import 'package:graduation_project/features/home/presentation/screens/home_screen.dart';
 import 'package:graduation_project/features/onBoarding/presentation/screen/on_boarding_screen.dart';
 
@@ -13,6 +15,10 @@ class RouteGenerator {
         return _buildRoute(const HomeScreen(), isIOS);
       case Routes.onBoarding:
         return _buildRoute(const OnBoardingScreen(), isIOS);
+      case Routes.login:
+        return _buildRoute(const LoginScreen(), isIOS);
+      case Routes.register:
+        return _buildRoute(const RegisterScreen(), isIOS);
       default:
         return _undefinedRoute();
     }

@@ -12,7 +12,8 @@ class CustomDotIndicator extends StatelessWidget {
       dotsCount: 3,
       decorator: DotsDecorator(
           size: Size(12.r, 25.r),
-          activeColor: Color.fromARGB(224, 22, 112, 139),
+          activeColor: Color(0xff4D9EF5),
+          // Color.fromARGB(224, 22, 112, 139),
           activeSize: Size(12.r, 25.r)),
     );
   }
