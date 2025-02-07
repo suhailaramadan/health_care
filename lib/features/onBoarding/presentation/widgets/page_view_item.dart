@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:graduation_project/core/resources/font_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
@@ -18,6 +19,9 @@ class PageViewItem extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        // SizedBox(
+        //     // height: 80,
+        //     ),
         SizedBox(width: double.infinity, child: Image.asset(image)),
         // SvgPicture.asset(
         //   image,
@@ -25,14 +29,13 @@ class PageViewItem extends StatelessWidget {
         //   // height: MediaQuery.of(context).size.height,
         // ),
         SizedBox(
-          height: 25,
+          height: 15.h,
         ),
         Text(
             textAlign: TextAlign.center,
             text,
-            style: getBoldStyle(
-                color: Color.fromARGB(223, 46, 119, 141),
-                fontSize: FontSize.s22)),
+            style:
+                getBoldStyle(color: Color(0xff2C2D3F), fontSize: FontSize.s22)),
         // Text(
         //     textAlign: TextAlign.center,
         //     subtext,
