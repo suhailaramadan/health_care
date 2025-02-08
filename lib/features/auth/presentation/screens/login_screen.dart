@@ -30,11 +30,26 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Directionality(
               textDirection: TextDirection.rtl,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: Sizes.s135.h,
+                    height: Sizes.s80.h,
                   ),
+                  // Center(
+                  //   child: Text(
+                  //     "تسجيل الدخول",
+                  //     style: getBoldStyle(
+                  //         fontSize: FontSize.s22, color: Color(0xff1976D2)),
+                  //   ),
+                  // ),
+                  Center(
+                    child: Text(
+                      "تسجيل الدخول",
+                      style: getBoldStyle(
+                          color: ColorManager.primary, fontSize: FontSize.s22),
+                    ),
+                  ),
+                  // ),
                   // Center(child: SvgPicture.asset(SvgAssets.route)),
                   // SizedBox(
                   //   height: Sizes.s40.h,
@@ -62,6 +77,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: Sizes.s50.h,
                   ),
                   CustomTextField(
+                    prefixIcon: Icon(
+                      Icons.email,
+                      color: ColorManager.grey,
+                    ),
                     backgroundColor: ColorManager.white,
                     hint: 'أدخل بريدك الإلكتروني',
                     label: 'البريد الإلكتروني',
@@ -73,9 +92,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: Sizes.s28.h,
                   ),
                   CustomTextField(
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: ColorManager.grey,
+                    ),
                     hint: 'أدخل كلمة المرور',
                     backgroundColor: ColorManager.white,
-                    label: 'كلمة المرور',
+                    // label: 'كلمة المرور',
                     validation: Validator.vaildatePassword,
                     isObscured: true,
                     textInputType: TextInputType.text,
@@ -91,8 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onTap: () {},
                         child: Text(
                           'نسيت كلمة المرور؟',
-                          style: getMediumStyle(
-                                  color: Color.fromARGB(223, 26, 114, 141))
+                          style: getMediumStyle(color: ColorManager.primary)
                               .copyWith(fontSize: FontSize.s18),
                         ),
                       ),
@@ -105,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: SizedBox(
                       child: CustomButton(
                         label: 'تسجيل دخول',
-                        backgroundColor: Color.fromARGB(223, 26, 114, 141),
+                        backgroundColor: ColorManager.primary,
                         isStadiumBorder: false,
                         textStyle: getBoldStyle(
                           color: ColorManager.white,
@@ -126,8 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       Text(
                         'ليس لديك أي حساب؟',
-                        style: getSemiBoldStyle(
-                                color: Color.fromARGB(223, 26, 114, 141))
+                        style: getSemiBoldStyle(color: ColorManager.primary)
                             .copyWith(fontSize: FontSize.s16),
                       ),
                       SizedBox(
@@ -138,8 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             .pushReplacementNamed(Routes.register),
                         child: Text(
                           'إنشاء حساب',
-                          style: getBoldStyle(
-                                  color: Color.fromARGB(224, 17, 85, 105))
+                          style: getBoldStyle(color: ColorManager.kuhly)
                               .copyWith(fontSize: FontSize.s14),
                         ),
                       ),

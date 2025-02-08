@@ -18,7 +18,7 @@ class HealthCareApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           onGenerateRoute: RouteGenerator.getRoute,
-          initialRoute: Routes.onBoarding,
+          initialRoute: Routes.register,
         ));
   }
 }

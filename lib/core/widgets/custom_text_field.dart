@@ -64,13 +64,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
         widget.label != null
             ? Padding(
                 padding: EdgeInsets.only(top: Insets.s2),
-                child: Text(
-                  widget.label!,
-                  style: widget.labelTextStyle ??
-                      getMediumStyle(color: Color.fromARGB(223, 26, 114, 141))
-                          .copyWith(fontSize: FontSize.s18),
-                  // color: const Color.fromARGB(255, 16, 104, 200))
-                ),
+                child: Text(widget.label!,
+                    style: widget.labelTextStyle ??
+                        getMediumStyle(color: ColorManager.primary)
+                    // Color.fromARGB(223, 26, 114, 141))
+                    //     .copyWith(fontSize: FontSize.s18),
+                    // color: const Color.fromARGB(255, 16, 104, 200))
+                    ),
               )
             : const SizedBox(),
         Container(
@@ -114,6 +114,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
               return errorText;
             },
             decoration: InputDecoration(
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: ColorManager.primary)),
               contentPadding: EdgeInsets.all(Insets.s12.sp),
               hintText: widget.hint,
               prefixIcon: widget.prefixIcon,
@@ -126,11 +128,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
                       color: widget.cursorColor,
                       selectedIcon: const Icon(
                         Icons.remove_red_eye_rounded,
-                        color: Color.fromARGB(223, 26, 114, 141),
+                        color: ColorManager.primary,
                       ),
                       icon: Icon(
                         Icons.visibility_off,
-                        color: Color.fromARGB(223, 26, 114, 141),
+                        color: ColorManager.primary,
                       )
                       // SvgPicture.asset(SvgAssets.visibilityOff),
                       )

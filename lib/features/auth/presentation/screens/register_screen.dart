@@ -77,22 +77,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Directionality(
               textDirection: TextDirection.rtl,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: Sizes.s10.h,
-                  ),
+                  // SizedBox(
+                  //   height: Sizes.s10.h,
+                  // ),
                   Center(
                       child: Text(
                     "إنشاء حساب",
                     style: getBoldStyle(
-                        color: Color.fromARGB(223, 23, 124, 155),
-                        fontSize: FontSize.s22),
+                        color: ColorManager.primary, fontSize: FontSize.s22),
                   )),
                   SizedBox(
                     height: Sizes.s40.h,
                   ),
                   CustomTextField(
+                    prefixIcon: Icon(
+                      Icons.person,
+                      color: ColorManager.grey,
+                    ),
                     backgroundColor: ColorManager.white,
                     hint: 'أدخل الاسم بالكامل',
                     label: 'الاسم بالكامل',
@@ -104,6 +107,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: Sizes.s18.h,
                   ),
                   CustomTextField(
+                    prefixIcon: Icon(
+                      Icons.phone,
+                      color: ColorManager.grey,
+                    ),
                     hint: 'أدخل رقم هاتفك',
                     backgroundColor: ColorManager.white,
                     label: 'رقم الهاتف',
@@ -115,6 +122,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: Sizes.s18.h,
                   ),
                   CustomTextField(
+                    prefixIcon: Icon(
+                      Icons.email,
+                      color: ColorManager.grey,
+                    ),
                     hint: 'أدخل البريد الإلكتروني',
                     backgroundColor: ColorManager.white,
                     label: 'البريد الإلكتروني',
@@ -126,6 +137,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: Sizes.s18.h,
                   ),
                   CustomTextField(
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: ColorManager.grey,
+                    ),
                     hint: 'أدخل كلمة المرور',
                     backgroundColor: ColorManager.white,
                     label: 'كلمة المرور',
@@ -146,10 +161,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Center(
                     child: SizedBox(
                       // height: Sizes.s60.h,
-                      // width: MediaQuery.sizeOf(context).width * .9,
+                      width: MediaQuery.sizeOf(context).width * .85,
                       child: CustomButton(
                         label: 'إنشاء حساب',
-                        backgroundColor: Color.fromARGB(223, 26, 114, 141),
+                        backgroundColor: ColorManager.primary,
+                        //  Color.fromARGB(223, 26, 114, 141),
 
                         onTap: () {
                           Navigator.of(context)
@@ -177,8 +193,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     children: [
                       Text(
                         'لديك حساب بالفعل؟',
-                        style: getSemiBoldStyle(
-                                color: Color.fromARGB(223, 26, 114, 141))
+                        style: getSemiBoldStyle(color: ColorManager.primary)
                             .copyWith(fontSize: FontSize.s16),
                       ),
                       SizedBox(
@@ -190,8 +205,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: Text(
                           'تسجيل دخول',
                           style: getBoldStyle(
-                                  color: Color.fromARGB(224, 17, 85, 105))
-                              .copyWith(fontSize: FontSize.s14),
+                              color: ColorManager.textColor,
+                              fontSize: FontSize.s15),
+                          // Color.fromARGB(224, 17, 85, 105))
                         ),
                       ),
                     ],

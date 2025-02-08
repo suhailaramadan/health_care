@@ -18,7 +18,7 @@ class CustomPageView extends StatelessWidget {
           ),
           PageViewItem(
             image: "assets/images/Date picker.gif",
-            text: "تطبيقنا يوفر لك سهولة الحجز والوصول\n للخدمات الطبية",
+            text: "تطبيقنا يوفر لك سهولة الحجز \nوالوصول للخدمات الطبية",
           ),
           PageViewItem(
             image: "assets/images/Mobile login-bro (4).png",
