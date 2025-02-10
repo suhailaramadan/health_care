@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/font_manager.dart';
@@ -7,6 +8,7 @@ import 'package:graduation_project/core/resources/value_manager.dart';
 import 'package:graduation_project/core/widgets/home_screen_app_bar.dart';
 import 'package:graduation_project/features/booking/presentation/screen/booking_tab.dart';
 import 'package:graduation_project/features/chatBot/presentation/screen/chat_bot_tab.dart';
+import 'package:graduation_project/features/clinic/presentation/screen/clinic_tab.dart';
 import 'package:graduation_project/features/home/presentation/widgets/home_tab.dart';
 import 'package:graduation_project/features/profile/presentation/screen/profile_tab.dart';
 
@@ -22,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
   List<Widget> tabs = [
     const HomeTab(),
+    const ClinicTab(),
     const BookingTab(),
     const ChatBotTab(),
     const ProfileTab()
@@ -29,40 +32,76 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size(double.infinity, Sizes.s100.h),
-          child: const HomeScreenAppBar(),
-        ),
-        body: tabs[currentIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          selectedLabelStyle:
-              getMediumStyle(color: Color(0xff01984A5), fontSize: FontSize.s14),
-          selectedItemColor: Color(0xff01984A5),
-          unselectedLabelStyle:
-              getMediumStyle(color: ColorManager.grey, fontSize: FontSize.s12),
-          unselectedItemColor: ColorManager.grey,
-          onTap: (index) {
-            setState(() {
-              currentIndex = index;
-            });
-          },
-          currentIndex: currentIndex,
-          backgroundColor: ColorManager.white,
-          type: BottomNavigationBarType.fixed,
-          items: const [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home_sharp), label: "الصفحة الرئيسية"),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_month_outlined),
-              label: "حجوزاتي",
-            ),
-            BottomNavigationBarItem(icon: Icon(Icons.chat), label: "شات بوت"),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: "الحساب")
-          ],
-        ),
-      ),
-    );
+        textDirection: TextDirection.rtl,
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size(double.infinity, Sizes.s100.h),
+            child: const HomeScreenAppBar(),
+          ),
+          body: tabs[currentIndex],
+
+          // floatingActionButton: FloatingActionButton(
+          //   onPressed: () => HomeTab(),
+          //   child: const Icon(Icons.home),
+          // ),
+
+          // elevation: 5,
+          // foregroundColor: ColorManager.primary,
+          // backgroundColor: ColorManager.white,
+          // shape: CircleBorder(),
+          // splashColor: ColorManager.blue,
+          // // onPressed: () => const HomeTab(),
+          // child: const Icon(Icons.home),
+
+          // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          // bottomNavigationBar: BottomAppBar(
+          //   shape: CircularNotchedRectangle(),
+          //   child: Container(
+          //     height: 40.h,
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //       children: [
+          //         IconButton(
+          //             onPressed: () => tabs[1],
+          //             icon: Icon(Icons.date_range_outlined)),
+          //         IconButton(onPressed: () => tabs[2], icon: Icon(Icons.chat)),
+          //         SizedBox(
+          //           width: 40,
+          //         ),
+          //         IconButton(onPressed: () => tabs[3], icon: Icon(Icons.person)),
+          //       ],
+          //     ),
+          //   ),
+          bottomNavigationBar: BottomNavigationBar(
+            selectedLabelStyle: getSemiBoldStyle(
+                color: ColorManager.primary, fontSize: FontSize.s10),
+            selectedItemColor: ColorManager.primary,
+            unselectedLabelStyle: getMediumStyle(
+                color: ColorManager.grey, fontSize: FontSize.s11),
+            unselectedItemColor: ColorManager.grey,
+            onTap: (index) {
+              setState(() {
+                currentIndex = index;
+              });
+            },
+            currentIndex: currentIndex,
+            backgroundColor: ColorManager.white,
+            type: BottomNavigationBarType.fixed,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: "الصفحة الرئيسية",
+              ),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.local_hospital), label: "العيادات"),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.calendar_month_outlined),
+                label: "حجوزاتي",
+              ),
+              BottomNavigationBarItem(icon: Icon(Icons.chat), label: "شات بوت"),
+              BottomNavigationBarItem(icon: Icon(Icons.person), label: "الحساب")
+            ],
+          ),
+        ));
   }
 }

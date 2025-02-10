@@ -24,15 +24,16 @@ class ClinicItem extends StatelessWidget {
             width: 90.w,
             margin: const EdgeInsets.symmetric(horizontal: Sizes.s10),
             decoration: const BoxDecoration(
-              shape: BoxShape.rectangle,
+              shape: BoxShape.circle,
               color: ColorManager.blue,
-              borderRadius: BorderRadius.all(Radius.circular(15)),
+              // borderRadius: BorderRadius.all(Radius.circular(15)),
             ),
             child: Center(
               child: SizedBox(
                 height: Sizes.s50,
                 width: Sizes.s40,
-                child: SvgPicture.asset(
+                child: Image.asset(
+                  //  SvgPicture.asset(
                   image,
                   // width: Sizes.s40,
                   // height: Sizes.s40,

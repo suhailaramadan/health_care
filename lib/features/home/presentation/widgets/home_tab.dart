@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:graduation_project/core/resources/image_manager.dart';
-import 'package:graduation_project/features/home/presentation/widgets/clinic_item.dart';
+import 'package:graduation_project/features/clinic/presentation/widget/clinic_item.dart';
 import 'package:graduation_project/features/home/presentation/widgets/custom_section_bar.dart';
 import 'package:graduation_project/features/home/presentation/widgets/doctor_item.dart';
 // import 'package:graduation_project/features/home/presentation/widgets/clinic_speciality.dart';
@@ -32,24 +32,24 @@ class _HomeTabState extends State<HomeTab> {
 
   final List<Widget> clinic = [
     ClinicItem(
-      image: SvgManager.svgHeart,
+      image: "assets/images/cardiogram_8028646.png",
       name: "القلب",
-    ),
-    ClinicItem(
-      image: SvgManager.svgBrain,
-      name: "الأسنان",
     ),
 
     ClinicItem(
-      image: SvgManager.svgBones,
+      image: "assets/images/skeleton_3904663.png",
       name: "العظام",
     ),
+    // ClinicItem(
+    //   image: "assets/images/eye_15632446.png",
+    //   name: "الرمد",
+    // ),
     ClinicItem(
-      image: SvgManager.svgEye,
-      name: "الرمد",
+      image: "assets/images/shining.png",
+      name: "الأسنان",
     ),
     ClinicItem(
-      image: SvgManager.svgBrain,
+      image: "assets/images/human_14858176.png",
       name: "المخ والأعصاب",
     ),
     // ClinicItem(
