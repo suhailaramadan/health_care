@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:graduation_project/core/resources/font_manager.dart';
@@ -19,23 +20,24 @@ class PageViewItem extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // SizedBox(
-        //     // height: 80,
-        //     ),
-        SizedBox(width: double.infinity, child: Image.asset(image)),
+        SizedBox(
+            height: 350.h, width: double.infinity, child: Image.asset(image)),
         // SvgPicture.asset(
         //   image,
         //   width: MediaQuery.of(context).size.width,
         //   // height: MediaQuery.of(context).size.height,
         // ),
         SizedBox(
-          height: 15.h,
+          height: 8.h,
         ),
-        Text(
-            textAlign: TextAlign.center,
-            text,
-            style:
-                getBoldStyle(color: Color(0xff2C2D3F), fontSize: FontSize.s22)),
+        SizedBox(
+          height: 100.h,
+          child: Text(
+              textAlign: TextAlign.center,
+              text,
+              style: getBoldStyle(
+                  color: Color(0xff2C2D3F), fontSize: FontSize.s22)),
+        ),
         // Text(
         //     textAlign: TextAlign.center,
         //     subtext,

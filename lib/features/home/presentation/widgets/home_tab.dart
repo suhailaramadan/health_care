@@ -2,8 +2,12 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_project/core/resources/image_manager.dart';
-import 'package:graduation_project/features/clinic/presentation/widget/clinic_item.dart';
+import 'package:graduation_project/core/resources/value_manager.dart';
+import 'package:graduation_project/core/routes/routes.dart';
+import 'package:graduation_project/core/widgets/home_screen_app_bar.dart';
+import 'package:graduation_project/features/home/presentation/widgets/clinic_item.dart';
 import 'package:graduation_project/features/home/presentation/widgets/custom_section_bar.dart';
 import 'package:graduation_project/features/home/presentation/widgets/doctor_item.dart';
 // import 'package:graduation_project/features/home/presentation/widgets/clinic_speciality.dart';
@@ -222,68 +226,75 @@ class _HomeTabState extends State<HomeTab> {
   ];
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(
-            height: 10,
-          ),
-          HomeSlider(
-            imagesPaths: _homeSlider,
-            currentIndex: _currentIndex,
-            timer: _timer,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          CustomSectionBar(
-            text: "الخدمات المتاحة",
-            onViewAllClicked: () {},
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            height: 160,
-            child: Directionality(
-              textDirection: TextDirection.rtl,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (_, index) {
-                  return clinic[index];
-                }
-                // currentIndex: index,
-                ,
-                padding: EdgeInsets.all(8),
-                itemCount: clinic.length,
+    return Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size(double.infinity, Sizes.s100.h),
+          child: const HomeScreenAppBar(),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 10,
               ),
-            ),
-          ),
-          CustomSectionBar(
-            text: "الأطباء المتاحين",
-            onViewAllClicked: () {},
-          ),
-          SizedBox(
-            height: 250,
-            // width: 150,
-            child: Directionality(
-              textDirection: TextDirection.rtl,
-              child: ListView.separated(
-                separatorBuilder: (context, index) => const SizedBox(
-                  width: 2,
-                ),
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (_, index) {
-                  return DoctorItem();
+              HomeSlider(
+                imagesPaths: _homeSlider,
+                currentIndex: _currentIndex,
+                timer: _timer,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              CustomSectionBar(
+                text: "الخدمات المتاحة",
+                onViewAllClicked: () {
+                  Navigator.of(context).pushNamed(Routes.clinic);
                 },
-                padding: EdgeInsets.all(10),
-                itemCount: 10,
               ),
-            ),
-          )
-        ],
-      ),
-    );
+              SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                height: 160,
+                child: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (_, index) {
+                      return clinic[index];
+                    }
+                    // currentIndex: index,
+                    ,
+                    padding: EdgeInsets.all(8),
+                    itemCount: clinic.length,
+                  ),
+                ),
+              ),
+              CustomSectionBar(
+                text: "الأطباء المتاحين",
+                onViewAllClicked: () {},
+              ),
+              SizedBox(
+                height: 250,
+                // width: 150,
+                child: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: ListView.separated(
+                    separatorBuilder: (context, index) => const SizedBox(
+                      width: 2,
+                    ),
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (_, index) {
+                      return DoctorItem();
+                    },
+                    padding: EdgeInsets.all(10),
+                    itemCount: 10,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ));
   }
 
   void _startImageSwitching() {

@@ -52,16 +52,15 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
           child: Positioned(
               left: 0,
               right: 0,
-              bottom: 90.h,
+              bottom: 80.h,
               //isPortrait
               //     ? SizeManager.defaultSize! * 4
               //     : SizeManager.defaultSize! * 17,
               child: Directionality(
                 textDirection: TextDirection.rtl,
                 child: CustomDotIndicator(
-                    dotIndex: pageController!.hasClients
-                        ? pageController!.page?.toInt()
-                        : 0),
+                    dotIndex:
+                        pageController!.hasClients ? pageController!.page : 0),
               )),
         ),
         Visibility(
@@ -90,7 +89,7 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
               )),
         ),
         Positioned(
-          bottom: 20.h,
+          bottom: 15.h,
           left: 120.w,
           right: 120.w,
           //     //  isPortrait
@@ -127,7 +126,7 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
                     duration: Duration(milliseconds: 500),
                     curve: Curves.easeIn);
               } else {
-                Navigator.of(context).pushNamed(Routes.register);
+                Navigator.of(context).pushNamed(Routes.home);
               }
             },
             // height: 50.h,
@@ -143,80 +142,81 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
   }
 
   Widget _buildLandscape() {
-    return Container();
+    return
+
+        // padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 3),
+        // child:
+        ListView(
+      // mainAxisAlignment: MainAxisAlignment.start,
+      // crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Padding(
+        //   padding: const EdgeInsets.only(left: 20.0, top: 3),
+        //   child: GestureDetector(
+        //     onTap: () {
+        //       if (pageController!.page! < 3) {
+        //         pageController?.nextPage(
+        //             duration: Duration(milliseconds: 500),
+        //             curve: Curves.easeIn);
+        //       }
+        //     },
+        //     child: Text(
+        //       "تخطي",
+        //       style: getSemiBoldStyle(
+        //           color: ColorManager.black, fontSize: FontSize.s10),
+        //     ),
+        //   ),
+        // ),
+        SizedBox(
+          height: 300,
+          child: CustomPageView(
+            pageController: pageController,
+          ),
+        ),
+
+        // Padding(
+        //   padding: EdgeInsets.only(left: 75.w, bottom: 10.h),
+        //   child: Directionality(
+        //     textDirection: TextDirection.rtl,
+        //     child: CustomDotIndicator(
+        //       dotIndex: pageController!.hasClients
+        //           ? pageController!.page?.toInt()
+        //           : 0,
+        //     ),
+        //   ),
+        // ),
+
+        // // زر "التالي" أو "ابدأ الآن"
+        // Padding(
+        //   padding: EdgeInsets.only(left: 50.w, bottom: 5.h),
+        //   child: GestureDetector(
+        //     onTap: () {
+        //       if (pageController!.page! < 3) {
+        //         pageController?.nextPage(
+        //           duration: Duration(milliseconds: 500),
+        //           curve: Curves.easeIn,
+        //         );
+        //       }
+        //       //  else {
+        //       //   // Get.to(
+        //       //   //   () => HomeScreen(),
+        //       //   //   transition: Transition.rightToLeft,
+        //       //   // );
+        //       // }
+        //     },
+        //     child: CustomButton(
+        //       label: pageController!.hasClients
+        //           ? (pageController!.page == 3 ? "ابدأ الآن" : "التالي")
+        //           : "التالي",
+        //       // height: 50.h,
+        //       size: Size(50.h, 100.w),
+        //       onTap: () {},
+        //       // width: 100.w,
+        //     ),
+        //   ),
+        // )
+      ],
+      // ),
+    );
   }
-  //     padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 3),
-  //     // child: ListView(
-  //     //   // mainAxisAlignment: MainAxisAlignment.start,
-  //     //   // crossAxisAlignment: CrossAxisAlignment.start,
-  //     //   children: [
-  //     //     // Padding(
-  //     //     //   padding: const EdgeInsets.only(left: 20.0, top: 3),
-  //     //     //   child: GestureDetector(
-  //     //     //     onTap: () {
-  //     //     //       if (pageController!.page! < 3) {
-  //     //     //         pageController?.nextPage(
-  //     //     //             duration: Duration(milliseconds: 500),
-  //     //     //             curve: Curves.easeIn);
-  //     //     //       }
-  //     //     //     },
-  //     //     //     child: Text(
-  //     //     //       "تخطي",
-  //     //     //       style: getSemiBoldStyle(
-  //     //     //           color: ColorManager.black, fontSize: FontSize.s10),
-  //     //     //     ),
-  //     //     //   ),
-  //     //     // ),
-  //     //     SizedBox(
-  //     //       height: 350,
-  //     //       child: CustomPageView(
-  //     //         pageController: pageController,
-  //     //       ),
-  //     //     ),
-
-  //     //     // Padding(
-  //     //     //   padding: EdgeInsets.only(left: 75.w, bottom: 10.h),
-  //     //     //   child: Directionality(
-  //     //     //     textDirection: TextDirection.rtl,
-  //     //     //     child: CustomDotIndicator(
-  //     //     //       dotIndex: pageController!.hasClients
-  //     //     //           ? pageController!.page?.toInt()
-  //     //     //           : 0,
-  //     //     //     ),
-  //     //     //   ),
-  //     //     // ),
-
-  //     //     // // زر "التالي" أو "ابدأ الآن"
-  //     //     // Padding(
-  //     //     //   padding: EdgeInsets.only(left: 50.w, bottom: 5.h),
-  //     //     //   child: GestureDetector(
-  //     //     //     onTap: () {
-  //     //     //       if (pageController!.page! < 3) {
-  //     //     //         pageController?.nextPage(
-  //     //     //           duration: Duration(milliseconds: 500),
-  //     //     //           curve: Curves.easeIn,
-  //     //     //         );
-  //     //     //       }
-  //     //     //       //  else {
-  //     //     //       //   // Get.to(
-  //     //     //       //   //   () => HomeScreen(),
-  //     //     //       //   //   transition: Transition.rightToLeft,
-  //     //     //       //   // );
-  //     //     //       // }
-  //     //     //     },
-  //     //     //     child: CustomButton(
-  //     //     //       label: pageController!.hasClients
-  //     //     //           ? (pageController!.page == 3 ? "ابدأ الآن" : "التالي")
-  //     //     //           : "التالي",
-  //     //     //       // height: 50.h,
-  //     //     //       size: Size(50.h, 100.w),
-  //     //     //       onTap: () {},
-  //     //     //       // width: 100.w,
-  //     //     //     ),
-  //     //     //   ),
-  //     //     // )
-  //     //   ],
-  //     // ),
-  //   );
-  // }
 }

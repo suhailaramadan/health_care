@@ -30,19 +30,21 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style: ButtonStyle(
-        maximumSize: MaterialStatePropertyAll(size),
-        shape: const MaterialStatePropertyAll(
-            // isStadiumBorder
-            // /?
-            RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(8)))
-            // : StadiumBorder()
-            ),
-        padding: MaterialStatePropertyAll(
-            EdgeInsets.symmetric(horizontal: 10.w, vertical: 14.h)),
-        backgroundColor: MaterialStatePropertyAll(
-            backgroundColor ?? Color.fromARGB(223, 24, 133, 167)),
+      style: ElevatedButton.styleFrom(
+        maximumSize: size,
+        backgroundColor: backgroundColor ?? Color.fromARGB(223, 24, 133, 167),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+        ),
+        // padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 14.h)
+        // isStadiumBorder
+        // /?
+        // RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.all(Radius.circular(8))),
+        // : StadiumBorder()
+
+        // padding:Padding(
+        //     EdgeInsets.symmetric(horizontal: 10.w, vertical: 14.h)),
       ),
       // style:
       // // // ElevatedButton.styleFrom(

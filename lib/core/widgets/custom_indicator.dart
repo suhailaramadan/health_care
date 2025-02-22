@@ -5,7 +5,7 @@ import 'package:graduation_project/core/resources/color_manager.dart';
 
 class CustomDotIndicator extends StatelessWidget {
   const CustomDotIndicator({super.key, required this.dotIndex});
-  final int? dotIndex;
+  final double? dotIndex;
   @override
   Widget build(BuildContext context) {
     return DotsIndicator(

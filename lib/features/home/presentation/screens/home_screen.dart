@@ -8,7 +8,6 @@ import 'package:graduation_project/core/resources/value_manager.dart';
 import 'package:graduation_project/core/widgets/home_screen_app_bar.dart';
 import 'package:graduation_project/features/booking/presentation/screen/booking_tab.dart';
 import 'package:graduation_project/features/chatBot/presentation/screen/chat_bot_tab.dart';
-import 'package:graduation_project/features/clinic/presentation/screen/clinic_tab.dart';
 import 'package:graduation_project/features/home/presentation/widgets/home_tab.dart';
 import 'package:graduation_project/features/profile/presentation/screen/profile_tab.dart';
 
@@ -24,7 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
   List<Widget> tabs = [
     const HomeTab(),
-    const ClinicTab(),
     const BookingTab(),
     const ChatBotTab(),
     const ProfileTab()
@@ -34,10 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: Size(double.infinity, Sizes.s100.h),
-            child: const HomeScreenAppBar(),
-          ),
+          // appBar: PreferredSize(
+          //   preferredSize: Size(double.infinity, Sizes.s100.h),
+          //   child: const HomeScreenAppBar(),
+          // ),
           body: tabs[currentIndex],
 
           // floatingActionButton: FloatingActionButton(
@@ -92,8 +90,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: Icon(Icons.home),
                 label: "الصفحة الرئيسية",
               ),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.local_hospital), label: "العيادات"),
+              // BottomNavigationBarItem(
+              //     icon: Icon(Icons.local_hospital), label: "العيادات"),
               BottomNavigationBarItem(
                 icon: Icon(Icons.calendar_month_outlined),
                 label: "حجوزاتي",
@@ -102,6 +100,68 @@ class _HomeScreenState extends State<HomeScreen> {
               BottomNavigationBarItem(icon: Icon(Icons.person), label: "الحساب")
             ],
           ),
-        ));
+        )
+        // bottomNavigationBar: ClipRRect(
+        //   borderRadius: const BorderRadiusDirectional.only(
+        //     topStart: Radius.circular(15),
+        //     topEnd: Radius.circular(15),
+        //   ),
+        //   child: SizedBox(
+        //     height: MediaQuery.sizeOf(context).height * 0.09,
+        //     child: BottomNavigationBar(
+        //       currentIndex: currentIndex,
+        //       onTap: (value) => changeSelectedIndex(value),
+        //       backgroundColor: ColorManager.primary,
+        //       type: BottomNavigationBarType.fixed,
+        //       selectedItemColor: ColorManager.primary,
+        //       unselectedItemColor: ColorManager.white,
+        //       showSelectedLabels: false,
+        //       showUnselectedLabels: false,
+        //       items: const [
+        //         BottomNavigationBarItem(
+        //           icon: Icon(Icons.home),
+        //           label: "الصفحة الرئيسية",
+        //         ),
+        //         // BottomNavigationBarItem(
+        //         //     icon: Icon(Icons.local_hospital), label: "العيادات"),
+        //         BottomNavigationBarItem(
+        //           icon: Icon(Icons.calendar_month_outlined),
+        //           label: "حجوزاتي",
+        //         ),
+        //         BottomNavigationBarItem(
+        //             icon: Icon(Icons.chat), label: "شات بوت"),
+        //         BottomNavigationBarItem(
+        //             icon: Icon(Icons.person), label: "الحساب")
+        //       ],
+        //     ),
+        //   ),
+        // ),
+        // )
+        );
   }
+
+  // void changeSelectedIndex(int selectedIndex) =>
+  //     setState(() => currentIndex = selectedIndex);
 }
+
+// class CustomBottomNavBarItem extends BottomNavigationBarItem {
+//   final Icon icon;
+//   final String title;
+
+//   CustomBottomNavBarItem(this.icon, this.title)
+//       : super(
+//           label: title,
+//           icon: Icon(
+//             icon as IconData,
+//             color: ColorManager.white,
+//           ),
+//           activeIcon: CircleAvatar(
+//               radius: 12,
+//               backgroundColor: ColorManager.white,
+//               child: Icon(
+//                 icon as IconData,
+//                 color: ColorManager.primary,
+//                 size: 14,
+//               )),
+//         );
+// }
