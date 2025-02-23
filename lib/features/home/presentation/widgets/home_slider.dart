@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/font_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/resources/value_manager.dart';
@@ -10,10 +11,12 @@ class HomeSlider extends StatelessWidget {
       {super.key,
       required this.imagesPaths,
       required this.currentIndex,
-      required this.timer});
+      required this.timer,
+      required this.text});
   final List<String> imagesPaths;
   final int currentIndex;
   final Timer timer;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class HomeSlider extends StatelessWidget {
               duration: const Duration(milliseconds: 2000),
               child: Image.asset(
                 height: 210.w,
-                fit: BoxFit.fill,
+                // fit: BoxFit.fill,
                 width: double.infinity,
                 imagesPaths[currentIndex],
                 key: ValueKey<int>(currentIndex),
@@ -38,10 +41,12 @@ class HomeSlider extends StatelessWidget {
               top: 70.w,
               right: 18.w,
               child: Text(
-                "الإدارة الطبية \nشريككم في رحلة صحية\nآمنة داخل الحرم الجامعي",
-                style: getBoldStyle(
-                    color: Color.fromARGB(239, 26, 101, 123),
-                    fontSize: FontSize.s15),
+                text,
+                // "الإدارة الطبية\nشريككم في رحلة صحية\nآمنة داخل الحرم الجامعي",
+                style: getSemiBoldStyle(
+                    color: ColorManager.textColor,
+                    // color: Color.fromARGB(239, 26, 101, 123),
+                    fontSize: FontSize.s12.sp),
               ),
             ),
             SizedBox(
@@ -61,7 +66,8 @@ class HomeSlider extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: currentIndex == index
-                          ? Color.fromARGB(239, 26, 101, 123)
+                          ? ColorManager.primary
+                          // ? Color.fromARGB(239, 26, 101, 123)
                           : Colors.grey,
                     ),
                   );

@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/image_manager.dart';
 import 'package:graduation_project/core/resources/value_manager.dart';
 import 'package:graduation_project/core/routes/routes.dart';
@@ -24,8 +26,10 @@ class _HomeTabState extends State<HomeTab> {
   int _currentIndex = 0;
   late Timer _timer;
   final List<String> _homeSlider = [
-    ImageManager.carousel1,
-    ImageManager.carousel2
+    ImageManager.carousel2,
+    ImageManager.carousel1
+    // "assets/images/carousel4.jpg"
+    //     "assets/images/carousel3.jpg"
   ];
 
   @override
@@ -34,28 +38,94 @@ class _HomeTabState extends State<HomeTab> {
     _startImageSwitching();
   }
 
+  int currentIndex = 0;
+  final List<String> text = [
+    "الإدارة الطبية جامعة طنطا\nرفيقككم في رحلة صحية آمنة\nداخل الحرم الجامعي",
+    "رعايتكم مسؤوليتنا! خدمات "
+  ];
   final List<Widget> clinic = [
     ClinicItem(
-      image: "assets/images/cardiogram_8028646.png",
-      name: "القلب",
-    ),
+        image: "assets/images/density_clinic.png", name: "عيادة الأسنان"),
 
     ClinicItem(
-      image: "assets/images/skeleton_3904663.png",
-      name: "العظام",
+      image: "assets/images/heart_clinic.png",
+      name: "عيادة جراجة القلب",
     ),
     // ClinicItem(
     //   image: "assets/images/eye_15632446.png",
     //   name: "الرمد",
     // ),
     ClinicItem(
-      image: "assets/images/shining.png",
-      name: "الأسنان",
+      image: "assets/images/heart_clinic.png",
+      name: "عيادة جراجة القلب",
     ),
     ClinicItem(
-      image: "assets/images/human_14858176.png",
-      name: "المخ والأعصاب",
+      image: "assets/images/heart_clinic.png",
+      name: "عيادة جراجة القلب",
     ),
+    ClinicItem(
+      image: "assets/images/density_clinic.png",
+      name: "عيادة الأسنان",
+    ),
+
+    ClinicItem(
+      image: "assets/images/heart_clinic.png",
+      name: "عيادة جراجة القلب",
+    ),
+    // ClinicItem(
+    //   image: "assets/images/eye_15632446.png",
+    //   name: "الرمد",
+    // ),
+    ClinicItem(
+      image: "assets/images/heart_clinic.png",
+      name: "عيادة جراجة القلب",
+    ),
+    ClinicItem(
+      image: "assets/images/heart_clinic.png",
+      name: "عيادة جراجة القلب",
+    ),
+    ClinicItem(
+      image: "assets/images/density_clinic.png",
+      name: "الأسنان",
+    ),
+
+    ClinicItem(
+      image: "assets/images/heart_clinic.png",
+      name: "عيادة جراجة القلب",
+    ),
+    // ClinicItem(
+    //   image: "assets/images/eye_15632446.png",
+    //   name: "الرمد",
+    // ),
+    ClinicItem(
+      image: "assets/images/heart_clinic.png",
+      name: "عيادة جراجة القلب",
+    ),
+    ClinicItem(
+      image: "assets/images/heart_clinic.png",
+      name: "عيادة جراجة القلب",
+    ),
+    // ClinicItem(
+    //   image: "assets/images/cardiogram_8028646.png",
+    //   name: "القلب",
+    // ),
+
+    // ClinicItem(
+    //   image: "assets/images/skeleton_3904663.png",
+    //   name: "العظام",
+    // ),
+    // // ClinicItem(
+    // //   image: "assets/images/eye_15632446.png",
+    // //   name: "الرمد",
+    // // ),
+    // ClinicItem(
+    //   image: "assets/images/shining.png",
+    //   name: "الأسنان",
+    // ),
+    // ClinicItem(
+    //   image: "assets/images/human_14858176.png",
+    //   name: "المخ والأعصاب",
+    // ),
     // ClinicItem(
     //   image: SvgManager.svgEar,
     // )
@@ -224,6 +294,7 @@ class _HomeTabState extends State<HomeTab> {
     //   child: Image.asset(ImageManager.ear),
     // ),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -235,30 +306,38 @@ class _HomeTabState extends State<HomeTab> {
           child: Column(
             children: [
               SizedBox(
-                height: 10,
+                height: 8.h,
               ),
               HomeSlider(
                 imagesPaths: _homeSlider,
                 currentIndex: _currentIndex,
                 timer: _timer,
+                text: text[currentIndex],
               ),
               SizedBox(
-                height: 20,
+                height: 20.h,
               ),
               CustomSectionBar(
-                text: "الخدمات المتاحة",
+                text: "العيادات المتاحة",
                 onViewAllClicked: () {
                   Navigator.of(context).pushNamed(Routes.clinic);
                 },
               ),
               SizedBox(
-                height: 10,
+                height: 10.h,
               ),
               SizedBox(
-                height: 160,
+                height: 400.h,
+                // width: MediaQuery.of(context).size.width.w,
                 child: Directionality(
                   textDirection: TextDirection.rtl,
-                  child: ListView.builder(
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      // mainAxisSpacing: 4.h,
+                      // crossAxisSpacing: .w,
+                      // childAspectRatio: 1,
+                    ),
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (_, index) {
                       return clinic[index];
@@ -296,6 +375,19 @@ class _HomeTabState extends State<HomeTab> {
           ),
         ));
   }
+
+  // Widget QuickAction({required IconData icon, required String label}) {
+  //   return Column(
+  //     children: [
+  //       CircleAvatar(
+  //           backgroundColor: ColorManager.primary,
+  //           // backgroundColor: Colors.teal,
+  //           child: Icon(icon, color: Colors.white)),
+  //       SizedBox(height: 5),
+  //       Text(label, style: TextStyle(fontSize: 12)),
+  //     ],
+  //   );
+  // }
 
   void _startImageSwitching() {
     _timer = Timer.periodic(const Duration(milliseconds: 6000), (Timer timer) {

@@ -20,9 +20,9 @@ class CustomSectionBar extends StatelessWidget {
         children: [
           Text(
             text,
-            style: getBoldStyle(
-              fontSize: FontSize.s17,
-              color: ColorManager.kuhly,
+            style: getSemiBoldStyle(
+              fontSize: FontSize.s12.sp,
+              color: ColorManager.textColor,
             ),
           ),
           TextButton(
@@ -30,7 +30,7 @@ class CustomSectionBar extends StatelessWidget {
             child: Text(
               'اعرض المزيد...',
               style: getMediumStyle(
-                  color: Colors.blueGrey, fontSize: FontSize.s15),
+                  color: Colors.blueGrey, fontSize: FontSize.s10.sp),
             ),
           ),
         ],

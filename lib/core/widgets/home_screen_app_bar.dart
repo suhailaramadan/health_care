@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
+import 'package:graduation_project/core/resources/font_manager.dart';
 import 'package:graduation_project/core/resources/image_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/resources/value_manager.dart';
@@ -16,7 +17,7 @@ class HomeScreenAppBar extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(0),
         child: AppBar(
-            // backgroundColor: Color.fromARGB(239, 172, 232, 250),
+            backgroundColor: ColorManager.white,
             surfaceTintColor: Colors.blueGrey,
             automaticallyImplyLeading: automaticallyImplyLeading ?? false,
             actions: [
@@ -40,8 +41,7 @@ class HomeScreenAppBar extends StatelessWidget {
               Text(
                 "أهلاً سهيله",
                 style: getSemiBoldStyle(
-                  color: ColorManager.kuhly,
-                ),
+                    color: ColorManager.textColor, fontSize: FontSize.s15),
               ),
               // const Icon(
               //   Icons.waving_hand,

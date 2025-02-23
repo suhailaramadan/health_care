@@ -18,34 +18,61 @@ class ClinicItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      // mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
+        ClipRRect(
+          borderRadius: BorderRadius.circular(10.r),
+          child: Container(
             height: 100.h,
-            width: 90.w,
-            margin: const EdgeInsets.symmetric(horizontal: Sizes.s10),
+            width: 100.w,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              color: ColorManager.blue,
-              // borderRadius: BorderRadius.all(Radius.circular(15)),
             ),
-            child: Center(
-              child: SizedBox(
-                height: Sizes.s50,
-                width: Sizes.s40,
-                child: Image.asset(
-                  //  SvgPicture.asset(
-                  image,
-                  // width: Sizes.s40,
-                  // height: Sizes.s40,
-                ),
-              ),
-            )),
+            child: Image.asset(
+              image,
+              // fit: BoxFit.cover,ذ
+            ),
+          ),
+        ),
+        // Container(
+        //     // height: 80.h,
+        //     // width: 100.w,
+        //     // margin: const EdgeInsets.symmetric(horizontal: Sizes.s10),
+        //     height: MediaQuery.of(context).size.width *
+        //         0.10.w, // نسبة من عرض الشاشة
+        //     width: MediaQuery.of(context).size.width *
+        //         0.10.w, // نسبة من عرض الشاشة
+        //     decoration: const BoxDecoration(
+        //       shape: BoxShape.circle,
+        //       color: ColorManager.blue,
+        //     ),
+        // child:
+        // Center(
+        // child:
+        // SizedBox(
+        //     // height: Sizes.s50.h,
+        //     // width: Sizes.s50.w,
+        //     child: CircleAvatar(
+        //   radius: 70,
+        //   backgroundImage: AssetImage(
+        //     image,
+        //     // ),
+        //     // child: Image.asset(
+        //     //   //  SvgPicture.asset(
+        //     //   image,
+        //     //   fit: BoxFit.contain,
+        //     // width: Sizes.s40,
+        //     // height: Sizes.s40,
+        //     // ),
+        //   ),
+        //   // ),
+        // )),
         // ),
-        SizedBox(height: 8.h),
+        SizedBox(height: 8.w),
         Text(
           name,
-          style:
-              getMediumStyle(color: ColorManager.kuhly, fontSize: FontSize.s18),
+          style: getMediumStyle(
+              color: ColorManager.textColor, fontSize: FontSize.s10),
         ),
       ],
     );

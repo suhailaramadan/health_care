@@ -24,7 +24,7 @@ class RouteGenerator {
       case Routes.clinic:
         return _buildRoute(const ClinicScreen(), isIOS);
       default:
-        return _undefinedRoute();
+        return _buildRoute(const HomeScreen(), isIOS);
     }
   }
 
@@ -34,14 +34,14 @@ class RouteGenerator {
         : MaterialPageRoute(builder: (_) => widget);
   }
 
-  static Route<dynamic> _undefinedRoute() {
-    return MaterialPageRoute(
-      builder: (_) => Scaffold(
-        appBar: AppBar(
-          title: const Text('No Route Found'),
-        ),
-        body: const Center(child: Text('No Route Found')),
-      ),
-    );
-  }
+  // static Route<dynamic> _undefinedRoute() {
+  //   return MaterialPageRoute(
+  //     builder: (_) => Scaffold(
+  //       appBar: AppBar(
+  //         title: const Text('No Route Found'),
+  //       ),
+  //       body: const Center(child: Text('No Route Found')),
+  //     ),
+  //   );
+  // }
 }
