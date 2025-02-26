@@ -5,7 +5,7 @@ import 'package:graduation_project/core/app_bloc_observer.dart';
 import 'package:graduation_project/core/di/service_locator.dart';
 import 'package:graduation_project/core/routes/routes.dart';
 import 'package:graduation_project/core/routes/routes_generators.dart';
-import 'package:graduation_project/features/clinic/presentation/cubit/clinic_cubit.dart';
+import 'package:graduation_project/features/user/clinic/presentation/cubit/clinic_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
