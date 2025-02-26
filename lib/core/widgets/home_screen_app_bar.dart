@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/font_manager.dart';
 import 'package:graduation_project/core/resources/image_manager.dart';
@@ -18,7 +19,7 @@ class HomeScreenAppBar extends StatelessWidget {
         padding: const EdgeInsets.all(0),
         child: AppBar(
             backgroundColor: ColorManager.white,
-            surfaceTintColor: Colors.blueGrey,
+            surfaceTintColor: ColorManager.transparent,
             automaticallyImplyLeading: automaticallyImplyLeading ?? false,
             actions: [
               const SizedBox(
@@ -28,12 +29,15 @@ class HomeScreenAppBar extends StatelessWidget {
               //     textDirection: TextDirection.rtl,
               //     child: Row(
               //       children: ['
-              CircleAvatar(
-                  radius: Sizes.s33,
-                  backgroundColor: Colors.transparent,
-                  backgroundImage: AssetImage(ImageManager.profile)
-                  // child: Image.asset(ImageManager.profile)
-                  ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: CircleAvatar(
+                    radius: Sizes.s40,
+                    backgroundColor: ColorManager.transparent,
+                    // backgroundImage: AssetImage(ImageManager.profile)
+                    child: Image.asset("assets/images/profile.avif",
+                        fit: BoxFit.cover)),
+              ),
 
               const SizedBox(
                 width: Sizes.s12,
@@ -41,7 +45,7 @@ class HomeScreenAppBar extends StatelessWidget {
               Text(
                 "أهلاً سهيله",
                 style: getSemiBoldStyle(
-                    color: ColorManager.textColor, fontSize: FontSize.s15),
+                    color: ColorManager.textColor, fontSize: FontSize.s15.sp),
               ),
               // const Icon(
               //   Icons.waving_hand,
@@ -66,8 +70,8 @@ class HomeScreenAppBar extends StatelessWidget {
               //   ],
               // ))
             ]),
+        // ),
       ),
-      // ),
     );
   }
 }

@@ -7,6 +7,7 @@ environment:
   sdk: '>=3.3.4 <4.0.0'
 dependencies:
   animated_custom_dropdown: ^3.1.1
+  cached_network_image: ^3.4.0
   cupertino_icons: ^1.0.6
   curved_navigation_bar: ^1.0.6
   dartz: ^0.10.1
@@ -20,13 +21,13 @@ dependencies:
   fluttertoast: ^8.2.8
   get_it: ^7.2.0
   image_picker: ^1.1.2
-  loading_indicator: ^3.1.1
-  shared_preferences: ^2.2.3
   injectable: ^2.4.2
   injectable_generator: ^2.6.1
+  loading_indicator: ^3.1.1
+  shared_preferences: ^2.2.3
 dev_dependencies:
-  flutter_lints: ^3.0.0
   build_runner: ^2.4.9
+  flutter_lints: ^3.0.0
   flutter_test:
     sdk: flutter
 flutter:

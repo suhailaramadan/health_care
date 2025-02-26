@@ -27,6 +27,7 @@ class CustomTextField extends StatefulWidget {
     this.prefixIcon,
     this.borderBackgroundColor,
     this.suffixIcon,
+    this.fillColor,
   });
   final TextEditingController? controller;
   final FocusNode? focusNode;
@@ -43,6 +44,7 @@ class CustomTextField extends StatefulWidget {
   final Color? cursorColor;
   final bool readOnly;
   final int? maxLines;
+  final Color? fillColor;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final String? Function(String?)? validation;
@@ -85,6 +87,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ),
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: TextFormField(
+            // textDirection: TextDirection.rtl,
+            textAlign: TextDirection.rtl == Directionality.of(context)
+                ? TextAlign.right
+                : TextAlign.left,
             maxLines: widget.maxLines ?? 1,
             controller: widget.controller,
             focusNode: widget.focusNode,
@@ -114,8 +120,24 @@ class _CustomTextFieldState extends State<CustomTextField> {
               return errorText;
             },
             decoration: InputDecoration(
+              filled: true,
+              fillColor: widget.fillColor,
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.r),
+                borderSide: BorderSide(color: Colors.grey.shade300, width: 2),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.r),
+                borderSide: BorderSide(color: ColorManager.red, width: 2),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.r),
+                borderSide: BorderSide(color: ColorManager.red, width: 2),
+              ),
               focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: ColorManager.primary)),
+                  borderRadius: BorderRadius.circular(10.r),
+                  borderSide:
+                      BorderSide(color: ColorManager.primary, width: 2)),
               contentPadding: EdgeInsets.all(Insets.s12.sp),
               hintText: widget.hint,
               prefixIcon: widget.prefixIcon,

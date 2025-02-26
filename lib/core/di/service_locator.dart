@@ -1,7 +1,8 @@
-// import 'package:get_it/get_it.dart';
-// import 'package:graduation_project/features/clinic/data/data_sources/remote/clinic_api_remote_data_source.dart';
-// import 'package:graduation_project/features/clinic/data/data_sources/remote/clinic_remote_data_source.dart';
+import 'package:get_it/get_it.dart';
+import 'package:graduation_project/core/di/service_locator.config.dart';
+import 'package:injectable/injectable.dart';
 
-// final serviceLocator = GetIt.instance;
-// @InjectableInit()  
-// void configureDependencies() => serviceLocator.init(); 
+final serviceLocator = GetIt.instance;
+
+@InjectableInit()
+Future<void> configureDependencies() async => serviceLocator.init();

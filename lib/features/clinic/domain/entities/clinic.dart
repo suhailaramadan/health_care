@@ -1,4 +1,0 @@
-// class Clinic{
-//   String name;
-
-// }
