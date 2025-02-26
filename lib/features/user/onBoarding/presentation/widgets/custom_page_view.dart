@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/features/onBoarding/presentation/widgets/page_view_item.dart';
+import 'package:graduation_project/features/user/onBoarding/presentation/widgets/page_view_item.dart';
 
 class CustomPageView extends StatelessWidget {
   const CustomPageView({super.key, this.pageController});

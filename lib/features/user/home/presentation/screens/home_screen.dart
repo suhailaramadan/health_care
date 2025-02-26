@@ -6,10 +6,10 @@ import 'package:graduation_project/core/resources/font_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/resources/value_manager.dart';
 import 'package:graduation_project/core/widgets/home_screen_app_bar.dart';
-import 'package:graduation_project/features/booking/presentation/screen/booking_tab.dart';
-import 'package:graduation_project/features/chatBot/presentation/screen/chat_bot_tab.dart';
-import 'package:graduation_project/features/home/presentation/widgets/home_tab.dart';
-import 'package:graduation_project/features/profile/presentation/screen/profile_tab.dart';
+import 'package:graduation_project/features/user/booking/presentation/screen/booking_tab.dart';
+import 'package:graduation_project/features/user/chatBot/presentation/screen/chat_bot_tab.dart';
+import 'package:graduation_project/features/user/home/presentation/widgets/home_tab.dart';
+import 'package:graduation_project/features/user/profile/presentation/screen/profile_tab.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

@@ -9,7 +9,7 @@ import 'package:graduation_project/core/resources/font_manager.dart';
 import 'package:graduation_project/core/resources/image_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/resources/value_manager.dart';
-import 'package:graduation_project/features/clinic/domain/entities/clinic_entity.dart';
+import 'package:graduation_project/features/user/clinic/domain/entities/clinic_entity.dart';
 
 class ClinicItem extends StatelessWidget {
   const ClinicItem({

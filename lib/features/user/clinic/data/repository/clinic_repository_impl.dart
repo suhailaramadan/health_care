@@ -1,9 +1,9 @@
 import 'package:graduation_project/core/error/exceptions.dart';
 import 'package:graduation_project/core/error/failure.dart';
-import 'package:graduation_project/features/clinic/data/data_sources/remote/clinic_remote_data_source.dart';
-import 'package:graduation_project/features/clinic/data/mappers/clinic_mappers.dart';
-import 'package:graduation_project/features/clinic/domain/entities/clinic_entity.dart';
-import 'package:graduation_project/features/clinic/domain/repository/clinic_repository.dart';
+import 'package:graduation_project/features/user/clinic/data/data_sources/remote/clinic_remote_data_source.dart';
+import 'package:graduation_project/features/user/clinic/data/mappers/clinic_mappers.dart';
+import 'package:graduation_project/features/user/clinic/domain/entities/clinic_entity.dart';
+import 'package:graduation_project/features/user/clinic/domain/repository/clinic_repository.dart';
 import 'package:injectable/injectable.dart';
 import 'package:dartz/dartz.dart';
 

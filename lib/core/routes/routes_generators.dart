@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/core/routes/routes.dart';
 import 'package:graduation_project/features/auth/presentation/screens/login_screen.dart';
 import 'package:graduation_project/features/auth/presentation/screens/register_screen.dart';
-import 'package:graduation_project/features/clinic/presentation/screen/clinic_screen.dart';
-import 'package:graduation_project/features/home/presentation/screens/home_screen.dart';
-import 'package:graduation_project/features/onBoarding/presentation/screen/on_boarding_screen.dart';
-import 'package:graduation_project/features/profile/presentation/screen/profile_tab.dart';
+import 'package:graduation_project/features/user/clinic/presentation/screen/clinic_screen.dart';
+import 'package:graduation_project/features/user/home/presentation/screens/home_screen.dart';
+import 'package:graduation_project/features/user/onBoarding/presentation/screen/on_boarding_screen.dart';
+import 'package:graduation_project/features/user/profile/presentation/screen/profile_tab.dart';
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {

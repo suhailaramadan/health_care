@@ -8,7 +8,7 @@ import 'package:graduation_project/core/resources/value_manager.dart';
 import 'package:graduation_project/core/routes/routes.dart';
 import 'package:graduation_project/core/widgets/custom_botton.dart';
 import 'package:graduation_project/core/widgets/custom_indicator.dart';
-import 'package:graduation_project/features/onBoarding/presentation/widgets/custom_page_view.dart';
+import 'package:graduation_project/features/user/onBoarding/presentation/widgets/custom_page_view.dart';
 
 class OnBoardingBody extends StatefulWidget {
   const OnBoardingBody({super.key});

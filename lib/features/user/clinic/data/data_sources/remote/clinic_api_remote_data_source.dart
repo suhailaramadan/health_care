@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/error/exceptions.dart';
-import 'package:graduation_project/features/clinic/data/data_sources/remote/clinic_remote_data_source.dart';
-import 'package:graduation_project/features/clinic/data/model/clinics_response/clinic_response.dart';
+import 'package:graduation_project/features/user/clinic/data/data_sources/remote/clinic_remote_data_source.dart';
+import 'package:graduation_project/features/user/clinic/data/model/clinics_response/clinic_response.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: ClinicRemoteDataSource)

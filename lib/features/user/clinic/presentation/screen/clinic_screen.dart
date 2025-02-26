@@ -9,9 +9,9 @@ import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/widgets/custom_text_field.dart';
 import 'package:graduation_project/core/widgets/error_indicator.dart';
 import 'package:graduation_project/core/widgets/loading_indicator.dart';
-import 'package:graduation_project/features/clinic/presentation/cubit/clinic_cubit.dart';
-import 'package:graduation_project/features/clinic/presentation/cubit/clinic_states.dart';
-import 'package:graduation_project/features/clinic/presentation/widget/custom_clinic_componant.dart';
+import 'package:graduation_project/features/user/clinic/presentation/cubit/clinic_cubit.dart';
+import 'package:graduation_project/features/user/clinic/presentation/cubit/clinic_states.dart';
+import 'package:graduation_project/features/user/clinic/presentation/widget/custom_clinic_componant.dart';
 
 class ClinicScreen extends StatefulWidget {
   const ClinicScreen({super.key});

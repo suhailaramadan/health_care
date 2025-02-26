@@ -10,13 +10,13 @@ import 'package:graduation_project/core/routes/routes.dart';
 import 'package:graduation_project/core/widgets/error_indicator.dart';
 import 'package:graduation_project/core/widgets/home_screen_app_bar.dart';
 import 'package:graduation_project/core/widgets/loading_indicator.dart';
-import 'package:graduation_project/features/clinic/domain/entities/clinic_entity.dart';
-import 'package:graduation_project/features/clinic/presentation/cubit/clinic_cubit.dart';
-import 'package:graduation_project/features/clinic/presentation/cubit/clinic_states.dart';
-import 'package:graduation_project/features/home/presentation/widgets/clinic_item.dart';
-import 'package:graduation_project/features/home/presentation/widgets/custom_section_bar.dart';
-import 'package:graduation_project/features/home/presentation/widgets/doctor_item.dart';
-import 'package:graduation_project/features/home/presentation/widgets/home_slider.dart';
+import 'package:graduation_project/features/user/clinic/domain/entities/clinic_entity.dart';
+import 'package:graduation_project/features/user/clinic/presentation/cubit/clinic_cubit.dart';
+import 'package:graduation_project/features/user/clinic/presentation/cubit/clinic_states.dart';
+import 'package:graduation_project/features/user/home/presentation/widgets/clinic_item.dart';
+import 'package:graduation_project/features/user/home/presentation/widgets/custom_section_bar.dart';
+import 'package:graduation_project/features/user/home/presentation/widgets/doctor_item.dart';
+import 'package:graduation_project/features/user/home/presentation/widgets/home_slider.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});

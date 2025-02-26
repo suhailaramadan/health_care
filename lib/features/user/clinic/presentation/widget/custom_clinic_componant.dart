@@ -9,7 +9,7 @@ import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/widgets/custom_botton.dart';
 import 'package:graduation_project/core/widgets/custom_text_field.dart';
 import 'package:graduation_project/core/widgets/loading_indicator.dart';
-import 'package:graduation_project/features/clinic/domain/entities/clinic_entity.dart';
+import 'package:graduation_project/features/user/clinic/domain/entities/clinic_entity.dart';
 
 class CustomClinicComponant extends StatelessWidget {
   const CustomClinicComponant({

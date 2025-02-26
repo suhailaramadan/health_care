@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/features/clinic/domain/use_case/get_clinics.dart';
-import 'package:graduation_project/features/clinic/presentation/cubit/clinic_states.dart';
+import 'package:graduation_project/features/user/clinic/domain/use_case/get_clinics.dart';
+import 'package:graduation_project/features/user/clinic/presentation/cubit/clinic_states.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
