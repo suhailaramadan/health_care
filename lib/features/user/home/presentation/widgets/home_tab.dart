@@ -29,10 +29,11 @@ class _HomeTabState extends State<HomeTab> {
   int _currentIndex = 0;
   late Timer _timer;
   final List<String> _homeSlider = [
-    "assets/images/medicine.jpg",
+    // "assets/images/medicine.jpg",
     // "assets/images/medicine.jpg"
     // "assets/images/carousel4.jpg"
-    "assets/images/carousel2.jpg"
+    "assets/images/carousel2.jpg",
+    "assets/images/carousel1.jpg"
   ];
   late ClinicCubit _clinicCubit;
   @override
@@ -44,8 +45,8 @@ class _HomeTabState extends State<HomeTab> {
 
   int currentIndex = 0;
   final List<String> text = [
-    "نحن هنا نقدم لكم رعاية طبية\nموثوقة ومتكاملة\nاحجز موعدك اليوم وابدأرحلتك\n نحو صحةأفضل"
-    //     "الإدارة الطبية جامعة طنطا\nرفيقكم في رحلة صحية آمنة\nداخل الحرم الجامعي",
+    // "نحن هنا نقدم لكم رعاية طبية\nموثوقة ومتكاملة\nاحجز موعدك اليوم وابدأرحلتك\n نحو صحةأفضل"
+    "الإدارة الطبية جامعة طنطا\nرفيقكم في رحلة صحية آمنة\nداخل الحرم الجامعي",
     // "رعايتكم مسؤوليتنا! خدمات "
   ];
   // final List<Widget> clinic = [
@@ -303,8 +304,9 @@ class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: ColorManager.white,
         appBar: PreferredSize(
-          preferredSize: Size(double.infinity, Sizes.s100.h),
+          preferredSize: Size(double.infinity, Sizes.s120.h),
           child: const HomeScreenAppBar(),
         ),
         body: SingleChildScrollView(
@@ -343,7 +345,7 @@ class _HomeTabState extends State<HomeTab> {
                       );
                     } else if (state is GetClinicsSuccess) {
                       return SizedBox(
-                        height: 400.h,
+                        height: 160.w,
                         // width: MediaQuery.of(context).size.width.w,
                         child: Directionality(
                           textDirection: TextDirection.rtl,
@@ -351,6 +353,7 @@ class _HomeTabState extends State<HomeTab> {
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (_, index) => ClinicItem(
                                 clinicEntity:
+                                    // state.clinicEntity[index]
                                     state.clinicEntity.take(5).toList()[index]),
                             // padding: EdgeInsets.all(8),
                             itemCount: 5,
@@ -362,28 +365,28 @@ class _HomeTabState extends State<HomeTab> {
                   },
                 ),
               ),
-              //     CustomSectionBar(
-              //       text: "الأطباء المتاحين",
-              //       onViewAllClicked: () {},
-              //     ),
-              //     SizedBox(
-              //       height: 250,
-              //       // width: 150,
-              //       child: Directionality(
-              //         textDirection: TextDirection.rtl,
-              //         child: ListView.separated(
-              //           separatorBuilder: (context, index) => const SizedBox(
-              //             width: 2,
-              //           ),
-              //           scrollDirection: Axis.horizontal,
-              //           itemBuilder: (_, index) {
-              //             return DoctorItem();
-              //           },
-              //           padding: EdgeInsets.all(10),
-              //           itemCount: 10,
-              //         ),
+              CustomSectionBar(
+                text: "أطباؤنا",
+                onViewAllClicked: () {},
+              ),
+              // SizedBox(
+              //   height: 250,
+              //   // width: 150,
+              //   child: Directionality(
+              //     textDirection: TextDirection.rtl,
+              //     child: ListView.separated(
+              //       separatorBuilder: (context, index) => const SizedBox(
+              //         width: 2,
               //       ),
-              //     )
+              //       scrollDirection: Axis.horizontal,
+              //       itemBuilder: (_, index) {
+              //         return DoctorItem();
+              //       },
+              //       padding: EdgeInsets.all(10),
+              //       itemCount: 10,
+              //     ),
+              //   ),
+              // )
             ],
           ),
         ));

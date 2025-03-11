@@ -5,9 +5,10 @@ import 'package:graduation_project/core/routes/routes.dart';
 import 'package:graduation_project/features/auth/presentation/screens/login_screen.dart';
 import 'package:graduation_project/features/auth/presentation/screens/register_screen.dart';
 import 'package:graduation_project/features/user/clinic/presentation/screen/clinic_screen.dart';
+import 'package:graduation_project/features/user/clinic/presentation/widget/clinic_details.dart';
 import 'package:graduation_project/features/user/home/presentation/screens/home_screen.dart';
 import 'package:graduation_project/features/user/onBoarding/presentation/screen/on_boarding_screen.dart';
-import 'package:graduation_project/features/user/profile/presentation/screen/profile_tab.dart';
+import 'package:graduation_project/features/user/profile/presentation/screen/profile_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
@@ -23,6 +24,10 @@ class RouteGenerator {
         return _buildRoute(const RegisterScreen(), isIOS);
       case Routes.clinic:
         return _buildRoute(const ClinicScreen(), isIOS);
+      case Routes.profile:
+        return _buildRoute(const ProfileScreen(), isIOS);
+      case Routes.clinicDetails:
+        return _buildRoute(const ClinicDetails(), isIOS);
       default:
         return _buildRoute(const HomeScreen(), isIOS);
     }

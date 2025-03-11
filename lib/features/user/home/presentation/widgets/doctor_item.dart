@@ -9,35 +9,67 @@ class DoctorItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 5),
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
-          // color: Color(0xff01984A5),
+          color: ColorManager.blue,
           // color: Color.fromARGB(237, 202, 228, 236),
-          // border: Border.all(width: .1),
+          border: Border.all(width: .1),
           borderRadius: BorderRadius.all(Radius.circular(25))),
       child: Directionality(
         textDirection: TextDirection.rtl,
         child:
             // Row(
             //   children: [
-            Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
+            Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Directionality(
-              textDirection: TextDirection.ltr,
-              child: Image.asset(
-                "assets/images/doctor_image2.png",
-                height: 150,
-                width: 150,
-              ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "د. محمد رمضان",
+                  style: getSemiBoldStyle(
+                      color: ColorManager.primary, fontSize: 20),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "كبير جراحين القلب",
+                  style:
+                      getMediumStyle(color: ColorManager.primary, fontSize: 13),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                  ],
+                ),
+              ],
             ),
-            Text(
-              "د. محمد رمضان",
-              style: getSemiBoldStyle(color: ColorManager.kuhly, fontSize: 15),
-            ),
-            Text(
-              "جراح أسنان",
-              style: getMediumStyle(color: ColorManager.kuhly, fontSize: 10),
+            Spacer(),
+            Image.asset(
+              "assets/images/doctor_image2.png",
+              height: 150,
+              width: 150,
             ),
             // SizedBox(
             //   height: 15,

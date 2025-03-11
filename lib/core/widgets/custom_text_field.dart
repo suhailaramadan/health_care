@@ -19,7 +19,7 @@ class CustomTextField extends StatefulWidget {
     this.backgroundColor,
     this.hintTextStyle,
     this.labelTextStyle,
-    this.cursorColor,
+    this.cursorColor = ColorManager.primary,
     this.readOnly = false,
     this.validation,
     this.onTap,
@@ -27,7 +27,7 @@ class CustomTextField extends StatefulWidget {
     this.prefixIcon,
     this.borderBackgroundColor,
     this.suffixIcon,
-    this.fillColor,
+    this.fillColor = ColorManager.transparent,
   });
   final TextEditingController? controller;
   final FocusNode? focusNode;
@@ -57,6 +57,14 @@ class CustomTextField extends StatefulWidget {
 class _CustomTextFieldState extends State<CustomTextField> {
   late bool hidden = widget.isObscured;
   String? errorText;
+  TextDirection _textDirection = TextDirection.rtl;
+  void _checkLanguage(String value) {
+    if (value.isEmpty) return;
+    final isArabic = RegExp(r'^[\u0600-\u06FF]').hasMatch(value);
+    setState(() {
+      _textDirection = isArabic ? _textDirection : TextDirection.ltr;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,15 +72,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         widget.label != null
-            ? Padding(
+            ? const Padding(
                 padding: EdgeInsets.only(top: Insets.s2),
-                child: Text(widget.label!,
-                    style: widget.labelTextStyle ??
-                        getMediumStyle(color: ColorManager.primary)
-                    // Color.fromARGB(223, 26, 114, 141))
-                    //     .copyWith(fontSize: FontSize.s18),
-                    // color: const Color.fromARGB(255, 16, 104, 200))
-                    ),
+                child: Text(
+                  "",
+                  //   style: widget.labelTextStyle ??
+                  //       getMediumStyle(color: ColorManager.primary)
+                  // Color.fromARGB(223, 26, 114, 141))
+                  //     .copyWith(fontSize: FontSize.s18),
+                  // color: const Color.fromARGB(255, 16, 104, 200))
+                ),
               )
             : const SizedBox(),
         Container(
@@ -87,20 +96,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ),
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: TextFormField(
-            // textDirection: TextDirection.rtl,
-            textAlign: TextDirection.rtl == Directionality.of(context)
-                ? TextAlign.right
-                : TextAlign.left,
+            // textDirection: _textDirection,
             maxLines: widget.maxLines ?? 1,
             controller: widget.controller,
             focusNode: widget.focusNode,
             readOnly: widget.readOnly,
             style: getMediumStyle(color: ColorManager.black)
-                .copyWith(fontSize: FontSize.s18),
+                .copyWith(fontSize: FontSize.s16),
             obscureText: hidden,
             keyboardType: widget.textInputType,
             obscuringCharacter: '*',
-            cursorColor: widget.cursorColor ?? ColorManager.black,
+            cursorColor: widget.cursorColor ?? ColorManager.kuhly,
             onTap: widget.onTap,
             onEditingComplete: () {
               widget.focusNode?.unfocus();
@@ -124,46 +130,60 @@ class _CustomTextFieldState extends State<CustomTextField> {
               fillColor: widget.fillColor,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.r),
-                borderSide: BorderSide(color: Colors.grey.shade300, width: 2),
+                borderSide:
+                    const BorderSide(color: Color.fromARGB(255, 214, 213, 213)
+                        // color: Color.fromARGB(102, 0, 0, 0), width: 1.5
+                        ),
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.r),
-                borderSide: BorderSide(color: ColorManager.red, width: 2),
+                borderSide:
+                    const BorderSide(color: ColorManager.red, width: 1.5),
               ),
               focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.r),
-                borderSide: BorderSide(color: ColorManager.red, width: 2),
+                borderSide:
+                    const BorderSide(color: ColorManager.red, width: 1.5),
               ),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.r),
-                  borderSide:
-                      BorderSide(color: ColorManager.primary, width: 2)),
-              contentPadding: EdgeInsets.all(Insets.s12.sp),
+                  borderSide: const BorderSide(
+                      color: ColorManager.primary, width: 1.5)),
+              contentPadding: const EdgeInsets.all(Insets.s12),
               hintText: widget.hint,
+              hintStyle:
+                  getMediumStyle(color: Colors.grey, fontSize: FontSize.s15),
+              // label: Text(
+              //   "${widget.label}",
+              //   // style: getRegularStyle(color: ColorManager.grey)
+              //   //     .copyWith(fontSize: 18),
+              // ),
+              labelStyle: getRegularStyle(
+                  color: ColorManager.grey, fontSize: FontSize.s18),
               prefixIcon: widget.prefixIcon,
               suffixIcon: widget.isObscured
                   ? IconButton(
                       onPressed: () => setState(() => hidden = !hidden),
-                      iconSize: Sizes.s24.sp,
+                      iconSize: Sizes.s24,
                       splashRadius: Sizes.s1,
                       isSelected: !hidden,
                       color: widget.cursorColor,
                       selectedIcon: const Icon(
-                        Icons.remove_red_eye_rounded,
+                        Icons.visibility,
                         color: ColorManager.primary,
                       ),
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.visibility_off,
-                        color: ColorManager.primary,
+                        color: ColorManager.grey,
                       )
                       // SvgPicture.asset(SvgAssets.visibilityOff),
                       )
                   : widget.suffixIcon,
-              hintStyle: widget.hintTextStyle ??
-                  getRegularStyle(color: ColorManager.grey)
-                      .copyWith(fontSize: 18.sp),
-              border: OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: ColorManager.red)),
+              // hintStyle: widget.hintTextStyle ??
+              //     getRegularStyle(color: ColorManager.grey)
+              //         .copyWith(fontSize: 18),
+              border: const OutlineInputBorder(
+                  borderSide: BorderSide(width: 1.5, color: ColorManager.red)),
               // enabledBorder: InputBorder.none,
               errorStyle: TextStyle(
                 fontSize: FontSize.s0,
@@ -182,7 +202,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 child: Text(
                   errorText!,
                   style: getMediumStyle(color: ColorManager.red)
-                      .copyWith(fontSize: 18.sp),
+                      .copyWith(fontSize: 10),
                 ),
               ),
       ],

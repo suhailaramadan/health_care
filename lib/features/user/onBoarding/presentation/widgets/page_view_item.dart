@@ -22,6 +22,7 @@ class PageViewItem extends StatelessWidget {
       children: [
         SizedBox(
             height: 350.h, width: double.infinity, child: Image.asset(image)),
+        // 350.h
         // SvgPicture.asset(
         //   image,
         //   width: MediaQuery.of(context).size.width,

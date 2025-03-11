@@ -33,7 +33,7 @@ class ClinicItem extends StatelessWidget {
             child: ClipOval(
               child: CachedNetworkImage(
                 imageUrl:
-                    "${ApiConstants.clinicBaseUrl}${clinicEntity.imageUrl}",
+                    "${ApiConstants.imageBaseUrl}${clinicEntity.imageUrl}",
                 fit: BoxFit.fill,
                 // height: 100,
                 // width: 150,
@@ -43,11 +43,11 @@ class ClinicItem extends StatelessWidget {
                   ),
                 ),
                 errorWidget: (context, url, error) => Image.asset(
-                  ImageManager.allergy, // حطي الصورة الافتراضية هنا
+                  "assets/images/brain_clinic.png", // حطي الصورة الافتراضية هنا
                   // height: 100.w,
                   // width: 50,
                   // width: double.infinity,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
             ),

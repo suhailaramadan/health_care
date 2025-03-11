@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/font_manager.dart';
@@ -8,10 +8,15 @@ import 'package:graduation_project/core/resources/image_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/resources/value_manager.dart';
 import 'package:graduation_project/core/routes/routes.dart';
+import 'package:graduation_project/core/utils/ui_utils.dart';
 import 'package:graduation_project/core/utils/validator.dart';
 import 'package:graduation_project/core/widgets/custom_botton.dart';
 import 'package:graduation_project/core/widgets/custom_dropdown.dart';
 import 'package:graduation_project/core/widgets/custom_text_field.dart';
+import 'package:graduation_project/core/widgets/wave_clipper.dart';
+import 'package:graduation_project/features/auth/data/models/register/register_request.dart';
+import 'package:graduation_project/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:graduation_project/features/auth/presentation/cubit/auth_states.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -22,11 +27,16 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  List<String>? collageList = [
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _nationalIdController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  List<String> collageList = [
     "كلية  الزراعة",
     "كلية الهندسة",
     "كلية تربية",
@@ -66,158 +76,304 @@ class _RegisterScreenState extends State<RegisterScreen> {
     // ItemList("كلية الفون التطبيقية", Icon(Icons.circle_rounded)),
     // ItemList("المعهد الفني الصحى", Icon(Icons.circle_rounded)),
   ];
+  File? _profileImage;
+  String? _selectedCollege;
+  Future<void> _pickImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _profileImage = File(pickedFile.path);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // backgroundColor: Color.fromARGB(238, 16, 104, 200),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(Insets.s20.sp),
-          child: SingleChildScrollView(
-            child: Directionality(
-              textDirection: TextDirection.rtl,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // SizedBox(
-                  //   height: Sizes.s10.h,
-                  // ),
-                  Center(
-                      child: Text(
-                    "إنشاء حساب",
-                    style: getBoldStyle(
-                        color: ColorManager.primary, fontSize: FontSize.s22),
-                  )),
-                  SizedBox(
-                    height: Sizes.s40.h,
-                  ),
-                  CustomTextField(
-                    prefixIcon: Icon(
-                      Icons.person,
-                      color: ColorManager.grey,
-                    ),
-                    backgroundColor: ColorManager.white,
-                    hint: 'أدخل الاسم بالكامل',
-                    label: 'الاسم بالكامل',
-                    textInputType: TextInputType.name,
-                    validation: Validator.validateFullName,
-                    controller: _nameController,
-                  ),
-                  SizedBox(
-                    height: Sizes.s18.h,
-                  ),
-                  CustomTextField(
-                    prefixIcon: Icon(
-                      Icons.phone,
-                      color: ColorManager.grey,
-                    ),
-                    hint: 'أدخل رقم هاتفك',
-                    backgroundColor: ColorManager.white,
-                    label: 'رقم الهاتف',
-                    validation: Validator.validatePhoneNumber,
-                    textInputType: TextInputType.phone,
-                    controller: _phoneController,
-                  ),
-                  SizedBox(
-                    height: Sizes.s18.h,
-                  ),
-                  CustomTextField(
-                    prefixIcon: Icon(
-                      Icons.email,
-                      color: ColorManager.grey,
-                    ),
-                    hint: 'أدخل البريد الإلكتروني',
-                    backgroundColor: ColorManager.white,
-                    label: 'البريد الإلكتروني',
-                    validation: Validator.validateEmail,
-                    textInputType: TextInputType.emailAddress,
-                    controller: _emailController,
-                  ),
-                  SizedBox(
-                    height: Sizes.s18.h,
-                  ),
-                  CustomTextField(
-                    prefixIcon: Icon(
-                      Icons.lock,
-                      color: ColorManager.grey,
-                    ),
-                    hint: 'أدخل كلمة المرور',
-                    backgroundColor: ColorManager.white,
-                    label: 'كلمة المرور',
-                    validation: Validator.vaildatePassword,
-                    isObscured: true,
-                    textInputType: TextInputType.text,
-                    controller: _passwordController,
-                  ),
-                  SizedBox(
-                    height: Sizes.s18.h,
-                  ),
-                  CustomDropDown(
-                    collageList: collageList,
-                  ),
-                  SizedBox(
-                    height: Sizes.s50.h,
-                  ),
-                  Center(
-                    child: SizedBox(
-                      // height: Sizes.s60.h,
-                      width: MediaQuery.sizeOf(context).width * .85,
-                      child: CustomButton(
-                        label: 'إنشاء حساب',
-                        backgroundColor: ColorManager.primary,
-                        //  Color.fromARGB(223, 26, 114, 141),
-
-                        onTap: () {
-                          Navigator.of(context)
-                              .pushReplacementNamed(Routes.home);
-                        },
-                        // /label: 'إنشاء حساب',
-                        // backgroundColor: ColorManager.white,
-                        // isStadiumBorder: false,
-                        // textStyle: getBoldStyle(
-                        //   color: ColorManager.primary,
-                        //   fontSize: FontSize.s20,
-                        // ),
-                        // onTap: () {
-                        //   Navigator.of(context)
-                        //       .pushReplacementNamed(Routes.home);
-                        // }, label: 'إنشاء حساب',
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'لديك حساب بالفعل؟',
-                        style: getSemiBoldStyle(color: ColorManager.primary)
-                            .copyWith(fontSize: FontSize.s16),
-                      ),
-                      SizedBox(
-                        width: Sizes.s8.w,
-                      ),
-                      GestureDetector(
-                        onTap: () => Navigator.of(context)
-                            .pushReplacementNamed(Routes.login),
-                        child: Text(
-                          'تسجيل دخول',
-                          style: getBoldStyle(
-                              color: ColorManager.textColor,
-                              fontSize: FontSize.s15),
-                          // Color.fromARGB(224, 17, 85, 105))
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+    return Container(
+        color: ColorManager.white,
+        child: Scaffold(
+            backgroundColor: ColorManager.transparent,
+            body: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                child: Stack(
+                  children: [
+                    Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        child: ClipPath(
+                          clipper: WaveClipper(),
+                          child: Container(
+                            height: 200,
+                            decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                    colors: [
+                                  Color.fromARGB(255, 4, 87, 169),
+                                  ColorManager.primary,
+                                  ColorManager.primaryColor,
+                                  ColorManager.blue
+                                ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.topRight)),
+                          ),
+                        )),
+                    Positioned(
+                      child: Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const SizedBox(
+                                      height: 40,
+                                    ),
+                                    Text(
+                                      "إنشاء حساب",
+                                      style: getBoldStyle(
+                                          color: ColorManager.white,
+                                          fontSize: FontSize.s22),
+                                    ),
+                                    const SizedBox(
+                                      height: 30,
+                                    ),
+                                    GestureDetector(
+                                      onTap: _pickImage,
+                                      child: CircleAvatar(
+                                        backgroundColor: ColorManager.white,
+                                        radius: 60,
+                                        backgroundImage: _profileImage != null
+                                            ? FileImage(_profileImage!)
+                                            : const AssetImage(
+                                                    ImageManager.profile)
+                                                as ImageProvider,
+                                        child: _profileImage == null
+                                            ? const Icon(
+                                                Icons.camera_alt_outlined,
+                                                size: 30,
+                                                color: ColorManager.white)
+                                            : null,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    SizedBox(
+                                      child: CustomTextField(
+                                        prefixIcon: const Icon(
+                                          Icons.person,
+                                          color: ColorManager.primary,
+                                        ),
+                                        backgroundColor: ColorManager.white,
+                                        hint: "الاسم الأول*",
+                                        textInputType: TextInputType.name,
+                                        validation: Validator.validateFullName,
+                                        controller: _firstNameController,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      child: CustomTextField(
+                                        prefixIcon: const Icon(
+                                          Icons.person,
+                                          color: ColorManager.primary,
+                                        ),
+                                        backgroundColor: ColorManager.white,
+                                        hint: "الاسم الأخير*",
+                                        textInputType: TextInputType.name,
+                                        validation: Validator.validateFullName,
+                                        controller: _lastNameController,
+                                      ),
+                                    ),
+                                    CustomTextField(
+                                      prefixIcon: const Icon(
+                                        Icons.credit_card,
+                                        color: ColorManager.primary,
+                                      ),
+                                      backgroundColor: ColorManager.white,
+                                      hint: "الرقم القومي*",
+                                      validation: Validator.validateNationalId,
+                                      controller: _nationalIdController,
+                                    ),
+                                    CustomTextField(
+                                      prefixIcon: const Icon(
+                                        Icons.phone,
+                                        color: ColorManager.primary,
+                                      ),
+                                      backgroundColor: ColorManager.white,
+                                      hint: "رقم الهاتف*",
+                                      validation: Validator.validatePhoneNumber,
+                                      textInputType: TextInputType.phone,
+                                      controller: _phoneController,
+                                    ),
+                                    CustomTextField(
+                                      prefixIcon: const Icon(
+                                        Icons.email,
+                                        color: ColorManager.primary,
+                                      ),
+                                      backgroundColor: ColorManager.white,
+                                      hint: "البريد الإلكتروني*",
+                                      validation: Validator.validateEmail,
+                                      textInputType: TextInputType.emailAddress,
+                                      controller: _emailController,
+                                    ),
+                                    CustomTextField(
+                                      prefixIcon: const Icon(
+                                        Icons.lock,
+                                        color: ColorManager.primary,
+                                      ),
+                                      backgroundColor: ColorManager.white,
+                                      hint: "كلمة المرور*",
+                                      validation: Validator.validatePassword,
+                                      isObscured: true,
+                                      controller: _passwordController,
+                                    ),
+                                    CustomTextField(
+                                      prefixIcon: const Icon(
+                                        Icons.lock,
+                                        color: ColorManager.primary,
+                                      ),
+                                      backgroundColor: ColorManager.white,
+                                      hint: "تأكيد كلمة المرور*",
+                                      validation: (value) {
+                                        if (value == null ||
+                                            value.trim().length < 10) {
+                                          return 'يرجى تأكيد كلمة المرور';
+                                        } else if (value !=
+                                            _passwordController.text) {
+                                          return 'كلمة المرور غير متطابقة';
+                                        }
+                                        return null;
+                                      },
+                                      isObscured: true,
+                                      controller: _confirmPasswordController,
+                                    ),
+                                    SizedBox(
+                                      height: Sizes.s10.h,
+                                    ),
+                                    CustomDropDown(
+                                      collageList: collageList,
+                                      onChange: (value) {
+                                        setState(() {
+                                          _selectedCollege = value;
+                                        });
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: Sizes.s12.h,
+                                    ),
+                                    Center(
+                                      child: SizedBox(
+                                        width:
+                                            MediaQuery.sizeOf(context).width *
+                                                .82,
+                                        child:
+                                            BlocListener<AuthCubit, AuthStates>(
+                                          listener: (context, state) {
+                                            if (state is RegisterLoading) {
+                                              return UIUtils.showLoading(
+                                                  context);
+                                            } else if (state
+                                                is RegisterSuccess) {
+                                              UIUtils.hideLoading(context);
+                                              Navigator.of(context)
+                                                  .pushReplacementNamed(
+                                                      Routes.login);
+                                            } else if (state is RegisterError) {
+                                              UIUtils.hideLoading(context);
+                                              UIUtils.showMessage(
+                                                  state.message);
+                                            }
+                                          },
+                                          child: CustomButton(
+                                            label: 'إنشاء حساب',
+                                            backgroundColor:
+                                                ColorManager.primary,
+                                            onTap: () {
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                BlocProvider.of<AuthCubit>(
+                                                        context)
+                                                    .register(RegisterRequest(
+                                                  collage: _selectedCollege!,
+                                                  firstName:
+                                                      _firstNameController.text,
+                                                  lastName:
+                                                      _lastNameController.text,
+                                                  nationalId: int.parse(
+                                                      _nationalIdController
+                                                          .text),
+                                                  email: _emailController.text,
+                                                  imageUrl: _profileImage !=
+                                                          null
+                                                      ? _profileImage!.path
+                                                      : ImageManager.profile,
+                                                  password:
+                                                      _passwordController.text,
+                                                  confirmPassword:
+                                                      _passwordController.text,
+                                                  phoneNumber: int.parse(
+                                                      _phoneController.text),
+                                                ));
+                                              }
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'لديك حساب بالفعل؟',
+                                          style: getSemiBoldStyle(
+                                                  color: ColorManager.primary)
+                                              .copyWith(fontSize: FontSize.s16),
+                                        ),
+                                        SizedBox(
+                                          width: Sizes.s8.w,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.of(context)
+                                                .pushReplacementNamed(
+                                                    Routes.login);
+                                          },
+                                          child: Text(
+                                            'تسجيل دخول',
+                                            style: getBoldStyle(
+                                                color: ColorManager.textColor,
+                                                fontSize: FontSize.s15),
+                                            // Color.fromARGB(224, 17, 85, 105))
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                  ]))),
+                    )
+                  ],
+                ),
               ),
-            ),
-          ),
-        ),
-      ),
-    );
+            )));
+  }
+
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _nationalIdController.dispose();
+    _phoneController.dispose();
+    super.dispose();
   }
 }

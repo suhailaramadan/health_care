@@ -9,7 +9,7 @@ import 'package:graduation_project/core/resources/value_manager.dart';
 class HomeScreenAppBar extends StatelessWidget {
 // implements PreferredSizeWidget {
   final bool? automaticallyImplyLeading;
-  const HomeScreenAppBar({this.automaticallyImplyLeading});
+  const HomeScreenAppBar({super.key, this.automaticallyImplyLeading});
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +19,21 @@ class HomeScreenAppBar extends StatelessWidget {
         padding: const EdgeInsets.all(0),
         child: AppBar(
             backgroundColor: ColorManager.white,
+            elevation: 0,
             surfaceTintColor: ColorManager.transparent,
             automaticallyImplyLeading: automaticallyImplyLeading ?? false,
-            actions: [
+            title: Row(children: [
+              const Padding(
+                padding: EdgeInsets.only(top: 0.0),
+                child: CircleAvatar(
+                    radius: Sizes.s28,
+                    // backgroundColor: ColorManager.transparent,
+                    backgroundImage: AssetImage(ImageManager.profile)
+                    // child: Image.asset("assets/images/doctor_image.jpg",
+                    // fit: BoxFit.cover
+                    // )
+                    ),
+              ),
               const SizedBox(
                 width: 10,
               ),
@@ -29,23 +41,15 @@ class HomeScreenAppBar extends StatelessWidget {
               //     textDirection: TextDirection.rtl,
               //     child: Row(
               //       children: ['
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: CircleAvatar(
-                    radius: Sizes.s40,
-                    backgroundColor: ColorManager.transparent,
-                    // backgroundImage: AssetImage(ImageManager.profile)
-                    child: Image.asset("assets/images/profile.avif",
-                        fit: BoxFit.cover)),
-              ),
 
               const SizedBox(
                 width: Sizes.s12,
               ),
               Text(
-                "أهلاً سهيله",
+                "أهلاً, سهيله",
                 style: getSemiBoldStyle(
-                    color: ColorManager.textColor, fontSize: FontSize.s15.sp),
+                    color: Color.fromARGB(255, 65, 111, 156),
+                    fontSize: FontSize.s15.sp),
               ),
               // const Icon(
               //   Icons.waving_hand,
@@ -56,11 +60,11 @@ class HomeScreenAppBar extends StatelessWidget {
               IconButton(
                   onPressed: () {},
                   icon: Badge.count(
-                    count: 10,
-                    child: const Icon(
+                    count: 2,
+                    child: Icon(
                       Icons.notifications_none,
                       // color: ColorManager.white,
-                      size: Sizes.s28,
+                      size: 30,
                     ),
                   )),
               const SizedBox(
@@ -69,7 +73,7 @@ class HomeScreenAppBar extends StatelessWidget {
               // ]
               //   ],
               // ))
-            ]),
+            ])),
         // ),
       ),
     );

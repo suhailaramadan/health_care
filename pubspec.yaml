@@ -11,8 +11,11 @@ dependencies:
   cupertino_icons: ^1.0.6
   curved_navigation_bar: ^1.0.6
   dartz: ^0.10.1
+  device_preview: ^1.1.0
   dio: ^5.8.0+1
   dots_indicator: ^4.0.1
+  # firebase_core: ^3.4.0
+  # firebase_messaging: ^15.1.0
   flutter:
     sdk: flutter
   flutter_bloc: ^9.0.0

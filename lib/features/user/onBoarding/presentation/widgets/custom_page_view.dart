@@ -11,8 +11,8 @@ class CustomPageView extends StatelessWidget {
       child: PageView(
         // physics:,
         controller: pageController!,
-        // physics: NeverScrollableScrollPhysics(),
-        children: [
+        physics: const NeverScrollableScrollPhysics(),
+        children: const [
           PageViewItem(
             image: "assets/images/Doctors.gif",
             text: "أهلاً بكم في الإدارة الطبية الخاصة \nبجامعة طنطا",

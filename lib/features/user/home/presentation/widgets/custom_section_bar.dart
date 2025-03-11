@@ -21,16 +21,16 @@ class CustomSectionBar extends StatelessWidget {
           Text(
             text,
             style: getSemiBoldStyle(
-              fontSize: FontSize.s18.sp,
+              fontSize: FontSize.s16,
               color: ColorManager.textColor,
             ),
           ),
           TextButton(
             onPressed: onViewAllClicked,
             child: Text(
-              'اعرض المزيد...',
+              "عرض المزيد...",
               style: getMediumStyle(
-                  color: Colors.blueGrey, fontSize: FontSize.s15.sp),
+                  color: Colors.blueGrey, fontSize: FontSize.s13),
             ),
           ),
         ],

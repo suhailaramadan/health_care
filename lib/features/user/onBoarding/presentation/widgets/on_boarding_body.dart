@@ -9,6 +9,7 @@ import 'package:graduation_project/core/routes/routes.dart';
 import 'package:graduation_project/core/widgets/custom_botton.dart';
 import 'package:graduation_project/core/widgets/custom_indicator.dart';
 import 'package:graduation_project/features/user/onBoarding/presentation/widgets/custom_page_view.dart';
+import 'package:graduation_project/features/user/onBoarding/presentation/widgets/page_view_item.dart';
 
 class OnBoardingBody extends StatefulWidget {
   const OnBoardingBody({super.key});
@@ -126,7 +127,7 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
                     duration: Duration(milliseconds: 500),
                     curve: Curves.easeIn);
               } else {
-                Navigator.of(context).pushNamed(Routes.home);
+                Navigator.of(context).pushNamed(Routes.register);
               }
             },
             // height: 50.h,
@@ -142,81 +143,102 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
   }
 
   Widget _buildLandscape() {
-    return
-
-        // padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 3),
-        // child:
-        ListView(
-      // mainAxisAlignment: MainAxisAlignment.start,
-      // crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Padding(
-        //   padding: const EdgeInsets.only(left: 20.0, top: 3),
-        //   child: GestureDetector(
-        //     onTap: () {
-        //       if (pageController!.page! < 3) {
-        //         pageController?.nextPage(
-        //             duration: Duration(milliseconds: 500),
-        //             curve: Curves.easeIn);
-        //       }
-        //     },
-        //     child: Text(
-        //       "تخطي",
-        //       style: getSemiBoldStyle(
-        //           color: ColorManager.black, fontSize: FontSize.s10),
-        //     ),
-        //   ),
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Container(
+        color: Colors.pink,
+        // child: Row(
+        //   children: [
+        //     PageView(
+        //       controller: pageController,
+        //       children: [
+        //         SizedBox(
+        //             height: 150,
+        //             width: 200,
+        //             child: PageViewItem(
+        //                 image: "assets/images/Doctors.gif", text: "")),
+        //         // PageViewItem(image: "assets/images/Doctors.gif", text: ""),
+        //         // PageViewItem(image: "assets/images/Doctors.gif", text: ""),
+        //       ],
+        //     )
+        //   ],
         // ),
-        SizedBox(
-          height: 300,
-          child: CustomPageView(
-            pageController: pageController,
-          ),
-        ),
-
-        // Padding(
-        //   padding: EdgeInsets.only(left: 75.w, bottom: 10.h),
-        //   child: Directionality(
-        //     textDirection: TextDirection.rtl,
-        //     child: CustomDotIndicator(
-        //       dotIndex: pageController!.hasClients
-        //           ? pageController!.page?.toInt()
-        //           : 0,
-        //     ),
-        //   ),
-        // ),
-
-        // // زر "التالي" أو "ابدأ الآن"
-        // Padding(
-        //   padding: EdgeInsets.only(left: 50.w, bottom: 5.h),
-        //   child: GestureDetector(
-        //     onTap: () {
-        //       if (pageController!.page! < 3) {
-        //         pageController?.nextPage(
-        //           duration: Duration(milliseconds: 500),
-        //           curve: Curves.easeIn,
-        //         );
-        //       }
-        //       //  else {
-        //       //   // Get.to(
-        //       //   //   () => HomeScreen(),
-        //       //   //   transition: Transition.rightToLeft,
-        //       //   // );
-        //       // }
-        //     },
-        //     child: CustomButton(
-        //       label: pageController!.hasClients
-        //           ? (pageController!.page == 3 ? "ابدأ الآن" : "التالي")
-        //           : "التالي",
-        //       // height: 50.h,
-        //       size: Size(50.h, 100.w),
-        //       onTap: () {},
-        //       // width: 100.w,
-        //     ),
-        //   ),
-        // )
-      ],
-      // ),
+      ),
     );
+
+    // padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 3),
+    // child:
+    //     Column(
+    //   // mainAxisAlignment: MainAxisAlignment.start,
+    //   // crossAxisAlignment: CrossAxisAlignment.start,
+    //   children: [
+    //     Padding(
+    //       padding: const EdgeInsets.only(left: 20.0, top: 3),
+    //       child: GestureDetector(
+    //         onTap: () {
+    //           if (pageController!.page! < 3) {
+    //             pageController?.nextPage(
+    //                 duration: Duration(milliseconds: 500),
+    //                 curve: Curves.easeIn);
+    //           }
+    //         },
+    //         child: Text(
+    //           "تخطي",
+    //           style: getSemiBoldStyle(
+    //               color: ColorManager.black, fontSize: FontSize.s10),
+    //         ),
+    //       ),
+    //     ),
+    //     SizedBox(
+    //       // height: 300,
+    //       child: CustomPageView(
+    //         pageController: pageController,
+    //       ),
+    //     ),
+
+    //     // Padding(
+    //     //   padding: EdgeInsets.only(left: 75.w, bottom: 10.h),
+    //     //   child: Directionality(
+    //     //     textDirection: TextDirection.rtl,
+    //     //     child: CustomDotIndicator(
+    //     //         dotIndex: pageController!.hasClients ? pageController!.page : 0
+
+    //     //         // : 0,
+    //     //         ),
+    //     //   ),
+    //     // ),
+
+    //     // زر "التالي" أو "ابدأ الآن"
+    //     Padding(
+    //       padding: EdgeInsets.only(left: 50.w, bottom: 5.h),
+    //       child: GestureDetector(
+    //         onTap: () {
+    //           if (pageController!.page! < 3) {
+    //             pageController?.nextPage(
+    //               duration: Duration(milliseconds: 500),
+    //               curve: Curves.easeIn,
+    //             );
+    //           }
+    //           //  else {
+    //           //   // Get.to(
+    //           //   //   () => HomeScreen(),
+    //           //   //   transition: Transition.rightToLeft,
+    //           //   // );
+    //           // }
+    //         },
+    //         child: CustomButton(
+    //           label: pageController!.hasClients
+    //               ? (pageController!.page == 3 ? "ابدأ الآن" : "التالي")
+    //               : "التالي",
+    //           // height: 50.h,
+    //           size: Size(50.h, 100.w),
+    //           onTap: () {},
+    //           // width: 100.w,
+    //         ),
+    //       ),
+    //     )
+    //   ],
+    //   // ),
+    // );
   }
 }

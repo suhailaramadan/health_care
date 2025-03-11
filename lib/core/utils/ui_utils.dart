@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/widgets/loading_indicator.dart';
 
 class UIUtils {
@@ -10,10 +11,14 @@ class UIUtils {
           canPop: false,
           child: AlertDialog(
               content: SizedBox(
-            height: MediaQuery.sizeOf(context).height * .2,
+            height: MediaQuery.sizeOf(context).height * .16,
             child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [LoadingIndicator()],
+              children: [
+                CircularProgressIndicator(
+                  color: ColorManager.primary,
+                )
+              ],
             ),
           ))));
   static void hideLoading(BuildContext context) => Navigator.of(context).pop();

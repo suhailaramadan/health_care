@@ -9,7 +9,7 @@ import 'package:graduation_project/core/widgets/home_screen_app_bar.dart';
 import 'package:graduation_project/features/user/booking/presentation/screen/booking_tab.dart';
 import 'package:graduation_project/features/user/chatBot/presentation/screen/chat_bot_tab.dart';
 import 'package:graduation_project/features/user/home/presentation/widgets/home_tab.dart';
-import 'package:graduation_project/features/user/profile/presentation/screen/profile_tab.dart';
+import 'package:graduation_project/features/user/profile/presentation/screen/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const HomeTab(),
     const BookingTab(),
     const ChatBotTab(),
-    const ProfileTab()
+    const ProfileScreen()
   ];
   @override
   Widget build(BuildContext context) {
@@ -72,72 +72,86 @@ class _HomeScreenState extends State<HomeScreen> {
           //   ),
           bottomNavigationBar: BottomNavigationBar(
             selectedLabelStyle: getSemiBoldStyle(
-                color: ColorManager.primary, fontSize: FontSize.s10.sp),
+                color: ColorManager.primary, fontSize: FontSize.s12.dg),
             selectedItemColor: ColorManager.primary,
             unselectedLabelStyle: getMediumStyle(
-                color: ColorManager.grey, fontSize: FontSize.s11.sp),
+                color: ColorManager.grey, fontSize: FontSize.s12.dg),
             unselectedItemColor: ColorManager.grey,
             onTap: (index) {
               setState(() {
                 currentIndex = index;
               });
             },
+            elevation: 0,
             currentIndex: currentIndex,
-            backgroundColor: ColorManager.white,
+            backgroundColor: Colors.transparent,
             type: BottomNavigationBarType.fixed,
             items: const [
               BottomNavigationBarItem(
-                icon: Icon(Icons.home),
+                icon: Icon(
+                  Icons.home,
+                  size: Sizes.s28,
+                ),
                 label: "الصفحة الرئيسية",
               ),
               // BottomNavigationBarItem(
               //     icon: Icon(Icons.local_hospital), label: "العيادات"),
               BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_month_outlined),
+                icon: Icon(
+                  Icons.calendar_month_outlined,
+                  size: Sizes.s28,
+                ),
                 label: "حجوزاتي",
               ),
-              BottomNavigationBarItem(icon: Icon(Icons.chat), label: "شات بوت"),
-              BottomNavigationBarItem(icon: Icon(Icons.person), label: "الحساب")
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.chat_outlined, size: Sizes.s33),
+                  label: "شات بوت"),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.person,
+                    size: Sizes.s28,
+                  ),
+                  label: "حسابي")
             ],
           ),
-        )
-        // bottomNavigationBar: ClipRRect(
-        //   borderRadius: const BorderRadiusDirectional.only(
-        //     topStart: Radius.circular(15),
-        //     topEnd: Radius.circular(15),
-        //   ),
-        //   child: SizedBox(
-        //     height: MediaQuery.sizeOf(context).height * 0.09,
-        //     child: BottomNavigationBar(
-        //       currentIndex: currentIndex,
-        //       onTap: (value) => changeSelectedIndex(value),
-        //       backgroundColor: ColorManager.primary,
-        //       type: BottomNavigationBarType.fixed,
-        //       selectedItemColor: ColorManager.primary,
-        //       unselectedItemColor: ColorManager.white,
-        //       showSelectedLabels: false,
-        //       showUnselectedLabels: false,
-        //       items: const [
-        //         BottomNavigationBarItem(
-        //           icon: Icon(Icons.home),
-        //           label: "الصفحة الرئيسية",
-        //         ),
-        //         // BottomNavigationBarItem(
-        //         //     icon: Icon(Icons.local_hospital), label: "العيادات"),
-        //         BottomNavigationBarItem(
-        //           icon: Icon(Icons.calendar_month_outlined),
-        //           label: "حجوزاتي",
-        //         ),
-        //         BottomNavigationBarItem(
-        //             icon: Icon(Icons.chat), label: "شات بوت"),
-        //         BottomNavigationBarItem(
-        //             icon: Icon(Icons.person), label: "الحساب")
-        //       ],
-        //     ),
-        //   ),
-        // ),
-        // )
-        );
+        ));
+
+    // bottomNavigationBar: ClipRRect(
+    //   borderRadius: const BorderRadiusDirectional.only(
+    //     topStart: Radius.circular(15),
+    //     topEnd: Radius.circular(15),
+    //   ),
+    //   child: SizedBox(
+    //     height: MediaQuery.sizeOf(context).height * 0.09,
+    //     child: BottomNavigationBar(
+    //       currentIndex: currentIndex,
+    //       onTap: (value) => changeSelectedIndex(value),
+    //       backgroundColor: ColorManager.primary,
+    //       type: BottomNavigationBarType.fixed,
+    //       selectedItemColor: ColorManager.primary,
+    //       unselectedItemColor: ColorManager.white,
+    //       showSelectedLabels: false,
+    //       showUnselectedLabels: false,
+    //       items: const [
+    //         BottomNavigationBarItem(
+    //           icon: Icon(Icons.home),
+    //           label: "الصفحة الرئيسية",
+    //         ),
+    //         // BottomNavigationBarItem(
+    //         //     icon: Icon(Icons.local_hospital), label: "العيادات"),
+    //         BottomNavigationBarItem(
+    //           icon: Icon(Icons.calendar_month_outlined),
+    //           label: "حجوزاتي",
+    //         ),
+    //         BottomNavigationBarItem(
+    //             icon: Icon(Icons.chat), label: "شات بوت"),
+    //         BottomNavigationBarItem(
+    //             icon: Icon(Icons.person), label: "الحساب")
+    //       ],
+    //     ),
+    //   ),
+    // ),
+    // )
   }
 
   // void changeSelectedIndex(int selectedIndex) =>

@@ -16,7 +16,7 @@ class LoadingIndicator extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircularProgressIndicator(
-            color: ColorManager.kuhly,
+            color: ColorManager.primary,
           ),
           // SizedBox(
           //   height: 20,

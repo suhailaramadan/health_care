@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/font_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/resources/value_manager.dart';
 import 'package:graduation_project/core/routes/routes.dart';
+import 'package:graduation_project/core/utils/ui_utils.dart';
 import 'package:graduation_project/core/utils/validator.dart';
 import 'package:graduation_project/core/widgets/custom_botton.dart';
 import 'package:graduation_project/core/widgets/custom_text_field.dart';
+import 'package:graduation_project/features/auth/data/models/login/login_request.dart';
+import 'package:graduation_project/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:graduation_project/features/auth/presentation/cubit/auth_states.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,159 +22,174 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // backgroundColor: ColorManager.greyDar,
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(Insets.s20.sp),
+    return Container(
+      decoration: const BoxDecoration(
+        color: ColorManager.white,
+        // image: DecorationImage(
+        //     image: AssetImage(
+        //       "assets/images/background.png",
+        //     ),
+        //     fit: BoxFit.fill),
+      ),
+      child: Scaffold(
+        backgroundColor: ColorManager.transparent,
+        body: Form(
+          key: _formKey,
+          // child:
+          // Padding(
+          //   padding: EdgeInsets.all(Insets.s20.sp),
           child: SingleChildScrollView(
             child: Directionality(
               textDirection: TextDirection.rtl,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: Sizes.s80.h,
+                  const SizedBox(
+                    height: 30,
                   ),
-                  // Center(
-                  //   child: Text(
-                  //     "تسجيل الدخول",
-                  //     style: getBoldStyle(
-                  //         fontSize: FontSize.s22, color: Color(0xff1976D2)),
-                  //   ),
-                  // ),
+                  Image.asset(
+                    "assets/images/Login-pana.png",
+                    height: MediaQuery.sizeOf(context).height * .4.w,
+                  ),
                   Center(
                     child: Text(
                       "تسجيل الدخول",
                       style: getBoldStyle(
-                          color: ColorManager.primary, fontSize: FontSize.s22),
+                          fontSize: FontSize.s22,
+                          color: ColorManager.textColor),
                     ),
                   ),
-                  // ),
-                  // Center(child: SvgPicture.asset(SvgAssets.route)),
-                  // SizedBox(
-                  //   height: Sizes.s40.h,
-                  // ),
-                  // Row(
-                  //   children: [
-                  //     Text(
-                  //       "مرحباً\ بعودتك مرة أخرى",
-                  //       style: getBoldStyle(color: ColorManager.white)
-                  //           .copyWith(fontSize: FontSize.s24),
-                  //     ),
-                  //     Icon(
-                  //       Icons.waving_hand_outlined,
-                  //       color: Colors.amber,
-                  //     )
-                  //   ],
-                  // ),
-
-                  // Text(
-                  //   'Please sign in with your mail',
-                  //   style: getLightStyle(color: ColorManager.white)
-                  //       .copyWith(fontSize: FontSize.s16),
-                  // ),
-                  SizedBox(
-                    height: Sizes.s50.h,
+                  const SizedBox(
+                    height: 8,
                   ),
-                  CustomTextField(
-                    prefixIcon: Icon(
-                      Icons.email,
-                      color: ColorManager.grey,
-                    ),
-                    backgroundColor: ColorManager.white,
-                    hint: 'أدخل بريدك الإلكتروني',
-                    label: 'البريد الإلكتروني',
-                    textInputType: TextInputType.emailAddress,
-                    validation: Validator.validateEmail,
-                    controller: _emailController,
-                  ),
-                  SizedBox(
-                    height: Sizes.s28.h,
-                  ),
-                  CustomTextField(
-                    prefixIcon: Icon(
-                      Icons.lock,
-                      color: ColorManager.grey,
-                    ),
-                    hint: 'أدخل كلمة المرور',
-                    backgroundColor: ColorManager.white,
-                    // label: 'كلمة المرور',
-                    validation: Validator.vaildatePassword,
-                    isObscured: true,
-                    textInputType: TextInputType.text,
-                    controller: _passwordController,
-                  ),
-                  SizedBox(
-                    height: Sizes.s8.h,
-                  ),
-                  Row(
-                    children: [
-                      const Spacer(),
-                      GestureDetector(
-                        onTap: () {},
-                        child: Text(
-                          'نسيت كلمة المرور؟',
-                          style: getMediumStyle(color: ColorManager.primary)
-                              .copyWith(fontSize: FontSize.s18),
+                  Padding(
+                    padding: EdgeInsets.all(Insets.s20.sp),
+                    child: Column(
+                      children: [
+                        CustomTextField(
+                          prefixIcon: const Icon(
+                            Icons.email,
+                            color: ColorManager.primary,
+                          ),
+                          backgroundColor: ColorManager.white,
+                          // hint: 'أدخل بريدك الإلكتروني',
+                          hint: 'البريد الإلكتروني',
+                          textInputType: TextInputType.emailAddress,
+                          validation: Validator.validateEmail,
+                          controller: _emailController,
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: Sizes.s60.h,
-                  ),
-                  Center(
-                    child: SizedBox(
-                      child: CustomButton(
-                        label: 'تسجيل دخول',
-                        backgroundColor: ColorManager.primary,
-                        isStadiumBorder: false,
-                        textStyle: getBoldStyle(
-                          color: ColorManager.white,
-                          fontSize: FontSize.s18,
+                        SizedBox(
+                          height: Sizes.s20.h,
                         ),
-                        onTap: () {
-                          Navigator.of(context)
-                              .pushReplacementNamed(Routes.home);
-                        },
-                      ),
+                        CustomTextField(
+                          prefixIcon: const Icon(
+                            Icons.lock,
+                            color: ColorManager.primary,
+                          ),
+                          // hint: 'أدخل كلمة المرور',
+                          backgroundColor: ColorManager.white,
+                          hint: 'كلمة المرور',
+                          validation: Validator.validatePassword,
+                          isObscured: true,
+                          controller: _passwordController,
+                        ),
+                        SizedBox(
+                          height: Sizes.s12.h,
+                        ),
+                        Row(
+                          children: [
+                            const Spacer(),
+                            GestureDetector(
+                              onTap: () {},
+                              child: Text(
+                                'نسيت كلمة المرور؟',
+                                style:
+                                    getMediumStyle(color: ColorManager.primary)
+                                        .copyWith(fontSize: FontSize.s13),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: Sizes.s50.h,
+                        ),
+                        Center(
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * .82,
+                            child: BlocListener<AuthCubit, AuthStates>(
+                              listener: (context, state) {
+                                if (state is LoginLoading) {
+                                  UIUtils.showLoading(context);
+                                } else if (state is LoginSuccess) {
+                                  UIUtils.hideLoading(context);
+                                  Navigator.of(context)
+                                      .pushReplacementNamed(Routes.home);
+                                } else if (state is LoginError) {
+                                  UIUtils.hideLoading(context);
+                                  UIUtils.showMessage(state.message);
+                                }
+                              },
+                              child: CustomButton(
+                                label: 'تسجيل الدخول',
+                                backgroundColor: ColorManager.primary,
+                                isStadiumBorder: false,
+                                textStyle: getBoldStyle(
+                                  color: ColorManager.white,
+                                  fontSize: FontSize.s18,
+                                ),
+                                onTap: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    BlocProvider.of<AuthCubit>(context).login(
+                                        LoginRequest(
+                                            email: _emailController.text,
+                                            password:
+                                                _passwordController.text));
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30.h,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'ليس لديك أي حساب؟',
+                              style:
+                                  getSemiBoldStyle(color: ColorManager.primary)
+                                      .copyWith(fontSize: FontSize.s16),
+                            ),
+                            SizedBox(
+                              width: Sizes.s8.w,
+                            ),
+                            GestureDetector(
+                              onTap: () => Navigator.of(context)
+                                  .pushReplacementNamed(Routes.register),
+                              child: Text(
+                                'إنشاء حساب',
+                                style:
+                                    getBoldStyle(color: ColorManager.textColor)
+                                        .copyWith(fontSize: FontSize.s13),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 30.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'ليس لديك أي حساب؟',
-                        style: getSemiBoldStyle(color: ColorManager.primary)
-                            .copyWith(fontSize: FontSize.s16),
-                      ),
-                      SizedBox(
-                        width: Sizes.s8.w,
-                      ),
-                      GestureDetector(
-                        onTap: () => Navigator.of(context)
-                            .pushReplacementNamed(Routes.register),
-                        child: Text(
-                          'إنشاء حساب',
-                          style: getBoldStyle(color: ColorManager.kuhly)
-                              .copyWith(fontSize: FontSize.s14),
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),
             ),
           ),
         ),
+        // ),
       ),
     );
   }
