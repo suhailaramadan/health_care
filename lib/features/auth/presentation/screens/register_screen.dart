@@ -324,7 +324,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       ),
                                     ),
                                     const SizedBox(
-                                      height: 5,
+                                      height: 8,
                                     ),
                                     Row(
                                       mainAxisAlignment:
@@ -339,7 +339,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         SizedBox(
                                           width: Sizes.s8.w,
                                         ),
-                                        GestureDetector(
+                                        InkWell(
+                                          splashColor: ColorManager.blue,
                                           onTap: () {
                                             Navigator.of(context)
                                                 .pushReplacementNamed(

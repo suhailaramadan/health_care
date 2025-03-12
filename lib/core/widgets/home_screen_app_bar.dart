@@ -6,11 +6,16 @@ import 'package:graduation_project/core/resources/image_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/resources/value_manager.dart';
 
-class HomeScreenAppBar extends StatelessWidget {
+class HomeScreenAppBar extends StatefulWidget {
 // implements PreferredSizeWidget {
   final bool? automaticallyImplyLeading;
   const HomeScreenAppBar({super.key, this.automaticallyImplyLeading});
 
+  @override
+  State<HomeScreenAppBar> createState() => _HomeScreenAppBarState();
+}
+
+class _HomeScreenAppBarState extends State<HomeScreenAppBar> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -21,10 +26,11 @@ class HomeScreenAppBar extends StatelessWidget {
             backgroundColor: ColorManager.white,
             elevation: 0,
             surfaceTintColor: ColorManager.transparent,
-            automaticallyImplyLeading: automaticallyImplyLeading ?? false,
+            automaticallyImplyLeading:
+                widget.automaticallyImplyLeading ?? false,
             title: Row(children: [
               const Padding(
-                padding: EdgeInsets.only(top: 0.0),
+                padding: EdgeInsets.only(),
                 child: CircleAvatar(
                     radius: Sizes.s28,
                     // backgroundColor: ColorManager.transparent,
@@ -48,7 +54,7 @@ class HomeScreenAppBar extends StatelessWidget {
               Text(
                 "أهلاً, سهيله",
                 style: getSemiBoldStyle(
-                    color: Color.fromARGB(255, 65, 111, 156),
+                    color: const Color.fromARGB(255, 65, 111, 156),
                     fontSize: FontSize.s15.sp),
               ),
               // const Icon(
@@ -61,7 +67,7 @@ class HomeScreenAppBar extends StatelessWidget {
                   onPressed: () {},
                   icon: Badge.count(
                     count: 2,
-                    child: Icon(
+                    child: const Icon(
                       Icons.notifications_none,
                       // color: ColorManager.white,
                       size: 30,

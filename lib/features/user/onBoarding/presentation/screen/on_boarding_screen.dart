@@ -7,7 +7,7 @@ class OnBoardingScreen extends StatelessWidget {
   static const onBoarding = "/onBoarding";
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: ColorManager.white,
       body: OnBoardingBody(),
     );

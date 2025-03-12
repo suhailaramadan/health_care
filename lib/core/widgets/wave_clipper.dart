@@ -6,7 +6,7 @@ class WaveClipper extends CustomClipper<Path> {
     Path path = Path();
     path.lineTo(0, size.height - 50);
     var firstControlPoint = Offset(size.width / 4, size.height);
-    var firstEndPoint = Offset(size.width / 2, size.height - 30);
+    var firstEndPoint = Offset(size.width / 2, size.height - 35);
     path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
         firstEndPoint.dx, firstEndPoint.dy);
     var secondControlPoint = Offset(size.width * 3 / 4, size.height - 90);

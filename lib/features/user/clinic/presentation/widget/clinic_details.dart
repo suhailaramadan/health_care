@@ -39,7 +39,7 @@ class _ClinicDetailsState extends State<ClinicDetails> {
             // automaticallyImplyLeading: false,
             ),
         body: Center(
-          child: Container(
+          child: SizedBox(
             height: MediaQuery.sizeOf(context).height,
             // decoration: const BoxDecoration(
             //     color: ColorManager.blue,
@@ -49,7 +49,6 @@ class _ClinicDetailsState extends State<ClinicDetails> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(
                     height: 15,

@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
@@ -34,14 +33,16 @@ class CustomClinicComponant extends StatelessWidget {
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: Container(
-          margin: const EdgeInsets.all(10),
+          // height: 250,
+          // width: 100,
+          margin: const EdgeInsets.all(8),
           // padding: EdgeInsets.symmetric(horizontal: 8),
           decoration: BoxDecoration(
               border: Border.all(width: 0.1, color: ColorManager.blue),
               borderRadius: BorderRadius.circular(10),
               color: ColorManager.white,
-              boxShadow: [
-                const BoxShadow(blurRadius: 10, color: ColorManager.blue)
+              boxShadow: const [
+                BoxShadow(blurRadius: 10, color: ColorManager.blue)
               ]),
           child: Column(
             children: [
@@ -51,13 +52,13 @@ class CustomClinicComponant extends StatelessWidget {
                 child: CachedNetworkImage(
                   imageUrl:
                       "${ApiConstants.imageBaseUrl}${clinicEntity.imageUrl}",
-                  height: 150.w,
-                  width: 200.w,
+                  // height: 150.w,
+                  // width: 200.w,
                   fit: BoxFit.fill,
                 ),
               ),
               const SizedBox(
-                width: 10,
+                height: 20,
               ),
 
               Text(
@@ -65,9 +66,9 @@ class CustomClinicComponant extends StatelessWidget {
                 style: getBoldStyle(
                     color: ColorManager.primary, fontSize: FontSize.s15.sp),
               ),
-              SizedBox(
-                width: 20.w,
-              )
+              // SizedBox(
+              //   width: 20.w,
+              // )
             ],
           ),
         ),

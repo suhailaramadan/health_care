@@ -24,20 +24,6 @@ class ClinicScreen extends StatefulWidget {
 }
 
 class _ClinicScreenState extends State<ClinicScreen> {
-  // List<String> images = [
-  //   "assets/images/heart_clinic.png",
-  //   "assets/images/density_clinic.png",
-  //   "assets/images/brain_clinic.png",
-  //   "assets/images/heart_clinic.png",
-  //   "assets/images/density_clinic.png",
-  //   "assets/images/brain_clinic.png",
-  //   "assets/images/heart_clinic.png",
-  //   "assets/images/density_clinic.png",
-  //   "assets/images/brain_clinic.png",
-  //   "assets/images/heart_clinic.png",
-  //   "assets/images/density_clinic.png",
-  //   "assets/images/brain_clinic.png",
-  // ];
   late final ClinicCubit _clinicCubit;
   @override
   void initState() {
@@ -66,16 +52,7 @@ class _ClinicScreenState extends State<ClinicScreen> {
             child: Column(children: [
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.0),
-                child:
-                    // TextField(
-                    //   decoration: InputDecoration(
-                    //       hintText: "ابحث عن العيادة",
-                    //       enabledBorder: OutlineInputBorder(
-                    //           borderSide: BorderSide(width: 1.2),
-                    //           borderRadius: BorderRadius.circular(18.r))),
-                    // )
-                    CustomTextField(
-                  // fillColor: Color.fromARGB(255, 245, 246, 248),
+                child: CustomTextField(
                   hint: "ابحث عن العيادة",
                   label: "",
                   prefixIcon: Icon(
@@ -102,10 +79,10 @@ class _ClinicScreenState extends State<ClinicScreen> {
                         message: state.message,
                       );
                     } else if (state is GetClinicsSuccess) {
-                      return Flexible(
+                      return Expanded(
                         child: GridView.builder(
                           gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2),
                           itemBuilder: (_, index) => CustomClinicComponant(
                             clinicEntity: state.clinicEntity[index],

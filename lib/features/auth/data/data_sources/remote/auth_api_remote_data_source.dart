@@ -6,10 +6,12 @@ import 'package:graduation_project/features/auth/data/models/login/login_request
 import 'package:graduation_project/features/auth/data/models/login/login_response.dart';
 import 'package:graduation_project/features/auth/data/models/register/register_request.dart';
 import 'package:graduation_project/features/auth/data/models/register/register_response.dart';
+import 'package:injectable/injectable.dart';
 
+@Singleton(as: AuthRemoteDataSource)
 class AuthAPIRemoteDataSource extends AuthRemoteDataSource {
-  final Dio dio = Dio(BaseOptions(
-      baseUrl: ApiConstants.baseUrl, receiveDataWhenStatusError: true));
+  final Dio dio;
+  AuthAPIRemoteDataSource(this.dio);
   @override
   Future<RegisterResponse> register(RegisterRequest request) async {
     FormData formData = await request.toFormData();

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
@@ -9,13 +8,13 @@ class DoctorItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      margin: EdgeInsets.all(10),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
           color: ColorManager.blue,
           // color: Color.fromARGB(237, 202, 228, 236),
           border: Border.all(width: .1),
-          borderRadius: BorderRadius.all(Radius.circular(25))),
+          borderRadius: const BorderRadius.all(Radius.circular(25))),
       child: Directionality(
         textDirection: TextDirection.rtl,
         child:
@@ -32,7 +31,7 @@ class DoctorItem extends StatelessWidget {
                   style: getSemiBoldStyle(
                       color: ColorManager.primary, fontSize: 20),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Text(
@@ -40,10 +39,10 @@ class DoctorItem extends StatelessWidget {
                   style:
                       getMediumStyle(color: ColorManager.primary, fontSize: 13),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                Row(
+                const Row(
                   children: [
                     Icon(
                       Icons.star,
@@ -65,7 +64,7 @@ class DoctorItem extends StatelessWidget {
                 ),
               ],
             ),
-            Spacer(),
+            const Spacer(),
             Image.asset(
               "assets/images/doctor_image2.png",
               height: 150,

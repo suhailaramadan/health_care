@@ -11,7 +11,7 @@ class UIUtils {
           canPop: false,
           child: AlertDialog(
               content: SizedBox(
-            height: MediaQuery.sizeOf(context).height * .16,
+            height: MediaQuery.sizeOf(context).height * .15,
             child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -23,6 +23,7 @@ class UIUtils {
           ))));
   static void hideLoading(BuildContext context) => Navigator.of(context).pop();
   static void showMessage(String message) => Fluttertoast.showToast(
+        backgroundColor: ColorManager.red,
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
       );

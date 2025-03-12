@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/font_manager.dart';
@@ -22,7 +21,7 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
   PageController? pageController;
   @override
   void initState() {
-    pageController = PageController(initialPage: 0)
+    pageController = PageController()
       ..addListener(() {
         setState(() {});
       });
@@ -78,7 +77,7 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
                 onTap: () {
                   if (pageController!.page! < 2) {
                     pageController?.nextPage(
-                        duration: Duration(milliseconds: 500),
+                        duration: const Duration(milliseconds: 500),
                         curve: Curves.easeIn);
                   }
                 },
@@ -117,14 +116,14 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
           //         // }
           //       },
           child: CustomButton(
-            backgroundColor: Color.fromARGB(255, 28, 130, 240),
+            backgroundColor: const Color.fromARGB(255, 28, 130, 240),
             label: pageController!.hasClients
                 ? (pageController!.page == 2 ? "ابدأ الآن" : "التالي")
                 : "التالى",
             onTap: () {
               if (pageController!.page! < 2) {
                 pageController?.nextPage(
-                    duration: Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 500),
                     curve: Curves.easeIn);
               } else {
                 Navigator.of(context).pushNamed(Routes.register);

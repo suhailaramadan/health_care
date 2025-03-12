@@ -12,7 +12,7 @@ class ProfileScreen extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
           appBar: AppBar(
-            title: Text("حسابي"),
+            title: const Text("حسابي"),
             centerTitle: true,
             backgroundColor: ColorManager.primary,
           ),

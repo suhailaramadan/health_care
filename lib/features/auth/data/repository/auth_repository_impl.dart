@@ -7,14 +7,17 @@ import 'package:graduation_project/features/auth/data/models/login/login_request
 import 'package:graduation_project/features/auth/data/models/login/login_response.dart';
 import 'package:graduation_project/features/auth/data/models/register/register_request.dart';
 import 'package:graduation_project/features/auth/data/models/register/register_response.dart';
+import 'package:graduation_project/features/auth/domain/entity/user_entity.dart';
+import 'package:graduation_project/features/auth/domain/repository/auth_repository.dart';
+import 'package:injectable/injectable.dart';
 
-class AuthRepository {
+@Singleton(as: AuthRepository)
+class AuthRepositoryImpl extends AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
   final AuthLocalDataSource localDataSource;
-  const AuthRepository(this.remoteDataSource, this.localDataSource);
+  AuthRepositoryImpl(this.remoteDataSource, this.localDataSource);
 
-  Future<Either<Failure, RegisterResponse>> register(
-      RegisterRequest request) async {
+  Future<Either<Failure, UserEntity>> register(RegisterRequest request) async {
     try {
       final response = await remoteDataSource.register(request);
       return right(response);
@@ -23,10 +26,10 @@ class AuthRepository {
     }
   }
 
-  Future<Either<Failure, LoginResponse>> login(LoginRequest request) async {
+  Future<Either<Failure, UserEntity>> login(LoginRequest request) async {
     try {
       final response = await remoteDataSource.login(request);
-      await localDataSource.saveToken(response.token);
+      await localDataSource.saveToken(response.token!);
       return Right(response);
     } on AppException catch (exception) {
       return left(Failure(exception.message));

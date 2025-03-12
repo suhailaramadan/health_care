@@ -25,7 +25,7 @@ class HealthCareApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthCubit(),
+      create: (context) => serviceLocator.get<AuthCubit>(),
       child: ScreenUtilInit(
           designSize: const Size(420, 874),
           minTextAdapt: true,
@@ -37,7 +37,7 @@ class HealthCareApp extends StatelessWidget {
               builder: DevicePreview.appBuilder,
               debugShowCheckedModeBanner: false,
               onGenerateRoute: RouteGenerator.getRoute,
-              initialRoute: Routes.register)),
+              initialRoute: Routes.login)),
     );
   }
 }

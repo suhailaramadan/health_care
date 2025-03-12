@@ -1,11 +1,14 @@
-class LoginResponse {
-  String token;
-  String role;
+import 'package:graduation_project/features/auth/domain/entity/user_entity.dart';
 
-  LoginResponse({required this.token, required this.role});
+class LoginResponse extends UserEntity {
+  String? token;
+  String? role;
+
+  LoginResponse({required this.token, required this.role})
+      : super(token: token, role: role);
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
-        token: json['token'] as String,
-        role: json['role'] as String,
+        token: json['token'] as String?,
+        role: json['role'] as String?,
       );
 }
