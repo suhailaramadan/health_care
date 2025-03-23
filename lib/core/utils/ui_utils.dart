@@ -10,17 +10,19 @@ class UIUtils {
       builder: (_) => PopScope(
           canPop: false,
           child: AlertDialog(
+              backgroundColor: ColorManager.blue,
               content: SizedBox(
-            height: MediaQuery.sizeOf(context).height * .15,
-            child: const Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(
-                  color: ColorManager.primary,
-                )
-              ],
-            ),
-          ))));
+                height: MediaQuery.sizeOf(context).height * .12,
+                width: MediaQuery.sizeOf(context).height * .12,
+                child: const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(
+                      color: ColorManager.primary,
+                    )
+                  ],
+                ),
+              ))));
   static void hideLoading(BuildContext context) => Navigator.of(context).pop();
   static void showMessage(String message) => Fluttertoast.showToast(
         backgroundColor: ColorManager.red,

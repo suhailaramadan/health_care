@@ -7,14 +7,24 @@ import 'package:injectable/injectable.dart';
 @lazySingleton
 class ClinicCubit extends Cubit<ClinicState> {
   final GetClinics _getClinics;
+  final GetClinicsById _getClinicsById;
   ClinicCubit(
     this._getClinics,
+    this._getClinicsById,
   ) : super(ClinicInitial()) {
     getClinics();
+    // getClinicsById();
   }
   Future<void> getClinics() async {
     emit(GetClinicsLoading());
     final result = await _getClinics();
+    result.fold((failure) => emit(GetClinicsError(failure.message)),
+        (clinics) => emit(GetClinicsSuccess(clinics)));
+  }
+
+  Future<void> getClinicsById(int id) async {
+    emit(GetClinicsLoading());
+    final result = await _getClinicsById(id);
     result.fold((failure) => emit(GetClinicsError(failure.message)),
         (clinics) => emit(GetClinicsSuccess(clinics)));
   }

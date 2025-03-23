@@ -8,7 +8,7 @@ abstract class RegisterModule {
   @singleton
   Dio get dio => Dio(BaseOptions(
       baseUrl: ApiConstants.baseUrl, receiveDataWhenStatusError: true));
-  // ignore: invalid_annotation_target
-  @preResolve
-  Future<SharedPreferences> getSharedPref() => SharedPreferences.getInstance();
+  // @preResolve
+  @lazySingleton
+  Future<SharedPreferences> get sharedPref => SharedPreferences.getInstance();
 }

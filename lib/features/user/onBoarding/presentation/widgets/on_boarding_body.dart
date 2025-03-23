@@ -126,7 +126,7 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeIn);
               } else {
-                Navigator.of(context).pushNamed(Routes.register);
+                Navigator.of(context).pushNamed(Routes.chooseUser);
               }
             },
             // height: 50.h,

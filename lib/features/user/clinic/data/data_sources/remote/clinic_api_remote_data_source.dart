@@ -21,7 +21,21 @@ class ClinicApiRemoteDataSource implements ClinicRemoteDataSource {
       if (exception is DioException) {
         message = exception.response?.data['message'];
       }
-      throw RemoteException(message ?? "فشل فى جلب العيادات");
+      throw RemoteException(message ?? "تعذر تحميل العيادات");
+    }
+  }
+
+  @override
+  Future<ClinicsResponse> getClinicsByID(int id) async {
+    try {
+      final response = await _dio.get("${ApiConstants.clinicEndPoint}/$id");
+      return ClinicsResponse.fromJson(response.data);
+    } catch (exception) {
+      String? message;
+      if (exception is DioException) {
+        message = exception.response?.data['message'];
+      }
+      throw RemoteException(message ?? "تعذر تحميل العيادات");
     }
   }
 }

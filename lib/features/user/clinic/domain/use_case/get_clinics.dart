@@ -9,5 +9,13 @@ class GetClinics {
   final ClinicRepository _clinicRepository;
   const GetClinics(this._clinicRepository);
   Future<Either<Failure, List<ClinicEntity>>> call() =>
-      _clinicRepository.getClinic();
+      _clinicRepository.getClinics();
+}
+
+@lazySingleton
+class GetClinicsById {
+  final ClinicRepository _clinicRepository;
+  const GetClinicsById(this._clinicRepository);
+  Future<Either<Failure, List<ClinicEntity>>> call(int id) =>
+      _clinicRepository.getClinicsById(id);
 }

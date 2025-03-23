@@ -68,6 +68,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
+    // final Size screenSize = MediaQuery.sizeOf(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -85,11 +86,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
               )
             : const SizedBox(),
         Container(
-          margin: EdgeInsets.only(top: Insets.s5.h),
+          // margin: EdgeInsets.only(top: Insets.s5.h),
           decoration: BoxDecoration(
-            // color: widget.backgroundColor ??
-            //     ColorManager.greyDark.withOpacity(.15),
-            borderRadius: BorderRadius.circular(Sizes.s8),
+            color: widget.backgroundColor ??
+                ColorManager.greyDark.withOpacity(.15),
+            borderRadius: BorderRadius.circular(11.r),
             border: Border.all(
               color: widget.borderBackgroundColor ?? ColorManager.transparent,
             ),

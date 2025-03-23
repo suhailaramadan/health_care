@@ -13,7 +13,7 @@ import 'package:graduation_project/core/widgets/loading_indicator.dart';
 import 'package:graduation_project/features/user/clinic/presentation/cubit/clinic_cubit.dart';
 import 'package:graduation_project/features/user/clinic/presentation/cubit/clinic_states.dart';
 import 'package:graduation_project/features/user/clinic/presentation/widget/custom_clinic_componant.dart';
-import 'package:graduation_project/features/user/home/presentation/widgets/clinic_item.dart';
+import 'package:graduation_project/features/home/presentation/widgets/clinic_item.dart';
 
 class ClinicScreen extends StatefulWidget {
   const ClinicScreen({super.key});

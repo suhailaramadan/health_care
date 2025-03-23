@@ -21,6 +21,7 @@ class CustomDropDown extends StatefulWidget {
 
 class _CustomDropDownState extends State<CustomDropDown> {
   String? selectedCollege;
+  bool isOpen = false;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -72,12 +73,37 @@ class _CustomDropDownState extends State<CustomDropDown> {
                 return DropdownMenuItem(
                   alignment: Alignment.centerRight,
                   value: college,
-                  child: Text(college),
+                  child: Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: Row(
+                      children: [
+                        if (isOpen)
+                          Icon(selectedCollege == college
+                              ? Icons.check_circle_outline_sharp
+                              : Icons.circle_outlined),
+                        const SizedBox(width: 10),
+                        Text(
+                          college,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            // color: Colors.blue,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 );
               }).toList(),
+              onTap: () {
+                setState(() {
+                  isOpen = true;
+                });
+              },
               onChanged: (value) {
                 setState(() {
                   selectedCollege = value!;
+                  isOpen = false;
                 });
                 widget.onChange(value);
               })

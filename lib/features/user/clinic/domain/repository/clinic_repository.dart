@@ -3,5 +3,6 @@ import 'package:graduation_project/features/user/clinic/domain/entities/clinic_e
 import 'package:dartz/dartz.dart';
 
 abstract class ClinicRepository {
-  Future<Either<Failure, List<ClinicEntity>>> getClinic();
+  Future<Either<Failure, List<ClinicEntity>>> getClinics();
+  Future<Either<Failure, List<ClinicEntity>>> getClinicsById(int id);
 }

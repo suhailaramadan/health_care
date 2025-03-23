@@ -2,4 +2,5 @@ import 'package:graduation_project/features/user/clinic/data/model/clinics_respo
 
 abstract class ClinicRemoteDataSource {
   Future<ClinicsResponse> getClinics();
+  Future<ClinicsResponse> getClinicsByID(int id);
 }

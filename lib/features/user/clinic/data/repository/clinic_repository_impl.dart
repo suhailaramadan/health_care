@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:graduation_project/core/error/exceptions.dart';
 import 'package:graduation_project/core/error/failure.dart';
 import 'package:graduation_project/features/user/clinic/data/data_sources/remote/clinic_remote_data_source.dart';
@@ -12,13 +13,24 @@ class ClinicRepositoryImpl implements ClinicRepository {
   final ClinicRemoteDataSource _remoteDataSource;
   const ClinicRepositoryImpl(this._remoteDataSource);
   @override
-  Future<Either<Failure, List<ClinicEntity>>> getClinic() async {
+  Future<Either<Failure, List<ClinicEntity>>> getClinics() async {
     try {
       final response = await _remoteDataSource.getClinics();
       return Right(
           response.data!.map((clinicModel) => clinicModel.toEntity).toList());
     } on RemoteException catch (exception) {
       return Left(Failure(exception.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ClinicEntity>>> getClinicsById(int id) async {
+    try {
+      final response = await _remoteDataSource.getClinicsByID(id);
+      return Right(
+          response.data!.map((clinicModel) => clinicModel.toEntity).toList());
+    } on RemoteException catch (exception) {
+      return left(Failure(exception.message));
     }
   }
 }

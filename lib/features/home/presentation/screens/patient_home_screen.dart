@@ -7,18 +7,18 @@ import 'package:graduation_project/core/resources/value_manager.dart';
 import 'package:graduation_project/core/widgets/home_screen_app_bar.dart';
 import 'package:graduation_project/features/user/booking/presentation/screen/booking_tab.dart';
 import 'package:graduation_project/features/user/chatBot/presentation/screen/chat_bot_tab.dart';
-import 'package:graduation_project/features/user/home/presentation/widgets/home_tab.dart';
-import 'package:graduation_project/features/user/profile/presentation/screen/profile_screen.dart';
+import 'package:graduation_project/features/home/presentation/widgets/home_tab.dart';
+import 'package:graduation_project/features/profile/presentation/screen/profile_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-  static const home = "/home";
+class PatientHomeScreen extends StatefulWidget {
+  const PatientHomeScreen({super.key});
+  static const patientHome = "/patientHome";
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<PatientHomeScreen> createState() => _PatientHomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _PatientHomeScreenState extends State<PatientHomeScreen> {
   int currentIndex = 0;
   List<Widget> tabs = [
     const HomeTab(),
@@ -28,6 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.sizeOf(context);
+    final bool isLandscape = screenSize.width > screenSize.height;
     return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
@@ -69,12 +71,51 @@ class _HomeScreenState extends State<HomeScreen> {
           //       ],
           //     ),
           //   ),
-          bottomNavigationBar: BottomNavigationBar(
+          bottomNavigationBar:
+              // Stack(
+              //     clipBehavior:
+              //         Clip.none, // علشان مايقطعش الأجزاء الخارجة من الشاشة
+              //     children: [
+              //       Positioned(
+              //           bottom: 0,
+              //           left: 0,
+              //           right: 0,
+              //           child: Container(
+              //             height: 80, // ارتفاع الخلفية اللي تحت البار
+              //             decoration: BoxDecoration(
+              //               // color: Colors
+              //               // .amber, // لون الخلفية السفلى للـ BottomNavigationBar
+              //               borderRadius: BorderRadius.only(
+              //                 topLeft: Radius.circular(30.r),
+              //                 topRight: Radius.circular(30.r),
+              //               ),
+              //             ),
+              //           )), // decoration: BoxDecoration(
+              //       //   color: Colors.white,
+              //       //   borderRadius: BorderRadius.only(
+              //       //     topLeft: Radius.circular(isLandscape ? 30.r : 20.r),
+              //       //     topRight: Radius.circular(isLandscape ? 30.r : 20.r),
+              //       //   ),
+              //       //   boxShadow: [
+              //       //     BoxShadow(
+              //       //       color: Colors.black.withOpacity(0.1),
+              //       //       blurRadius: 10,
+              //       //     ),
+              //       // ],
+              //       // ),
+              //       // child:
+              BottomNavigationBar(
             selectedLabelStyle: getSemiBoldStyle(
-                color: ColorManager.primary, fontSize: FontSize.s12.dg),
+                color: ColorManager.primary,
+                fontSize: isLandscape
+                    ? screenSize.shortestSide * .034
+                    : screenSize.shortestSide * .031),
             selectedItemColor: ColorManager.primary,
             unselectedLabelStyle: getMediumStyle(
-                color: ColorManager.grey, fontSize: FontSize.s12.dg),
+                color: ColorManager.grey,
+                fontSize: isLandscape
+                    ? screenSize.shortestSide * .03
+                    : screenSize.shortestSide * .029),
             unselectedItemColor: ColorManager.grey,
             onTap: (index) {
               setState(() {
@@ -83,36 +124,42 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             elevation: 0,
             currentIndex: currentIndex,
-            backgroundColor: Colors.transparent,
+            // backgroundColor: ColorManager.blue,
             type: BottomNavigationBarType.fixed,
-            items: const [
+            items: [
               BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home,
-                  size: Sizes.s28,
-                ),
+                icon: Icon(Icons.home,
+                    size: isLandscape
+                        ? screenSize.shortestSide * .07
+                        : screenSize.shortestSide * .07),
                 label: "الصفحة الرئيسية",
               ),
               // BottomNavigationBarItem(
               //     icon: Icon(Icons.local_hospital), label: "العيادات"),
               BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.calendar_month_outlined,
-                  size: Sizes.s28,
-                ),
+                icon: Icon(Icons.calendar_month_outlined,
+                    size: isLandscape
+                        ? screenSize.shortestSide * .07
+                        : screenSize.shortestSide * .07),
                 label: "حجوزاتي",
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.chat_outlined, size: Sizes.s33),
+                  icon: Icon(
+                    Icons.chat_outlined,
+                    size: isLandscape
+                        ? screenSize.shortestSide * .07
+                        : screenSize.shortestSide * .07,
+                  ),
                   label: "شات بوت"),
               BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.person,
-                    size: Sizes.s28,
-                  ),
+                  icon: Icon(Icons.person,
+                      size: isLandscape
+                          ? screenSize.shortestSide * .07
+                          : screenSize.shortestSide * .07),
                   label: "حسابي")
             ],
           ),
+          // ]),
         ));
 
     // bottomNavigationBar: ClipRRect(

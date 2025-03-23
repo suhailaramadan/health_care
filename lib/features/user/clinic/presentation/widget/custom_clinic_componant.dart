@@ -21,14 +21,18 @@ class CustomClinicComponant extends StatelessWidget {
   final ClinicEntity clinicEntity;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => const ClinicDetails(),
             settings: RouteSettings(
                 arguments: ClinicDetailsArg(
-                    imageUrl: clinicEntity.imageUrl,
-                    name: clinicEntity.name))));
+              id: clinicEntity.id,
+              name: clinicEntity.name,
+              imageUrl: clinicEntity.imageUrl,
+            ))));
+        print(
+            "Nahhhhhhhhkkswaaaaaae[;.m]=----> ${clinicEntity.id}, name : ${clinicEntity.name},,  image ${clinicEntity.imageUrl}!");
       },
       child: Directionality(
         textDirection: TextDirection.rtl,
@@ -217,7 +221,9 @@ class CustomClinicComponant extends StatelessWidget {
 }
 
 class ClinicDetailsArg {
+  int id;
   String name;
   String imageUrl;
-  ClinicDetailsArg({required this.imageUrl, required this.name});
+  ClinicDetailsArg(
+      {required this.id, required this.name, required this.imageUrl});
 }

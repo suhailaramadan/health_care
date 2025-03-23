@@ -6,7 +6,7 @@ abstract class ClinicState {}
 class ClinicInitial extends ClinicState {}
 
 class GetClinicsSuccess extends ClinicState {
-  final List<ClinicEntity> clinicEntity;
+  List<ClinicEntity> clinicEntity;
   GetClinicsSuccess(this.clinicEntity);
 }
 

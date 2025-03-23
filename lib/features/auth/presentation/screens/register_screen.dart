@@ -17,6 +17,7 @@ import 'package:graduation_project/core/widgets/wave_clipper.dart';
 import 'package:graduation_project/features/auth/data/models/register/register_request.dart';
 import 'package:graduation_project/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:graduation_project/features/auth/presentation/cubit/auth_states.dart';
+import 'package:graduation_project/features/auth/presentation/screens/login_screen.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -90,6 +91,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.sizeOf(context);
+    final bool isLargeTablet =
+        screenSize.width > 600 && screenSize.width < screenSize.height;
+
+    final bool isLandscape =
+        screenSize.width > screenSize.height || isLargeTablet;
+
     return Container(
         color: ColorManager.white,
         child: Scaffold(
@@ -99,268 +107,282 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: SingleChildScrollView(
                 child: Stack(
                   children: [
-                    Positioned(
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        child: ClipPath(
-                          clipper: WaveClipper(),
-                          child: Container(
-                            height: 200,
-                            decoration: const BoxDecoration(
-                                gradient: LinearGradient(
-                                    colors: [
-                                  Color.fromARGB(255, 4, 87, 169),
-                                  ColorManager.primary,
-                                  ColorManager.primaryColor,
-                                  ColorManager.blue
-                                ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.topRight)),
-                          ),
+                    ClipPath(
+                        clipper: WaveClipper(),
+                        child: Container(
+                          height: isLargeTablet
+                              ? screenSize.height * .35
+                              : isLandscape
+                                  ? screenSize.width * 0.23
+                                  : screenSize.height * 0.27,
+                          // height: screenSize.height * .27,
+                          // height: 200,
+
+                          decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                  colors: [
+                                Color.fromARGB(255, 4, 87, 169),
+                                ColorManager.primary,
+                                ColorManager.primaryColor,
+                                ColorManager.blue
+                              ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.topRight)),
                         )),
-                    Positioned(
-                      child: Directionality(
-                          textDirection: TextDirection.rtl,
-                          child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const SizedBox(
-                                      height: 40,
-                                    ),
-                                    Text(
-                                      "إنشاء حساب",
-                                      style: getBoldStyle(
-                                          color: ColorManager.white,
-                                          fontSize: FontSize.s22),
-                                    ),
-                                    const SizedBox(
-                                      height: 30,
-                                    ),
-                                    GestureDetector(
-                                      onTap: _pickImage,
-                                      child: CircleAvatar(
-                                        backgroundColor: ColorManager.white,
-                                        radius: 60,
-                                        backgroundImage: _profileImage != null
-                                            ? FileImage(_profileImage!)
-                                            : const AssetImage(
-                                                    ImageManager.profile)
-                                                as ImageProvider,
-                                        child: _profileImage == null
-                                            ? const Icon(
-                                                Icons.camera_alt_outlined,
-                                                size: 30,
-                                                color: ColorManager.white)
-                                            : null,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 15,
-                                    ),
-                                    SizedBox(
-                                      child: CustomTextField(
-                                        prefixIcon: const Icon(
-                                          Icons.person,
-                                          color: ColorManager.primary,
+                    Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    // height: 40,
+                                    height: isLargeTablet
+                                        ? screenSize.height * .04
+                                        : isLandscape
+                                            ? screenSize.height * .04
+                                            : screenSize.height * .05,
+                                  ),
+                                  Text(
+                                    "إنشاء حساب",
+                                    style: getBoldStyle(
+                                        color: ColorManager.white,
+                                        fontSize: isLandscape
+                                            ? screenSize.height * .06
+                                            : 20
+                                        //  isLandscape:
+                                        // ? 20.sp
+                                        // : FontSize.s24.sp
                                         ),
-                                        backgroundColor: ColorManager.white,
-                                        hint: "الاسم الأول*",
-                                        textInputType: TextInputType.name,
-                                        validation: Validator.validateFullName,
-                                        controller: _firstNameController,
-                                      ),
+                                  ),
+                                  SizedBox(
+                                    // height: 32,
+                                    height: isLargeTablet
+                                        ? screenSize.height * .05
+                                        : isLandscape
+                                            ? screenSize.width * .019
+                                            : screenSize.height * .04,
+                                  ),
+                                  GestureDetector(
+                                    onTap: _pickImage,
+                                    child: CircleAvatar(
+                                      backgroundColor: ColorManager.white,
+                                      radius: isLargeTablet
+                                          ? screenSize.height * .08
+                                          : isLandscape
+                                              ? screenSize.width * .07
+                                              : screenSize.height * .073,
+                                      // radius: 60,
+                                      backgroundImage: _profileImage != null
+                                          ? FileImage(_profileImage!)
+                                          : const AssetImage(
+                                                  ImageManager.profile)
+                                              as ImageProvider,
+                                      child: _profileImage == null
+                                          ? Icon(Icons.camera_alt_outlined,
+                                              size: screenSize.height * .035,
+                                              color: ColorManager.white)
+                                          : null,
                                     ),
-                                    SizedBox(
-                                      child: CustomTextField(
-                                        prefixIcon: const Icon(
-                                          Icons.person,
-                                          color: ColorManager.primary,
-                                        ),
-                                        backgroundColor: ColorManager.white,
-                                        hint: "الاسم الأخير*",
-                                        textInputType: TextInputType.name,
-                                        validation: Validator.validateFullName,
-                                        controller: _lastNameController,
-                                      ),
-                                    ),
-                                    CustomTextField(
+                                  ),
+                                  SizedBox(
+                                    height: screenSize.height * .023,
+                                  ),
+                                  SizedBox(
+                                    child: CustomTextField(
                                       prefixIcon: const Icon(
-                                        Icons.credit_card,
+                                        Icons.person,
                                         color: ColorManager.primary,
                                       ),
                                       backgroundColor: ColorManager.white,
-                                      hint: "الرقم القومي*",
-                                      validation: Validator.validateNationalId,
-                                      controller: _nationalIdController,
+                                      hint: "الاسم الأول*",
+                                      textInputType: TextInputType.name,
+                                      validation: Validator.validateFullName,
+                                      controller: _firstNameController,
                                     ),
-                                    CustomTextField(
+                                  ),
+                                  SizedBox(
+                                    child: CustomTextField(
                                       prefixIcon: const Icon(
-                                        Icons.phone,
+                                        Icons.person,
                                         color: ColorManager.primary,
                                       ),
                                       backgroundColor: ColorManager.white,
-                                      hint: "رقم الهاتف*",
-                                      validation: Validator.validatePhoneNumber,
-                                      textInputType: TextInputType.phone,
-                                      controller: _phoneController,
+                                      hint: "الاسم الأخير*",
+                                      textInputType: TextInputType.name,
+                                      validation: Validator.validateFullName,
+                                      controller: _lastNameController,
                                     ),
-                                    CustomTextField(
-                                      prefixIcon: const Icon(
-                                        Icons.email,
-                                        color: ColorManager.primary,
+                                  ),
+                                  CustomTextField(
+                                    prefixIcon: const Icon(
+                                      Icons.credit_card,
+                                      color: ColorManager.primary,
+                                    ),
+                                    backgroundColor: ColorManager.white,
+                                    hint: "الرقم القومي*",
+                                    validation: Validator.validateNationalId,
+                                    controller: _nationalIdController,
+                                  ),
+                                  CustomTextField(
+                                    prefixIcon: const Icon(
+                                      Icons.phone,
+                                      color: ColorManager.primary,
+                                    ),
+                                    backgroundColor: ColorManager.white,
+                                    hint: "رقم الهاتف*",
+                                    validation: Validator.validatePhoneNumber,
+                                    textInputType: TextInputType.phone,
+                                    controller: _phoneController,
+                                  ),
+                                  CustomTextField(
+                                    prefixIcon: const Icon(
+                                      Icons.email,
+                                      color: ColorManager.primary,
+                                    ),
+                                    backgroundColor: ColorManager.white,
+                                    hint: "البريد الإلكتروني*",
+                                    validation: Validator.validateEmail,
+                                    textInputType: TextInputType.emailAddress,
+                                    controller: _emailController,
+                                  ),
+                                  CustomTextField(
+                                    prefixIcon: const Icon(
+                                      Icons.lock,
+                                      color: ColorManager.primary,
+                                    ),
+                                    backgroundColor: ColorManager.white,
+                                    hint: "كلمة المرور*",
+                                    validation: Validator.validatePassword,
+                                    isObscured: true,
+                                    controller: _passwordController,
+                                  ),
+                                  CustomTextField(
+                                    prefixIcon: const Icon(
+                                      Icons.lock,
+                                      color: ColorManager.primary,
+                                    ),
+                                    backgroundColor: ColorManager.white,
+                                    hint: "تأكيد كلمة المرور*",
+                                    validation: (value) {
+                                      if (value == null ||
+                                          value.trim().length < 10) {
+                                        return 'يرجى تأكيد كلمة المرور';
+                                      } else if (value !=
+                                          _passwordController.text) {
+                                        return 'كلمة المرور غير متطابقة';
+                                      }
+                                      return null;
+                                    },
+                                    isObscured: true,
+                                    controller: _confirmPasswordController,
+                                  ),
+                                  SizedBox(
+                                    height: Sizes.s10.h,
+                                  ),
+                                  CustomDropDown(
+                                    collageList: collageList,
+                                    onChange: (value) {
+                                      setState(() {
+                                        _selectedCollege = value;
+                                      });
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: Sizes.s12.h,
+                                  ),
+                                  // Center(
+                                  //   child: SizedBox(
+                                  //     width: MediaQuery.sizeOf(context).width *
+                                  //         .82,
+                                  //     child:
+                                  //         BlocListener<AuthCubit, AuthStates>(
+                                  //       listener: (context, state) {
+                                  //         if (state is RegisterLoading) {
+                                  //           return UIUtils.showLoading(context);
+                                  //         } else if (state is RegisterSuccess) {
+                                  //           UIUtils.hideLoading(context);
+                                  //           Navigator.of(context)
+                                  //               .pushReplacementNamed(
+                                  //                   Routes.login);
+                                  //           UIUtils.showMessage(
+                                  //               "تم إنشاء حساب بنجاح");
+                                  //         } else if (state is RegisterError) {
+                                  //           UIUtils.hideLoading(context);
+                                  //           UIUtils.showMessage(state.message);
+                                  //         }
+                                  //       },
+                                  //       child: CustomButton(
+                                  //         label: 'إنشاء حساب',
+                                  //         backgroundColor: ColorManager.primary,
+                                  //         onTap: () {
+                                  //           if (_formKey.currentState!
+                                  //               .validate()) {
+                                  //             BlocProvider.of<AuthCubit>(
+                                  //                     context)
+                                  //                 .register(RegisterRequest(
+                                  //               collage: _selectedCollege!,
+                                  //               firstName:
+                                  //                   _firstNameController.text,
+                                  //               lastName:
+                                  //                   _lastNameController.text,
+                                  //               nationalId: int.parse(
+                                  //                   _nationalIdController.text),
+                                  //               email: _emailController.text,
+                                  //               imageUrl: _profileImage != null
+                                  //                   ? _profileImage!.path
+                                  //                   : ImageManager.profile,
+                                  //               password:
+                                  //                   _passwordController.text,
+                                  //               confirmPassword:
+                                  //                   _passwordController.text,
+                                  //               phoneNumber: int.parse(
+                                  //                   _phoneController.text),
+                                  //             ));
+                                  //           }
+                                  //         },
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'لديك حساب بالفعل؟',
+                                        style: getSemiBoldStyle(
+                                                color: ColorManager.primary)
+                                            .copyWith(fontSize: FontSize.s16),
                                       ),
-                                      backgroundColor: ColorManager.white,
-                                      hint: "البريد الإلكتروني*",
-                                      validation: Validator.validateEmail,
-                                      textInputType: TextInputType.emailAddress,
-                                      controller: _emailController,
-                                    ),
-                                    CustomTextField(
-                                      prefixIcon: const Icon(
-                                        Icons.lock,
-                                        color: ColorManager.primary,
-                                      ),
-                                      backgroundColor: ColorManager.white,
-                                      hint: "كلمة المرور*",
-                                      validation: Validator.validatePassword,
-                                      isObscured: true,
-                                      controller: _passwordController,
-                                    ),
-                                    CustomTextField(
-                                      prefixIcon: const Icon(
-                                        Icons.lock,
-                                        color: ColorManager.primary,
-                                      ),
-                                      backgroundColor: ColorManager.white,
-                                      hint: "تأكيد كلمة المرور*",
-                                      validation: (value) {
-                                        if (value == null ||
-                                            value.trim().length < 10) {
-                                          return 'يرجى تأكيد كلمة المرور';
-                                        } else if (value !=
-                                            _passwordController.text) {
-                                          return 'كلمة المرور غير متطابقة';
-                                        }
-                                        return null;
-                                      },
-                                      isObscured: true,
-                                      controller: _confirmPasswordController,
-                                    ),
-                                    SizedBox(
-                                      height: Sizes.s10.h,
-                                    ),
-                                    CustomDropDown(
-                                      collageList: collageList,
-                                      onChange: (value) {
-                                        setState(() {
-                                          _selectedCollege = value;
-                                        });
-                                      },
-                                    ),
-                                    SizedBox(
-                                      height: Sizes.s12.h,
-                                    ),
-                                    Center(
-                                      child: SizedBox(
-                                        width:
-                                            MediaQuery.sizeOf(context).width *
-                                                .82,
-                                        child:
-                                            BlocListener<AuthCubit, AuthStates>(
-                                          listener: (context, state) {
-                                            if (state is RegisterLoading) {
-                                              return UIUtils.showLoading(
-                                                  context);
-                                            } else if (state
-                                                is RegisterSuccess) {
-                                              UIUtils.hideLoading(context);
-                                              Navigator.of(context)
-                                                  .pushReplacementNamed(
-                                                      Routes.login);
-                                            } else if (state is RegisterError) {
-                                              UIUtils.hideLoading(context);
-                                              UIUtils.showMessage(
-                                                  state.message);
-                                            }
-                                          },
-                                          child: CustomButton(
-                                            label: 'إنشاء حساب',
-                                            backgroundColor:
-                                                ColorManager.primary,
-                                            onTap: () {
-                                              if (_formKey.currentState!
-                                                  .validate()) {
-                                                BlocProvider.of<AuthCubit>(
-                                                        context)
-                                                    .register(RegisterRequest(
-                                                  collage: _selectedCollege!,
-                                                  firstName:
-                                                      _firstNameController.text,
-                                                  lastName:
-                                                      _lastNameController.text,
-                                                  nationalId: int.parse(
-                                                      _nationalIdController
-                                                          .text),
-                                                  email: _emailController.text,
-                                                  imageUrl: _profileImage !=
-                                                          null
-                                                      ? _profileImage!.path
-                                                      : ImageManager.profile,
-                                                  password:
-                                                      _passwordController.text,
-                                                  confirmPassword:
-                                                      _passwordController.text,
-                                                  phoneNumber: int.parse(
-                                                      _phoneController.text),
-                                                ));
-                                              }
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'لديك حساب بالفعل؟',
-                                          style: getSemiBoldStyle(
-                                                  color: ColorManager.primary)
-                                              .copyWith(fontSize: FontSize.s16),
-                                        ),
-                                        SizedBox(
-                                          width: Sizes.s8.w,
-                                        ),
-                                        InkWell(
-                                          splashColor: ColorManager.blue,
-                                          onTap: () {
-                                            Navigator.of(context)
-                                                .pushReplacementNamed(
-                                                    Routes.login);
-                                          },
-                                          child: Text(
-                                            'تسجيل دخول',
-                                            style: getBoldStyle(
-                                                color: ColorManager.textColor,
-                                                fontSize: FontSize.s15),
-                                            // Color.fromARGB(224, 17, 85, 105))
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                  ]))),
-                    )
+                                      // SizedBox(
+                                      //   width: Sizes.s8.w,
+                                      // ),
+                                      // InkWell(
+                                      //   splashColor: ColorManager.blue,
+                                      //   onTap: () {
+                                      //     Navigator.of(context)
+                                      //         .pushReplacementNamed(
+                                      //       Routes.login,
+                                      //     );
+                                      //   },
+                                      //   child: Text(
+                                      //     'تسجيل دخول',
+                                      //     style: getBoldStyle(
+                                      //         color: ColorManager.textColor,
+                                      //         fontSize: FontSize.s15),
+                                      //     // Color.fromARGB(224, 17, 85, 105))
+                                      //   ),
+                                      // ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                ])))
                   ],
                 ),
               ),
