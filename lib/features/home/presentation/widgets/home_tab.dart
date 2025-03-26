@@ -56,6 +56,7 @@ class _HomeTabState extends State<HomeTab> {
     super.initState();
     _startImageSwitching();
     _doctorsCubit = serviceLocator.get<DoctorsCubit>()..getDoctors();
+    // context.read<DoctorsCubit>().getDoctors();
     // _doctorsCubit.getDoctors();.
     // _loadUserData();
     // _clinicCubit = serviceLocator.get<ClinicCubit>()..getClinics();
@@ -99,67 +100,67 @@ class _HomeTabState extends State<HomeTab> {
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Scaffold(
           backgroundColor: ColorManager.white,
-          // appBar:
-          // PreferredSize(
-          //     preferredSize: Size.fromHeight(appBarHeight),
-          //     // child: AppBar(
-          //     //     backgroundColor: ColorManager.babyGreen,
-          //     //     elevation: 0,
-          //     //     surfaceTintColor: ColorManager.transparent,
-          //     //     automaticallyImplyLeading: false,
-          //     // widget.automaticallyImplyLeading ?? false,
-          //     child: SizedBox(
-          //       height: appBarHeight,
-          //       child: Row(children: [
-          //         CircleAvatar(
-          //             radius: avatarRadius,
-          //             backgroundColor: ColorManager.transparent,
-          //             backgroundImage: const AssetImage(ImageManager.profile)
-          //             // child: Image.asset("assets/images/doctor_image.jpg",
-          //             // fit: BoxFit.cover
-          //             // )
-          //             ),
+          appBar:
+              // PreferredSize(
+              //     preferredSize: Size.fromHeight(appBarHeight),
+              //     // child: AppBar(
+              //     //     backgroundColor: ColorManager.babyGreen,
+              //     //     elevation: 0,
+              //     //     surfaceTintColor: ColorManager.transparent,
+              //     //     automaticallyImplyLeading: false,
+              //     // widget.automaticallyImplyLeading ?? false,
+              //     child: SizedBox(
+              //       height: appBarHeight,
+              //       child: Row(children: [
+              //         CircleAvatar(
+              //             radius: avatarRadius,
+              //             backgroundColor: ColorManager.transparent,
+              //             backgroundImage: const AssetImage(ImageManager.profile)
+              //             // child: Image.asset("assets/images/doctor_image.jpg",
+              //             // fit: BoxFit.cover
+              //             // )
+              //             ),
 
-          //         const SizedBox(
-          //           width: Sizes.s12,
-          //         ),
-          //         Expanded(
-          //           child: Text(
-          //             "أهلاً, سهيله",
-          //             style: getSemiBoldStyle(
-          //                 color: const Color.fromARGB(255, 65, 111, 156),
-          //                 fontSize: FontSize.s13.sp),
-          //           ),
-          //         ),
-          //         // const Icon(
-          //         //   Icons.waving_hand,
-          //         //   color: Colors.amber,
-          //         // ),
-          //         const Spacer(),
+              //         const SizedBox(
+              //           width: Sizes.s12,
+              //         ),
+              //         Expanded(
+              //           child: Text(
+              //             "أهلاً, سهيله",
+              //             style: getSemiBoldStyle(
+              //                 color: const Color.fromARGB(255, 65, 111, 156),
+              //                 fontSize: FontSize.s13.sp),
+              //           ),
+              //         ),
+              //         // const Icon(
+              //         //   Icons.waving_hand,
+              //         //   color: Colors.amber,
+              //         // ),
+              //         const Spacer(),
 
-          //         IconButton(
-          //             onPressed: () {},
-          //             icon: Badge.count(
-          //               count: 2,
-          //               child: Icon(
-          //                 Icons.notifications_none,
-          //                 // color: ColorManager.white,
-          //                 size: isLandscape ? 40 : 30,
-          //               ),
-          //             )),
-          //         const SizedBox(
-          //           width: 10,
-          //         )
-          //         // ]
-          //         //   ],
-          //         // ))
-          //       ]),
-          //     )),
-          // ),
-          //     PreferredSize(
-          //   preferredSize: Size.fromHeight(appBarHeight),
-          //   child: SizedBox(height: appBarHeight, child: HomeScreenAppBar()),
-          // ),
+              //         IconButton(
+              //             onPressed: () {},
+              //             icon: Badge.count(
+              //               count: 2,
+              //               child: Icon(
+              //                 Icons.notifications_none,
+              //                 // color: ColorManager.white,
+              //                 size: isLandscape ? 40 : 30,
+              //               ),
+              //             )),
+              //         const SizedBox(
+              //           width: 10,
+              //         )
+              //         // ]
+              //         //   ],
+              //         // ))
+              //       ]),
+              //     )),
+              // ),
+              PreferredSize(
+            preferredSize: Size.fromHeight(appBarHeight),
+            child: SizedBox(height: appBarHeight, child: HomeScreenAppBar()),
+          ),
           body: SingleChildScrollView(
             child: Column(
               children: [
@@ -240,18 +241,18 @@ class _HomeTabState extends State<HomeTab> {
                 CustomSectionBar(
                   text: "أطباؤنا",
                   onViewAllClicked: () {
-                    Navigator.of(context).pushReplacementNamed(Routes.doctor);
+                    Navigator.of(context).pushNamed(Routes.doctor);
                   },
                 ),
                 SizedBox(
                   height: isLandscape
                       ? screenSize.width * .34
-                      : screenSize.height * .32,
+                      // : screenSize.height * .32,
+                      : screenSize.height * .4,
                   child: BlocProvider(
-                    create: (context) => _doctorsCubit..getDoctors(),
+                    create: (context) => _doctorsCubit,
                     child: BlocBuilder<DoctorsCubit, DoctorsStates>(
                         builder: (context, state) {
-                      print("llllllllllooooooooooooooooogsdyning");
                       if (state is GetDoctorsLoading) {
                         return const LoadingIndicator();
                       } else if (state is GetDoctorsError) {
@@ -262,16 +263,18 @@ class _HomeTabState extends State<HomeTab> {
                         return Directionality(
                           textDirection: TextDirection.rtl,
                           child: ListView.builder(
+                            shrinkWrap: true,
+                            // physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (_, index) => DoctorItem(
-                                doctorEntity: state.doctorEntity[index]
-                                // state.doctorEntity.take(5).toList()[index]
-                                ),
+                              doctorEntity: state.doctorEntity[index],
+                              // .take(5).toList()[index]
+                            ),
                             scrollDirection: Axis.horizontal,
                             itemCount: state.doctorEntity.length,
                           ),
                         );
                       }
-                      return Text("أظن حدث حطا ما ");
+                      return Text("حدث خطأ ما يرجى المحاولة مرة أخرى");
                     }),
                   ),
                 )

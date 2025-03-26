@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:graduation_project/features/user/clinic/domain/entities/clinic_entity.dart';
 
 abstract class ClinicState {}

@@ -7,6 +7,8 @@ class ApiConstants {
       "Authentication/RegisterPatient";
   static const String loginPatientEndPoint = "Authentication/login";
   static const String profilePatientEndPoint = 'Patient';
+  static const String bookingPatientEndPoint = "Booking/PatientBookings";
+  static const String appointmentDoctorByIdEndPoint = "Appointment";
 }
 
 class CacheConstants {

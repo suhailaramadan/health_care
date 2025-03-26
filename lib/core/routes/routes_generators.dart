@@ -7,6 +7,7 @@ import 'package:graduation_project/features/auth/presentation/screens/login_scre
 import 'package:graduation_project/features/auth/presentation/screens/register_screen.dart';
 import 'package:graduation_project/features/home/presentation/screens/doctor_home_screen.dart';
 import 'package:graduation_project/features/home/presentation/screens/patient_home_screen.dart';
+import 'package:graduation_project/features/user/booking/presentation/screen/booking_screen.dart';
 import 'package:graduation_project/features/user/clinic/presentation/screen/clinic_screen.dart';
 import 'package:graduation_project/features/user/clinic/presentation/widget/clinic_details.dart';
 import 'package:graduation_project/features/doctor/presentation/screen/doctor_screen.dart';
@@ -24,12 +25,12 @@ class RouteGenerator {
         return _buildRoute(const DoctorHomeScreen(), isIOS);
       case Routes.onBoarding:
         return _buildRoute(const OnBoardingScreen(), isIOS);
-      // case Routes.login:
-      //   return _buildRoute(
-      //       const LoginScreen(
-      //         userType: 'User',
-      //       ),
-      //       isIOS);
+      case Routes.login:
+        return _buildRoute(
+            const LoginScreen(
+              userType: 'User',
+            ),
+            isIOS);
       case Routes.doctor:
         return _buildRoute(const DoctorsScreen(), isIOS);
       case Routes.chooseUser:
@@ -40,11 +41,15 @@ class RouteGenerator {
         return _buildRoute(const ClinicScreen(), isIOS);
       case Routes.profile:
         return _buildRoute(const ProfileScreen(), isIOS);
+      case Routes.booking:
+        return _buildRoute(const BookingScreen(), isIOS);
       case Routes.clinicDetails:
         return _buildRoute(const ClinicDetails(), isIOS);
       case Routes.doctorsDetails:
         return _buildRoute(
-          const DoctorDetails(),
+          const DoctorDetails(
+            doctorId: '',
+          ),
           isIOS,
         );
       default:

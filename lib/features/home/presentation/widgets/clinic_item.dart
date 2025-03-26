@@ -40,7 +40,7 @@ class ClinicItem extends StatelessWidget {
             ))));
 
         print(
-            "Nahhhhhhhhkkswaaaaaae[;.m]=----> ${clinicEntity.id}, name : ${clinicEntity.name},,  image ${clinicEntity.imageUrl}!");
+            "Nahhhhhhhhkkswaaaaaae--------> ${clinicEntity.id}, name : ${clinicEntity.name},,  image ${clinicEntity.imageUrl}!");
       },
       // )
 

@@ -32,7 +32,6 @@ class DoctorApiRemoteDataSource implements DoctorRemoteDataSource {
       // "${ApiConstants.baseUrl}Doctor/by-clinic/",
       // queryParameters: {'clinicId': clinicId});
       // await _dio.get("${ApiConstants.baseUrl}Doctor/by-clinic/$clinicId");
-      print("APiREsponseId--------------${response.data}");
       return DoctorResponse.fromJson(response.data);
     } catch (exception) {
       String? message;

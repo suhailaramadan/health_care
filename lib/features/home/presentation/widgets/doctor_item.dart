@@ -64,13 +64,15 @@ class DoctorItem extends StatelessWidget {
       // padding: const EdgeInsets.symmetric(horizontal: 10),
       // margin: const EdgeInsets.all(10),
 
-      height: 350,
+      height: 400,
       // decoration: const BoxDecoration(
       //     // color: Color.fromARGB(255, 79, 136, 198),
       //     borderRadius: BorderRadius.all(Radius.circular(15))),
       child: InkWell(
         onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const DoctorDetails(),
+            builder: (context) => DoctorDetails(
+                  doctorId: doctorEntity.id ?? '',
+                ),
             settings: RouteSettings(
                 arguments: DoctorArg(
                     doctorEntity.clinicId,
@@ -82,64 +84,106 @@ class DoctorItem extends StatelessWidget {
                     doctorEntity.specialty,
                     doctorEntity.imageUrl)))),
         child: Directionality(
-          textDirection: TextDirection.rtl,
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 8),
-            height: screenSize.height * 0.7,
-            width: screenSize.width * .5,
-            decoration: BoxDecoration(
-              color: ColorManager.blue,
-              border: Border.all(
-                color: ColorManager.primary.withOpacity(0.3),
-                width: 2,
+            textDirection: TextDirection.rtl,
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
               ),
-              borderRadius: BorderRadius.circular(16.r),
-            ),
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: CachedNetworkImage(
-                    imageUrl:
-                        "${ApiConstants.imageBaseUrl}${doctorEntity.imageUrl}",
-                    height: isLandscape
-                        ? screenSize.width * .16
-                        : screenSize.height * .23,
-                    width: 350,
-                    fit: BoxFit.fitHeight,
+              elevation: 3,
+              child: Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.vertical(
+                        top: const Radius.circular(12)),
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          "${ApiConstants.imageBaseUrl}${doctorEntity.imageUrl}",
+                      height: 150,
+                      // width: double.infinity,
+                      width: 200,
+                      fit: BoxFit.fill,
+                      placeholder: (context, url) =>
+                          const Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) =>
+                          Image.asset("assets/images/doctor_image.png"),
+                    ),
                   ),
-                ),
-                // Image.asset(
-                //   "assets/images/doctor_image.png",
-                //   height:
-                //       isLandscape ? screenSize.width * .16 : screenSize.height * .2,
-                //   // width:
-                //   //     isLandscape ? screenSize.height * . : screenSize.width * .34,
-                // ),
-                // SizedBox(
-                //   height: 15,
-                // ),
-                Text(
-                  "${doctorEntity.firstName ?? ''} ${doctorEntity.lastName}",
-                  style: getSemiBoldStyle(
-                      color: ColorManager.primary, fontSize: 18.sp),
-                ),
-                // const SizedBox(
-                //   height: 5,
-                // ),
-                Text(
-                  doctorEntity.specialty ?? '',
-                  style: getMediumStyle(
-                      color: ColorManager.primary, fontSize: FontSize.s12),
-                ),
-                // const SizedBox(
-                //   height: 10,
-                // ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      children: [
+                        Text(
+                          "${doctorEntity.firstName} ${doctorEntity.lastName}",
+                          style:
+                              getSemiBoldStyle(color: ColorManager.textColor),
+                        ),
+                        Text(
+                          "${doctorEntity.specialty}",
+                          style: getMediumStyle(color: ColorManager.grey),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )
+            // Container(
+            //   margin: EdgeInsets.symmetric(horizontal: 8),
+            //   height: screenSize.height * 0.7,
+            //   width: screenSize.width * .5,
+            //   decoration: BoxDecoration(
+            //     color: ColorManager.blue,
+            //     border: Border.all(
+            //       color: ColorManager.primary.withOpacity(0.3),
+            //       width: 2,
+            //     ),
+            //     borderRadius: BorderRadius.circular(16.r),
+            //   ),
+            //   child: Column(
+            //     // mainAxisAlignment: MainAxisAlignment.center,
+            //     children: [
+            //       ClipRRect(
+            //         borderRadius: BorderRadius.circular(20),
+            //         child: CachedNetworkImage(
+            //           imageUrl:
+            //               "${ApiConstants.imageBaseUrl}${doctorEntity.imageUrl}",
+            //           height: isLandscape
+            //               ? screenSize.width * .16
+            //               : screenSize.height * .23,
+            //           width: 350,
+            //           fit: BoxFit.fitHeight,
+            //         ),
+            //       ),
+            //       // Image.asset(
+            //       //   "assets/images/doctor_image.png",
+            //       //   height:
+            //       //       isLandscape ? screenSize.width * .16 : screenSize.height * .2,
+            //       //   // width:
+            //       //   //     isLandscape ? screenSize.height * . : screenSize.width * .34,
+            //       // ),
+            //       // SizedBox(
+            //       //   height: 15,
+            //       // ),
+            //       Text(
+            //         "${doctorEntity.firstName ?? ''} ${doctorEntity.lastName}",
+            //         style: getSemiBoldStyle(
+            //             color: ColorManager.primary, fontSize: 18.sp),
+            //       ),
+            //       // const SizedBox(
+            //       //   height: 5,
+            //       // ),
+            //       Text(
+            //         doctorEntity.specialty ?? '',
+            //         style: getMediumStyle(
+            //             color: ColorManager.primary, fontSize: FontSize.s12),
+            //       ),
+            //       // const SizedBox(
+            //       //   height: 10,
+            //       // ),
+            //     ],
+            //   ),
+            // ),
             ),
-          ),
-        ),
       ),
     );
   }

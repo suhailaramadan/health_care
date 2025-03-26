@@ -30,9 +30,10 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("أطباؤنا"),
+        centerTitle: true,
       ),
       body: BlocProvider.value(
-        value: doctorsCubit,
+        value: doctorsCubit..getDoctors(),
         // (context) => _doctorsCubit,
         child:
             BlocBuilder<DoctorsCubit, DoctorsStates>(builder: (context, state) {
@@ -50,7 +51,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 8,
-                  childAspectRatio: 5 / 7,
+                  childAspectRatio: 0.74,
                   crossAxisSpacing: 6),
               itemBuilder: (_, index) => DoctorItem(
                 doctorEntity: state.doctorEntity[index],

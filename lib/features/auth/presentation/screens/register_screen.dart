@@ -292,60 +292,60 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   SizedBox(
                                     height: Sizes.s12.h,
                                   ),
-                                  // Center(
-                                  //   child: SizedBox(
-                                  //     width: MediaQuery.sizeOf(context).width *
-                                  //         .82,
-                                  //     child:
-                                  //         BlocListener<AuthCubit, AuthStates>(
-                                  //       listener: (context, state) {
-                                  //         if (state is RegisterLoading) {
-                                  //           return UIUtils.showLoading(context);
-                                  //         } else if (state is RegisterSuccess) {
-                                  //           UIUtils.hideLoading(context);
-                                  //           Navigator.of(context)
-                                  //               .pushReplacementNamed(
-                                  //                   Routes.login);
-                                  //           UIUtils.showMessage(
-                                  //               "تم إنشاء حساب بنجاح");
-                                  //         } else if (state is RegisterError) {
-                                  //           UIUtils.hideLoading(context);
-                                  //           UIUtils.showMessage(state.message);
-                                  //         }
-                                  //       },
-                                  //       child: CustomButton(
-                                  //         label: 'إنشاء حساب',
-                                  //         backgroundColor: ColorManager.primary,
-                                  //         onTap: () {
-                                  //           if (_formKey.currentState!
-                                  //               .validate()) {
-                                  //             BlocProvider.of<AuthCubit>(
-                                  //                     context)
-                                  //                 .register(RegisterRequest(
-                                  //               collage: _selectedCollege!,
-                                  //               firstName:
-                                  //                   _firstNameController.text,
-                                  //               lastName:
-                                  //                   _lastNameController.text,
-                                  //               nationalId: int.parse(
-                                  //                   _nationalIdController.text),
-                                  //               email: _emailController.text,
-                                  //               imageUrl: _profileImage != null
-                                  //                   ? _profileImage!.path
-                                  //                   : ImageManager.profile,
-                                  //               password:
-                                  //                   _passwordController.text,
-                                  //               confirmPassword:
-                                  //                   _passwordController.text,
-                                  //               phoneNumber: int.parse(
-                                  //                   _phoneController.text),
-                                  //             ));
-                                  //           }
-                                  //         },
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // ),
+                                  Center(
+                                    child: SizedBox(
+                                      width: MediaQuery.sizeOf(context).width *
+                                          .82,
+                                      child:
+                                          BlocListener<AuthCubit, AuthStates>(
+                                        listener: (context, state) {
+                                          if (state is RegisterLoading) {
+                                            return UIUtils.showLoading(context);
+                                          } else if (state is RegisterSuccess) {
+                                            UIUtils.hideLoading(context);
+                                            Navigator.of(context)
+                                                .pushReplacementNamed(
+                                                    Routes.login);
+                                            UIUtils.showMessage(
+                                                "تم إنشاء حساب بنجاح");
+                                          } else if (state is RegisterError) {
+                                            UIUtils.hideLoading(context);
+                                            UIUtils.showMessage(state.message);
+                                          }
+                                        },
+                                        child: CustomButton(
+                                          label: 'إنشاء حساب',
+                                          backgroundColor: ColorManager.primary,
+                                          onTap: () {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              BlocProvider.of<AuthCubit>(
+                                                      context)
+                                                  .register(RegisterRequest(
+                                                collage: _selectedCollege!,
+                                                firstName:
+                                                    _firstNameController.text,
+                                                lastName:
+                                                    _lastNameController.text,
+                                                nationalId: int.parse(
+                                                    _nationalIdController.text),
+                                                email: _emailController.text,
+                                                imageUrl: _profileImage != null
+                                                    ? _profileImage!.path
+                                                    : ImageManager.profile,
+                                                password:
+                                                    _passwordController.text,
+                                                confirmPassword:
+                                                    _passwordController.text,
+                                                phoneNumber: int.parse(
+                                                    _phoneController.text),
+                                              ));
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                   const SizedBox(
                                     height: 8,
                                   ),
@@ -358,25 +358,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                 color: ColorManager.primary)
                                             .copyWith(fontSize: FontSize.s16),
                                       ),
-                                      // SizedBox(
-                                      //   width: Sizes.s8.w,
-                                      // ),
-                                      // InkWell(
-                                      //   splashColor: ColorManager.blue,
-                                      //   onTap: () {
-                                      //     Navigator.of(context)
-                                      //         .pushReplacementNamed(
-                                      //       Routes.login,
-                                      //     );
-                                      //   },
-                                      //   child: Text(
-                                      //     'تسجيل دخول',
-                                      //     style: getBoldStyle(
-                                      //         color: ColorManager.textColor,
-                                      //         fontSize: FontSize.s15),
-                                      //     // Color.fromARGB(224, 17, 85, 105))
-                                      //   ),
-                                      // ),
+                                      SizedBox(
+                                        width: Sizes.s8.w,
+                                      ),
+                                      InkWell(
+                                        splashColor: ColorManager.blue,
+                                        onTap: () {
+                                          Navigator.of(context)
+                                              .pushReplacementNamed(
+                                            Routes.login,
+                                          );
+                                        },
+                                        child: Text(
+                                          'تسجيل دخول',
+                                          style: getBoldStyle(
+                                              color: ColorManager.textColor,
+                                              fontSize: FontSize.s15),
+                                          // Color.fromARGB(224, 17, 85, 105))
+                                        ),
+                                      ),
                                     ],
                                   ),
                                   const SizedBox(

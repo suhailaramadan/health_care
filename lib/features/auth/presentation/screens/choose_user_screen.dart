@@ -23,11 +23,11 @@ class _ChooseUserScreenState extends State<ChooseUserScreen> {
       selectedRole = role;
     });
     Future.delayed(const Duration(milliseconds: 600), () {
-      // Navigator.of(context).push(
-      //   MaterialPageRoute(
-      //     builder: (context) => LoginScreen(userType: role),
-      //   ),
-      // );
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => LoginScreen(userType: role),
+        ),
+      );
     });
   }
 

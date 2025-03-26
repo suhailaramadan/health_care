@@ -43,7 +43,7 @@ class DoctorsCubit extends Cubit<DoctorsStates> {
         print("print errrrror messahgen-------> ${failure.message}");
       emit(GetDoctorsError(failure.message));
     }, (doctors) {
-      if (!isClosed) print("Succcccccccccccc-.,,,>>>> ${doctors.length}");
+      if (!isClosed) print("Succcccccccccccc---->>>> ${doctors.length}");
       emit(GetDoctorsSuccess(doctors));
     });
   }
