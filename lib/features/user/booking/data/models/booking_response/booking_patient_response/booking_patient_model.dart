@@ -1,6 +1,6 @@
-import 'package:intl/intl.dart';
+import 'package:graduation_project/features/user/booking/data/data_source/remote/booking/booking_api_remote_data_source.dart';
 
-class Datum {
+class BookingPatientModel {
   int? id;
   String? date;
   String? time;
@@ -10,7 +10,7 @@ class Datum {
   String? doctorLastName;
   String? clinicName;
 
-  Datum({
+  BookingPatientModel({
     this.id,
     this.date,
     this.time,
@@ -21,7 +21,8 @@ class Datum {
     this.clinicName,
   });
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory BookingPatientModel.fromJson(Map<String, dynamic> json) =>
+      BookingPatientModel(
         id: json['id'] as int?,
         date: json['date'] as String?,
         time: json['time'] as String?,
@@ -42,16 +43,4 @@ class Datum {
         'doctorLastName': doctorLastName,
         'clinicName': clinicName,
       };
-
-  bool get isUpcoming {
-    if (date == null) return false;
-    DateTime bookingData = DateFormat('yyyy-MM--dd').parse(date!);
-    return bookingData.isAfter(DateTime.now());
-  }
-
-  bool get isCancellable {
-    if (date == null) return false;
-    DateTime bookingDate = DateFormat('yyyy-MM--dd').parse(date!);
-    return bookingDate.difference(DateTime.now()).inHours >= 24;
-  }
 }

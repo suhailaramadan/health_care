@@ -22,11 +22,11 @@ class ProfileRepositoryImpl extends ProfileRepository {
     try {
       final token = await localDataSource.getToken();
 
-      // if (token == null || token.isEmpty) {
-      //   return const Left(
-      //       Failure("لم يتم العثور علي رمز التوثيق , يرجى تسجيل الدخول"));
-      // }
-      final response = await profileRemoteDataSource.getPatientProfile(token!);
+      if (token == null || token.isEmpty) {
+        return const Left(
+            Failure("لم يتم العثور علي رمز التوثيق , يرجى تسجيل الدخول"));
+      }
+      final response = await profileRemoteDataSource.getPatientProfile(token);
       if (response.data == null) {
         return const Left(Failure("لم يتم العثور على بيانات المستخدم"));
       }
@@ -37,6 +37,16 @@ class ProfileRepositoryImpl extends ProfileRepository {
       return Right(response.data!.toEntity);
     } on RemoteException catch (exception) {
       return Left(Failure(exception.message));
+    }
+  }
+
+  @override
+  Future<ProfileEntity?> getCachedPatientProfile() async {
+    try {
+      final profile = await localDataSource.getPatientProfile();
+      return profile;
+    } catch (e) {
+      return null;
     }
   }
 }

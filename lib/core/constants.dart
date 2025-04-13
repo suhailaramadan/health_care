@@ -9,12 +9,14 @@ class ApiConstants {
   static const String profilePatientEndPoint = 'Patient';
   static const String bookingPatientEndPoint = "Booking/PatientBookings";
   static const String appointmentDoctorByIdEndPoint = "Appointment";
+  static const String bookingAppointmentEndPoint = 'Booking';
 }
 
 class CacheConstants {
   static const tokenKey = "token";
   static const roleKey = 'role';
   static const firstNameKey = 'firstName';
+  static const profileKey = 'profileKey';
   static const lastNameKey = 'lastName';
   static const userImageKey = 'userImage';
 }

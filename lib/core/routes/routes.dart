@@ -22,7 +22,7 @@ class Routes {
   static const clinic = ClinicScreen.clinic;
   static const doctor = DoctorsScreen.doctor;
   static const profile = ProfileScreen.profile;
-  static const booking = BookingScreen.booking;
+  static const booking = BookingTab.booking;
   static const clinicDetails = ClinicDetails.clinicDetails;
   static const doctorsDetails = DoctorDetails.dectorDetails;
 }

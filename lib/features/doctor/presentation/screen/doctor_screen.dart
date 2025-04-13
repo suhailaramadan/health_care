@@ -47,11 +47,11 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
             );
           } else if (state is GetDoctorsSuccess) {
             return GridView.builder(
-              padding: const EdgeInsets.all(1),
+              // padding: const EdgeInsets.all(1),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  mainAxisSpacing: 8,
-                  childAspectRatio: 0.74,
+                  mainAxisSpacing: 6,
+                  childAspectRatio: 0.8,
                   crossAxisSpacing: 6),
               itemBuilder: (_, index) => DoctorItem(
                 doctorEntity: state.doctorEntity[index],

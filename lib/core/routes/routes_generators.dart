@@ -42,7 +42,7 @@ class RouteGenerator {
       case Routes.profile:
         return _buildRoute(const ProfileScreen(), isIOS);
       case Routes.booking:
-        return _buildRoute(const BookingScreen(), isIOS);
+        return _buildRoute(const BookingTab(), isIOS);
       case Routes.clinicDetails:
         return _buildRoute(const ClinicDetails(), isIOS);
       case Routes.doctorsDetails:

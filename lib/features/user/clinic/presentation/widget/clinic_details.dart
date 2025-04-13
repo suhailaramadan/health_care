@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_project/core/constants.dart';
@@ -26,33 +28,7 @@ class ClinicDetails extends StatefulWidget {
 
 class _ClinicDetailsState extends State<ClinicDetails> {
   late ClinicDetailsArg args;
-  // late DoctorArg doctorArg;
   late DoctorsCubit doctorsCubit;
-
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   final routeArgs = ModalRoute.of(context)?.settings.arguments;
-  // if (args != null) {
-  //   args = ModalRoute.of(context)?.settings.arguments as ClinicDetailsArg?;
-  // if (args != null) {
-  //   // _doctorsCubit = serviceLocator.get<DoctorsCubit>();
-
-  // _doctorsCubit.getDoctorsByClinicId(args!.id);
-  // }
-
-  //   if (routeArgs != null && routeArgs is ClinicDetailsArg) {
-  //     setState(() {
-  //       args = routeArgs;
-  //     });
-  //     //   // final clinicId = args.id.toString();
-  //     //   _doctorsCubit = serviceLocator.get<DoctorsCubit>();
-  //     //   print("--------------------------------------> ${args!.id}");
-  //     //   _doctorsCubit.getDoctorsByClinicId(args!.id);
-
-  //     _doctorsCubit.getDoctorsByClinicId(args!.id);
-  //   }
-  // }
   @override
   void initState() {
     super.initState();
@@ -72,48 +48,77 @@ class _ClinicDetailsState extends State<ClinicDetails> {
 
   @override
   Widget build(BuildContext context) {
-    // print("---------------------> ${args.name}");
-    // final args = ModalRoute.of(context)?.settings.arguments as ClinicDetailsArg;
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        body: Center(
-          child: SizedBox(
-            // height: MediaQuery.sizeOf(context).height,
-            // decoration: const BoxDecoration(
-            //     color: ColorManager.blue,
-            //     borderRadius: BorderRadius.only(
-            //         topLeft: Radius.circular(70),
-            //         topRight: Radius.circular(70))),
+    return Scaffold(
+      backgroundColor: ColorManager.primary,
+      body: ListView(
+        children: [
+          // const SizedBox(
+          //   height: 15,
+          // ),
+          Container(
+            height: 440,
+            // width: double.infinity,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: CachedNetworkImageProvider(
+              "${ApiConstants.imageBaseUrl}${args.imageUrl}",
+              errorListener: (p0) =>
+                  Image.asset("assets/images/default_clinic.png"),
+            )
+                    // CachedNetworkImage(
+                    // imageBuilder: (context, imageProvider) => ,
+                    // imageUrl: "${ApiConstants.imageBaseUrl}${args.imageUrl}",
+                    // width: double.infinity,
+                    // fit: BoxFit.fill,
+                    // placeholder: (context, url) =>
+                    //     const CircularProgressIndicator(),
+                    // errorWidget: (context, url, error) =>
+                    //     Image.asset("assets/images/default_clinic.png")
+                    )),
+          ),
+          // IconButton(
+          //   icon: Icon(
+          //     Icons.arrow_back_ios_rounded,
+          //     color: Colors.black,
+          //   ),
+          //   onPressed: () => Navigator.pop(context),
+          // ),
+          // const SizedBox(
+          //   height: 5,
+          // ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            // surfaceTintColor: ColorManager.white,
+            // semanticContainer: false,
+            decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 254, 248, 248),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20))),
+
             child: Column(
               children: [
-                // const SizedBox(
-                //   height: 15,
-                // ),
-                Center(
-                  child: CachedNetworkImage(
-                      imageUrl: "${ApiConstants.imageBaseUrl}${args.imageUrl}",
-                      height: 400,
-                      width: double.infinity,
-                      fit: BoxFit.fill,
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) =>
-                          Image.asset("assets/images/default_clinic.png")),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
                 Text(
                   args.name,
-                  style: getBoldStyle(
-                      color: ColorManager.primary, fontSize: FontSize.s22.sp),
+                  style: getSemiBoldStyle(
+                      color: const Color.fromARGB(255, 26, 69, 111),
+                      fontSize: FontSize.s18.sp),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                // const Text("نقدم لكم أفضل الخدمات"),
+                // const SizedBox(
+                //   height: 20,
+                // ),
+                // // const Text("نقدم لكم أفضل الخدمات"),
 
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Text(
+                    "أطباء العيادة",
+                    style: getMediumStyle(color: ColorManager.grey),
+                  ),
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -134,7 +139,8 @@ class _ClinicDetailsState extends State<ClinicDetails> {
                         );
                       } else if (state is GetDoctorsSuccess) {
                         // print("SucccccccMessage${state.doctorEntity}");
-                        return Expanded(
+                        return SizedBox(
+                          height: 250,
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: state.doctorEntity.length,
@@ -147,11 +153,11 @@ class _ClinicDetailsState extends State<ClinicDetails> {
                       }
                     },
                   ),
-                )
+                ),
               ],
             ),
-          ),
-        ),
+          )
+        ],
       ),
     );
   }

@@ -38,4 +38,19 @@ class ClinicApiRemoteDataSource implements ClinicRemoteDataSource {
       throw RemoteException(message ?? "تعذر تحميل العيادات");
     }
   }
+
+  @override
+  Future<ClinicsResponse> search(String query) async {
+    try {
+      final response = await _dio.get("${ApiConstants.clinicEndPoint}/search",
+          queryParameters: {'q': query});
+      return ClinicsResponse.fromJson(response.data);
+    } catch (exception) {
+      String? message;
+      if (exception is DioException) {
+        message = exception.response?.data['message'];
+      }
+      throw RemoteException(message ?? "تعذر تحميل العيادات");
+    }
+  }
 }

@@ -5,4 +5,5 @@ import 'package:graduation_project/features/profile/domain/entities/profile_enti
 
 abstract class ProfileRepository {
   Future<Either<Failure, ProfileEntity>> getPatientProfile();
+  Future<ProfileEntity?> getCachedPatientProfile();
 }

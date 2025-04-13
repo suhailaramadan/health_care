@@ -29,136 +29,144 @@ class HomeScreenAppBar extends StatefulWidget {
 }
 
 class _HomeScreenAppBarState extends State<HomeScreenAppBar> {
-  // late final AuthSharedPrefLocalDataSource localSharedPref;
-  // String name = '';
-  // String email = '';
-  late ProfileCubit profileCubit;
-  @override
-  void initState() {
-    profileCubit = serviceLocator.get<ProfileCubit>();
-    // _loadUserData();
-    // profileCubit.getPatientProfile();
-    super.initState();
+  Widget _buildAppBarSkeleton() {
+    return SafeArea(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(
+          children: [
+            const CircleAvatar(
+              backgroundImage: AssetImage("assets/images/doctor_image.png"),
+              radius: 40,
+            ),
+            const SizedBox(width: 10),
+            Text(
+              "طالب",
+              style: getSemiBoldStyle(
+                color: const Color.fromARGB(255, 65, 111, 156),
+                fontSize: FontSize.s15.sp,
+              ),
+            ),
+            const Spacer(),
+            IconButton(
+              onPressed: () {},
+              icon: Badge.count(
+                count: 0,
+                child: const Icon(
+                  Icons.notifications_none,
+                  size: 30,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
-
-  // late ProfileEntity profileEntity;
-  // Future<void> _loadUserData() async {
-  //   // profileCubit = serviceLocator.get<ProfileCubit>();
-  //   final localDataSource = serviceLocator.get<AuthLocalDataSource>();
-  //   var user = await localDataSource.getPatientProfile();
-  //   if (mounted) {
-  //     setState(() {
-  //       profileEntity = user;
-  //       // firstName = sharedPref.getString(CacheConstants.firstNameKey) ?? "";
-  //       // lastName = sharedPref.getString(CacheConstants.lastNameKey) ?? "";
-  //       // userImage = sharedPref.getString(CacheConstants.userImageKey) ?? "";
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
     final double avatarRadius =
         (MediaQuery.of(context).size.shortestSide * 0.1).clamp(35.0, 60.0);
-    return BlocProvider.value(
-      value: profileCubit,
-      child: BlocBuilder<ProfileCubit, ProfileStates>(
-        builder: (context, state) {
-          if (state is GetProfilesLoading) {
-            return const LoadingIndicator();
-          } else if (state is GetProfilesError) {
-            return Text('حدث خطأ: ${state.message}');
-          } else if (state is GetProfilesSuccess) {
-            return SafeArea(
-                child: Directionality(
-              textDirection: TextDirection.rtl,
-              child: Container(
-                  padding: const EdgeInsets.only(top: 7, right: 8, left: 8),
-                  child:
-                      //  AppBar(
-                      //     backgroundColor: ColorManager.white,
-                      //     elevation: 0,
-                      //     surfaceTintColor: ColorManager.transparent,
-                      //     automaticallyImplyLeading:
-                      //         widget.automaticallyImplyLeading ?? false,
-                      Row(children: [
-                    CircleAvatar(
-                      radius: avatarRadius,
-                      backgroundColor: ColorManager.transparent,
-                      backgroundImage: state.profileEntity.imageUrl != null &&
-                              state.profileEntity.imageUrl!.isNotEmpty
-                          ? NetworkImage(state.profileEntity.imageUrl!)
-                          : const AssetImage("${ImageManager.profile}")
-                              as ImageProvider,
-                      // child: CachedNetworkImage(imageUrl: "${widget.image}")
-                      // child:
-                      //  state.profileEntity.imageUrl == null
-                      //     ? Image.asset("assets/images/doctor_image.png")
-                      //
+    return BlocBuilder<ProfileCubit, ProfileStates>(
+      builder: (context, state) {
+        if (state is GetProfilesLoading) {
+          // return const LoadingIndicator();
+          return _buildAppBarSkeleton();
+        } else if (state is GetProfilesError) {
+          // return Center(child: Text('حدث خطأ: //${state.message}'));
+          return _buildAppBarSkeleton();
+        } else if (state is GetProfilesSuccess) {
+          return SafeArea(
+              child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: Container(
+                padding: const EdgeInsets.only(top: 7, right: 8, left: 8),
+                child:
+                    //  AppBar(
+                    //     backgroundColor: ColorManager.white,
+                    //     elevation: 0,
+                    //     surfaceTintColor: ColorManager.transparent,
+                    //     automaticallyImplyLeading:
+                    //         widget.automaticallyImplyLeading ?? false,
+                    Row(children: [
+                  CircleAvatar(
+                    radius: avatarRadius,
+                    backgroundColor: ColorManager.transparent,
+                    backgroundImage: state.profileEntity.imageUrl != null &&
+                            state.profileEntity.imageUrl!.isNotEmpty
+                        ? CachedNetworkImageProvider(
+                            state.profileEntity.imageUrl!)
+                        : const AssetImage(ImageManager.profile)
+                            as ImageProvider,
+                    // child: CachedNetworkImage(imageUrl: "${widget.image}")
+                    // child:
+                    //  state.profileEntity.imageUrl == null
+                    //     ? Image.asset("assets/images/doctor_image.png")
+                    //
 
-                      //   CachedNetworkImage(
-                      // imageUrl:
-                      //     "${ApiConstants.imageBaseUrl}${state.profileEntity.imageUrl}",
+                    //   CachedNetworkImage(
+                    // imageUrl:
+                    //     "${ApiConstants.imageBaseUrl}${state.profileEntity.imageUrl}",
 
-                      // state.profileEntity.imageUrl != null
-                      //     ? FileImage(File(
-                      //         "${ApiConstants.imageBaseUrl}${state.profileEntity.imageUrl}"))
-                      //     : FileImage(File("assets/images/doctor_image.png"))
-                      // : Image.asset('assets/images/doctor_image.png')
+                    // state.profileEntity.imageUrl != null
+                    //     ? FileImage(File(
+                    //         "${ApiConstants.imageBaseUrl}${state.profileEntity.imageUrl}"))
+                    //     : FileImage(File("assets/images/doctor_image.png"))
+                    // : Image.asset('assets/images/doctor_image.png')
 
-                      // backgroundColor: ColorManager.transparent,
-                      // backgroundImage: AssetImage(widget.image)
-                      // child: Image.asset("assets/images/doctor_image.jpg",
-                      // fit: BoxFit.cover
-                      // )
-                    ),
-                    // const SizedBox(
-                    //   width: 10,
-                    // ),
-                    // // Directionality(
-                    // //     textDirection: TextDirection.rtl,
-                    // //     child: Row(
-                    // //       children: ['
+                    // backgroundColor: ColorManager.transparent,
+                    // backgroundImage: AssetImage(widget.image)
+                    // child: Image.asset("assets/images/doctor_image.jpg",
+                    // fit: BoxFit.cover
+                    // )
+                  ),
+                  // const SizedBox(
+                  //   width: 10,
+                  // ),
+                  // // Directionality(
+                  // //     textDirection: TextDirection.rtl,
+                  // //     child: Row(
+                  // //       children: ['
 
-                    // const SizedBox(
-                    //   width: Sizes.s12,
-                    // ),
-                    Text(
-                      "${state.profileEntity.firstName ?? ''}${state.profileEntity.lastName ?? ''}",
-                      style: getSemiBoldStyle(
-                          color: const Color.fromARGB(255, 65, 111, 156),
-                          fontSize: FontSize.s15.sp),
-                    ),
-                    // const Icon(
-                    //   Icons.waving_hand,
-                    //   color: Colors.amber,
-                    // ),
-                    const Spacer(),
+                  // const SizedBox(
+                  //   width: Sizes.s12,
+                  // ),
+                  Text(
+                    "${state.profileEntity.firstName ?? ''}${state.profileEntity.lastName ?? ''}",
+                    style: getSemiBoldStyle(
+                        color: const Color.fromARGB(255, 65, 111, 156),
+                        fontSize: FontSize.s15.sp),
+                  ),
+                  // const Icon(
+                  //   Icons.waving_hand,
+                  //   color: Colors.amber,
+                  // ),
+                  const Spacer(),
 
-                    IconButton(
-                        onPressed: () {},
-                        icon: Badge.count(
-                          count: 2,
-                          child: const Icon(
-                            Icons.notifications_none,
-                            // color: ColorManager.white,
-                            size: 30,
-                          ),
-                        )),
-                    const SizedBox(
-                      width: 10,
-                    )
-                    // ]
-                    //   ],
-                    // ))
-                  ])),
-              // ),
-              // ),
-            ));
-          }
-          return SizedBox();
-        },
-      ),
+                  IconButton(
+                      onPressed: () {},
+                      icon: Badge.count(
+                        count: 2,
+                        child: const Icon(
+                          Icons.notifications_none,
+                          // color: ColorManager.white,
+                          size: 30,
+                        ),
+                      )),
+                  const SizedBox(
+                    width: 10,
+                  )
+                  // ]
+                  //   ],
+                  // ))
+                ])),
+            // ),
+            // ),
+          ));
+        }
+        return const SizedBox();
+      },
     );
   }
 }

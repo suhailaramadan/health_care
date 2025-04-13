@@ -31,28 +31,27 @@ class CustomClinicComponant extends StatelessWidget {
               name: clinicEntity.name,
               imageUrl: clinicEntity.imageUrl,
             ))));
-        print(
-            "Nahhhhhhhhkkswaaaaaae[;.m]=----> ${clinicEntity.id}, name : ${clinicEntity.name},,  image ${clinicEntity.imageUrl}!");
       },
       child: Directionality(
         textDirection: TextDirection.rtl,
-        child: Container(
+        child: Card(
           // height: 250,
           // width: 100,
+          surfaceTintColor: ColorManager.white,
           margin: const EdgeInsets.all(8),
           // padding: EdgeInsets.symmetric(horizontal: 8),
-          decoration: BoxDecoration(
-              border: Border.all(width: 0.1, color: ColorManager.blue),
-              borderRadius: BorderRadius.circular(10),
-              color: ColorManager.white,
-              boxShadow: const [
-                BoxShadow(blurRadius: 10, color: ColorManager.blue)
-              ]),
+          // decoration: BoxDecoration(
+          //     border: Border.all(width: 0.1, color: ColorManager.blue),
+          //     borderRadius: BorderRadius.circular(10),
+          //     color: ColorManager.white,
+          //     boxShadow: const [
+          //       BoxShadow(blurRadius: 10, color: ColorManager.blue)
+          //     ]),
           child: Column(
             children: [
               // CachedNetworkImage(imageUrl:"${ApiConstants.clinicBaseUrl}${clinicEntity.imageUrl}"),
               ClipRRect(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(5),
                 child: CachedNetworkImage(
                   imageUrl:
                       "${ApiConstants.imageBaseUrl}${clinicEntity.imageUrl}",

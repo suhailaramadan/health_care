@@ -3,25 +3,61 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/error/exceptions.dart';
 import 'package:graduation_project/features/user/booking/data/data_source/remote/booking/booking_remote_data_source.dart';
-import 'package:graduation_project/features/user/booking/data/models/booking_response.dart';
+import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_appointment/booking_appointment.dart';
+import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_patient_response/booking_patient_response.dart';
+import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_request.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-@Singleton(as: BookingRemoteDataSource)
+@LazySingleton(as: BookingRemoteDataSource)
 class BookingApiRemoteDataSource implements BookingRemoteDataSource {
   final Dio _dio;
   const BookingApiRemoteDataSource(this._dio);
+
   @override
-  Future<BookingResponse> getPatientBooking(String token) async {
+  Future<BookingAppointment> bookAppointment(BookingRequest request) async {
     try {
-      final response = await _dio.get(ApiConstants.bookingPatientEndPoint,
-          options: Options(headers: {'Authorization': 'Bearer $token'}));
-      return BookingResponse.fromJson(response.data);
-    } catch (exception) {
-      String? message;
-      if (exception is DioException) {
-        message = exception.response?.data['message'];
+      SharedPreferences sharedPref = await SharedPreferences.getInstance();
+      String? token =
+          // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJzdWhhaWxhQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMmFiYjA3ZWEtYWY1ZC00YWIxLWJjN2MtMDQ1NzNmNjA5MmMzIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6InN1aGFpbGEgIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTc0NDQxNTg5MCwiaXNzIjoibXljbGluaWNhcHAiLCJhdWQiOiJteWNsaW5pY2FwcCJ9.YYVpG41OOJec2WXDRkASTYvyhJT-c9QzgmKANESKWgc";
+          sharedPref.getString(CacheConstants.tokenKey);
+      if (token == null) {
+        throw const RemoteException("لا يوجد رمز توثيق");
       }
-      throw RemoteException(message ?? "تعذر تحميل حجوزاتك");
+      final response = await _dio.post(ApiConstants.bookingAppointmentEndPoint,
+          data: request.toJson(),
+          options: Options(headers: {
+            "Content-Type": 'application/json',
+            "Authorization": 'Bearer $token',
+          }));
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return BookingAppointment.fromJson(response.data);
+      } else {
+        throw RemoteException('فشل الحجز , ${response.statusCode}');
+      }
+    } catch (e) {
+      throw const RemoteException("حدث خطأ أثناء الحجز , حاول مرة أخرى");
+    }
+  }
+
+  @override
+  Future<BookingPatientResponse> getbookingPatient(String token) async {
+    try {
+      SharedPreferences sharedPref = await SharedPreferences.getInstance();
+      String? token = sharedPref.getString(CacheConstants.tokenKey);
+      // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJzdWhhaWxhQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMmFiYjA3ZWEtYWY1ZC00YWIxLWJjN2MtMDQ1NzNmNjA5MmMzIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6InN1aGFpbGEgIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTc0NDQxNTg5MCwiaXNzIjoibXljbGluaWNhcHAiLCJhdWQiOiJteWNsaW5pY2FwcCJ9.YYVpG41OOJec2WXDRkASTYvyhJT-c9QzgmKANESKWgc";
+      final response = await _dio.get(ApiConstants.bookingPatientEndPoint,
+          options: Options(headers: {
+            "Content-Type": 'application/json',
+            "Authorization": 'Bearer $token',
+          }));
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return BookingPatientResponse.fromJson(response.data);
+      } else {
+        throw RemoteException('فشل في تحميل الحجوزات , ${response.statusCode}');
+      }
+    } catch (e) {
+      throw const RemoteException("فشل في تحميل الحجوزات");
     }
   }
 }

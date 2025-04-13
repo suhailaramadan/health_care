@@ -12,6 +12,7 @@ import 'package:graduation_project/core/widgets/error_indicator.dart';
 import 'package:graduation_project/core/widgets/loading_indicator.dart';
 import 'package:graduation_project/features/user/clinic/presentation/cubit/clinic_cubit.dart';
 import 'package:graduation_project/features/user/clinic/presentation/cubit/clinic_states.dart';
+import 'package:graduation_project/features/user/clinic/presentation/screen/search_screen.dart';
 import 'package:graduation_project/features/user/clinic/presentation/widget/custom_clinic_componant.dart';
 import 'package:graduation_project/features/home/presentation/widgets/clinic_item.dart';
 
@@ -38,7 +39,11 @@ class _ClinicScreenState extends State<ClinicScreen> {
       child: Scaffold(
           backgroundColor: ColorManager.white,
           appBar: AppBar(
-            backgroundColor: ColorManager.white,
+            shape: ContinuousRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(34),
+                    bottomLeft: Radius.circular(35))),
+            backgroundColor: ColorManager.blue,
             centerTitle: true,
             title: Text(
               "العيادات",
@@ -46,25 +51,67 @@ class _ClinicScreenState extends State<ClinicScreen> {
               style: getBoldStyle(color: ColorManager.textColor),
               // Color.fromARGB(255, 9, 55, 101)
             ),
+            leading: IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () => showSearch(
+                  context: context,
+                  delegate: SearchScreen(),
+                  query: "ابحث عن العيادة"),
+            ),
           ),
           body: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.0),
-                child: CustomTextField(
-                  hint: "ابحث عن العيادة",
-                  label: "",
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: ColorManager.kuhly,
-                  ),
-                  // hintTextStyle: getRegularStyle(
-                  //     color: ColorManager.grey, fontSize: FontSize.s13.sp),
-                  // labelTextStyle: getMediumStyle(
-                  //     color: ColorManager.black, fontSize: FontSize.s5),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              //   child: InkWell(
+              //     onTap: () => showSearch(
+              //       context: context,
+              //       delegate: SearchScreen(),
+              //     ),
+              //     child: Container(
+              //         height: 50,
+              //         width: double.infinity,
+              //         padding: EdgeInsets.symmetric(horizontal: 20),
+              //         decoration: BoxDecoration(
+              //             shape: BoxShape.rectangle,
+              //             border: Border.all(
+              //               width: .5,
+              //               color: ColorManager.black,
+              //             ),
+              //             borderRadius: BorderRadius.circular(12)),
+              //         child: Align(
+              //             alignment: Alignment.centerRight,
+              //             child: Row(
+              //               children: [
+              //                 Icon(Icons.search),
+              //                 SizedBox(
+              //                   width: 15,
+              //                 ),
+              //                 Text(
+              //                   "ابحث عن العيادة",
+              //                   style: getLightStyle(
+              //                       color: ColorManager.textColor,
+              //                       fontSize: 15),
+              //                 )
+              //               ],
+              //             ))
+
+              // child: const CustomTextField(
+              //   hint: "ابحث عن العيادة",
+              //   label: "",
+              //   prefixIcon: Icon(
+              //     Icons.search,
+              //     color: ColorManager.kuhly,
+              //   ),
+
+              // hintTextStyle: getRegularStyle(
+              //     color: ColorManager.grey, fontSize: FontSize.s13.sp),
+              // labelTextStyle: getMediumStyle(
+              //     color: ColorManager.black, fontSize: FontSize.s5),
+              // ),
+              //   ),
+              // ),
               SizedBox(
                 height: 20.h,
               ),

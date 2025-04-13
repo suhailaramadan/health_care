@@ -1,16 +1,7 @@
-import 'package:graduation_project/features/user/booking/data/models/datum.dart';
+import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_appointment/data.dart';
 import 'package:graduation_project/features/user/booking/domain/entities/booking_entity.dart';
 
-extension BookingMapper on Datum {
+extension BookingMapper on Data {
   BookingEntity get toEntity => BookingEntity(
-      clinicName: clinicName,
-      id: id,
-      date: date,
-      doctorFirstName: doctorFirstName,
-      doctorId: doctorId,
-      doctorLastName: doctorLastName,
-      patientId: patientId,
-      time: time,
-      isCancellable: isCancellable,
-      isUpcoming: isUpcoming);
+      date: date, doctorId: doctorId, isbooked: isbooked, time: time);
 }

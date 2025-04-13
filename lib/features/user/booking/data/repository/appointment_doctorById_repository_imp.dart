@@ -15,16 +15,9 @@ class AppointmentDoctorByIdRepositoryImpl
   @override
   Future<Either<Failure, List<AppointmentEntity>>> getAppointmentDoctorById(
       String doctorId) async {
-    print(
-        "🟠 Repository: Fetching appointments for doctorId: $doctorId"); // ✅ تأكد من أن هذا
     try {
       final result = await _remoteDataSource.getAppointmentDoctorById(doctorId);
-      print(
-          "Repository: Received Data: ${result.data}"); // ✅ تحقق من أن البيانات ليست فارغة
-
       final appointments = result.data?.toEntityList ?? [];
-
-      print("Converted Appointments: $appointments");
       return Right(appointments);
     } catch (e) {
       return Left(Failure(e.toString()));

@@ -64,7 +64,7 @@ class DoctorItem extends StatelessWidget {
       // padding: const EdgeInsets.symmetric(horizontal: 10),
       // margin: const EdgeInsets.all(10),
 
-      height: 400,
+      height: 300,
       // decoration: const BoxDecoration(
       //     // color: Color.fromARGB(255, 79, 136, 198),
       //     borderRadius: BorderRadius.all(Radius.circular(15))),
@@ -85,46 +85,55 @@ class DoctorItem extends StatelessWidget {
                     doctorEntity.imageUrl)))),
         child: Directionality(
             textDirection: TextDirection.rtl,
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              elevation: 3,
-              child: Column(
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.vertical(
-                        top: const Radius.circular(12)),
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          "${ApiConstants.imageBaseUrl}${doctorEntity.imageUrl}",
-                      height: 150,
-                      // width: double.infinity,
-                      width: 200,
-                      fit: BoxFit.fill,
-                      placeholder: (context, url) =>
-                          const Center(child: CircularProgressIndicator()),
-                      errorWidget: (context, url, error) =>
-                          Image.asset("assets/images/doctor_image.png"),
+            child: SizedBox(
+              height: 200,
+              width: 200,
+              child: Card(
+                // shape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(12),
+                // ),
+                surfaceTintColor: ColorManager.white,
+                elevation: 3,
+                child: Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius:
+                          const BorderRadius.vertical(top: Radius.circular(12)),
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            "${ApiConstants.imageBaseUrl}${doctorEntity.imageUrl}",
+                        height: 150,
+                        // width: double.infinity,
+                        width: 200,
+                        fit: BoxFit.fill,
+                        placeholder: (context, url) =>
+                            const Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) =>
+                            Image.asset("assets/images/doctor_image.png"),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Column(
-                      children: [
-                        Text(
-                          "${doctorEntity.firstName} ${doctorEntity.lastName}",
-                          style:
-                              getSemiBoldStyle(color: ColorManager.textColor),
-                        ),
-                        Text(
-                          "${doctorEntity.specialty}",
-                          style: getMediumStyle(color: ColorManager.grey),
-                        )
-                      ],
+                    const SizedBox(
+                      height: 10,
                     ),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Column(
+                        children: [
+                          Text(
+                            "${doctorEntity.firstName} ${doctorEntity.lastName}",
+                            style: getBoldStyle(
+                                color: ColorManager.primary, fontSize: 15),
+                          ),
+                          Text(
+                            "${doctorEntity.specialty}",
+                            style: getRegularStyle(
+                                color: ColorManager.grey, fontSize: 12),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             )
             // Container(

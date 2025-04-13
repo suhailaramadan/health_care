@@ -22,7 +22,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
   int currentIndex = 0;
   List<Widget> tabs = [
     const HomeTab(),
-    const BookingScreen(),
+    BookingTab(),
     const ChatBotTab(),
     const ProfileScreen()
   ];
@@ -38,7 +38,6 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
           //   child: const HomeScreenAppBar(),
           // ),
           body: tabs[currentIndex],
-
           // floatingActionButton: FloatingActionButton(
           //   onPressed: () => HomeTab(),
           //   child: const Icon(Icons.home),

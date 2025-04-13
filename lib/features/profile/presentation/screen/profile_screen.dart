@@ -12,9 +12,15 @@ import 'package:graduation_project/core/widgets/loading_indicator.dart';
 import 'package:graduation_project/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:graduation_project/features/profile/presentation/cubit/profile_states.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
   static const profile = "/profile";
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -28,71 +34,67 @@ class ProfileScreen extends StatelessWidget {
             centerTitle: true,
             // backgroundColor: ColorManager.primary,
           ),
-          body: BlocProvider(
-            create: (context) =>
-                serviceLocator.get<ProfileCubit>()..getPatientProfile(),
-            child: BlocBuilder<ProfileCubit, ProfileStates>(
-              builder: (context, state) {
-                if (state is GetProfilesLoading) {
-                  return const LoadingIndicator();
-                } else if (state is GetProfilesError) {
-                  return ErrorIndicator(message: state.message);
-                } else if (state is GetProfilesSuccess) {
-                  return Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        children: [
-                          CircleAvatar(
-                              radius: 90,
-                              backgroundImage: state.profileEntity.imageUrl !=
-                                          null &&
-                                      state.profileEntity.imageUrl!.isNotEmpty
-                                  ? NetworkImage(state.profileEntity.imageUrl!)
-                                  : const AssetImage("${ImageManager.profile}")
-                                      as ImageProvider),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          Text(
-                            "${state.profileEntity.firstName ?? ''} ${state.profileEntity.lastName ?? ''}",
-                            style:
-                                getSemiBoldStyle(color: ColorManager.textColor),
-                          ),
-                          SizedBox(
-                            height: 50,
-                          ),
-                          Text(
-                            "البريد الإلكتروني : ${state.profileEntity.email ?? 'غير متوفر'}",
-                            style:
-                                getSemiBoldStyle(color: ColorManager.textColor),
-                          ),
-                          Text(
-                            "الكلية :  ${state.profileEntity.college ?? 'غير متوفر'}",
-                            style:
-                                getSemiBoldStyle(color: ColorManager.textColor),
-                          ),
-                          Text(
-                            "رقم الهاتف :  ${state.profileEntity.phoneNumber}",
-                            style:
-                                getSemiBoldStyle(color: ColorManager.textColor),
-                          ),
-                          Text(
-                            "الرقم القومي :  ${state.profileEntity.nationalId ?? 'غير متوفر'}",
-                            style:
-                                getSemiBoldStyle(color: ColorManager.textColor),
-                          ),
-                        ],
-                      ),
+          body: BlocBuilder<ProfileCubit, ProfileStates>(
+            builder: (context, state) {
+              if (state is GetProfilesLoading) {
+                return const LoadingIndicator();
+              } else if (state is GetProfilesError) {
+                return ErrorIndicator(message: state.message);
+              } else if (state is GetProfilesSuccess) {
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      children: [
+                        CircleAvatar(
+                            radius: 90,
+                            backgroundImage: state.profileEntity.imageUrl !=
+                                        null &&
+                                    state.profileEntity.imageUrl!.isNotEmpty
+                                ? NetworkImage(state.profileEntity.imageUrl!)
+                                : const AssetImage("${ImageManager.profile}")
+                                    as ImageProvider),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Text(
+                          "${state.profileEntity.firstName ?? ''} ${state.profileEntity.lastName ?? ''}",
+                          style:
+                              getSemiBoldStyle(color: ColorManager.textColor),
+                        ),
+                        SizedBox(
+                          height: 50,
+                        ),
+                        Text(
+                          "البريد الإلكتروني : ${state.profileEntity.email ?? 'غير متوفر'}",
+                          style:
+                              getSemiBoldStyle(color: ColorManager.textColor),
+                        ),
+                        Text(
+                          "الكلية :  ${state.profileEntity.college ?? 'غير متوفر'}",
+                          style:
+                              getSemiBoldStyle(color: ColorManager.textColor),
+                        ),
+                        Text(
+                          "رقم الهاتف :  ${state.profileEntity.phoneNumber}",
+                          style:
+                              getSemiBoldStyle(color: ColorManager.textColor),
+                        ),
+                        Text(
+                          "الرقم القومي :  ${state.profileEntity.nationalId ?? 'غير متوفر'}",
+                          style:
+                              getSemiBoldStyle(color: ColorManager.textColor),
+                        ),
+                      ],
                     ),
-                  );
-                } else {
-                  return const Center(
-                    child: Text("لا توجد بيانات متاحة "),
-                  );
-                }
-              },
-            ),
+                  ),
+                );
+              } else {
+                return const Center(
+                  child: Text("لا توجد بيانات متاحة "),
+                );
+              }
+            },
           )),
     );
   }

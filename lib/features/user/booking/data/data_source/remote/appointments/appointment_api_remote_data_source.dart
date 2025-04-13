@@ -19,23 +19,17 @@ class AppointmentApiRemoteDataSource extends AppointmentRemoteDataSource {
         "https://myclinicapp.runasp.net/api/Appointment/AvailableSlots",
         queryParameters: {"doctorId": doctorId},
       );
-      print("ApiApppointmennt-----------------------> $doctorId");
-      // .get("${ApiConstants.appointmentDoctorByIdEndPoint}/$doctorId");
       if (response.statusCode == 200) {
-        print("API Apppointment Response: ${response.data}");
-
         return AppointmentByDoctorIdResponse.fromJson(response.data);
-        // print("📢 Raw API Response: ${response.data}");
       } else {
         throw RemoteException("Unexpected response: ${response.statusCode}");
       }
-      // return AppointmentByDoctorIdResponse.fromJson(response.data);
     } catch (exception) {
       String? message;
       if (exception is DioException) {
         message = exception.response?.data['message'];
       }
-      throw RemoteException("حدث خطأغير متوقع");
+      throw const RemoteException("حدث خطأغير متوقع");
     }
   }
 }

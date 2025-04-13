@@ -83,15 +83,30 @@ class AuthSharedPrefLocalDataSource extends AuthLocalDataSource {
 
   @override
   Future<void> savePatientProfile(ProfileEntity? profileEntity) async {
-    _sharedPref.setString('id', profileEntity!.id ?? '');
-    _sharedPref.setString('firstName', profileEntity.firstName ?? '');
-    _sharedPref.setString('lastName', profileEntity.lastName ?? '');
-    _sharedPref.setString('email', profileEntity.email ?? '');
-    _sharedPref.setString('college', profileEntity.college ?? '');
-    _sharedPref.setString('phoneNumber', profileEntity.phoneNumber ?? '');
-    _sharedPref.setString('nationalID', profileEntity.nationalId ?? '');
-    if (profileEntity.imageUrl != null) {
-      _sharedPref.setString('imageUrl', profileEntity.imageUrl ?? '');
+    if (profileEntity == null) {
+      throw const LocalException("البيانات غير متوفرة");
     }
+    await _sharedPref.setString('id', profileEntity!.id ?? '');
+    await _sharedPref.setString('firstName', profileEntity.firstName ?? '');
+    await _sharedPref.setString('lastName', profileEntity.lastName ?? '');
+    await _sharedPref.setString('email', profileEntity.email ?? '');
+    await _sharedPref.setString('college', profileEntity.college ?? '');
+    await _sharedPref.setString('phoneNumber', profileEntity.phoneNumber ?? '');
+    await _sharedPref.setString('nationalID', profileEntity.nationalId ?? '');
+    if (profileEntity.imageUrl != null) {
+      await _sharedPref.setString('imageUrl', profileEntity.imageUrl ?? '');
+    }
+  }
+
+  @override
+  Future<void> clearUserData() async {
+    await _sharedPref.remove('id');
+    await _sharedPref.remove('firstName');
+    await _sharedPref.remove('lastName');
+    await _sharedPref.remove('email');
+    await _sharedPref.remove('college');
+    await _sharedPref.remove('phoneNumber');
+    await _sharedPref.remove('nationalID');
+    await _sharedPref.remove('imageUrl');
   }
 }

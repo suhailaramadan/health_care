@@ -4,15 +4,18 @@ import 'package:graduation_project/features/profile/domain/repository/profile_re
 import 'package:graduation_project/features/profile/presentation/cubit/profile_states.dart';
 import 'package:injectable/injectable.dart';
 
-@singleton
+@lazySingleton
 class ProfileCubit extends Cubit<ProfileStates> {
   final ProfileRepository _profileRepository;
-  ProfileCubit(this._profileRepository) : super(ProfileInitial()) {
-    getPatientProfile();
-  }
+  ProfileCubit(this._profileRepository) : super(ProfileInitial());
+
   Future<void> getPatientProfile() async {
     emit(GetProfilesLoading());
     try {
+      final cachedProfile = await _profileRepository.getCachedPatientProfile();
+      if (cachedProfile != null) {
+        emit(GetProfilesSuccess(cachedProfile));
+      }
       final result = await _profileRepository.getPatientProfile();
       result.fold((failure) => emit(GetProfilesError(failure.message)),
           (patientProfile) {
