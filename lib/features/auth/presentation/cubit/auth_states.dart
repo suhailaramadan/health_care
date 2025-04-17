@@ -16,13 +16,14 @@ class LoginLoading extends AuthStates {}
 class LoginSuccess extends AuthStates {
   final String token;
   final String role;
-  final String userImage;
-  final String firstName;
-  final String lastName;
+  // final String userImage;
+  // final String firstName;
+  // final String lastName;
   LoginSuccess(
-      {required this.userImage,
-      required this.firstName,
-      required this.lastName,
+      {
+      //required this.userImage,
+      // required this.firstName,
+      // required this.lastName,
       required this.role,
       required this.token});
 }

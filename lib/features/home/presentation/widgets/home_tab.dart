@@ -20,6 +20,7 @@ import 'package:graduation_project/core/widgets/loading_indicator.dart';
 import 'package:graduation_project/features/auth/data/data_sources/local/auth_local_data_source.dart';
 import 'package:graduation_project/features/auth/data/data_sources/local/auth_shared_pref_local_data_source.dart';
 import 'package:graduation_project/features/auth/presentation/screens/login_screen.dart';
+import 'package:graduation_project/features/doctor/presentation/widgets/custom_doctor.dart';
 import 'package:graduation_project/features/profile/domain/entities/profile_entity.dart';
 import 'package:graduation_project/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:graduation_project/features/user/clinic/domain/entities/clinic_entity.dart';
@@ -199,7 +200,7 @@ class _HomeTabState extends State<HomeTab> {
                   SizedBox(
                     height: isLandscape
                         ? screenSize.width * .02
-                        : screenSize.height * .02,
+                        : screenSize.height * .018,
                   ),
                   CustomSectionBar(
                     text: "العيادات المتاحة",
@@ -227,17 +228,20 @@ class _HomeTabState extends State<HomeTab> {
                           return SizedBox(
                               height: isLandscape
                                   ? screenSize.width * .23
-                                  : screenSize.height * .2,
+                                  : screenSize.height * .19,
                               width: MediaQuery.of(context).size.width.w,
                               child: Directionality(
                                 textDirection: TextDirection.rtl,
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (_, index) => ClinicItem(
-                                    clinicEntity: state.clinicEntity[index],
-                                  ),
+                                      clinicEntity: state.clinicEntity
+                                          .take(5)
+                                          .toList()[index]
+                                      // state.clinicEntity[index],
+                                      ),
                                   // padding: EdgeInsets.all(4),
-                                  itemCount: state.clinicEntity.length,
+                                  itemCount: 5,
                                 ),
                               ));
                         }
@@ -260,8 +264,8 @@ class _HomeTabState extends State<HomeTab> {
                   SizedBox(
                     height: isLandscape
                         ? screenSize.width * .38
-                        // : screenSize.height * .32,
-                        : screenSize.height * .312,
+                        : screenSize.height * .3,
+                    // : screenSize.height * .312,
                     child: BlocProvider(
                       create: (context) => _doctorsCubit,
                       child: BlocBuilder<DoctorsCubit, DoctorsStates>(
@@ -278,12 +282,14 @@ class _HomeTabState extends State<HomeTab> {
                             child: ListView.builder(
                               shrinkWrap: true,
                               // physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (_, index) => DoctorItem(
-                                doctorEntity: state.doctorEntity[index],
-                                // .take(5).toList()[index]
-                              ),
+                              itemBuilder: (_, index) => CustomDoctor(
+                                  doctorEntity:
+                                      // state.doctorEntity[index],
+                                      state.doctorEntity
+                                          .take(5)
+                                          .toList()[index]),
                               scrollDirection: Axis.horizontal,
-                              itemCount: state.doctorEntity.length,
+                              itemCount: 5,
                             ),
                           );
                         }

@@ -19,3 +19,11 @@ class GetClinicsById {
   Future<Either<Failure, List<ClinicEntity>>> call(int id) =>
       _clinicRepository.getClinicsById(id);
 }
+
+@lazySingleton
+class Search {
+  final ClinicRepository _clinicRepository;
+  const Search(this._clinicRepository);
+  Future<Either<Failure, List<ClinicEntity>>> call(String query) =>
+      _clinicRepository.search(query);
+}

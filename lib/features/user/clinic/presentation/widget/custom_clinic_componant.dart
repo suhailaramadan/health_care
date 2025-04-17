@@ -37,7 +37,9 @@ class CustomClinicComponant extends StatelessWidget {
         child: Card(
           // height: 250,
           // width: 100,
+          elevation: 3,
           surfaceTintColor: ColorManager.white,
+          color: ColorManager.white,
           margin: const EdgeInsets.all(8),
           // padding: EdgeInsets.symmetric(horizontal: 8),
           // decoration: BoxDecoration(
@@ -47,32 +49,38 @@ class CustomClinicComponant extends StatelessWidget {
           //     boxShadow: const [
           //       BoxShadow(blurRadius: 10, color: ColorManager.blue)
           //     ]),
-          child: Column(
-            children: [
-              // CachedNetworkImage(imageUrl:"${ApiConstants.clinicBaseUrl}${clinicEntity.imageUrl}"),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: CachedNetworkImage(
-                  imageUrl:
-                      "${ApiConstants.imageBaseUrl}${clinicEntity.imageUrl}",
-                  // height: 150.w,
-                  // width: 200.w,
-                  fit: BoxFit.fill,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              // mainAxisAlignment: MainAxisAlignment.spacee,
+              children: [
+                // CachedNetworkImage(imageUrl:"${ApiConstants.clinicBaseUrl}${clinicEntity.imageUrl}"),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: CachedNetworkImage(
+                    height: 150,
+                    width: 150,
+                    imageUrl:
+                        "${ApiConstants.imageBaseUrl}${clinicEntity.imageUrl}",
+                    // height: 150.w,
+                    // width: 200.w,
+                    fit: BoxFit.fill,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+                const SizedBox(
+                  width: 15,
+                ),
 
-              Text(
-                clinicEntity.name,
-                style: getBoldStyle(
-                    color: ColorManager.primary, fontSize: FontSize.s15.sp),
-              ),
-              // SizedBox(
-              //   width: 20.w,
-              // )
-            ],
+                Text(
+                  "عيادة  ${clinicEntity.name}",
+                  style: getBoldStyle(
+                      color: ColorManager.primary, fontSize: FontSize.s15.sp),
+                ),
+                // SizedBox(
+                //   width: 20.w,
+                // )
+              ],
+            ),
           ),
         ),
       ),

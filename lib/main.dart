@@ -16,6 +16,7 @@ import 'package:graduation_project/features/user/booking/presentation/cubit/book
 import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_patient_cubit.dart';
 import 'package:graduation_project/features/user/clinic/presentation/cubit/clinic_cubit.dart';
 import 'package:graduation_project/features/doctor/presentation/cubit/doctor_cubit.dart';
+import 'package:graduation_project/features/user/clinic/presentation/cubit/search_cubit.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 Future<void> main() async {
@@ -25,15 +26,34 @@ Future<void> main() async {
   await configureDependencies();
   // await serviceLocator.init();
   await serviceLocator.allReady();
+  final authCubit = await serviceLocator.getAsync<AuthCubit>();
+  final profileCubit = await serviceLocator.getAsync<ProfileCubit>();
+  final bookingCubit = await serviceLocator.getAsync<BookingCubit>();
+  final deleteBookingCubit =
+      await serviceLocator.getAsync<DeleteBookingCubit>();
   runApp(DevicePreview(
       // ignore: avoid_redundant_argument_values
       // enabled: !kReleaseMode,
       enabled: false,
-      builder: (context) => const HealthCareApp()));
+      builder: (context) => HealthCareApp(
+            authCubit: authCubit,
+            profileCubit: profileCubit,
+            bookingCubit: bookingCubit,
+            deleteBookingCubit: deleteBookingCubit,
+          )));
 }
 
 class HealthCareApp extends StatelessWidget {
-  const HealthCareApp({super.key});
+  final AuthCubit authCubit;
+  final ProfileCubit profileCubit;
+  final BookingCubit bookingCubit;
+  final DeleteBookingCubit deleteBookingCubit;
+  const HealthCareApp(
+      {super.key,
+      required this.authCubit,
+      required this.profileCubit,
+      required this.bookingCubit,
+      required this.deleteBookingCubit});
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<ProfileCubit>(
@@ -48,17 +68,20 @@ class HealthCareApp extends StatelessWidget {
               ),
             );
           }
-          final profileCubit = snapshot.data!;
+          // final profileCubit = snapshot.data!;
           return MultiBlocProvider(
               providers: [
-                BlocProvider(
-                    create: (context) => serviceLocator.get<AuthCubit>()),
-                // BlocProvider(create: (context) => serviceLocator.get<DoctorsCubit>()),
+                BlocProvider(create: (context) => authCubit),
+                BlocProvider(create: (context) => deleteBookingCubit),
                 // ..getDoctors()..getDoctorsByClinicId(clinicId)),
                 BlocProvider(
                     create: (context) => serviceLocator.get<ClinicCubit>()),
                 BlocProvider(
-                    create: (context) => serviceLocator.get<BookingCubit>()),
+                    create: (context) => serviceLocator.get<DoctorsCubit>()),
+                BlocProvider(
+                  create: (context) => serviceLocator.get<SearchCubit>(),
+                ),
+                BlocProvider(create: (context) => bookingCubit),
                 BlocProvider(
                     create: (context) =>
                         serviceLocator.get<BookingPatientCubit>()),
@@ -79,7 +102,7 @@ class HealthCareApp extends StatelessWidget {
                       builder: DevicePreview.appBuilder,
                       debugShowCheckedModeBanner: false,
                       onGenerateRoute: RouteGenerator.getRoute,
-                      initialRoute: Routes.clinic)));
+                      initialRoute: Routes.login)));
         });
   }
 }

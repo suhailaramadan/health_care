@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/core/di/service_locator.dart';
+import 'package:graduation_project/core/resources/color_manager.dart';
+import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/widgets/error_indicator.dart';
 import 'package:graduation_project/core/widgets/loading_indicator.dart';
 import 'package:graduation_project/features/doctor/presentation/cubit/doctor_cubit.dart';
@@ -27,41 +30,54 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("أطباؤنا"),
-        centerTitle: true,
-      ),
-      body: BlocProvider.value(
-        value: doctorsCubit..getDoctors(),
-        // (context) => _doctorsCubit,
-        child:
-            BlocBuilder<DoctorsCubit, DoctorsStates>(builder: (context, state) {
-          if (state is GetDoctorsLoading) {
-            return const Center(child: LoadingIndicator());
-          } else if (state is GetDoctorsError) {
-            return Center(
-              child: ErrorIndicator(
-                message: state.message,
-              ),
-            );
-          } else if (state is GetDoctorsSuccess) {
-            return GridView.builder(
-              // padding: const EdgeInsets.all(1),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 6,
-                  childAspectRatio: 0.8,
-                  crossAxisSpacing: 6),
-              itemBuilder: (_, index) => DoctorItem(
-                doctorEntity: state.doctorEntity[index],
-              ),
-              itemCount: state.doctorEntity.length,
-            );
-          } else {
-            return const SizedBox();
-          }
-        }),
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        backgroundColor: ColorManager.white,
+        appBar: AppBar(
+          toolbarHeight: 70,
+          backgroundColor: ColorManager.white,
+          title: Text(
+            "أطباؤنا",
+            style: getSemiBoldStyle(color: ColorManager.textColor),
+          ),
+          centerTitle: true,
+        ),
+        body: BlocProvider.value(
+          value: doctorsCubit..getDoctors(),
+          // (context) => _doctorsCubit,
+          child: BlocBuilder<DoctorsCubit, DoctorsStates>(
+              builder: (context, state) {
+            if (state is GetDoctorsLoading) {
+              return const Center(child: LoadingIndicator());
+            } else if (state is GetDoctorsError) {
+              return Center(
+                child: ErrorIndicator(
+                  message: state.message,
+                ),
+              );
+            } else if (state is GetDoctorsSuccess) {
+              return ListView.builder(
+                padding: const EdgeInsets.all(1),
+                // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                //     crossAxisCount: 2,
+                //     mainAxisSpacing: 6,
+                //     childAspectRatio: 0.8,
+                //     crossAxisSpacing: 6),
+                itemBuilder: (_, index) => SizedBox(
+                  height: 150,
+                  width: 200,
+                  child: DoctorItem(
+                    doctorEntity: state.doctorEntity[index],
+                  ),
+                ),
+                itemCount: state.doctorEntity.length,
+              );
+            } else {
+              return const SizedBox();
+            }
+          }),
+        ),
       ),
     );
   }

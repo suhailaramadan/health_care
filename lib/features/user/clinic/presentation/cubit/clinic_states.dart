@@ -9,7 +9,19 @@ class GetClinicsSuccess extends ClinicState {
   GetClinicsSuccess(this.clinicEntity);
 }
 
+class GetSearchSuccess extends ClinicState {
+  List<ClinicEntity> searchEntity;
+  GetSearchSuccess(this.searchEntity);
+}
+
 class GetClinicsLoading extends ClinicState {}
+
+class GetSearchLoading extends ClinicState {}
+
+class GetSearchError extends ClinicState {
+  final String message;
+  GetSearchError(this.message);
+}
 
 class GetClinicsError extends ClinicState {
   final String message;

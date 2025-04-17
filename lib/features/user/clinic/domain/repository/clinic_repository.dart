@@ -5,4 +5,5 @@ import 'package:dartz/dartz.dart';
 abstract class ClinicRepository {
   Future<Either<Failure, List<ClinicEntity>>> getClinics();
   Future<Either<Failure, List<ClinicEntity>>> getClinicsById(int id);
+  Future<Either<Failure, List<ClinicEntity>>> search(String query);
 }

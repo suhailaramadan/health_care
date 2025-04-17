@@ -34,7 +34,7 @@ class _AppointmentListState extends State<AppointmentList> {
           child: Align(
             alignment: Alignment.topRight,
             child: Text(
-              "اليوم",
+              "",
               style: getMediumStyle(color: ColorManager.textColor),
             ),
           ),
@@ -129,7 +129,7 @@ class _AppointmentListState extends State<AppointmentList> {
         ),
         if (selectedDay != null && availableSlots.isEmpty)
           Padding(
-            padding: EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 10),
             child: Text(
               "لا يوجد مواعيد متاحة لهذا اليوم",
               style: getMediumStyle(color: ColorManager.red),

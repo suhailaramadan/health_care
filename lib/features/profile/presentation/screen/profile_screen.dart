@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/di/service_locator.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/image_manager.dart';
@@ -47,43 +48,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Column(
                       children: [
                         CircleAvatar(
-                            radius: 90,
+                            radius: 80,
                             backgroundImage: state.profileEntity.imageUrl !=
                                         null &&
                                     state.profileEntity.imageUrl!.isNotEmpty
-                                ? NetworkImage(state.profileEntity.imageUrl!)
-                                : const AssetImage("${ImageManager.profile}")
+                                ? NetworkImage(
+                                    "${ApiConstants.imageBaseUrl}${state.profileEntity.imageUrl!}")
+                                : const AssetImage(ImageManager.profile)
                                     as ImageProvider),
                         const SizedBox(
                           height: 16,
                         ),
                         Text(
                           "${state.profileEntity.firstName ?? ''} ${state.profileEntity.lastName ?? ''}",
-                          style:
-                              getSemiBoldStyle(color: ColorManager.textColor),
+                          style: getMediumStyle(color: ColorManager.textColor),
                         ),
                         SizedBox(
                           height: 50,
                         ),
                         Text(
                           "البريد الإلكتروني : ${state.profileEntity.email ?? 'غير متوفر'}",
-                          style:
-                              getSemiBoldStyle(color: ColorManager.textColor),
+                          style: getMediumStyle(color: ColorManager.textColor),
                         ),
                         Text(
                           "الكلية :  ${state.profileEntity.college ?? 'غير متوفر'}",
-                          style:
-                              getSemiBoldStyle(color: ColorManager.textColor),
+                          style: getMediumStyle(color: ColorManager.textColor),
                         ),
                         Text(
                           "رقم الهاتف :  ${state.profileEntity.phoneNumber}",
-                          style:
-                              getSemiBoldStyle(color: ColorManager.textColor),
+                          style: getMediumStyle(color: ColorManager.textColor),
                         ),
                         Text(
                           "الرقم القومي :  ${state.profileEntity.nationalId ?? 'غير متوفر'}",
-                          style:
-                              getSemiBoldStyle(color: ColorManager.textColor),
+                          style: getMediumStyle(color: ColorManager.textColor),
                         ),
                       ],
                     ),

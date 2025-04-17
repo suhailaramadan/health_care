@@ -3,6 +3,7 @@ import 'package:graduation_project/core/error/exceptions.dart';
 import 'package:graduation_project/core/error/failure.dart';
 import 'package:graduation_project/features/user/clinic/data/data_sources/remote/clinic_remote_data_source.dart';
 import 'package:graduation_project/features/user/clinic/data/mappers/clinic_mappers.dart';
+import 'package:graduation_project/features/user/clinic/data/mappers/search_mapper.dart';
 import 'package:graduation_project/features/user/clinic/domain/entities/clinic_entity.dart';
 import 'package:graduation_project/features/user/clinic/domain/repository/clinic_repository.dart';
 import 'package:injectable/injectable.dart';
@@ -29,6 +30,17 @@ class ClinicRepositoryImpl implements ClinicRepository {
       final response = await _remoteDataSource.getClinicsByID(id);
       return Right(
           response.data!.map((clinicModel) => clinicModel.toEntity).toList());
+    } on RemoteException catch (exception) {
+      return left(Failure(exception.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ClinicEntity>>> search(String query) async {
+    try {
+      final response = await _remoteDataSource.search(query);
+      return Right(
+          response.data!.map((searchModel) => searchModel.toEntity).toList());
     } on RemoteException catch (exception) {
       return left(Failure(exception.message));
     }

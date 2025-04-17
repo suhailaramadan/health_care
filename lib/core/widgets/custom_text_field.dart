@@ -107,7 +107,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             obscureText: hidden,
             keyboardType: widget.textInputType,
             obscuringCharacter: '*',
-            cursorColor: widget.cursorColor ?? ColorManager.kuhly,
+            cursorColor: widget.cursorColor ?? ColorManager.primary,
             onTap: widget.onTap,
             onEditingComplete: () {
               widget.focusNode?.unfocus();

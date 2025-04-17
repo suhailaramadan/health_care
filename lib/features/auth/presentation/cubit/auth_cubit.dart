@@ -52,42 +52,75 @@ class AuthCubit extends Cubit<AuthStates> {
     emit(LoginLoading());
     try {
       final result = await _loginUseCase(request);
-
-      return result.fold((failure) {
-        emit(LoginError(failure.message));
+      result.fold((failure) {
+        if (!isClosed) {
+          emit(LoginError(failure.message));
+        }
       }, (loginResponse) async {
         await localSharedPref.saveToken(
             loginResponse.token ?? '', loginResponse.role ?? 'User');
-        final profileResult =
-            await serviceLocator.get<ProfileRepository>().getPatientProfile();
-        profileResult.fold((failure) {
-          emit(LoginError(failure.message));
-        }, (profile) async {
-          await localSharedPref.savePatientProfile(profile);
-
-          return emit(LoginSuccess(
+        if (!isClosed) {
+          emit(LoginSuccess(
               role: loginResponse.role ?? 'User',
-              token: loginResponse.token ?? '',
-              firstName: profile.firstName ?? '',
-              lastName: profile.lastName ?? '',
-              userImage: profile.imageUrl ?? ''));
+              token: loginResponse.token ?? ''));
         }
-            // });
-            // if (!isClosed) {
-            //   return emit(LoginSuccess(
-            //     token: loginResponse.token ?? '',
-            //     role: loginResponse.role ?? 'User',
-            //     // firstName: firstName ?? "أهلاً",
-            //     // lastName: lastName ?? '',
-            //     // userImage: userImage ?? '',
-
-            //   }
-            );
       });
     } catch (e) {
       if (!isClosed) {
-        return emit(LoginError("حدث خطأ غير متوقع , حاول مرة أخرى"));
+        LoginError("حدث خطأ غير متوقع , حاول مرة أخرى");
       }
     }
   }
+
+  // Future<void> login(LoginRequest request) async {
+  //   print("???????Loading");
+  //   if (!isClosed) emit(LoginLoading());
+  //   try {
+  //     final result = await _loginUseCase(request);
+
+  //     return result.fold((failure) {
+  //       if (!isClosed) emit(LoginError(failure.message));
+  //       print(">>>>>>>>>>Errror");
+  //     }, (loginResponse) async {
+  //       await localSharedPref.saveToken(
+  //           loginResponse.token ?? '', loginResponse.role ?? 'User');
+  //       // final profileResult =
+  //       //     await serviceLocator.get<ProfileRepository>().getPatientProfile();
+  //       // profileResult.fold((failure) {
+  //       //   emit(LoginError(failure.message));
+  //       // }, (profile) async {
+  //       //   await localSharedPref.savePatientProfile(profile);
+
+  //       //   // return
+  //       if (!isClosed) {
+  //         emit(LoginSuccess(
+  //           role: loginResponse.role ?? 'User',
+  //           token: loginResponse.token ?? '',
+  //           // firstName: profile.firstName ?? '',
+  //           // lastName: profile.lastName ?? '',
+  //           // userImage: profile.imageUrl ?? ''
+  //         ));
+  //       }
+  //       print(">,Mmb >>>>>>>>>success");
+  //     });
+  //     // });
+  //     // if (!isClosed) {
+  //     //   return emit(LoginSuccess(
+  //     //     token: loginResponse.token ?? '',
+  //     //     role: loginResponse.role ?? 'User',
+  //     //     // firstName: firstName ?? "أهلاً",
+  //     //     // lastName: lastName ?? '',
+  //     //     // userImage: userImage ?? '',
+
+  //     //   }
+  //     // );
+
+  //     // )
+  //     // ;
+  //   } catch (e) {
+  //     if (!isClosed) {
+  //       return emit(LoginError("حدث خطأ غير متوقع , حاول مرة أخرى"));
+  //     }
+  //   }
+  // }
 }

@@ -10,6 +10,8 @@ class ApiConstants {
   static const String bookingPatientEndPoint = "Booking/PatientBookings";
   static const String appointmentDoctorByIdEndPoint = "Appointment";
   static const String bookingAppointmentEndPoint = 'Booking';
+  static const String deleteBookingEndPoint =
+      '$bookingAppointmentEndPoint/DeleteBooking/';
 }
 
 class CacheConstants {

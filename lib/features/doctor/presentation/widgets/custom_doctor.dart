@@ -7,11 +7,10 @@ import 'package:graduation_project/core/resources/font_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/routes/routes.dart';
 import 'package:graduation_project/features/doctor/domain/entities/doctor_entity.dart';
-import 'package:graduation_project/features/doctor/presentation/widgets/custom_doctor.dart';
 import 'package:graduation_project/features/doctor/presentation/widgets/doctor_details.dart';
 
-class DoctorItem extends StatelessWidget {
-  const DoctorItem({super.key, required this.doctorEntity});
+class CustomDoctor extends StatelessWidget {
+  const CustomDoctor({super.key, required this.doctorEntity});
   final DoctorEntity doctorEntity;
   @override
   Widget build(BuildContext context) {
@@ -88,7 +87,7 @@ class DoctorItem extends StatelessWidget {
             textDirection: TextDirection.rtl,
             child: SizedBox(
               height: 150,
-              width: 300,
+              width: 200,
               child: Card(
                 // shape: RoundedRectangleBorder(
                 //   borderRadius: BorderRadius.circular(12),
@@ -96,7 +95,7 @@ class DoctorItem extends StatelessWidget {
                 surfaceTintColor: ColorManager.white,
                 color: ColorManager.white,
                 elevation: 3,
-                child: Row(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ClipRRect(
@@ -108,7 +107,7 @@ class DoctorItem extends StatelessWidget {
                               "${ApiConstants.imageBaseUrl}${doctorEntity.imageUrl}",
                           height: 140,
                           // width: double.infinity,
-                          width: 150,
+                          width: 160,
                           fit: BoxFit.fill,
                           placeholder: (context, url) => const Center(
                                   child: CircularProgressIndicator(
@@ -134,21 +133,13 @@ class DoctorItem extends StatelessWidget {
                                 color: ColorManager.primary, fontSize: 18),
                           ),
                           const SizedBox(
-                            height: 5,
+                            width: 5,
                           ),
                           Text(
                             "${doctorEntity.specialty}",
                             style: getMediumStyle(
-                                color: ColorManager.textColor, fontSize: 12),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "${doctorEntity.email}",
-                            style: getMediumStyle(
-                                color: ColorManager.grey, fontSize: 15),
-                          ),
+                                color: ColorManager.grey, fontSize: 12),
+                          )
                         ],
                       ),
                     )
@@ -218,15 +209,15 @@ class DoctorItem extends StatelessWidget {
   }
 }
 
-// class DoctorArg {
-//   String? firstName;
-//   String? lastName;
-//   String? id;
-//   int? clincId;
-//   String? imageUrl;
-//   dynamic clinicName;
-//   String? description;
-//   String? specialty;
-//   DoctorArg(this.clincId, this.clinicName, this.description, this.firstName,
-//       this.id, this.lastName, this.specialty, this.imageUrl);
-// }
+class DoctorArg {
+  String? firstName;
+  String? lastName;
+  String? id;
+  int? clincId;
+  String? imageUrl;
+  dynamic clinicName;
+  String? description;
+  String? specialty;
+  DoctorArg(this.clincId, this.clinicName, this.description, this.firstName,
+      this.id, this.lastName, this.specialty, this.imageUrl);
+}

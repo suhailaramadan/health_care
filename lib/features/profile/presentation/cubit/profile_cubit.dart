@@ -7,22 +7,34 @@ import 'package:injectable/injectable.dart';
 @lazySingleton
 class ProfileCubit extends Cubit<ProfileStates> {
   final ProfileRepository _profileRepository;
-  ProfileCubit(this._profileRepository) : super(ProfileInitial());
-
+  final AuthLocalDataSource _localDataSource;
+  ProfileCubit(this._profileRepository, this._localDataSource)
+      : super(ProfileInitial());
   Future<void> getPatientProfile() async {
     emit(GetProfilesLoading());
-    try {
-      final cachedProfile = await _profileRepository.getCachedPatientProfile();
-      if (cachedProfile != null) {
-        emit(GetProfilesSuccess(cachedProfile));
-      }
-      final result = await _profileRepository.getPatientProfile();
-      result.fold((failure) => emit(GetProfilesError(failure.message)),
-          (patientProfile) {
-        emit(GetProfilesSuccess(patientProfile));
-      });
-    } catch (exception) {
-      emit(GetProfilesError('تعذر تحميل البيانات'));
-    }
+    final result = await _profileRepository.getPatientProfile();
+    result.fold((failure) {
+      emit(GetProfilesError(failure.message));
+    }, (profile) async {
+      await _localDataSource.savePatientProfile(profile);
+      emit(GetProfilesSuccess(profile));
+    });
   }
+
+  // Future<void> getPatientProfile() async {
+  //   emit(GetProfilesLoading());
+  //   try {
+  //     final cachedProfile = await _profileRepository.getCachedPatientProfile();
+  //     if (cachedProfile != null) {
+  //       emit(GetProfilesSuccess(cachedProfile));
+  //     }
+  //     final result = await _profileRepository.getPatientProfile();
+  //     result.fold((failure) => emit(GetProfilesError(failure.message)),
+  //         (patientProfile) {
+  //       emit(GetProfilesSuccess(patientProfile));
+  //     });
+  //   } catch (exception) {
+  //     emit(GetProfilesError('تعذر تحميل البيانات'));
+  //   }
+  // }
 }

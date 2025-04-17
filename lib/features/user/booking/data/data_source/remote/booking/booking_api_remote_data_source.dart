@@ -6,6 +6,7 @@ import 'package:graduation_project/features/user/booking/data/data_source/remote
 import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_appointment/booking_appointment.dart';
 import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_patient_response/booking_patient_response.dart';
 import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_request.dart';
+import 'package:graduation_project/features/user/booking/data/models/delete_booking_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -58,6 +59,28 @@ class BookingApiRemoteDataSource implements BookingRemoteDataSource {
       }
     } catch (e) {
       throw const RemoteException("فشل في تحميل الحجوزات");
+    }
+  }
+
+  @override
+  Future<DeleteBookingResponse> deleteBooking(
+      int bookingId, String token) async {
+    try {
+      // SharedPreferences sharedPref = await SharedPreferences.getInstance();
+      // String? token = sharedPref.getString(CacheConstants.tokenKey);
+
+      final response =
+          await _dio.delete("${ApiConstants.deleteBookingEndPoint}$bookingId",
+              // queryParameters: {'bookingId': bookingId},
+              options: Options(headers: {
+                "Content-Type": 'application/json',
+                "Authorization": 'Bearer $token',
+              }));
+      print(response);
+      print("$token--------------------- $bookingId");
+      return DeleteBookingResponse.fromJson(response.data);
+    } catch (e) {
+      throw const RemoteException('فشل فى إلغاء الحجز');
     }
   }
 }

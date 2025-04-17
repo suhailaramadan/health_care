@@ -146,6 +146,7 @@
 
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
@@ -153,11 +154,16 @@ import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/utils/formated_date_time.dart';
 import 'package:graduation_project/core/widgets/error_indicator.dart';
 import 'package:graduation_project/core/widgets/loading_indicator.dart';
+import 'package:graduation_project/features/doctor/presentation/cubit/doctor_cubit.dart';
 import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_patient_response/booking_patient_model.dart';
 import 'package:graduation_project/features/user/booking/domain/entities/booking_patient_entity.dart';
+import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/appointment_cubit.dart';
+import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_patient_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_states.dart';
 import 'package:graduation_project/features/user/booking/presentation/widgets/booking_card.dart';
+import 'package:graduation_project/features/user/booking/presentation/widgets/re_booking.dart';
+import 'package:graduation_project/features/user/clinic/presentation/cubit/clinic_cubit.dart';
 import 'package:intl/intl.dart';
 
 class BookingTab extends StatefulWidget {
@@ -185,8 +191,9 @@ class _BookingTabState extends State<BookingTab>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorManager.white,
+      backgroundColor: ColorManager.blue,
       appBar: AppBar(
+        toolbarHeight: 70,
         backgroundColor: ColorManager.white,
         title: Text(
           "حجوزاتي",
@@ -213,29 +220,37 @@ class _BookingTabState extends State<BookingTab>
           } else if (state is GetBookingError) {
             return Center(child: ErrorIndicator(message: state.message));
           } else if (state is GetBookingPatientSuccess) {
-            List<BookingPatientModel> upcomingBookings = state
-                .bookingPatientResponse.data!
-                .where((booking) => _isUpComing(booking.date))
-                .toList()
-              ..sort((a, b) {
-                DateTime dateA = DateFormat('yyyy-MM-dd').parse(a.date ?? '');
-                DateTime dateB = DateFormat('yyyy-MM-dd').parse(b.date ?? '');
-                return dateA.compareTo(dateB);
-              });
-            List<BookingPatientModel> completedBookings = state
-                .bookingPatientResponse.data!
-                .where((booking) => !_isUpComing(booking.date))
-                .toList()
-              ..sort((a, b) {
-                DateTime dateA = DateFormat('yyyy-MM-dd').parse(a.date ?? '');
-                DateTime dateB = DateFormat('yyyy-MM-dd').parse(b.date ?? '');
-                return dateB.compareTo(dateA);
-              });
+            const SizedBox(
+              height: 15,
+            );
+            final data = state.bookingPatientResponse.data;
+            if (data == null || data.isEmpty) {
+              return const Center(
+                child: Text("لا توجد حجوزات"),
+              );
+            }
+            List<BookingPatientModel> upcomingBookings =
+                data.where((booking) => _isUpComing(booking.date)).toList()
+                  ..sort((a, b) {
+                    if (a.date == null || b.date == null) {
+                      return 0;
+                    }
+                    DateTime dateA = DateFormat('yyyy-MM-dd').parse(a.date!);
+                    DateTime dateB = DateFormat('yyyy-MM-dd').parse(b.date!);
+                    return dateA.compareTo(dateB);
+                  });
+            List<BookingPatientModel> completedBookings =
+                data.where((booking) => !_isUpComing(booking.date)).toList()
+                  ..sort((a, b) {
+                    DateTime dateA = DateFormat('yyyy-MM-dd').parse(a.date!);
+                    DateTime dateB = DateFormat('yyyy-MM-dd').parse(b.date!);
+                    return dateB.compareTo(dateA);
+                  });
 
             return TabBarView(
               controller: _tabController,
               children: [
-                _buildBookingList(upcomingBookings, "لا توجد حجوزات قادمة"),
+                _buildBookingList(upcomingBookings, "لا توجد حجوزات"),
                 _buildBookingList(completedBookings, "لا توجد حجوزات مكتملة"),
               ],
             );
@@ -260,34 +275,97 @@ class _BookingTabState extends State<BookingTab>
           child: Text(emptyMessage, style: const TextStyle(fontSize: 16)));
     }
 
-    return ListView.builder(
-      itemCount: bookings.length,
-      itemBuilder: (context, index) {
-        final booking = bookings[index];
-        return BookingCard(
-            clinicName: booking.clinicName ?? '',
-            doctorImage: "assets/images/doctor_image.png",
-            bookingDate: booking.date ?? "",
-            bookingTime: booking.time ?? "",
-            onCancel: () {},
-            onReschedule: () {},
-            doctorFirstName: booking.doctorFirstName ?? "",
-            doctorlastName: booking.doctorLastName ?? '');
+    return BlocListener<DeleteBookingCubit, BookingStates>(
+        listener: (context, state) {
+          if (state is DeleteBookingSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              duration: Duration(seconds: 2),
+              content: Text("تم إلغاء الحجز بنجاح"),
+              backgroundColor: Colors.green,
+            ));
+            context
+                .read<BookingPatientCubit>()
+                .getBookingPatient(CacheConstants.tokenKey);
+          } else if (state is GetBookingError) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                state.message,
+              ),
+              backgroundColor: ColorManager.red,
+            ));
+          }
+        },
+        child: ListView.builder(
+          itemCount: bookings.length,
+          itemBuilder: (context, index) {
+            final booking = bookings[index];
+            return BookingCard(
+              clinicName: booking.clinicName ?? '',
+              doctorImage: "assets/images/doctor_image.png",
+              bookingDate: booking.date ?? "",
+              bookingTime: booking.time ?? "",
+              bookingId: booking.id ?? 0,
+              onReschedule: () {
+                showReBooking(context, booking.id ?? 0, booking.doctorId ?? '',
+                    booking.id ?? 0, booking.date ?? '', booking.time ?? '');
+              },
+              doctorFirstName: booking.doctorFirstName ?? "",
+              doctorlastName: booking.doctorLastName ?? '',
+              doctorId: booking.doctorId ?? '',
+              clinicId: booking.id ?? 0,
+            );
 
-        // return Card(
-        //   margin: EdgeInsets.all(10),
-        //   elevation: 3,
-        //   child: ListTile(
-        //     title: Text(
-        //         "دكتور ${booking.doctorFirstName} ${booking.doctorLastName}"),
-        //     subtitle: Text(
-        //         "التاريخ: ${FormatedDate.formateArabicDate(booking.date ?? '', day: '')} - الوقت: ${FormatedDate.formateTime(booking.time ?? '')}"),
-        //     trailing: Icon(
-        //       _isUpComing(booking.date) ? Icons.schedule : Icons.check_circle,
-        //       color: _isUpComing(booking.date) ? Colors.orange : Colors.green,
-        //     ),
-        //   ),
-        // );
+            // return Card(
+            //   margin: EdgeInsets.all(10),
+            //   elevation: 3,
+            //   child: ListTile(
+            //     title: Text(
+            //         "دكتور ${booking.doctorFirstName} ${booking.doctorLastName}"),
+            //     subtitle: Text(
+            //         "التاريخ: ${FormatedDate.formateArabicDate(booking.date ?? '', day: '')} - الوقت: ${FormatedDate.formateTime(booking.time ?? '')}"),
+            //     trailing: Icon(
+            //       _isUpComing(booking.date) ? Icons.schedule : Icons.check_circle,
+            //       color: _isUpComing(booking.date) ? Colors.orange : Colors.green,
+            //     ),
+            //   ),
+            // );
+          },
+        ));
+  }
+
+  void showReBooking(BuildContext context, int oldBookingId, String doctorId,
+      int clinicId, String date, String time) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider.value(value: context.read<ClinicCubit>()),
+            BlocProvider.value(value: context.read<DoctorsCubit>()),
+            BlocProvider.value(value: context.read<AppointmentCubit>()),
+            BlocProvider.value(value: context.read<BookingCubit>()),
+            BlocProvider.value(value: context.read<DeleteBookingCubit>()),
+          ],
+          child: AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            title: Center(
+              child: Text(
+                "إعادة الحجز",
+                style:
+                    getSemiBoldStyle(color: ColorManager.primary, fontSize: 18),
+              ),
+            ),
+            content: ReBooking(
+              oldBookingId: oldBookingId,
+              initialDate: date,
+              initialDoctorId: doctorId,
+              initialTime: time,
+              initialClinicId: clinicId,
+            ),
+          ),
+        );
       },
     );
   }

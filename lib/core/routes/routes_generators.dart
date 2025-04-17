@@ -53,7 +53,7 @@ class RouteGenerator {
           isIOS,
         );
       default:
-        return _buildRoute(const PatientHomeScreen(), isIOS);
+        return _buildRoute(ChooseUserScreen(), isIOS);
     }
   }
 

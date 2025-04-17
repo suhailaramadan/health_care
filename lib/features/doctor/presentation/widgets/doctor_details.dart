@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/di/service_locator.dart';
@@ -13,6 +16,7 @@ import 'package:graduation_project/core/widgets/error_indicator.dart';
 import 'package:graduation_project/core/widgets/loading_indicator.dart';
 import 'package:graduation_project/features/doctor/domain/entities/doctor_entity.dart';
 import 'package:graduation_project/features/doctor/presentation/widgets/appointment_list.dart';
+import 'package:graduation_project/features/doctor/presentation/widgets/custom_doctor.dart';
 import 'package:graduation_project/features/home/presentation/widgets/doctor_item.dart';
 import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_request.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/appointment_cubit.dart';
@@ -36,7 +40,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
   String? selectedDay;
   String? selectedTime;
   bool isBooking = false;
-
+  bool _showFullDescription = false;
   void _updateSelectedAppointment(String? day, String? time) {
     setState(() {
       selectedDay = day;
@@ -71,19 +75,102 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                 height: 400,
                 width: double.infinity,
                 imageUrl: "${ApiConstants.imageBaseUrl}${args.imageUrl}",
-                placeholder: (context, url) =>
-                    const Center(child: CircularProgressIndicator()),
+                placeholder: (context, url) => const Center(
+                    child: CircularProgressIndicator(
+                  color: ColorManager.primary,
+                )),
                 errorWidget: (context, url, error) =>
                     Image.asset("assets/images/doctor_image.png"),
               ),
             ),
             const SizedBox(height: 15),
             Text("${args.firstName} ${args.lastName}",
-                style: getMediumStyle(
-                    color: const Color.fromARGB(204, 82, 151, 221))),
+                style: getSemiBoldStyle(color: ColorManager.primary
+                    // color: const Color.fromARGB(204, 82, 151, 221)
+                    )),
             const SizedBox(height: 20),
-            Text("مواعيد الحجز",
-                style: getMediumStyle(color: ColorManager.grey)),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.article,
+                      color: ColorManager.primary,
+                    ),
+                    const SizedBox(
+                      width: 2,
+                    ),
+                    Text(
+                      "عن الطبيب",
+                      style: getMediumStyle(color: ColorManager.primary),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RichText(
+                  text: TextSpan(children: [
+                    TextSpan(
+                      text: _showFullDescription
+                          ? args.description ?? ''
+                          : (args.description != null &&
+                                  args.description!.length > 80
+                              ? args.description!.substring(0, 80)
+                              : args.description ?? ''),
+                      style: getRegularStyle(color: ColorManager.textColor),
+                    ),
+                    if (args.description != null &&
+                        args.description!.length > 80)
+                      TextSpan(
+                        text: _showFullDescription
+                            ? 'عرض أقل   '
+                            : '... عرض المزيد',
+                        style: getSemiBoldStyle(
+                            color: ColorManager.primary, fontSize: 15),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            setState(() {
+                              _showFullDescription = !_showFullDescription;
+                            });
+                          },
+                      )
+                  ]),
+                  // child: Text(
+                  //   _showFullDescription
+                  //       ? (args.description ?? '')
+                  //       : (args.description != null &&
+                  //               args.description!.length > 80)
+                  //           ? args.description!.substring(0, 80)
+                  //           : args.description ?? '',
+                  //   style: getMediumStyle(
+                  //       color: const Color.fromARGB(204, 82, 151, 221)),
+                  //   maxLines: _showFullDescription ? null : 3,
+                  //   overflow: TextOverflow.ellipsis,
+                  // ),
+                )),
+            // if (args.description != null && args.description!.length > 80)
+            // TextButton(
+            //     onPressed: () {
+            //       setState(() {
+            //         _showFullDescription = !_showFullDescription;
+            //       });
+            //     },
+            //     child: Text(
+            //       !_showFullDescription ? 'عرض أقل' : 'عرض المزيد',
+            //       style: getRegularStyle(color: ColorManager.textColor),
+            //     )),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text("مواعيد الحجز",
+                    style: getMediumStyle(color: ColorManager.grey)),
+              ),
+            ),
             const SizedBox(height: 20),
             BlocBuilder<AppointmentCubit, AppointmentStates>(
               builder: (context, state) {
@@ -160,37 +247,43 @@ class _DoctorDetailsState extends State<DoctorDetails> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          // shape: ContinuousRectangleBorder(
-          //     borderRadius: BorderRadius.circular(25)),
-          title: const Center(child: Text("تأكيد الحجز")),
-          backgroundColor: ColorManager.blue,
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: AlertDialog(
+            // shape: ContinuousRectangleBorder(
+            //     borderRadius: BorderRadius.circular(25)),
+            title: const Center(child: Text("تأكيد الحجز")),
+            backgroundColor: ColorManager.blue,
 
-          content: Text(
-              "هل تريد تأكيد حجز موعد يوم${FormatedDate.formateArabicDate(selectedDay!, day: '')} الساعة ${FormatedDate.formateTime(selectedTime!)}؟"),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child:
-                  Text("إلغاء", style: getMediumStyle(color: ColorManager.red)),
-            ),
-            TextButton(
-              onPressed: () {
-                final bookingCubit = context.read<BookingCubit>();
-                bookingCubit.bookAppointment(
-                  BookingRequest(
-                    time: selectedTime!,
-                    date: selectedDay!,
-                    doctorId: widget.doctorId,
-                    isBooking: isBooking,
-                  ),
-                );
-                Navigator.of(context).pop();
-              },
-              child: Text("تأكيد",
-                  style: getMediumStyle(color: ColorManager.primary)),
-            ),
-          ],
+            content: Text(
+                "هل تريد تأكيد حجز موعد يوم${FormatedDate.formateArabicDate(selectedDay!, day: '')} الساعة ${FormatedDate.formateTime(selectedTime!)}؟"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text("إلغاء",
+                    style: getMediumStyle(color: ColorManager.red)),
+              ),
+              TextButton(
+                onPressed: () {
+                  final bookingCubit = context.read<BookingCubit>();
+                  bookingCubit.bookAppointment(
+                    BookingRequest(
+                      time: selectedTime!,
+                      date: selectedDay!,
+                      doctorId: widget.doctorId,
+                      isBooking: isBooking,
+                    ),
+                  );
+                  Navigator.of(context).pop();
+                  context
+                      .read<AppointmentCubit>()
+                      .getAppointmentDoctorById(widget.doctorId);
+                },
+                child: Text("تأكيد",
+                    style: getMediumStyle(color: ColorManager.primary)),
+              ),
+            ],
+          ),
         );
       },
     );
