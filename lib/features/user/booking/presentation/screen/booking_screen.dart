@@ -145,6 +145,7 @@
 //////////////////////////////////////////////////////////////////////
 
 import 'package:device_preview/device_preview.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -154,6 +155,7 @@ import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/utils/formated_date_time.dart';
 import 'package:graduation_project/core/widgets/error_indicator.dart';
 import 'package:graduation_project/core/widgets/loading_indicator.dart';
+import 'package:graduation_project/features/auth/presentation/screens/login_screen.dart';
 import 'package:graduation_project/features/doctor/presentation/cubit/doctor_cubit.dart';
 import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_patient_response/booking_patient_model.dart';
 import 'package:graduation_project/features/user/booking/domain/entities/booking_patient_entity.dart';
@@ -176,6 +178,13 @@ class BookingTab extends StatefulWidget {
 
 class _BookingTabState extends State<BookingTab>
     with SingleTickerProviderStateMixin {
+  String? selectedRole;
+  void _navigateToLogin(String role) {
+    setState(() {
+      selectedRole = role;
+    });
+  }
+
   late TabController _tabController;
 
   @override
@@ -190,7 +199,10 @@ class _BookingTabState extends State<BookingTab>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return
+        // selectedRole == 'User'
+        //     ?
+        Scaffold(
       backgroundColor: ColorManager.blue,
       appBar: AppBar(
         toolbarHeight: 70,
@@ -258,6 +270,9 @@ class _BookingTabState extends State<BookingTab>
           return const Center(child: Text("لم يتم تحميل البيانات"));
         },
       ),
+      // )
+      // : const Scaffold(
+      //     body: Center(child: Text("المواعيد المسجلة")),
     );
   }
 

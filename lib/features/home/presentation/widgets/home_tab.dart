@@ -20,7 +20,7 @@ import 'package:graduation_project/core/widgets/loading_indicator.dart';
 import 'package:graduation_project/features/auth/data/data_sources/local/auth_local_data_source.dart';
 import 'package:graduation_project/features/auth/data/data_sources/local/auth_shared_pref_local_data_source.dart';
 import 'package:graduation_project/features/auth/presentation/screens/login_screen.dart';
-import 'package:graduation_project/features/doctor/presentation/widgets/custom_doctor.dart';
+import 'package:graduation_project/features/home/presentation/widgets/custom_doctor.dart';
 import 'package:graduation_project/features/profile/domain/entities/profile_entity.dart';
 import 'package:graduation_project/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:graduation_project/features/user/clinic/domain/entities/clinic_entity.dart';
@@ -30,7 +30,7 @@ import 'package:graduation_project/features/doctor/presentation/cubit/doctor_cub
 import 'package:graduation_project/features/doctor/presentation/cubit/doctor_states.dart';
 import 'package:graduation_project/features/home/presentation/widgets/clinic_item.dart';
 import 'package:graduation_project/features/home/presentation/widgets/custom_section_bar.dart';
-import 'package:graduation_project/features/home/presentation/widgets/doctor_item.dart';
+import 'package:graduation_project/features/doctor/presentation/widgets/doctor_item.dart';
 import 'package:graduation_project/features/home/presentation/widgets/home_slider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -211,7 +211,7 @@ class _HomeTabState extends State<HomeTab> {
                   SizedBox(
                     height: isLandscape
                         ? screenSize.width * .01
-                        : screenSize.height * .01,
+                        : screenSize.height * .015,
                   ),
                   BlocProvider.value(
                     // create: (context) => serviceLocator.get<ClinicCubit>(),
@@ -228,7 +228,7 @@ class _HomeTabState extends State<HomeTab> {
                           return SizedBox(
                               height: isLandscape
                                   ? screenSize.width * .23
-                                  : screenSize.height * .19,
+                                  : screenSize.height * .2,
                               width: MediaQuery.of(context).size.width.w,
                               child: Directionality(
                                 textDirection: TextDirection.rtl,

@@ -1,9 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/core/di/service_locator.dart';
 import 'package:graduation_project/core/routes/routes.dart';
+import 'package:graduation_project/features/auth/presentation/cubit/reset_password_cubit.dart';
+import 'package:graduation_project/features/auth/presentation/cubit/verify_code_cubit.dart';
+import 'package:graduation_project/features/auth/presentation/screens/change_password_screen.dart';
 import 'package:graduation_project/features/auth/presentation/screens/choose_user_screen.dart';
+import 'package:graduation_project/features/auth/presentation/screens/forget_password_screen.dart';
 import 'package:graduation_project/features/auth/presentation/screens/login_screen.dart';
+import 'package:graduation_project/features/auth/presentation/screens/reset_password.dart';
+import 'package:graduation_project/features/auth/presentation/screens/verfiy_code_screen.dart';
 import 'package:graduation_project/features/auth/presentation/screens/register_screen.dart';
 import 'package:graduation_project/features/home/presentation/screens/doctor_home_screen.dart';
 import 'package:graduation_project/features/home/presentation/screens/patient_home_screen.dart';
@@ -45,6 +53,56 @@ class RouteGenerator {
         return _buildRoute(const BookingTab(), isIOS);
       case Routes.clinicDetails:
         return _buildRoute(const ClinicDetails(), isIOS);
+      case Routes.forgetPassword:
+        return _buildRoute(const ForgetPasswordScreen(), isIOS);
+      case Routes.changePassword:
+        return _buildRoute(const ChangePasswordScreen(), isIOS);
+      case Routes.resetPassword:
+        print("${settings.arguments}================================");
+
+        if (settings.arguments != null &&
+            settings.arguments is Map<String, dynamic>) {
+          final args = settings.arguments as Map<String, dynamic>;
+          final email = args['email']?.toString() ?? '';
+          final code = args['code']?.toString() ?? '';
+
+          print('Reset Password Screen => EMAIL: $email, CODE: $code');
+
+          return _buildRoute(
+            ResetPassword(
+              email: email,
+              code: code,
+            ),
+            isIOS,
+          );
+        } else {
+          return _buildRoute(
+              const Scaffold(body: Center(child: Text("بيانات ناقصة"))), isIOS);
+        }
+      // print("${settings.arguments}================================");
+      // final args = settings.arguments as Map<String, dynamic>;
+      // final email = args['email'] as String;
+      // final code = args['code'] as String;
+      // return _buildRoute(
+      //     ResetPassword(
+      //       code: code,
+      //       email: email,
+      //     ),
+      //     isIOS);
+      case Routes.verifycode:
+        print("${settings.arguments}vvvvvvvvvvvvvvvvvvvvvvvvvvv");
+        final args = settings.arguments as Map<String, dynamic>;
+        final email = args['email'] as String;
+        return _buildRoute(
+            VerifyCodeScreen(
+              email: email,
+            ),
+            isIOS);
+
+      // const VerifyCodeScreen(
+      //   email: '',
+      // ),
+      // isIOS);
       case Routes.doctorsDetails:
         return _buildRoute(
           const DoctorDetails(
@@ -53,7 +111,7 @@ class RouteGenerator {
           isIOS,
         );
       default:
-        return _buildRoute(ChooseUserScreen(), isIOS);
+        return _undefinedRoute();
     }
   }
 
@@ -63,14 +121,14 @@ class RouteGenerator {
         : MaterialPageRoute(builder: (_) => widget);
   }
 
-  // static Route<dynamic> _undefinedRoute() {
-  //   return MaterialPageRoute(
-  //     builder: (_) => Scaffold(
-  //       appBar: AppBar(
-  //         title: const Text('No Route Found'),
-  //       ),
-  //       body: const Center(child: Text('No Route Found')),
-  //     ),
-  //   );
-  // }
+  static Route<dynamic> _undefinedRoute() {
+    return MaterialPageRoute(
+      builder: (_) => Scaffold(
+        appBar: AppBar(
+          title: const Text('No Route Found'),
+        ),
+        body: const Center(child: Text('No Route Found')),
+      ),
+    );
+  }
 }

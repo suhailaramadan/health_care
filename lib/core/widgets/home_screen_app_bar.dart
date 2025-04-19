@@ -91,36 +91,42 @@ class _HomeScreenAppBarState extends State<HomeScreenAppBar> {
                     //         widget.automaticallyImplyLeading ?? false,
                     Row(children: [
                   CircleAvatar(
-                    radius: avatarRadius,
-                    backgroundColor: ColorManager.transparent,
-                    backgroundImage: state.profileEntity.imageUrl != null &&
-                            state.profileEntity.imageUrl!.isNotEmpty
-                        ? CachedNetworkImageProvider(
-                            state.profileEntity.imageUrl!)
-                        : const AssetImage(ImageManager.profile)
-                            as ImageProvider,
-                    // child: CachedNetworkImage(imageUrl: "${widget.image}")
-                    // child:
-                    //  state.profileEntity.imageUrl == null
-                    //     ? Image.asset("assets/images/doctor_image.png")
-                    //
+                      radius: avatarRadius,
+                      backgroundColor: ColorManager.transparent,
+                      backgroundImage: state.profileEntity.imageUrl != null &&
+                              state.profileEntity.imageUrl!.isNotEmpty
+                          ? NetworkImage(
+                              "${ApiConstants.imageBaseUrl}${state.profileEntity.imageUrl!}")
+                          : const AssetImage(ImageManager.profile)
+                              as ImageProvider
+                      // state.profileEntity.imageUrl != null &&
+                      //         state.profileEntity.imageUrl!.isNotEmpty
+                      //     ? CachedNetworkImageProvider(
+                      //         state.profileEntity.imageUrl!)
+                      //     : const AssetImage(ImageManager.profile)
+                      //         as ImageProvider,
+                      // child: CachedNetworkImage(imageUrl: "${widget.image}")
+                      // child:
+                      //  state.profileEntity.imageUrl == null
+                      //     ? Image.asset("assets/images/doctor_image.png")
+                      //
 
-                    //   CachedNetworkImage(
-                    // imageUrl:
-                    //     "${ApiConstants.imageBaseUrl}${state.profileEntity.imageUrl}",
+                      //   CachedNetworkImage(
+                      // imageUrl:
+                      //     "${ApiConstants.imageBaseUrl}${state.profileEntity.imageUrl}",
 
-                    // state.profileEntity.imageUrl != null
-                    //     ? FileImage(File(
-                    //         "${ApiConstants.imageBaseUrl}${state.profileEntity.imageUrl}"))
-                    //     : FileImage(File("assets/images/doctor_image.png"))
-                    // : Image.asset('assets/images/doctor_image.png')
+                      // state.profileEntity.imageUrl != null
+                      //     ? FileImage(File(
+                      //         "${ApiConstants.imageBaseUrl}${state.profileEntity.imageUrl}"))
+                      //     : FileImage(File("assets/images/doctor_image.png"))
+                      // : Image.asset('assets/images/doctor_image.png')
 
-                    // backgroundColor: ColorManager.transparent,
-                    // backgroundImage: AssetImage(widget.image)
-                    // child: Image.asset("assets/images/doctor_image.jpg",
-                    // fit: BoxFit.cover
-                    // )
-                  ),
+                      // backgroundColor: ColorManager.transparent,
+                      // backgroundImage: AssetImage(widget.image)
+                      // child: Image.asset("assets/images/doctor_image.jpg",
+                      // fit: BoxFit.cover
+                      // )
+                      ),
                   // const SizedBox(
                   //   width: 10,
                   // ),
@@ -129,11 +135,11 @@ class _HomeScreenAppBarState extends State<HomeScreenAppBar> {
                   // //     child: Row(
                   // //       children: ['
 
-                  // const SizedBox(
-                  //   width: Sizes.s12,
-                  // ),
+                  const SizedBox(
+                    width: Sizes.s12,
+                  ),
                   Text(
-                    "${state.profileEntity.firstName ?? ''}${state.profileEntity.lastName ?? ''}",
+                    "${state.profileEntity.firstName ?? ''} ${state.profileEntity.lastName ?? ''}",
                     style: getSemiBoldStyle(
                         color: const Color.fromARGB(255, 65, 111, 156),
                         fontSize: FontSize.s15.sp),

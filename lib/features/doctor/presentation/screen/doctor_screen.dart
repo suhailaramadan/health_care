@@ -8,7 +8,7 @@ import 'package:graduation_project/core/widgets/error_indicator.dart';
 import 'package:graduation_project/core/widgets/loading_indicator.dart';
 import 'package:graduation_project/features/doctor/presentation/cubit/doctor_cubit.dart';
 import 'package:graduation_project/features/doctor/presentation/cubit/doctor_states.dart';
-import 'package:graduation_project/features/home/presentation/widgets/doctor_item.dart';
+import 'package:graduation_project/features/doctor/presentation/widgets/doctor_item.dart';
 
 class DoctorsScreen extends StatefulWidget {
   const DoctorsScreen({super.key});

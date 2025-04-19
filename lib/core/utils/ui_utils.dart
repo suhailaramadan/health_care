@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
+import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/widgets/loading_indicator.dart';
 
 class UIUtils {
@@ -24,9 +25,20 @@ class UIUtils {
                 ),
               ))));
   static void hideLoading(BuildContext context) => Navigator.of(context).pop();
-  static void showMessage(String message) => Fluttertoast.showToast(
-        backgroundColor: ColorManager.red,
-        msg: message,
-        toastLength: Toast.LENGTH_SHORT,
-      );
+  // static void showMessage(String message) => Fluttertoast.showToast(
+  //       backgroundColor: ColorManager.red,
+  //       msg: message,
+  //       toastLength: Toast.LENGTH_SHORT,
+  //     );
+  static void showMessage(BuildContext context, String message, Color color) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Text(
+            message,
+            style: getRegularStyle(color: ColorManager.white),
+          ),
+        ),
+        backgroundColor: color));
+  }
 }

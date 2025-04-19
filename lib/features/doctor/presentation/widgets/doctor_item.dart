@@ -1,16 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/font_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/routes/routes.dart';
 import 'package:graduation_project/features/doctor/domain/entities/doctor_entity.dart';
+import 'package:graduation_project/features/home/presentation/widgets/custom_doctor.dart';
 import 'package:graduation_project/features/doctor/presentation/widgets/doctor_details.dart';
 
-class CustomDoctor extends StatelessWidget {
-  const CustomDoctor({super.key, required this.doctorEntity});
+class DoctorItem extends StatelessWidget {
+  const DoctorItem({super.key, required this.doctorEntity});
   final DoctorEntity doctorEntity;
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,7 @@ class CustomDoctor extends StatelessWidget {
     // );
     return Container(
       // padding: const EdgeInsets.symmetric(horizontal: 10),
-      // margin: const EdgeInsets.all(10),
+      margin: const EdgeInsets.all(8),
 
       height: 300,
       // decoration: const BoxDecoration(
@@ -86,8 +88,10 @@ class CustomDoctor extends StatelessWidget {
         child: Directionality(
             textDirection: TextDirection.rtl,
             child: SizedBox(
+              // decoration: BoxDecoration(
+              // border: Border.all(color: ColorManager.primary, width: .2)),
               height: 150,
-              width: 200,
+              width: 300,
               child: Card(
                 // shape: RoundedRectangleBorder(
                 //   borderRadius: BorderRadius.circular(12),
@@ -95,55 +99,69 @@ class CustomDoctor extends StatelessWidget {
                 surfaceTintColor: ColorManager.white,
                 color: ColorManager.white,
                 elevation: 3,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ClipRRect(
-                      borderRadius: const BorderRadius.vertical(
-                          top: Radius.circular(12),
-                          bottom: Radius.circular(12)),
-                      child: CachedNetworkImage(
-                          imageUrl:
-                              "${ApiConstants.imageBaseUrl}${doctorEntity.imageUrl}",
-                          height: 140,
-                          // width: double.infinity,
-                          width: 160,
-                          fit: BoxFit.fill,
-                          placeholder: (context, url) => const Center(
-                                  child: CircularProgressIndicator(
-                                color: ColorManager.primary,
-                              )),
-                          errorWidget: (context, url, error) {
-                            return Image.asset(
-                              "assets/images/doctor_image.png",
-                            );
-                          }),
-                    ),
-                    // const SizedBox(
-                    //   width: 15,
-                    // ),
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "د. ${doctorEntity.firstName} ${doctorEntity.lastName}",
-                            style: getBoldStyle(
-                                color: ColorManager.primary, fontSize: 18),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "${doctorEntity.specialty}",
-                            style: getMediumStyle(
-                                color: ColorManager.grey, fontSize: 12),
-                          )
-                        ],
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border:
+                          Border.all(width: .2, color: ColorManager.primary)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ClipRRect(
+                        borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(12),
+                            bottom: Radius.circular(12)),
+                        child: CachedNetworkImage(
+                            imageUrl:
+                                "${ApiConstants.imageBaseUrl}${doctorEntity.imageUrl}",
+                            height: 140,
+                            // width: double.infinity,
+                            width: 150,
+                            fit: BoxFit.fill,
+                            placeholder: (context, url) => const Center(
+                                    child: CircularProgressIndicator(
+                                  color: ColorManager.primary,
+                                )),
+                            errorWidget: (context, url, error) {
+                              return Image.asset(
+                                "assets/images/doctor_image.png",
+                              );
+                            }),
                       ),
-                    )
-                  ],
+                      // const SizedBox(
+                      //   width: 15,
+                      // ),
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "د. ${doctorEntity.firstName} ${doctorEntity.lastName}",
+                              style: getBoldStyle(
+                                  color: ColorManager.primary, fontSize: 18),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "${doctorEntity.specialty}",
+                              style: getMediumStyle(
+                                  color: ColorManager.textColor, fontSize: 12),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "${doctorEntity.email}",
+                              style: getMediumStyle(
+                                  color: ColorManager.grey, fontSize: 15),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             )
@@ -209,15 +227,15 @@ class CustomDoctor extends StatelessWidget {
   }
 }
 
-class DoctorArg {
-  String? firstName;
-  String? lastName;
-  String? id;
-  int? clincId;
-  String? imageUrl;
-  dynamic clinicName;
-  String? description;
-  String? specialty;
-  DoctorArg(this.clincId, this.clinicName, this.description, this.firstName,
-      this.id, this.lastName, this.specialty, this.imageUrl);
-}
+// class DoctorArg {
+//   String? firstName;
+//   String? lastName;
+//   String? id;
+//   int? clincId;
+//   String? imageUrl;
+//   dynamic clinicName;
+//   String? description;
+//   String? specialty;
+//   DoctorArg(this.clincId, this.clinicName, this.description, this.firstName,
+//       this.id, this.lastName, this.specialty, this.imageUrl);
+// }

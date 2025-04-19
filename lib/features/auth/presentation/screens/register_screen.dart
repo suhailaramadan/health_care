@@ -307,10 +307,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                 .pushReplacementNamed(
                                                     Routes.login);
                                             UIUtils.showMessage(
-                                                "تم إنشاء حساب بنجاح");
+                                                context,
+                                                "تم إنشاء حساب بنجاح",
+                                                ColorManager.green);
                                           } else if (state is RegisterError) {
                                             UIUtils.hideLoading(context);
-                                            UIUtils.showMessage(state.message);
+                                            UIUtils.showMessage(
+                                                context,
+                                                state.message,
+                                                ColorManager.red);
                                           }
                                         },
                                         child: CustomButton(

@@ -1,7 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_project/core/constants.dart';
@@ -12,12 +10,12 @@ import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/widgets/custom_botton.dart';
 import 'package:graduation_project/core/widgets/error_indicator.dart';
 import 'package:graduation_project/core/widgets/loading_indicator.dart';
-import 'package:graduation_project/features/doctor/presentation/widgets/custom_doctor.dart';
+import 'package:graduation_project/features/home/presentation/widgets/custom_doctor.dart';
 import 'package:graduation_project/features/user/clinic/presentation/widget/custom_clinic_componant.dart';
 import 'package:graduation_project/features/doctor/domain/use_case.dart/get_doctors.dart';
 import 'package:graduation_project/features/doctor/presentation/cubit/doctor_cubit.dart';
 import 'package:graduation_project/features/doctor/presentation/cubit/doctor_states.dart';
-import 'package:graduation_project/features/home/presentation/widgets/doctor_item.dart';
+import 'package:graduation_project/features/doctor/presentation/widgets/doctor_item.dart';
 
 class ClinicDetails extends StatefulWidget {
   const ClinicDetails({super.key});
@@ -33,8 +31,6 @@ class _ClinicDetailsState extends State<ClinicDetails> {
   @override
   void initState() {
     super.initState();
-    // doctorsCubit = serviceLocator.get<DoctorsCubit>();
-    // doctorsCubit?.getDoctorsByClinicId(args!.id);
     Future.microtask(() {
       final routeArgs = ModalRoute.of(context)?.settings.arguments;
       if (routeArgs is ClinicDetailsArg) {
@@ -202,11 +198,8 @@ class _ClinicDetailsState extends State<ClinicDetails> {
                         child: BlocBuilder<DoctorsCubit, DoctorsStates>(
                           builder: (context, state) {
                             if (state is GetDoctorsLoading) {
-                              print("ARGGGGGGGGGGID----> ${args.id}");
                               return const LoadingIndicator();
                             } else if (state is GetDoctorsError) {
-                              print(
-                                  "ErrorMessage-------------------> ${state.message}");
                               return ErrorIndicator(
                                 message: state.message,
                               );

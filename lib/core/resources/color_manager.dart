@@ -11,6 +11,7 @@ class ColorManager {
   static const blue = Color(0xffDBEDF7);
   static const greyDark = Color(0xffE0E0E0);
   static const babyGreen = Color(0xffE2FEE8);
+  static const green = Colors.green;
   static const babyPink = Color(0xffFAEEDE);
   static const red = Color.fromRGBO(175, 7, 7, 1);
   static const transparent = Colors.transparent;

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/features/auth/presentation/screens/change_password_screen.dart';
 import 'package:graduation_project/features/auth/presentation/screens/choose_user_screen.dart';
+import 'package:graduation_project/features/auth/presentation/screens/forget_password_screen.dart';
 import 'package:graduation_project/features/auth/presentation/screens/login_screen.dart';
+import 'package:graduation_project/features/auth/presentation/screens/reset_password.dart';
+import 'package:graduation_project/features/auth/presentation/screens/verfiy_code_screen.dart';
 import 'package:graduation_project/features/auth/presentation/screens/register_screen.dart';
 import 'package:graduation_project/features/user/booking/presentation/screen/booking_screen.dart';
 import 'package:graduation_project/features/user/clinic/presentation/screen/clinic_screen.dart';
@@ -23,6 +27,10 @@ class Routes {
   static const doctor = DoctorsScreen.doctor;
   static const profile = ProfileScreen.profile;
   static const booking = BookingTab.booking;
+  static const forgetPassword = ForgetPasswordScreen.forgetPassword;
   static const clinicDetails = ClinicDetails.clinicDetails;
   static const doctorsDetails = DoctorDetails.dectorDetails;
+  static const verifycode = VerifyCodeScreen.verifyCodeScreen;
+  static const resetPassword = ResetPassword.resetPassword;
+  static const changePassword = ChangePasswordScreen.changePassword;
 }

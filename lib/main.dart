@@ -10,6 +10,10 @@ import 'package:graduation_project/core/routes/routes.dart';
 import 'package:graduation_project/core/routes/routes_generators.dart';
 import 'package:graduation_project/core/widgets/loading_indicator.dart';
 import 'package:graduation_project/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:graduation_project/features/auth/presentation/cubit/change_password_cubit.dart';
+import 'package:graduation_project/features/auth/presentation/cubit/forget_password_cubit.dart';
+import 'package:graduation_project/features/auth/presentation/cubit/reset_password_cubit.dart';
+import 'package:graduation_project/features/auth/presentation/cubit/verify_code_cubit.dart';
 import 'package:graduation_project/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/appointment_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_cubit.dart';
@@ -84,6 +88,17 @@ class HealthCareApp extends StatelessWidget {
                 BlocProvider(create: (context) => bookingCubit),
                 BlocProvider(
                     create: (context) =>
+                        serviceLocator.get<ForgetPasswordCubit>()),
+                BlocProvider(
+                    create: (context) =>
+                        serviceLocator.get<ChangePasswordCubit>()),
+                BlocProvider(
+                    create: (context) => serviceLocator.get<VerifyCodeCubit>()),
+                BlocProvider(
+                    create: (context) =>
+                        serviceLocator.get<ResetPasswordCubit>()),
+                BlocProvider(
+                    create: (context) =>
                         serviceLocator.get<BookingPatientCubit>()),
                 BlocProvider(
                     create: (context) =>
@@ -102,7 +117,7 @@ class HealthCareApp extends StatelessWidget {
                       builder: DevicePreview.appBuilder,
                       debugShowCheckedModeBanner: false,
                       onGenerateRoute: RouteGenerator.getRoute,
-                      initialRoute: Routes.login)));
+                      initialRoute: Routes.patientHome)));
         });
   }
 }

@@ -82,6 +82,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           "الرقم القومي :  ${state.profileEntity.nationalId ?? 'غير متوفر'}",
                           style: getMediumStyle(color: ColorManager.textColor),
                         ),
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(Routes.login);
+                            },
+                            child: Text("logOut"))
                       ],
                     ),
                   ),

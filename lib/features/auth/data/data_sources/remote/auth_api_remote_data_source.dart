@@ -2,8 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/error/exceptions.dart';
 import 'package:graduation_project/features/auth/data/data_sources/remote/auth_remote_data_source.dart';
+import 'package:graduation_project/features/auth/data/models/password/change_password_request.dart';
+import 'package:graduation_project/features/auth/data/models/password/forget_password_request.dart';
 import 'package:graduation_project/features/auth/data/models/login/login_request.dart';
 import 'package:graduation_project/features/auth/data/models/login/login_response.dart';
+import 'package:graduation_project/features/auth/data/models/password/reset_password_request.dart';
+import 'package:graduation_project/features/auth/data/models/password/verify_code_request.dart';
 import 'package:graduation_project/features/auth/data/models/register/register_request.dart';
 import 'package:graduation_project/features/auth/data/models/register/register_response.dart';
 import 'package:injectable/injectable.dart';
@@ -65,6 +69,60 @@ class AuthAPIRemoteDataSource extends AuthRemoteDataSource {
         }
       }
       throw RemoteException(message);
+    }
+  }
+
+  @override
+  Future<void> forgetPassword(ForgetPasswordRequest request) async {
+    final response = await dio
+        .post("Authentication/Forget-Password", data: {'email': request.email});
+    if (response.statusCode != 200) {
+      throw RemoteException(response.statusMessage ?? '');
+    }
+  }
+
+  @override
+  Future<String> verifyCode(VerifyCodeRequest request) async {
+    final response = await dio.post("Authentication/Verify-Code", data: {
+      'email': request.email,
+      'code': request.code,
+    });
+    if (response.statusCode == 200) {
+      return response.data.toString();
+    } else {
+      throw Exception('حدث خطأ فى السيرفر');
+    }
+  }
+
+  @override
+  Future<String> resetPassword(ResetPasswordRequest request) async {
+    final response = await dio.post("Authentication/Reset-Password", data: {
+      'code': request.code,
+      'email': request.email,
+      'newPassword': request.newPassword,
+      'confirmPassword': request.confirmPassword,
+    });
+    print("Status------- ${response.statusCode}");
+    print("Response=======> ${response.data}");
+    if (response.statusCode == 200) {
+      return response.data.toString();
+    } else {
+      throw const RemoteException("فشل في إعادة تعيين كلمة المرور");
+    }
+  }
+
+  @override
+  Future<String> changePassword(ChangePasswordRequest request) async {
+    final response = await dio.post("Authentication/Change-Password", data: {
+      'email': request.email,
+      "oldPassword": request.oldPassword,
+      "newPassword": request.newPassword,
+      "confirmPassword": request.confirmPassword,
+    });
+    if (response.statusCode == 200) {
+      return response.data.toString();
+    } else {
+      throw const RemoteException("فشل في تغيير كلمة المرور");
     }
   }
 }

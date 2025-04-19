@@ -28,6 +28,7 @@ class CustomTextField extends StatefulWidget {
     this.borderBackgroundColor,
     this.suffixIcon,
     this.fillColor = ColorManager.transparent,
+    this.maxLength,
   });
   final TextEditingController? controller;
   final FocusNode? focusNode;
@@ -44,6 +45,7 @@ class CustomTextField extends StatefulWidget {
   final Color? cursorColor;
   final bool readOnly;
   final int? maxLines;
+  final int? maxLength;
   final Color? fillColor;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
@@ -98,6 +100,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: TextFormField(
             // textDirection: _textDirection,
+            maxLength: widget.maxLength,
             maxLines: widget.maxLines ?? 1,
             controller: widget.controller,
             focusNode: widget.focusNode,

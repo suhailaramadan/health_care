@@ -22,7 +22,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
   int currentIndex = 0;
   List<Widget> tabs = [
     const HomeTab(),
-    BookingTab(),
+    const BookingTab(),
     const ChatBotTab(),
     const ProfileScreen()
   ];
