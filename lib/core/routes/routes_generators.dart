@@ -15,6 +15,7 @@ import 'package:graduation_project/features/auth/presentation/screens/verfiy_cod
 import 'package:graduation_project/features/auth/presentation/screens/register_screen.dart';
 import 'package:graduation_project/features/home/presentation/screens/doctor_home_screen.dart';
 import 'package:graduation_project/features/home/presentation/screens/patient_home_screen.dart';
+import 'package:graduation_project/features/splash_screen.dart';
 import 'package:graduation_project/features/user/booking/presentation/screen/booking_screen.dart';
 import 'package:graduation_project/features/user/clinic/presentation/screen/clinic_screen.dart';
 import 'package:graduation_project/features/user/clinic/presentation/widget/clinic_details.dart';
@@ -39,6 +40,8 @@ class RouteGenerator {
               userType: 'User',
             ),
             isIOS);
+      case Routes.splash:
+        return _buildRoute(const SplashScreen(), isIOS);
       case Routes.doctor:
         return _buildRoute(const DoctorsScreen(), isIOS);
       case Routes.chooseUser:
@@ -58,16 +61,11 @@ class RouteGenerator {
       case Routes.changePassword:
         return _buildRoute(const ChangePasswordScreen(), isIOS);
       case Routes.resetPassword:
-        print("${settings.arguments}================================");
-
         if (settings.arguments != null &&
             settings.arguments is Map<String, dynamic>) {
           final args = settings.arguments as Map<String, dynamic>;
           final email = args['email']?.toString() ?? '';
           final code = args['code']?.toString() ?? '';
-
-          print('Reset Password Screen => EMAIL: $email, CODE: $code');
-
           return _buildRoute(
             ResetPassword(
               email: email,
@@ -111,7 +109,7 @@ class RouteGenerator {
           isIOS,
         );
       default:
-        return _undefinedRoute();
+        return _buildRoute(const SplashScreen(), isIOS);
     }
   }
 

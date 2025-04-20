@@ -64,6 +64,36 @@ TextStyle getBoldStyle({
       color,
     );
 
+TextStyle _getTextStyleTajawal(
+  double fontSize,
+  FontWeight fontWeight,
+  Color color,
+) =>
+    TextStyle(
+      fontSize: fontSize,
+      fontFamily: FontConstants.font,
+      color: color,
+      fontWeight: fontWeight,
+    );
+TextStyle getTajawalBoldStyle({
+  double? fontSize,
+  required Color color,
+}) =>
+    _getTextStyleTajawal(
+      fontSize ?? FontSize.s22,
+      FontWeightManager.tajawalBold,
+      color,
+    );
+TextStyle getExtraBoldStyle({
+  double? fontSize,
+  required Color color,
+}) =>
+    _getTextStyleTajawal(
+      fontSize ?? FontSize.s22,
+      FontWeightManager.extraBold,
+      color,
+    );
+
 TextStyle getTextWithLine() => TextStyle(
       color: ColorManager.primary,
       fontSize: FontSize.s16,

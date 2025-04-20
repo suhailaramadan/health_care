@@ -117,7 +117,7 @@ class HealthCareApp extends StatelessWidget {
                       builder: DevicePreview.appBuilder,
                       debugShowCheckedModeBanner: false,
                       onGenerateRoute: RouteGenerator.getRoute,
-                      initialRoute: Routes.patientHome)));
+                      initialRoute: Routes.splash)));
         });
   }
 }

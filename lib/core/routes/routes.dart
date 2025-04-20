@@ -6,6 +6,7 @@ import 'package:graduation_project/features/auth/presentation/screens/login_scre
 import 'package:graduation_project/features/auth/presentation/screens/reset_password.dart';
 import 'package:graduation_project/features/auth/presentation/screens/verfiy_code_screen.dart';
 import 'package:graduation_project/features/auth/presentation/screens/register_screen.dart';
+import 'package:graduation_project/features/splash_screen.dart';
 import 'package:graduation_project/features/user/booking/presentation/screen/booking_screen.dart';
 import 'package:graduation_project/features/user/clinic/presentation/screen/clinic_screen.dart';
 import 'package:graduation_project/features/user/clinic/presentation/widget/clinic_details.dart';
@@ -23,6 +24,7 @@ class Routes {
   static const register = RegisterScreen.register;
   static const chooseUser = ChooseUserScreen.chooseUser;
   static const login = LoginScreen.login;
+  static const splash = SplashScreen.splashScreen;
   static const clinic = ClinicScreen.clinic;
   static const doctor = DoctorsScreen.doctor;
   static const profile = ProfileScreen.profile;

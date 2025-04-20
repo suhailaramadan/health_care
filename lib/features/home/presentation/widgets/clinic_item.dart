@@ -38,12 +38,9 @@ class ClinicItem extends StatelessWidget {
               name: clinicEntity.name,
               imageUrl: clinicEntity.imageUrl,
             ))));
-
-        print(
-            "Nahhhhhhhhkkswaaaaaae--------> ${clinicEntity.id}, name : ${clinicEntity.name},,  image ${clinicEntity.imageUrl}!");
       },
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 4),
         color: ColorManager.white,
         // height: 80,
         width: 130,
@@ -77,24 +74,30 @@ class ClinicItem extends StatelessWidget {
                 child:
                     // Image.asset("assets/images/heart_clinic.png"),
                     CachedNetworkImage(
-                  imageUrl:
-                      "${ApiConstants.imageBaseUrl}${clinicEntity.imageUrl}",
-                  fit: BoxFit.fill,
-                  // height: 100,
-                  // width: 150,
-                  placeholder: (context, url) => const Center(
-                    child: CircularProgressIndicator(
-                      color: ColorManager.greyDark,
-                    ),
-                  ),
-                  errorWidget: (context, url, error) => Image.asset(
-                    "assets/images/brain_clinic.png",
-                    // height: 100.w,
-                    // width: 50,
-                    // width: double.infinity,
-                    fit: BoxFit.fill,
-                  ),
-                ),
+                        imageUrl:
+                            "${ApiConstants.imageBaseUrl}${clinicEntity.imageUrl}",
+                        fit: BoxFit.fill,
+                        // height: 100,
+                        // width: 150,
+                        placeholder: (context, url) => const Center(
+                              child: CircularProgressIndicator(
+                                color: ColorManager.greyDark,
+                              ),
+                            ),
+                        errorWidget: (context, url, error) => const Center(
+                                child: Icon(
+                              Icons.error_outline_outlined,
+                              color: ColorManager.red,
+                              size: 25,
+                            ))
+                        // Image.asset(
+                        //   "assets/images/brain_clinic.png",
+                        //   // height: 100.w,
+                        //   // width: 50,
+                        //   // width: double.infinity,
+                        //   fit: BoxFit.fill,
+                        // ),
+                        ),
               ),
             ),
             // Container(

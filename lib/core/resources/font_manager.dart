@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FontConstants {
   static const fonFamily = "Cairo";
+  static const font = "Tajawal";
 }
 
 class FontWeightManager {
@@ -12,6 +13,8 @@ class FontWeightManager {
   static const FontWeight medium = FontWeight.w500;
   static const FontWeight semiBold = FontWeight.w600;
   static const FontWeight bold = FontWeight.w700;
+  static const FontWeight tajawalBold = FontWeight.w800;
+  static const FontWeight extraBold = FontWeight.w900;
 }
 
 class FontSize {
