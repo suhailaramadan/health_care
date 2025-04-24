@@ -8,19 +8,20 @@ import 'package:injectable/injectable.dart';
 class SearchCubit extends Cubit<ClinicState> {
   final Search _search;
   SearchCubit(this._search) : super(ClinicInitial());
-  bool isSearching = false;
+
   Future<void> searchClinic(
     String query,
   ) async {
-    isSearching = true;
     emit(GetSearchLoading());
     final result = await _search(query);
     result.fold((failure) {
-      isSearching = true;
       emit(GetSearchError(failure.message.toString()));
     }, (clinics) {
-      isSearching = false;
       emit(GetSearchSuccess(clinics));
     });
+  }
+
+  void clearSearchRewsults() {
+    emit(ClinicInitial());
   }
 }

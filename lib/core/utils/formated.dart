@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
 class FormatedDate {
@@ -25,4 +26,6 @@ class FormatedDate {
       return time;
     }
   }
+
+  static FormData formData = FormData.fromMap({});
 }

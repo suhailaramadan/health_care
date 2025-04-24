@@ -82,7 +82,9 @@ class CustomDoctor extends StatelessWidget {
                     doctorEntity.id,
                     doctorEntity.lastName,
                     doctorEntity.specialty,
-                    doctorEntity.imageUrl)))),
+                    doctorEntity.imageUrl,
+                    doctorEntity.email,
+                    doctorEntity.college)))),
         child: Directionality(
             textDirection: TextDirection.rtl,
             child: SizedBox(
@@ -93,55 +95,61 @@ class CustomDoctor extends StatelessWidget {
                 surfaceTintColor: ColorManager.white,
                 color: ColorManager.white,
                 elevation: 3,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ClipRRect(
-                      borderRadius: const BorderRadius.vertical(
-                          top: Radius.circular(12),
-                          bottom: Radius.circular(12)),
-                      child: CachedNetworkImage(
-                          imageUrl:
-                              "${ApiConstants.imageBaseUrl}${doctorEntity.imageUrl}",
-                          height: 140,
-                          // width: double.infinity,
-                          width: 160,
-                          fit: BoxFit.fill,
-                          placeholder: (context, url) => const Center(
-                                  child: CircularProgressIndicator(
-                                color: ColorManager.primary,
-                              )),
-                          errorWidget: (context, url, error) {
-                            return Image.asset(
-                              "assets/images/doctor_image.png",
-                            );
-                          }),
-                    ),
-                    // const SizedBox(
-                    //   width: 15,
-                    // ),
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "د. ${doctorEntity.firstName} ${doctorEntity.lastName}",
-                            style: getBoldStyle(
-                                color: ColorManager.primary, fontSize: 18),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "${doctorEntity.specialty}",
-                            style: getMediumStyle(
-                                color: ColorManager.grey, fontSize: 12),
-                          )
-                        ],
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border:
+                          Border.all(width: .1, color: ColorManager.primary)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ClipRRect(
+                        borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(12),
+                            bottom: Radius.circular(12)),
+                        child: CachedNetworkImage(
+                            imageUrl:
+                                "${ApiConstants.imageBaseUrl}${doctorEntity.imageUrl}",
+                            height: 140,
+                            // width: double.infinity,
+                            width: 160,
+                            fit: BoxFit.fill,
+                            placeholder: (context, url) => const Center(
+                                    child: CircularProgressIndicator(
+                                  color: ColorManager.primary,
+                                )),
+                            errorWidget: (context, url, error) {
+                              return Image.asset(
+                                "assets/images/doctor_image.png",
+                              );
+                            }),
                       ),
-                    )
-                  ],
+                      // const SizedBox(
+                      //   width: 15,
+                      // ),
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "د. ${doctorEntity.firstName} ${doctorEntity.lastName}",
+                              style: getBoldStyle(
+                                  color: ColorManager.primary, fontSize: 18),
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              "${doctorEntity.specialty}",
+                              style: getMediumStyle(
+                                  color: ColorManager.grey, fontSize: 12),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             )
@@ -211,11 +219,23 @@ class DoctorArg {
   String? firstName;
   String? lastName;
   String? id;
+  String? email;
+  String? college;
   int? clincId;
   String? imageUrl;
   dynamic clinicName;
   String? description;
   String? specialty;
-  DoctorArg(this.clincId, this.clinicName, this.description, this.firstName,
-      this.id, this.lastName, this.specialty, this.imageUrl);
+
+  DoctorArg(
+      this.clincId,
+      this.clinicName,
+      this.description,
+      this.firstName,
+      this.id,
+      this.lastName,
+      this.specialty,
+      this.imageUrl,
+      this.email,
+      this.college);
 }

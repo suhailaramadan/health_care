@@ -15,3 +15,15 @@ class GetProfilesError extends ProfileStates {
   final String message;
   GetProfilesError(this.message);
 }
+
+class GetUpdateProfilesLoading extends ProfileStates {}
+
+class GetUpdateProfilesSuccess extends ProfileStates {
+  final String message;
+  GetUpdateProfilesSuccess(this.message);
+}
+
+class GetUpdateProfilesError extends ProfileStates {
+  final String message;
+  GetUpdateProfilesError(this.message);
+}

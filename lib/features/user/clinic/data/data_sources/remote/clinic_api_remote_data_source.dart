@@ -45,7 +45,6 @@ class ClinicApiRemoteDataSource implements ClinicRemoteDataSource {
     try {
       final response = await _dio.get("${ApiConstants.clinicEndPoint}/search?",
           queryParameters: {'query': query});
-      print(response);
       return SearchResponse.fromJson(response.data);
     } catch (exception) {
       String? message;

@@ -74,7 +74,7 @@ class SearchScreen extends SearchDelegate {
                   close(context, clinic.name);
                   context.read<ClinicCubit>().getClinics();
                 },
-                title: Text(clinic.name ?? ''),
+                title: Text(clinic.name),
                 leading: Image.network(
                     '${ApiConstants.imageBaseUrl}${clinic.imageUrl}'),
               );

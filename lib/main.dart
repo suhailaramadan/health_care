@@ -103,9 +103,10 @@ class HealthCareApp extends StatelessWidget {
                 BlocProvider(
                     create: (context) =>
                         serviceLocator.get<AppointmentCubit>()),
+                        
                 BlocProvider(
-                    create: (context) => profileCubit..getPatientProfile())
-              ],
+                    create: (context) => profileCubit..getPatientProfile()..updatePatientProfile),
+                               ],
               child: ScreenUtilInit(
                   designSize: const Size(420, 874),
                   minTextAdapt: true,

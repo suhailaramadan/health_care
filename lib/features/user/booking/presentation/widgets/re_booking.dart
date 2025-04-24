@@ -253,147 +253,164 @@ class _ReBookingState extends State<ReBooking> {
         selectedDoctorId != widget.initialDoctorId &&
             selectedDate != widget.initialDate &&
             selectedTime != widget.initialTime;
-    return Dialog(
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: SingleChildScrollView(
-          child: Column(
-            // mainAxisSize: MainAxisSize.min,
-            children: [
-              BlocBuilder<ClinicCubit, ClinicState>(builder: (context, state) {
-                if (state is GetClinicsLoading) {
-                  return const LoadingIndicator();
-                }
-                if (state is GetClinicsSuccess) {
-                  var clinics = List<ClinicEntity>.from(state.clinicEntity);
-
-                  if (selectedClinicId != null &&
-                      !clinics
-                          .any((element) => element.id == selectedClinicId!)) {
-                    clinics.insert(
-                        0, ClinicEntity(selectedClinicId ?? 0, 'العيادة', ''));
-                  }
-                  return DropdownButtonFormField<int>(
-                    value: selectedClinicId,
-                    hint: const Text("اختر العيادة"),
-                    items: clinics
-                        .map((clinic) => DropdownMenuItem(
-                              value: clinic.id,
-                              child: Text(clinic.name),
-                            ))
-                        .toList(),
-                    onChanged: (val) {
-                      setState(() {
-                        selectedClinicId = val;
-                        selectedDoctorId = null;
-                      });
-                      context.read<DoctorsCubit>().getDoctorsByClinicId(val!);
-                    },
-                  );
-                }
-                return const SizedBox();
-              }),
-              const SizedBox(height: 10),
-              BlocBuilder<DoctorsCubit, DoctorsStates>(
-                builder: (context, state) {
-                  if (state is GetDoctorsLoading) {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: SizedBox(
+        height: 350,
+        width: 450,
+        child: Padding(
+          padding: const EdgeInsets.all(0.0),
+          child: SingleChildScrollView(
+            child: Column(
+              // mainAxisSize: MainAxisSize.min,
+              children: [
+                BlocBuilder<ClinicCubit, ClinicState>(
+                    builder: (context, state) {
+                  if (state is GetClinicsLoading) {
                     return const LoadingIndicator();
                   }
-                  if (state is GetDoctorsSuccess) {
-                    var doctors = List<DoctorEntity>.from(state.doctorEntity);
-                    if (selectedDoctorId != null &&
-                        !doctors
-                            .any((element) => element.id == selectedDoctorId)) {
-                      doctors.insert(
+                  if (state is GetClinicsSuccess) {
+                    var clinics = List<ClinicEntity>.from(state.clinicEntity);
+
+                    if (selectedClinicId != null &&
+                        !clinics.any(
+                            (element) => element.id == selectedClinicId!)) {
+                      clinics.insert(
                           0,
-                          DoctorEntity(selectedDoctorId!, 'الدكتور', "المحتار",
-                              "", 0, "", "", "", "", ""));
+                          ClinicEntity(
+                              selectedClinicId ?? 0, 'اختر العيادة', ''));
                     }
-                    return DropdownButtonFormField<String>(
-                      isExpanded: true,
-                      value: selectedDoctorId,
-                      hint: const Text("اختر الدكتور"),
-                      items: doctors
-                          .map((doc) => DropdownMenuItem(
-                                value: doc.id,
-                                child: Text("${doc.firstName} ${doc.lastName}"),
+                    return DropdownButtonFormField<int>(
+                      focusColor: ColorManager.primary,
+                      decoration:
+                          InputDecoration(contentPadding: EdgeInsets.all(2)),
+                      value: selectedClinicId,
+                      hint: Text("اختر العيادة",
+                          style: getMediumStyle(color: ColorManager.textColor)),
+                      items: clinics
+                          .map((clinic) => DropdownMenuItem(
+                                alignment: Alignment.topRight,
+                                value: clinic.id,
+                                child: Text(clinic.name),
                               ))
                           .toList(),
                       onChanged: (val) {
-                        setState(() => selectedDoctorId = val);
-                        context
-                            .read<AppointmentCubit>()
-                            .getAppointmentDoctorById(val!);
-                      },
-                    );
-                  }
-                  return const SizedBox();
-                },
-              ),
-              const SizedBox(height: 10),
-              BlocBuilder<AppointmentCubit, AppointmentStates>(
-                builder: (context, state) {
-                  if (state is GetAppointmentLoading) {
-                    return const LoadingIndicator();
-                  }
-                  if (state is GetAppointmentSuccess) {
-                    return AppointmentList(
-                      appointments: state.appointmentEntity,
-                      onSelectionChanged: (day, time) {
                         setState(() {
-                          selectedDate = day;
-                          selectedTime = time;
+                          selectedClinicId = val;
+                          selectedDoctorId = null;
                         });
+                        context.read<DoctorsCubit>().getDoctorsByClinicId(val!);
                       },
                     );
                   }
                   return const SizedBox();
-                },
-              ),
-              const SizedBox(height: 15),
-              ElevatedButton(
-                onPressed: (selectedClinicId != null &&
-                        selectedDoctorId != null &&
-                        selectedDate != null &&
-                        selectedTime != null &&
-                        isChange)
-                    ? () {
-                        context.read<BookingCubit>().bookAppointment(
-                              BookingRequest(
-                                doctorId: selectedDoctorId!,
-                                date: selectedDate!,
-                                time: selectedTime!,
-                                isBooking: true,
-                              ),
-                            );
-
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                            "تم إعادة الحجز بنجاح",
-                          ),
-                          backgroundColor: Colors.green,
-                        ));
-                        context
-                            .read<DeleteBookingCubit>()
-                            .deleteBooking(widget.oldBookingId);
-                        Navigator.of(context).pop();
-                        context
-                            .read<BookingPatientCubit>()
-                            .getBookingPatient(CacheConstants.tokenKey);
+                }),
+                const SizedBox(height: 10),
+                BlocBuilder<DoctorsCubit, DoctorsStates>(
+                  builder: (context, state) {
+                    if (state is GetDoctorsLoading) {
+                      return const LoadingIndicator();
+                    }
+                    if (state is GetDoctorsSuccess) {
+                      var doctors = List<DoctorEntity>.from(state.doctorEntity);
+                      if (selectedDoctorId != null &&
+                          !doctors.any(
+                              (element) => element.id == selectedDoctorId)) {
+                        doctors.insert(
+                            0,
+                            DoctorEntity(selectedDoctorId!, "", "اختر الدكتور",
+                                "", 0, "", "", "", "", ""));
                       }
-                    : null,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorManager.primary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                      return DropdownButtonFormField<String>(
+                        isExpanded: true,
+                        value: selectedDoctorId,
+                        hint: Text("اختر الدكتور",
+                            style:
+                                getMediumStyle(color: ColorManager.textColor)),
+                        items: doctors
+                            .map((doc) => DropdownMenuItem(
+                                  value: doc.id,
+                                  child:
+                                      Text("${doc.firstName} ${doc.lastName}"),
+                                ))
+                            .toList(),
+                        onChanged: (val) {
+                          setState(() => selectedDoctorId = val);
+                          context
+                              .read<AppointmentCubit>()
+                              .getAppointmentDoctorById(val!);
+                        },
+                      );
+                    }
+                    return const SizedBox();
+                  },
+                ),
+                const SizedBox(height: 10),
+                BlocBuilder<AppointmentCubit, AppointmentStates>(
+                  builder: (context, state) {
+                    if (state is GetAppointmentLoading) {
+                      return const LoadingIndicator();
+                    }
+                    if (state is GetAppointmentSuccess) {
+                      return AppointmentList(
+                        appointments: state.appointmentEntity,
+                        onSelectionChanged: (day, time) {
+                          setState(() {
+                            selectedDate = day;
+                            selectedTime = time;
+                          });
+                        },
+                      );
+                    }
+                    return const SizedBox();
+                  },
+                ),
+                const SizedBox(height: 15),
+                ElevatedButton(
+                  onPressed: (selectedClinicId != null &&
+                          selectedDoctorId != null &&
+                          selectedDate != null &&
+                          selectedTime != null &&
+                          isChange)
+                      ? () {
+                          context.read<BookingCubit>().bookAppointment(
+                                BookingRequest(
+                                  doctorId: selectedDoctorId!,
+                                  date: selectedDate!,
+                                  time: selectedTime!,
+                                  isBooking: true,
+                                ),
+                              );
+
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content: Text(
+                              "تم إعادة الحجز بنجاح",
+                            ),
+                            backgroundColor: Colors.green,
+                          ));
+                          context
+                              .read<DeleteBookingCubit>()
+                              .deleteBooking(widget.oldBookingId);
+                          Navigator.of(context).pop();
+                          context
+                              .read<BookingPatientCubit>()
+                              .getBookingPatient(CacheConstants.tokenKey);
+                        }
+                      : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorManager.primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
-                ),
-                child: Text(
-                  "تأكيد الحجز",
-                  style: getMediumStyle(color: ColorManager.white),
-                ),
-              )
-            ],
+                  child: Text(
+                    "تأكيد الحجز",
+                    style: getMediumStyle(color: ColorManager.white),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

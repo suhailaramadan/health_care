@@ -28,14 +28,14 @@ class ProfileEntity {
   //       json['imageUrl'] as dynamic,
   //     );
 
-  // Map<String, dynamic> toJson() => {
-  //       'id': id,
-  //       'firstName': firstName,
-  //       'lastName': lastName,
-  //       'email': email,
-  //       'college': college,
-  //       'phoneNumber': phoneNumber,
-  //       'nationalID': nationalId,
-  //       'imageUrl': imageUrl,
-  //     };
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+        'college': college,
+        'phoneNumber': phoneNumber,
+        'nationalID': nationalId,
+        'imageUrl': imageUrl,
+      };
 }

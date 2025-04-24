@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
-import 'package:graduation_project/core/utils/formated_date_time.dart';
+import 'package:graduation_project/core/utils/formated.dart';
 import 'package:graduation_project/features/doctor/presentation/cubit/doctor_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/appointment_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_cubit.dart';

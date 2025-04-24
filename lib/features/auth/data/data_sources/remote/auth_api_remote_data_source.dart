@@ -102,8 +102,6 @@ class AuthAPIRemoteDataSource extends AuthRemoteDataSource {
       'newPassword': request.newPassword,
       'confirmPassword': request.confirmPassword,
     });
-    print("Status------- ${response.statusCode}");
-    print("Response=======> ${response.data}");
     if (response.statusCode == 200) {
       return response.data.toString();
     } else {
@@ -112,13 +110,16 @@ class AuthAPIRemoteDataSource extends AuthRemoteDataSource {
   }
 
   @override
-  Future<String> changePassword(ChangePasswordRequest request) async {
-    final response = await dio.post("Authentication/Change-Password", data: {
-      'email': request.email,
-      "oldPassword": request.oldPassword,
-      "newPassword": request.newPassword,
-      "confirmPassword": request.confirmPassword,
-    });
+  Future<String> changePassword(
+      ChangePasswordRequest request, String token) async {
+    final response = await dio.post("Authentication/Change-Password",
+        data: {
+          'email': request.email,
+          "oldPassword": request.oldPassword,
+          "newPassword": request.newPassword,
+          "confirmPassword": request.confirmPassword,
+        },
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
     if (response.statusCode == 200) {
       return response.data.toString();
     } else {

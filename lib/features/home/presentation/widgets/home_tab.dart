@@ -228,7 +228,7 @@ class _HomeTabState extends State<HomeTab> {
                           return SizedBox(
                               height: isLandscape
                                   ? screenSize.width * .23
-                                  : screenSize.height * .2,
+                                  : screenSize.height * .18,
                               width: MediaQuery.of(context).size.width.w,
                               child: Directionality(
                                 textDirection: TextDirection.rtl,

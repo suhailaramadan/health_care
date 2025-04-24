@@ -84,7 +84,9 @@ class DoctorItem extends StatelessWidget {
                     doctorEntity.id,
                     doctorEntity.lastName,
                     doctorEntity.specialty,
-                    doctorEntity.imageUrl)))),
+                    doctorEntity.imageUrl,
+                    doctorEntity.email,
+                    doctorEntity.college)))),
         child: Directionality(
             textDirection: TextDirection.rtl,
             child: SizedBox(
@@ -103,7 +105,7 @@ class DoctorItem extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       border:
-                          Border.all(width: .2, color: ColorManager.primary)),
+                          Border.all(width: .1, color: ColorManager.primary)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

@@ -81,7 +81,7 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<Either<Failure, String>> changePassword(
       ChangePasswordRequest request) async {
     try {
-      final result = await remoteDataSource.changePassword(request);
+      final result = await remoteDataSource.changePassword(request, '');
       return Right(result);
     } catch (e) {
       return Left(Failure(e.toString()));

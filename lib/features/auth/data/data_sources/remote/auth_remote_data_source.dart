@@ -13,5 +13,5 @@ abstract class AuthRemoteDataSource {
   Future<void> forgetPassword(ForgetPasswordRequest request);
   Future<String> verifyCode(VerifyCodeRequest request);
   Future<String> resetPassword(ResetPasswordRequest request);
-  Future<String> changePassword(ChangePasswordRequest request);
+  Future<String> changePassword(ChangePasswordRequest request, String token);
 }

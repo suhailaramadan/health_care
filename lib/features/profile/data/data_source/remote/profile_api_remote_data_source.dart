@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/error/exceptions.dart';
+import 'package:graduation_project/features/auth/data/models/register/register_request.dart';
 import 'package:graduation_project/features/profile/data/data_source/remote/profile_remote_data_source.dart';
+import 'package:graduation_project/features/profile/data/model/profile_response/Update_request.dart';
 import 'package:graduation_project/features/profile/data/model/profile_response/profile_response.dart';
 import 'package:graduation_project/features/profile/domain/entities/profile_entity.dart';
 import 'package:injectable/injectable.dart';
@@ -23,6 +25,26 @@ class ProfileApiRemoteDataSource extends ProfileRemoteDataSource {
         message = exception.response?.data['message'];
       }
       throw RemoteException(message ?? 'تعذر تحميل بيانات المستخدم');
+    }
+  }
+
+  @override
+  Future<String> updatePatientProfile(
+      String token, UpdateRequest request) async {
+    try {
+      final response = await dio.put("${ApiConstants.baseUrl}Patient",
+          data: request.toFormData(),
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+            "Content-Type": "multipart/form-data",
+          }));
+      return response.data['message'] ?? 'تم التحديث بنجاح';
+    } catch (e) {
+      String? message;
+      if (e is DioException) {
+        message = e.response?.data['message'];
+      }
+      throw RemoteException(message ?? 'تعذر تحديث بيانات المستخدم');
     }
   }
 }

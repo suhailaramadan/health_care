@@ -36,8 +36,9 @@ class _HomeScreenAppBarState extends State<HomeScreenAppBar> {
         child: Row(
           children: [
             const CircleAvatar(
-              backgroundImage: AssetImage("assets/images/doctor_image.png"),
-              radius: 40,
+              backgroundImage: AssetImage("assets/images/logo_app.jpg"),
+              radius: 20,
+              backgroundColor: ColorManager.transparent,
             ),
             const SizedBox(width: 10),
             Text(
@@ -91,13 +92,13 @@ class _HomeScreenAppBarState extends State<HomeScreenAppBar> {
                     //         widget.automaticallyImplyLeading ?? false,
                     Row(children: [
                   CircleAvatar(
-                      radius: avatarRadius,
+                      radius: 30,
                       backgroundColor: ColorManager.transparent,
                       backgroundImage: state.profileEntity.imageUrl != null &&
                               state.profileEntity.imageUrl!.isNotEmpty
                           ? NetworkImage(
-                              "${ApiConstants.imageBaseUrl}${state.profileEntity.imageUrl!}")
-                          : const AssetImage(ImageManager.profile)
+                              "${ApiConstants.imageBaseUrl}${state.profileEntity.imageUrl}")
+                          : const AssetImage("assets/images/logo_app.jpg")
                               as ImageProvider
                       // state.profileEntity.imageUrl != null &&
                       //         state.profileEntity.imageUrl!.isNotEmpty

@@ -15,6 +15,7 @@ import 'package:graduation_project/features/auth/presentation/screens/verfiy_cod
 import 'package:graduation_project/features/auth/presentation/screens/register_screen.dart';
 import 'package:graduation_project/features/home/presentation/screens/doctor_home_screen.dart';
 import 'package:graduation_project/features/home/presentation/screens/patient_home_screen.dart';
+import 'package:graduation_project/features/profile/presentation/screen/update_profile.dart';
 import 'package:graduation_project/features/splash_screen.dart';
 import 'package:graduation_project/features/user/booking/presentation/screen/booking_screen.dart';
 import 'package:graduation_project/features/user/clinic/presentation/screen/clinic_screen.dart';
@@ -52,6 +53,8 @@ class RouteGenerator {
         return _buildRoute(const ClinicScreen(), isIOS);
       case Routes.profile:
         return _buildRoute(const ProfileScreen(), isIOS);
+      case Routes.updateprofile:
+        return _buildRoute(const UpdateProfileScreen(), isIOS);
       case Routes.booking:
         return _buildRoute(const BookingTab(), isIOS);
       case Routes.clinicDetails:

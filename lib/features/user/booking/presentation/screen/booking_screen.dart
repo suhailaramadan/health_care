@@ -152,7 +152,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
-import 'package:graduation_project/core/utils/formated_date_time.dart';
+import 'package:graduation_project/core/utils/formated.dart';
 import 'package:graduation_project/core/widgets/error_indicator.dart';
 import 'package:graduation_project/core/widgets/loading_indicator.dart';
 import 'package:graduation_project/features/auth/presentation/screens/login_screen.dart';

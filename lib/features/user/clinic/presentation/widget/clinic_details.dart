@@ -57,7 +57,7 @@ class _ClinicDetailsState extends State<ClinicDetails> {
                 child: IconButton(
                   icon: const Icon(
                     Icons.arrow_back_ios_rounded,
-                    color: Colors.black,
+                    color: ColorManager.primary,
                   ),
                   onPressed: () => Navigator.pop(context),
                 ),
@@ -85,7 +85,7 @@ class _ClinicDetailsState extends State<ClinicDetails> {
                   // right: MediaQuery.of(context).size.width * .35,
                   // left: MediaQuery.of(context).size.width * .35,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 18),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     // height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
                     child: Column(children: [
