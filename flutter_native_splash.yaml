@@ -1,11 +1,10 @@
- flutter_native_splash:
-  color: "#ffffff"
-  image: assets/images/logo_app.jpg
-  fullscreen: true
-  android: true
-  ios: true
+#  flutter_native_splash:
+#   color: "#ffffff"
+#   image: assets/images/photo_2024-12-24_06-14-01.jpg
+#   fullscreen: true
+#   android: true
+#   ios: true
 
-  android_12:
-    image: assets/images/logo_app.jpg
-    icon_background_color: "#ffffff"
-    image_scale: .5
+#   android_12:
+#     image: assets/images/photo_2024-12-24_06-14-01.jpg
+#     icon_background_color: "#ffffff"

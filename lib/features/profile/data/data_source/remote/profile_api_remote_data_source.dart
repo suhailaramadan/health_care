@@ -30,21 +30,22 @@ class ProfileApiRemoteDataSource extends ProfileRemoteDataSource {
 
   @override
   Future<String> updatePatientProfile(
-      String token, UpdateRequest request) async {
+      String token, UpdateProfileRequest request) async {
     try {
       final response = await dio.put("${ApiConstants.baseUrl}Patient",
           data: request.toFormData(),
           options: Options(headers: {
             'Authorization': 'Bearer $token',
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "multipart/form-data"
           }));
       return response.data['message'] ?? 'تم التحديث بنجاح';
-    } catch (e) {
-      String? message;
-      if (e is DioException) {
-        message = e.response?.data['message'];
-      }
+    } on DioException catch (e) {
+      // if (e is DioException) {
+      final message = e.response?.data['message'];
+      // }
       throw RemoteException(message ?? 'تعذر تحديث بيانات المستخدم');
+    } catch (e) {
+      throw const RemoteException("تعذر تحديث بيانات المستخدم");
     }
   }
 }

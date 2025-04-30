@@ -43,7 +43,7 @@ class AppointmentCubit extends Cubit<AppointmentStates> {
         },
       );
     } catch (e) {
-      _emitIfOpen(GetAppointmentError("Unexpected error occurred."));
+      _emitIfOpen(GetAppointmentError("حدث خطأ غير متوقع"));
     }
   }
 

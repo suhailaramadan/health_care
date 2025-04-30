@@ -46,23 +46,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  // List<String> collageList = [
-  //   "كلية  الزراعة",
-  //   "كلية الهندسة",
-  //   "كلية تربية",
-  //   "كلية الطب",
-  //   "كلية الآداب",
-  //   "كلية التربية الرياضية",
-  //   "كلية التربية النوعية",
-  //   "كلية التجارة",
-  //   "كلية الصيدلة",
-  //   "كلية الحقوق",
-  //   "كلية طب الأسنان",
-  //   "كلية التمريض",
-  //   "كلية الحاسبات والمعلومات",
-  //   "كلية الفنون التطبيقية",
-  //   "المعهد الفنى الصحى",
-  // ];
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.sizeOf(context);
@@ -95,8 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      GestureDetector(
-                        onTap: _pickImage,
+                      Center(
                         child: CircleAvatar(
                           backgroundColor: ColorManager.white,
                           radius: isLargeTablet
@@ -105,15 +87,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ? screenSize.width * .07
                                   : screenSize.height * .073,
                           // radius: 60,
-                          backgroundImage: _profileImage != null
+                          backgroundImage: state.profileEntity.imageUrl == null
                               ? FileImage(_profileImage!)
-                              : const AssetImage("assets/images/logo_app.jpg")
-                                  as ImageProvider,
-                          child: _profileImage == null
-                              ? Icon(Icons.camera_alt_outlined,
-                                  size: screenSize.height * .035,
-                                  color: ColorManager.white)
-                              : null,
+                              : (state.profileEntity.imageUrl != null &&
+                                      state.profileEntity.imageUrl!.isNotEmpty)
+                                  ? CachedNetworkImageProvider(
+                                      "${ApiConstants.imageBaseUrl}${state.profileEntity.imageUrl}")
+                                  : const AssetImage(
+                                          "assets/images/profile.avif")
+                                      as ImageProvider,
+                          // child: _profileImage == null
+                          //     ? Icon(Icons.camera_alt_outlined,
+                          //         size: screenSize.height * .035,
+                          //         color: ColorManager.white)
+                          //     : null,
                         ),
                       ),
                       // CircleAvatar(
@@ -225,7 +212,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         backgroundColor: ColorManager.primary,
                         label: "تعديل البيانات",
                         onTap: () {
-                          Navigator.of(context).pushNamed(Routes.updateprofile);
+                          Navigator.of(context).pushNamed(Routes.updateprofile,
+                              arguments: state.profileEntity);
                         },
                       )
                     ],

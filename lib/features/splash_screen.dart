@@ -114,9 +114,9 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    Future.delayed(const Duration(seconds: 4), () {
-      Navigator.pushReplacementNamed(context, Routes.onBoarding);
-    });
+    // Future.delayed(const Duration(seconds: 4), () {
+    //   Navigator.pushReplacementNamed(context, Routes.onBoarding);
+    // });
   }
 
   @override
@@ -139,30 +139,30 @@ class _SplashScreenState extends State<SplashScreen>
               mainAxisSize: MainAxisSize.min,
               children: [
                 Image.asset(
-                  "assets/images/logo.png",
+                  "assets/images/log.jpg",
                   height: 130.w,
                   width: 130.w,
                 ),
-                SizedBox(height: 10.h),
-                ShaderMask(
-                  shaderCallback: (bounds) => const LinearGradient(colors: [
-                    ColorManager.primary,
-                    ColorManager.primaryColor,
-                    Color.fromARGB(255, 143, 209, 244)
-                  ], begin: Alignment.topRight, end: Alignment.bottomLeft)
-                      .createShader(
-                          Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
-                  child: Text(
-                    "الإدارة الطبية",
-                    style:
-                        getBoldStyle(color: ColorManager.white, fontSize: 26),
-                  ),
-                ),
-                Text(
-                  "جامعة طنطا",
-                  style:
-                      getBoldStyle(color: ColorManager.primary, fontSize: 10),
-                )
+                // SizedBox(height: 10.h),
+                // ShaderMask(
+                //   shaderCallback: (bounds) => const LinearGradient(colors: [
+                //     ColorManager.primary,
+                //     ColorManager.primaryColor,
+                //     Color.fromARGB(255, 143, 209, 244)
+                //   ], begin: Alignment.topRight, end: Alignment.bottomLeft)
+                //       .createShader(
+                //           Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
+                //   child: Text(
+                //     "الإدارة الطبية",
+                //     style:
+                //         getBoldStyle(color: ColorManager.white, fontSize: 26),
+                //   ),
+                // ),
+                // Text(
+                //   "جامعة طنطا",
+                //   style:
+                //       getBoldStyle(color: ColorManager.primary, fontSize: 10),
+                // )
               ],
             ),
           ),

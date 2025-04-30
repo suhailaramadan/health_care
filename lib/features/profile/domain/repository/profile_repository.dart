@@ -7,5 +7,6 @@ import 'package:graduation_project/features/profile/domain/entities/profile_enti
 abstract class ProfileRepository {
   Future<Either<Failure, ProfileEntity>> getPatientProfile();
   Future<ProfileEntity?> getCachedPatientProfile();
-  Future<Either<Failure, String>> updatePatientProfile(UpdateRequest request);
+  Future<Either<Failure, String>> updatePatientProfile(
+      UpdateProfileRequest request);
 }

@@ -38,17 +38,20 @@ class ProfileCubit extends Cubit<ProfileStates> {
   //     emit(GetProfilesError('تعذر تحميل البيانات'));
   //   }
   // }
-  Future<void> updatePatientProfile(UpdateRequest request) async {
+  Future<void> updatePatientProfile(UpdateProfileRequest request) async {
     emit(GetUpdateProfilesLoading());
     final result = await _profileRepository.updatePatientProfile(request);
     print("Result $result");
     result.fold((failure) => emit(GetUpdateProfilesError(failure.message)),
         (message) async {
-      final newProfileResult = await _profileRepository.getPatientProfile();
-      newProfileResult.fold(
-          (failure) => emit(GetUpdateProfilesError(failure.message)),
-          (profile) => emit(GetProfilesSuccess(profile)));
-      // await getPatientProfile();
+      print(message);
+      // final newProfileResult = await _profileRepository.getPatientProfile();
+      // newProfileResult.fold(
+      // (failure) => emit(GetUpdateProfilesError(failure.message)),
+      emit(GetUpdateProfilesSuccess(message))
+          // )
+          ;
+      await getPatientProfile();
       // emit(GetUpdateProfilesSuccess(message));
     });
   }

@@ -6,5 +6,6 @@ import 'package:graduation_project/features/profile/domain/entities/profile_enti
 
 abstract class ProfileRemoteDataSource {
   Future<ProfileResponse> getPatientProfile(String token);
-  Future<String> updatePatientProfile(String token, UpdateRequest request);
+  Future<String> updatePatientProfile(
+      String token, UpdateProfileRequest request);
 }

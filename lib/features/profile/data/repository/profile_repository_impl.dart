@@ -53,7 +53,7 @@ class ProfileRepositoryImpl extends ProfileRepository {
 
   @override
   Future<Either<Failure, String>> updatePatientProfile(
-      UpdateRequest request) async {
+      UpdateProfileRequest request) async {
     try {
       final token = await localDataSource.getToken();
       if (token == null || token.isEmpty) {
@@ -68,6 +68,8 @@ class ProfileRepositoryImpl extends ProfileRepository {
       // return Right(response.data!)
     } on RemoteException catch (e) {
       return Left(Failure(e.message));
+    } catch (_) {
+      return Left(Failure("حدث خطأ غير متوقع"));
     }
   }
 

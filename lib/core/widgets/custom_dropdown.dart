@@ -10,8 +10,10 @@ class CustomDropDown extends StatefulWidget {
   const CustomDropDown({
     super.key,
     required this.collageList,
+    this.initialValue,
     required this.onChange,
   });
+  final String? initialValue;
   final List<String> collageList;
   final Function(String?) onChange;
 
@@ -22,6 +24,15 @@ class CustomDropDown extends StatefulWidget {
 class _CustomDropDownState extends State<CustomDropDown> {
   String? selectedCollege;
   bool isOpen = false;
+  void initState() {
+    super.initState();
+    selectedCollege = widget.initialValue;
+    if (selectedCollege != null &&
+        !widget.collageList.contains(selectedCollege)) {
+      widget.collageList.insert(0, selectedCollege!);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -39,7 +50,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
               decoration: InputDecoration(
                 filled: true,
                 fillColor: ColorManager.transparent,
-                focusColor: ColorManager.primary,
+                // focusColor: ColorManager.primary,
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.r),
                     borderSide: const BorderSide(
@@ -68,7 +79,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
                 hintStyle: getMediumStyle(
                     color: ColorManager.grey, fontSize: FontSize.s16),
               ),
-              focusColor: ColorManager.primary,
+              // focusColor: ColorManager.primary,
               items: widget.collageList.map((college) {
                 return DropdownMenuItem(
                   alignment: Alignment.centerRight,

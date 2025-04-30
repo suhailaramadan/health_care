@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
               }
               BlocProvider.of<ProfileCubit>(context).getPatientProfile();
               Navigator.of(context).pushReplacementNamed(
-                userType == "User" ? Routes.patientHome : Routes.patientHome,
+                userType == "User" ? Routes.patientHome : Routes.doctorHome,
               );
             } else if (state is LoginError) {
               UIUtils.hideLoading(context);

@@ -21,4 +21,5 @@ class CacheConstants {
   static const profileKey = 'profileKey';
   static const lastNameKey = 'lastName';
   static const userImageKey = 'userImage';
+  static const doctorId = 'doctorId';
 }

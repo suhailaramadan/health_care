@@ -64,6 +64,12 @@ class AuthCubit extends Cubit<AuthStates> {
               role: loginResponse.role ?? 'User',
               token: loginResponse.token ?? ''));
         }
+        final profileResult =
+            await serviceLocator.get<ProfileRepository>().getPatientProfile();
+        profileResult.fold((failure) => emit(LoginError(failure.message)),
+            (profile) async {
+          await localSharedPref.saveDoctorId(profile.id ?? '');
+        });
       });
     } catch (e) {
       if (!isClosed) {

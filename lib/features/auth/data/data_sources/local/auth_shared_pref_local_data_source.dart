@@ -2,6 +2,7 @@ import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/error/exceptions.dart';
 import 'package:graduation_project/features/auth/data/data_sources/local/auth_local_data_source.dart';
 import 'package:graduation_project/features/profile/domain/entities/profile_entity.dart';
+import 'package:graduation_project/features/user/booking/data/models/doctors_appointment_response/create_request_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,6 +39,24 @@ class AuthSharedPrefLocalDataSource extends AuthLocalDataSource {
       throw const LocalException(
           'فشل فى استرجاع نوع المستخدم , يرجى المحاولة مرة أخرى');
     }
+  }
+
+  @override
+  Future<void> saveDoctorId(String id) async {
+    try {
+      await _sharedPref.setString(CacheConstants.doctorId, id);
+    } catch (e) {
+      throw const LocalException('فشل في حفظ الرقم التعريفي للدكتور');
+    }
+  }
+
+  @override
+  Future<String?> getDoctorId() async {
+    // try {
+    return _sharedPref.getString(CacheConstants.doctorId);
+    // } catch (e) {
+    //   throw const LocalException('فشل في استرجاع الرقم التعريفي للدكتور');
+    // }
   }
 
   // @override
@@ -86,7 +105,7 @@ class AuthSharedPrefLocalDataSource extends AuthLocalDataSource {
     if (profileEntity == null) {
       throw const LocalException("البيانات غير متوفرة");
     }
-    await _sharedPref.setString('id', profileEntity!.id ?? '');
+    await _sharedPref.setString('id', profileEntity.id ?? '');
     await _sharedPref.setString('firstName', profileEntity.firstName ?? '');
     await _sharedPref.setString('lastName', profileEntity.lastName ?? '');
     await _sharedPref.setString('email', profileEntity.email ?? '');

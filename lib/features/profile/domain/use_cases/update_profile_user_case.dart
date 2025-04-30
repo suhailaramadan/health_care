@@ -9,6 +9,6 @@ class UpdatePatientUseCase {
   final ProfileRepository repository;
   UpdatePatientUseCase(this.repository);
 
-  Future<Either<Failure, String>> call(UpdateRequest request) =>
+  Future<Either<Failure, String>> call(UpdateProfileRequest request) =>
       repository.updatePatientProfile(request);
 }

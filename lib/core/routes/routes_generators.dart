@@ -13,10 +13,18 @@ import 'package:graduation_project/features/auth/presentation/screens/login_scre
 import 'package:graduation_project/features/auth/presentation/screens/reset_password.dart';
 import 'package:graduation_project/features/auth/presentation/screens/verfiy_code_screen.dart';
 import 'package:graduation_project/features/auth/presentation/screens/register_screen.dart';
+import 'package:graduation_project/features/doctors/presentation/screens/create_apointment_screen.dart';
+import 'package:graduation_project/features/doctors/presentation/screens/doctor_appointments_screen.dart';
+import 'package:graduation_project/features/doctors/presentation/screens/work_hours_screen.dart';
 import 'package:graduation_project/features/home/presentation/screens/doctor_home_screen.dart';
 import 'package:graduation_project/features/home/presentation/screens/patient_home_screen.dart';
+import 'package:graduation_project/features/profile/data/model/profile_response/Update_request.dart';
+import 'package:graduation_project/features/profile/domain/entities/profile_entity.dart';
 import 'package:graduation_project/features/profile/presentation/screen/update_profile.dart';
 import 'package:graduation_project/features/splash_screen.dart';
+import 'package:graduation_project/features/user/booking/data/models/doctors_appointment_response/doctors_appointment_model.dart';
+import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/create_appointment_cubit.dart';
+import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/doctor_appointments_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/screen/booking_screen.dart';
 import 'package:graduation_project/features/user/clinic/presentation/screen/clinic_screen.dart';
 import 'package:graduation_project/features/user/clinic/presentation/widget/clinic_details.dart';
@@ -45,6 +53,10 @@ class RouteGenerator {
         return _buildRoute(const SplashScreen(), isIOS);
       case Routes.doctor:
         return _buildRoute(const DoctorsScreen(), isIOS);
+      case Routes.doctorAppointments:
+        return _buildRoute(const DoctorAppointmentsScreen(), isIOS);
+      case Routes.worksHours:
+        return _buildRoute(const WorksHoursScreen(), isIOS);
       case Routes.chooseUser:
         return _buildRoute(const ChooseUserScreen(), isIOS);
       case Routes.register:
@@ -53,8 +65,16 @@ class RouteGenerator {
         return _buildRoute(const ClinicScreen(), isIOS);
       case Routes.profile:
         return _buildRoute(const ProfileScreen(), isIOS);
+      case Routes.createAppointment:
+        final doctorId = settings.arguments as String;
+        return _buildRoute(CreateAppointmentScreen(doctorId: doctorId), isIOS);
       case Routes.updateprofile:
-        return _buildRoute(const UpdateProfileScreen(), isIOS);
+        final patient = settings.arguments as ProfileEntity;
+        return _buildRoute(
+            UpdateProfileScreen(
+              patient: patient,
+            ),
+            isIOS);
       case Routes.booking:
         return _buildRoute(const BookingTab(), isIOS);
       case Routes.clinicDetails:

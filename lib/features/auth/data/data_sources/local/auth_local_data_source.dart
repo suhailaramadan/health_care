@@ -12,4 +12,6 @@ abstract class AuthLocalDataSource {
   Future<void> savePatientProfile(ProfileEntity profileEntity);
   Future<ProfileEntity> getPatientProfile();
   Future<void> clearUserData();
+  Future<void> saveDoctorId(String id);
+  Future<String?> getDoctorId();
 }
