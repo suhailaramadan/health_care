@@ -47,6 +47,8 @@
 // }
 
 import 'package:dio/dio.dart';
+import 'package:graduation_project/features/profile/data/model/profile_response/profile_data_model.dart';
+import 'package:graduation_project/features/profile/domain/entities/profile_entity.dart';
 
 class UpdateProfileRequest {
   final String? firstName;
@@ -55,7 +57,7 @@ class UpdateProfileRequest {
   final String? nationalId;
   final String? phoneNumber;
   final String? college;
-  final String? imageUrl; // دي المسار بتاع الصورة لو موجودة
+  final String? imageUrl;
 
   UpdateProfileRequest({
     this.firstName,
@@ -68,22 +70,42 @@ class UpdateProfileRequest {
   });
 
   Future<FormData> toFormData() async {
-    final Map<String, dynamic> data = {};
+    return FormData.fromMap({
+      if (firstName != null) 'firstName': firstName,
 
-    if (firstName != null) data["FirstName"] = firstName;
-    if (lastName != null) data["LastName"] = lastName;
-    if (email != null) data["Email"] = email;
-    if (nationalId != null) data["NationalID"] = nationalId;
-    if (phoneNumber != null) data["PhoneNumber"] = phoneNumber;
-    if (college != null) data["College"] = college;
+      if (lastName != null) 'lastName': lastName,
+      if (email != null) 'email': email,
+      if (college != null) 'college': college,
+      if (phoneNumber != null) 'phoneNumber': phoneNumber,
+      if (nationalId != null) 'nationalID': nationalId,
+      if (imageUrl != null)
+        "ImageUrl": await MultipartFile.fromFile(imageUrl!,
+            filename: imageUrl!.split('/').last)
+      // "LastName": lastName ?? patientDataModel.lastName,
+      // "Email": email ?? patientDataModel.email,
+      // "NationalID": nationalId ?? patientDataModel.nationalId,
+      // "PhoneNumber": phoneNumber ?? patientDataModel.phoneNumber,
+      // "College": college ?? patientDataModel.college,
+      // if (imageUrl != null)
+      //   "ImageUrl": await MultipartFile.fromFile(imageUrl!,
+      //       filename: imageUrl!.split('/').last)
+    });
+    // final Map<String, dynamic> data = {};
 
-    if (imageUrl != null && imageUrl!.isNotEmpty) {
-      data["ImageFile"] = await MultipartFile.fromFile(
-        imageUrl!,
-        filename: "profile.jpg",
-      );
-    }
+    // if (firstName != null) data["FirstName"] = firstName;
+    // if (lastName != null) data["LastName"] = lastName;
+    // if (email != null) data["Email"] = email;
+    // if (nationalId != null) data["NationalID"] = nationalId;
+    // if (phoneNumber != null) data["PhoneNumber"] = phoneNumber;
+    // if (college != null) data["College"] = college;
 
-    return FormData.fromMap(data);
+    // if (imageUrl != null && imageUrl!.isNotEmpty) {
+    //   data["ImageFile"] = await MultipartFile.fromFile(
+    //     imageUrl!,
+    //     filename: "profile.jpg",
+    //   );
+    // }
+
+    // return FormData.fromMap(data);
   }
 }

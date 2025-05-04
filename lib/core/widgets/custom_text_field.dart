@@ -74,19 +74,18 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        widget.label != null
-            ? const Padding(
-                padding: EdgeInsets.only(top: Insets.s2),
-                child: Text(
-                  "",
-                  //   style: widget.labelTextStyle ??
-                  //       getMediumStyle(color: ColorManager.primary)
-                  // Color.fromARGB(223, 26, 114, 141))
-                  //     .copyWith(fontSize: FontSize.s18),
-                  // color: const Color.fromARGB(255, 16, 104, 200))
-                ),
-              )
-            : const SizedBox(),
+        // widget.label != null
+        //     ? const Padding(
+        //         padding: EdgeInsets.only(top: Insets.s2),
+        //         child: Text(
+
+        //             style: widget.labelTextStyle ??
+        //           //       getMediumStyle(color: ColorManager.primary)
+        //           // Color.fromARGB(223, 26, 114, 141))
+        //           //     .copyWith(fontSize: FontSize.s18),
+        //           // color: const Color.fromARGB(255, 16, 104, 200))
+
+        //     : const SizedBox(),
         Container(
           // margin: EdgeInsets.only(top: Insets.s5.h),
           decoration: BoxDecoration(
@@ -155,6 +154,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                       color: ColorManager.primary, width: 1.5)),
               contentPadding: const EdgeInsets.all(Insets.s12),
               hintText: widget.hint,
+              // label:Text(widget.label),
               hintStyle:
                   getMediumStyle(color: Colors.grey, fontSize: FontSize.s15),
               // label: Text(

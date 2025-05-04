@@ -214,11 +214,14 @@
 // }
 
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
+import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/utils/ui_utils.dart';
+import 'package:graduation_project/core/utils/validator.dart';
 import 'package:graduation_project/core/widgets/custom_botton.dart';
 import 'package:graduation_project/core/widgets/custom_dropdown.dart';
 import 'package:graduation_project/core/widgets/custom_text_field.dart';
@@ -243,13 +246,12 @@ class UpdateProfileScreen extends StatefulWidget {
 class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   final _imagePicker = ImagePicker();
-
-  late TextEditingController firstNameController;
-  late TextEditingController lastNameController;
-  late TextEditingController emailController;
-  late TextEditingController nationalIdController;
-  late TextEditingController phoneNumberController;
-  String? selectedCollage;
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController nationalIdController = TextEditingController();
+  String? selectedCollege;
   String? imagePath;
   List<String> collageList = [
     "كلية  الزراعة",
@@ -273,22 +275,23 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         lastNameController.text != widget.patient.lastName ||
         emailController.text != widget.patient.email ||
         nationalIdController.text != widget.patient.nationalId.toString() ||
-        phoneNumberController.text != widget.patient.phoneNumber.toString() ||
-        selectedCollage != widget.patient.college ||
+        phoneController.text != widget.patient.phoneNumber.toString() ||
+        selectedCollege != widget.patient.college ||
         imagePath != null;
   }
 
   @override
   void initState() {
     super.initState();
+
     firstNameController = TextEditingController(text: widget.patient.firstName);
     lastNameController = TextEditingController(text: widget.patient.lastName);
+
     emailController = TextEditingController(text: widget.patient.email);
     nationalIdController =
-        TextEditingController(text: widget.patient.nationalId.toString());
-    phoneNumberController =
-        TextEditingController(text: widget.patient.phoneNumber.toString());
-    selectedCollage = widget.patient.college;
+        TextEditingController(text: widget.patient.nationalId);
+    phoneController = TextEditingController(text: widget.patient.phoneNumber);
+    selectedCollege = widget.patient.college ?? '';
   }
 
   @override
@@ -297,7 +300,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     lastNameController.dispose();
     emailController.dispose();
     nationalIdController.dispose();
-    phoneNumberController.dispose();
+    phoneController.dispose();
     super.dispose();
   }
 
@@ -308,6 +311,20 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     }
   }
 
+  void onUpdatePressed() {
+    if (_formKey.currentState!.validate()) {
+      context.read<ProfileCubit>().updatePatientProfile(UpdateProfileRequest(
+            firstName: firstNameController.text,
+            lastName: lastNameController.text,
+            email: emailController.text,
+            phoneNumber: phoneController.text,
+            nationalId: nationalIdController.text,
+            college: selectedCollege,
+            imageUrl: imagePath,
+          ));
+    }
+  }
+
   void _updateProfile() {
     if (!_hasChanges) {
       UIUtils.showMessage(
@@ -315,49 +332,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         "لم يتم تعديل أي بيانات",
         ColorManager.red,
       );
-      return;
-    }
 
-    if (_formKey.currentState!.validate()) {
-      final nationalIdText = nationalIdController.text.trim();
-      final phoneNumber = phoneNumberController.text.trim();
-      final updateRequest = UpdateProfileRequest(
-        firstName: firstNameController.text != widget.patient.firstName
-            ? firstNameController.text
-            : null,
-        lastName: lastNameController.text != widget.patient.lastName
-            ? lastNameController.text
-            : null,
-        email: emailController.text != widget.patient.email
-            ? emailController.text
-            : null,
-        nationalId:
-            nationalIdText.isNotEmpty ? widget.patient.nationalId : null,
-        // nationalIdController.text != widget.patient.nationalId.toString()
-        //     ? int.tryParse(nationalIdController.text)
-        //     : null,
-        phoneNumber: phoneNumberController.text.trim().isNotEmpty
-            ? widget.patient.phoneNumber
-            // != widget.patient.phoneNumber.toString()
-            //     ? int.tryParse(phoneNumberController.text)
-            : null,
-        college:
-            selectedCollage != widget.patient.college ? selectedCollage : null,
-        imageUrl: imagePath,
-      );
-      if (updateRequest.firstName == null &&
-          updateRequest.lastName == null &&
-          updateRequest.email == null &&
-          updateRequest.nationalId == null &&
-          updateRequest.phoneNumber == null &&
-          updateRequest.college == null &&
-          (updateRequest.imageUrl == null || updateRequest.imageUrl!.isEmpty)) {
-        UIUtils.showMessage(context, 'لم يتم تعديل البيانات', ColorManager.red);
-        return;
-      }
-      print(
-          "${updateRequest.firstName}  ${updateRequest.lastName}    ${updateRequest.email}  ${updateRequest.college}  ${updateRequest.imageUrl}  ${updateRequest.nationalId}  ${updateRequest.phoneNumber}");
-      context.read<ProfileCubit>().updatePatientProfile(updateRequest);
+      context.read<ProfileCubit>().getPatientProfile();
     }
   }
 
@@ -366,21 +342,27 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        appBar: AppBar(title: const Text("تعديل البيانات")),
+        appBar: AppBar(
+          title: Text(
+            'تحديث الملف الشخصي',
+            style: getSemiBoldStyle(color: ColorManager.textColor),
+          ),
+          centerTitle: true,
+        ),
         body: BlocConsumer<ProfileCubit, ProfileStates>(
           listener: (context, state) {
             if (state is GetUpdateProfilesSuccess) {
               UIUtils.showMessage(
                   context, "تم تعديل البيانات بنجاح", Colors.green);
+              context.read<ProfileCubit>().getPatientProfile();
               Navigator.pop(context);
             } else if (state is GetUpdateProfilesError) {
-              print("---->${state.message}");
               UIUtils.showMessage(context, state.message, ColorManager.red);
             }
           },
           builder: (context, state) {
             return SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
+              // padding: const EdgeInsets.all(16),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -389,11 +371,11 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       alignment: Alignment.bottomRight,
                       children: [
                         CircleAvatar(
-                          radius: 50,
+                          radius: 60,
                           backgroundImage: imagePath != null
                               ? FileImage(File(imagePath!))
                               : (widget.patient.imageUrl != null
-                                      ? NetworkImage(
+                                      ? CachedNetworkImageProvider(
                                           "${ApiConstants.imageBaseUrl}${widget.patient.imageUrl!}")
                                       : const AssetImage(
                                           "assets/images/default_profile.png"))
@@ -401,44 +383,81 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         ),
                         IconButton(
                           onPressed: _pickImage,
-                          icon: const Icon(Icons.edit, color: Colors.blue),
+                          icon: const Icon(
+                            Icons.camera_alt,
+                            color: Color.fromARGB(255, 21, 21, 21),
+                            size: 26,
+                          ),
                         )
                       ],
                     ),
-                    const SizedBox(height: 16),
-                    CustomTextField(
-                        controller: firstNameController, label: "الاسم الأول"),
+                    const SizedBox(height: 45),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: CustomTextField(
+                          validation: Validator.validateFullName,
+                          controller: firstNameController,
+                          label: "الاسم الأول"),
+                    ),
                     const SizedBox(height: 10),
-                    CustomTextField(
-                        controller: lastNameController, label: "الاسم الأخير"),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: CustomTextField(
+                          validation: Validator.validateFullName,
+                          controller: lastNameController,
+                          label: "الاسم الأخير"),
+                    ),
                     const SizedBox(height: 10),
-                    CustomTextField(
-                        controller: emailController,
-                        label: "البريد الإلكتروني",
-                        textInputType: TextInputType.emailAddress),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: CustomTextField(
+                          controller: emailController,
+                          label: "البريد الإلكتروني",
+                          validation: Validator.validateEmail,
+                          textInputType: TextInputType.emailAddress),
+                    ),
                     const SizedBox(height: 10),
-                    CustomTextField(
-                        controller: nationalIdController,
-                        label: "الرقم القومي",
-                        textInputType: TextInputType.number),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: CustomTextField(
+                          controller: nationalIdController,
+                          validation: Validator.validateNationalId,
+                          label: "الرقم القومي",
+                          textInputType: TextInputType.number),
+                    ),
                     const SizedBox(height: 10),
-                    CustomTextField(
-                        controller: phoneNumberController,
-                        label: "رقم الهاتف",
-                        textInputType: TextInputType.phone),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: CustomTextField(
+                          controller: phoneController,
+                          validation: Validator.validatePhoneNumber,
+                          label: "رقم الهاتف",
+                          textInputType: TextInputType.phone),
+                    ),
                     const SizedBox(height: 10),
-                    CustomDropDown(
-                        collageList: collageList,
-                        initialValue: selectedCollage,
-                        onChange: (value) => setState(() {
-                              selectedCollage = value;
-                            })),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 8),
+                      child: CustomDropDown(
+                          collageList: collageList,
+                          initialValue: selectedCollege,
+                          onChange: (value) => setState(() {
+                                selectedCollege = value;
+                              })),
+                    ),
                     const SizedBox(height: 20),
                     state is GetUpdateProfilesLoading
-                        ? const CircularProgressIndicator()
-                        : CustomButton(
-                            label: "حفظ التعديلات",
-                            onTap: _updateProfile,
+                        ? const CircularProgressIndicator(
+                            color: ColorManager.primary,
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: CustomButton(
+                                backgroundColor: ColorManager.primary,
+                                label: "حفظ التعديلات",
+                                onTap: onUpdatePressed
+                                // _updateProfile,
+                                ),
                           ),
                   ],
                 ),

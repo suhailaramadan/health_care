@@ -3,6 +3,7 @@ import 'package:graduation_project/features/user/booking/data/models/appointment
 import 'package:graduation_project/features/user/booking/data/models/doctors_appointment_response/doctors_appointment_model.dart';
 import 'package:graduation_project/features/user/booking/domain/entities/appointment_entity.dart';
 import 'package:graduation_project/features/user/booking/domain/entities/booking_entity.dart';
+import 'package:graduation_project/features/user/booking/domain/entities/delete_booking_entity.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_states.dart';
 
 abstract class AppointmentStates {}
@@ -24,6 +25,16 @@ class GetDoctorAppointmentsSuccess extends AppointmentStates {
 class CreateAppointmentSuccess extends AppointmentStates {
   final DoctorsAppointmentModel doctorsAppointmentModel;
   CreateAppointmentSuccess(this.doctorsAppointmentModel);
+}
+
+class UpdateAppointmentSuccess extends AppointmentStates {
+  final DoctorsAppointmentModel doctorsAppointmentModel;
+  UpdateAppointmentSuccess(this.doctorsAppointmentModel);
+}
+
+class DeleteAppointmentSuccess extends AppointmentStates {
+  final DeleteBookingEntity bookingResponse;
+  DeleteAppointmentSuccess(this.bookingResponse);
 }
 
 class GetAppointmentError extends AppointmentStates {

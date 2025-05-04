@@ -112,18 +112,29 @@ class AuthAPIRemoteDataSource extends AuthRemoteDataSource {
   @override
   Future<String> changePassword(
       ChangePasswordRequest request, String token) async {
-    final response = await dio.post("Authentication/Change-Password",
-        data: {
-          'email': request.email,
-          "oldPassword": request.oldPassword,
-          "newPassword": request.newPassword,
-          "confirmPassword": request.confirmPassword,
-        },
-        options: Options(headers: {'Authorization': 'Bearer $token'}));
-    if (response.statusCode == 200) {
-      return response.data.toString();
-    } else {
-      throw const RemoteException("فشل في تغيير كلمة المرور");
+    try {
+      final response = await dio.post("Authentication/Change-Password",
+          data: {
+            "oldPassword": request.oldPassword,
+            "newPassword": request.newPassword,
+            "confirmPassword": request.confirmPassword,
+          },
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+            "Content-Type": "application/json"
+          }));
+
+      if (response.statusCode == 200) {
+        return response.data.toString();
+      } else {
+        throw const RemoteException("فشل في تغيير كلمة المرور");
+      }
+    } on DioException catch (e) {
+      final errormessage =
+          e.response?.data['message'] ?? 'حدث خطأ غير توقع أثناء التغيير';
+      throw RemoteException(errormessage);
+    } catch (e) {
+      throw const RemoteException("حدث خطأ أثناء تغيير كلمة المرور");
     }
   }
 }

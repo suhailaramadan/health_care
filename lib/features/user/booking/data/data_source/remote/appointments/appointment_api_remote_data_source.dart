@@ -5,6 +5,8 @@ import 'package:graduation_project/features/user/booking/data/data_source/remote
 import 'package:graduation_project/features/user/booking/data/models/appointment_by_doctor_id_response/appointment_by_doctor_id_response.dart';
 import 'package:graduation_project/features/user/booking/data/models/doctors_appointment_response/create_request_model.dart';
 import 'package:graduation_project/features/user/booking/data/models/doctors_appointment_response/doctors_appointment_model.dart';
+import 'package:graduation_project/features/user/booking/data/models/doctors_appointment_response/update_appointment_request.dart';
+import 'package:graduation_project/features/user/booking/domain/entities/delete_booking_entity.dart';
 
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -69,6 +71,48 @@ class AppointmentApiRemoteDataSource extends AppointmentRemoteDataSource {
       return DoctorsAppointmentModel.fromJson(response.data['data']);
     } else {
       throw RemoteException(response.data['message']);
+    }
+  }
+
+  @override
+  Future<DeleteBookingEntity> deleteappointment(int id) async {
+    SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    String? token = sharedPref.getString(CacheConstants.tokenKey);
+    if (token == null) {
+      throw const RemoteException("لا يوجد رمز توثيق");
+    }
+    final response = await _dio.delete("Appointment/$id",
+        options: Options(headers: {
+          "Content-Type": 'application/json',
+          "Authorization": 'Bearer $token',
+        }));
+    if (response.statusCode == 200) {
+      return DeleteBookingEntity.fromJson(response.data);
+    } else {
+      throw RemoteException(response.data['message'] ?? 'فشل في حذف الموعد');
+    }
+  }
+
+  @override
+  Future<DoctorsAppointmentModel> updateAppointment(
+      UpdateAppointmentRequest updateAppointmentRequest) async {
+    SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    String? token = sharedPref.getString(CacheConstants.tokenKey);
+    if (token == null) {
+      throw const RemoteException("لا يوجد رمز توثيق");
+    }
+    final response =
+        await _dio.put("Appointment/${updateAppointmentRequest.id}",
+            data: updateAppointmentRequest.toJson(),
+            options: Options(headers: {
+              "Content-Type": 'application/json',
+              "Authorization": 'Bearer $token',
+            }));
+    if (response.statusCode == 200 && response.data['success'] == true) {
+      return DoctorsAppointmentModel.fromJson(response.data['data']);
+    } else {
+      throw RemoteException(
+          response.data['message'] ?? 'حدث خطأ أثناء التعديل');
     }
   }
 }

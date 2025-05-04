@@ -58,10 +58,9 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<Either<Failure, String>> verifyCode(VerifyCodeRequest request) async {
     try {
       final response = await remoteDataSource.verifyCode(request);
-      print("/////////////$response");
+
       return Right(response);
     } catch (e) {
-      print("eeeeeee=> $e");
       return const Left(Failure('فشل التحقق من الكود'));
     }
   }
@@ -81,7 +80,8 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<Either<Failure, String>> changePassword(
       ChangePasswordRequest request) async {
     try {
-      final result = await remoteDataSource.changePassword(request, '');
+      final token = await localDataSource.getToken();
+      final result = await remoteDataSource.changePassword(request, token!);
       return Right(result);
     } catch (e) {
       return Left(Failure(e.toString()));

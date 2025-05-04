@@ -18,7 +18,9 @@ import 'package:graduation_project/features/profile/presentation/cubit/profile_c
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/appointment_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/create_appointment_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/doctor_appointments_cubit.dart';
+import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/update_appointment_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_cubit.dart';
+import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_doctor_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_patient_cubit.dart';
 import 'package:graduation_project/features/user/clinic/presentation/cubit/clinic_cubit.dart';
 import 'package:graduation_project/features/doctor/presentation/cubit/doctor_cubit.dart';
@@ -104,6 +106,10 @@ class HealthCareApp extends StatelessWidget {
             create: (context) => createAppointmentCubit,
           ),
           BlocProvider(
+              create: (context) =>
+                  serviceLocator.get<UpdateAppointmentCubit>()),
+
+          BlocProvider(
               create: (context) => serviceLocator.get<ForgetPasswordCubit>()),
           BlocProvider(
               create: (context) => serviceLocator.get<ChangePasswordCubit>()),
@@ -113,6 +119,8 @@ class HealthCareApp extends StatelessWidget {
               create: (context) => serviceLocator.get<ResetPasswordCubit>()),
           BlocProvider(
               create: (context) => serviceLocator.get<BookingPatientCubit>()),
+          BlocProvider(
+              create: (context) => serviceLocator.get<BookingDoctorCubit>()),
           BlocProvider(
               create: (context) => serviceLocator.get<AppointmentCubit>()),
 
@@ -129,17 +137,18 @@ class HealthCareApp extends StatelessWidget {
                   GlobalCupertinoLocalizations.delegate,
                 ],
                 supportedLocales: [
-                  Locale('ar'), // Arabic
-                  Locale('en'), // English
+                  Locale('ar'),
+                  Locale('en'),
                 ],
                 // theme: ThemeData(useMaterial3: false),
                 // ignore: deprecated_member_use
                 useInheritedMediaQuery: true,
+                locale: Locale('ar'),
                 // locale: DevicePreview.locale(context),
                 builder: DevicePreview.appBuilder,
                 debugShowCheckedModeBanner: false,
                 onGenerateRoute: RouteGenerator.getRoute,
-                initialRoute: Routes.chooseUser)));
+                initialRoute: Routes.splash)));
   }
 //        )
 //         ;

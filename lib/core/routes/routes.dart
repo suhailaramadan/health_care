@@ -7,8 +7,13 @@ import 'package:graduation_project/features/auth/presentation/screens/reset_pass
 import 'package:graduation_project/features/auth/presentation/screens/verfiy_code_screen.dart';
 import 'package:graduation_project/features/auth/presentation/screens/register_screen.dart';
 import 'package:graduation_project/features/doctors/presentation/screens/create_apointment_screen.dart';
-import 'package:graduation_project/features/doctors/presentation/screens/doctor_appointments_screen.dart';
+import 'package:graduation_project/features/doctors/presentation/screens/doctor_booking_screen.dart';
+import 'package:graduation_project/features/doctors/presentation/screens/update_appointment_screen.dart';
 import 'package:graduation_project/features/doctors/presentation/screens/work_hours_screen.dart';
+import 'package:graduation_project/features/doctors/presentation/widgets/medical_record_screen.dart';
+import 'package:graduation_project/features/medical_record/presentation/screens/patient_medical_record_screen.dart';
+import 'package:graduation_project/features/profile/presentation/screen/doctor_profile_screen.dart';
+import 'package:graduation_project/features/profile/presentation/screen/update_doctor_profile_screen.dart';
 import 'package:graduation_project/features/profile/presentation/screen/update_profile.dart';
 import 'package:graduation_project/features/splash_screen.dart';
 import 'package:graduation_project/features/user/booking/presentation/screen/booking_screen.dart';
@@ -43,4 +48,12 @@ class Routes {
   static const doctorAppointments = DoctorAppointmentsScreen.doctorAppointments;
   static const worksHours = WorksHoursScreen.worksHours;
   static const createAppointment = CreateAppointmentScreen.createAppointment;
+  static const updateAppointment = UpdateAppointmentScreen.updateAppointment;
+  static const medicalRecord = MedicalRecordScreen.medicalRecord;
+  static const patientMedicalRecord =
+      PatientMedicalRecordScreen.patientMedicalRecord;
+  static const doctorPatient = DoctorProfileScreen.doctorProfile;
+
+  static const updateDoctorProfile =
+      UpdateDoctorProfileScreen.updateDoctorProfile;
 }

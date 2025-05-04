@@ -1,3 +1,4 @@
+import 'package:graduation_project/features/profile/domain/entities/profile_doctor_entity.dart';
 import 'package:graduation_project/features/profile/domain/entities/profile_entity.dart';
 
 abstract class AuthLocalDataSource {
@@ -10,6 +11,8 @@ abstract class AuthLocalDataSource {
   // Future<String?> getLastName();
   // Future<String?> getUserImage();
   Future<void> savePatientProfile(ProfileEntity profileEntity);
+  Future<void> savedDoctorProfile(ProfileDoctorEntity profileDoctorEntity);
+  Future<ProfileDoctorEntity> getDoctorProfile();
   Future<ProfileEntity> getPatientProfile();
   Future<void> clearUserData();
   Future<void> saveDoctorId(String id);

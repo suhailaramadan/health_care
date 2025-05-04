@@ -14,12 +14,18 @@ import 'package:graduation_project/features/auth/presentation/screens/reset_pass
 import 'package:graduation_project/features/auth/presentation/screens/verfiy_code_screen.dart';
 import 'package:graduation_project/features/auth/presentation/screens/register_screen.dart';
 import 'package:graduation_project/features/doctors/presentation/screens/create_apointment_screen.dart';
-import 'package:graduation_project/features/doctors/presentation/screens/doctor_appointments_screen.dart';
+import 'package:graduation_project/features/doctors/presentation/screens/doctor_booking_screen.dart';
+import 'package:graduation_project/features/doctors/presentation/screens/update_appointment_screen.dart';
 import 'package:graduation_project/features/doctors/presentation/screens/work_hours_screen.dart';
+import 'package:graduation_project/features/doctors/presentation/widgets/medical_record_screen.dart';
 import 'package:graduation_project/features/home/presentation/screens/doctor_home_screen.dart';
+import 'package:graduation_project/features/medical_record/presentation/screens/patient_medical_record_screen.dart';
 import 'package:graduation_project/features/home/presentation/screens/patient_home_screen.dart';
 import 'package:graduation_project/features/profile/data/model/profile_response/Update_request.dart';
+import 'package:graduation_project/features/profile/domain/entities/profile_doctor_entity.dart';
 import 'package:graduation_project/features/profile/domain/entities/profile_entity.dart';
+import 'package:graduation_project/features/profile/presentation/screen/doctor_profile_screen.dart';
+import 'package:graduation_project/features/profile/presentation/screen/update_doctor_profile_screen.dart';
 import 'package:graduation_project/features/profile/presentation/screen/update_profile.dart';
 import 'package:graduation_project/features/splash_screen.dart';
 import 'package:graduation_project/features/user/booking/data/models/doctors_appointment_response/doctors_appointment_model.dart';
@@ -63,8 +69,35 @@ class RouteGenerator {
         return _buildRoute(const RegisterScreen(), isIOS);
       case Routes.clinic:
         return _buildRoute(const ClinicScreen(), isIOS);
+      case Routes.patientMedicalRecord:
+        return _buildRoute(const PatientMedicalRecordScreen(), isIOS);
+      case Routes.updateDoctorProfile:
+        final args = settings.arguments as ProfileDoctorEntity;
+        return _buildRoute(
+            UpdateDoctorProfileScreen(
+              profileDoctorEntity: args,
+            ),
+            isIOS);
       case Routes.profile:
         return _buildRoute(const ProfileScreen(), isIOS);
+      case Routes.doctorPatient:
+        return _buildRoute(const DoctorProfileScreen(), isIOS);
+      case Routes.medicalRecord:
+        final args = settings.arguments as String;
+        return _buildRoute(
+            MedicalRecordScreen(
+              patientId: args,
+            ),
+            isIOS);
+      case Routes.updateAppointment:
+        final args = settings.arguments as DoctorsAppointmentModel;
+
+        return _buildRoute(
+            UpdateAppointmentScreen(
+              appointment: args,
+            ),
+            isIOS);
+
       case Routes.createAppointment:
         final doctorId = settings.arguments as String;
         return _buildRoute(CreateAppointmentScreen(doctorId: doctorId), isIOS);

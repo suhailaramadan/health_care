@@ -4,6 +4,8 @@ import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/error/exceptions.dart';
 import 'package:graduation_project/features/user/booking/data/data_source/remote/booking/booking_remote_data_source.dart';
 import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_appointment/booking_appointment.dart';
+import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_doctor_response/booking_doctor_model.dart';
+import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_doctor_response/booking_doctor_response.dart';
 import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_patient_response/booking_patient_response.dart';
 import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_request.dart';
 import 'package:graduation_project/features/user/booking/data/models/delete_booking_response.dart';
@@ -81,6 +83,26 @@ class BookingApiRemoteDataSource implements BookingRemoteDataSource {
       return DeleteBookingResponse.fromJson(response.data);
     } catch (e) {
       throw const RemoteException('فشل فى إلغاء الحجز');
+    }
+  }
+
+  @override
+  Future<BookingDoctorResponse> getBookingDoctor(String token) async {
+    try {
+      SharedPreferences sharedPref = await SharedPreferences.getInstance();
+      String? token = sharedPref.getString(CacheConstants.tokenKey);
+      final response = await _dio.get("Booking/DoctorBookings",
+          options: Options(headers: {
+            "Content-Type": 'application/json',
+            "Authorization": 'Bearer $token',
+          }));
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return BookingDoctorResponse.fromJson(response.data);
+      } else {
+        throw RemoteException('فشل في تحميل الحجوزات , ${response.statusCode}');
+      }
+    } catch (e) {
+      throw const RemoteException("فشل في تحميل الحجوزات");
     }
   }
 }

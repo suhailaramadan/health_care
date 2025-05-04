@@ -120,50 +120,44 @@ class DoctorAppointmentItem extends StatelessWidget {
       ),
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
+        // mainAxisAlignment: MainAxisAlignment.spa,
         children: [
-          Expanded(
-              child: Center(
-                  child: Text(
+          Spacer(),
+          Text(
             FormatedDate.formateArabicDate(day, day: day),
-            style: getRegularStyle(color: ColorManager.textColor),
-          ))),
-          const Divider(),
-          Expanded(
-              child: Center(
-                  child: Text(
+            style: getMediumStyle(color: ColorManager.textColor),
+          ),
+          Spacer(),
+          Text(
             FormatedDate.formateTime(startTime),
             style: getRegularStyle(color: ColorManager.textColor),
-          ))),
-          const Divider(),
-          Expanded(
-              child: Center(
-                  child: Text(
+          ),
+          Spacer(),
+          Text(
             FormatedDate.formateTime(endTime),
             style: getRegularStyle(color: ColorManager.textColor),
-          ))),
-          const Divider(),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.edit_square,
-                    color: ColorManager.primary,
-                    size: 20,
-                  ),
-                  onPressed: onEdit,
+          ),
+          Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                icon: const Icon(
+                  Icons.edit_square,
+                  color: ColorManager.primary,
+                  size: 22,
                 ),
-                IconButton(
-                  icon: const Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                    size: 24,
-                  ),
-                  onPressed: onDelete,
+                onPressed: onEdit,
+              ),
+              IconButton(
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                  size: 25,
                 ),
-              ],
-            ),
+                onPressed: onDelete,
+              ),
+            ],
           ),
         ],
       ),

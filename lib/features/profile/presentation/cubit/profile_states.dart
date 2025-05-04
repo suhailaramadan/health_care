@@ -1,3 +1,4 @@
+import 'package:graduation_project/features/profile/domain/entities/profile_doctor_entity.dart';
 import 'package:graduation_project/features/profile/domain/entities/profile_entity.dart';
 
 abstract class ProfileStates {}
@@ -7,6 +8,11 @@ class ProfileInitial extends ProfileStates {}
 class GetProfilesSuccess extends ProfileStates {
   ProfileEntity profileEntity;
   GetProfilesSuccess(this.profileEntity);
+}
+
+class GetProfileDoctorSuccess extends ProfileStates {
+  ProfileDoctorEntity profileDoctorEntity;
+  GetProfileDoctorSuccess(this.profileDoctorEntity);
 }
 
 class GetProfilesLoading extends ProfileStates {}

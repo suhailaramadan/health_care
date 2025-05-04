@@ -1,6 +1,7 @@
 import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/error/exceptions.dart';
 import 'package:graduation_project/features/auth/data/data_sources/local/auth_local_data_source.dart';
+import 'package:graduation_project/features/profile/domain/entities/profile_doctor_entity.dart';
 import 'package:graduation_project/features/profile/domain/entities/profile_entity.dart';
 import 'package:graduation_project/features/user/booking/data/models/doctors_appointment_response/create_request_model.dart';
 import 'package:injectable/injectable.dart';
@@ -101,6 +102,35 @@ class AuthSharedPrefLocalDataSource extends AuthLocalDataSource {
   }
 
   @override
+  Future<ProfileDoctorEntity> getDoctorProfile() async {
+    final id = _sharedPref.getString('id');
+    final firstName = _sharedPref.getString('firstName');
+    final lastName = _sharedPref.getString('lastName');
+    final email = _sharedPref.getString('email');
+    final college = _sharedPref.getString('college');
+    final description = _sharedPref.getString('description');
+    final specialty = _sharedPref.getString('specialty');
+    final phoneNumber = _sharedPref.getString('phoneNumber');
+    final nationalId = _sharedPref.getString('nationalID');
+    final imageUrl = _sharedPref.getString('imageUrl');
+    final clinicName = _sharedPref.getString('clinicName');
+    final clinicId = _sharedPref.getInt('clinicId');
+    return ProfileDoctorEntity(
+        id: id,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        college: college,
+        specialty: specialty,
+        phoneNumber: phoneNumber,
+        nationalId: nationalId,
+        imageUrl: imageUrl,
+        clinicId: clinicId,
+        clinicName: clinicName,
+        description: description);
+  }
+
+  @override
   Future<void> savePatientProfile(ProfileEntity? profileEntity) async {
     if (profileEntity == null) {
       throw const LocalException("البيانات غير متوفرة");
@@ -127,5 +157,31 @@ class AuthSharedPrefLocalDataSource extends AuthLocalDataSource {
     await _sharedPref.remove('phoneNumber');
     await _sharedPref.remove('nationalID');
     await _sharedPref.remove('imageUrl');
+  }
+
+  @override
+  Future<void> savedDoctorProfile(
+      ProfileDoctorEntity profileDoctorEntity) async {
+    await _sharedPref.setString('id', profileDoctorEntity.id ?? '');
+    await _sharedPref.setString(
+        'firstName', profileDoctorEntity.firstName ?? '');
+    await _sharedPref.setString('lastName', profileDoctorEntity.lastName ?? '');
+    await _sharedPref.setString('email', profileDoctorEntity.email ?? '');
+    await _sharedPref.setString(
+        'specialty', profileDoctorEntity.specialty ?? '');
+    await _sharedPref.setString(
+        'description', profileDoctorEntity.description ?? '');
+    await _sharedPref.setInt('clinicId', profileDoctorEntity.clinicId ?? 0);
+    await _sharedPref.setString(
+        'clinicName', profileDoctorEntity.clinicName ?? '');
+    await _sharedPref.setString('college', profileDoctorEntity.college ?? '');
+    await _sharedPref.setString(
+        'phoneNumber', profileDoctorEntity.phoneNumber ?? '');
+    await _sharedPref.setString(
+        'nationalID', profileDoctorEntity.nationalId ?? '');
+    if (profileDoctorEntity.imageUrl != null) {
+      await _sharedPref.setString(
+          'imageUrl', profileDoctorEntity.imageUrl ?? '');
+    }
   }
 }

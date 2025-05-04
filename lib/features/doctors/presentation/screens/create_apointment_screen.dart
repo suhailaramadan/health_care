@@ -172,6 +172,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
+import 'package:graduation_project/core/utils/formated.dart';
+import 'package:graduation_project/core/utils/ui_utils.dart';
 import 'package:graduation_project/core/widgets/custom_botton.dart';
 import 'package:graduation_project/core/widgets/custom_text_field.dart';
 import 'package:graduation_project/features/user/booking/data/models/doctors_appointment_response/create_request_model.dart';
@@ -197,15 +199,17 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
   TimeOfDay? startTime;
   TimeOfDay? endTime;
   final TextEditingController durationController = TextEditingController();
+  final TextEditingController startTimeController = TextEditingController();
+  final TextEditingController endTimeController = TextEditingController();
 
   final Map<String, int> daysMap = {
-    'السبت': 0,
-    'الأحد': 1,
-    'الإثنين': 2,
-    'الثلاثاء': 3,
-    'الأربعاء': 4,
-    'الخميس': 5,
-    'الجمعة': 6,
+    'الأحد': 0,
+    'الإثنين': 1,
+    'الثلاثاء': 2,
+    'الأربعاء': 3,
+    'الخميس': 4,
+    'الجمعة': 5,
+    'السبت': 6
   };
 // /
   Future<void> pickTime(bool isStart) async {
@@ -275,8 +279,10 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
       setState(() {
         if (isStart) {
           startTime = picked;
+          startTimeController.text = picked.format(context);
         } else {
           endTime = picked;
+          endTimeController.text = picked.format(context);
         }
       });
     }
@@ -320,27 +326,27 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
   //   }
   // }
 
-  String formateTimeToArabic(TimeOfDay time) {
-    int hour = time.hourOfPeriod == 0 ? 12 : time.hourOfPeriod;
-    int minute = time.minute;
-    String period = time.period == DayPeriod.am ? 'ص' : 'م';
+  // String formateTimeToArabic(TimeOfDay time) {
+  //   int hour = time.hourOfPeriod == 0 ? 12 : time.hourOfPeriod;
+  //   int minute = time.minute;
+  //   String period = time.period == DayPeriod.am ? 'ص' : 'م';
 
-    String hourStr = convertToArabicNumber(hour, minDigits: 2);
-    String minuteStr = convertToArabicNumber(minute, minDigits: 2);
+  //   String hourStr = convertToArabicNumber(hour, minDigits: 2);
+  //   String minuteStr = convertToArabicNumber(minute, minDigits: 2);
 
-    return '$hourStr:$minuteStr $period';
-  }
+  //   return '$hourStr:$minuteStr $period';
+  // }
 
-  String convertToArabicNumber(int number, {int minDigits = 1}) {
-    const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-    final digits = number.toString().padLeft(minDigits, '0');
-    return digits.split('').map((e) => arabicNumbers[int.parse(e)]).join();
-  }
+  // String convertToArabicNumber(int number, {int minDigits = 1}) {
+  //   const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+  //   final digits = number.toString().padLeft(minDigits, '0');
+  //   return digits.split('').map((e) => arabicNumbers[int.parse(e)]).join();
+  // }
 
   String getFormattedDuration() {
     final duration = int.tryParse(durationController.text);
     if (duration != null) {
-      return '${convertToArabicNumber(duration)} دقيقة';
+      return '${FormatedDate.convertToArabicNumber(duration)} دقيقة';
     }
     return '';
   }
@@ -368,6 +374,20 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
     final now = DateTime.now();
     final dt = DateTime(now.year, now.month, now.day, time.hour, time.minute);
     return DateFormat.Hms().format(dt);
+  }
+
+  Future<void> _selectTime(TextEditingController controller) async {
+    final TimeOfDay? picked =
+        await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    if (picked != null) {
+      final now = DateTime.now();
+      final dt =
+          DateTime(now.year, now.month, now.day, picked.hour, picked.minute);
+      final formattedTime = DateFormat.Hm().format(dt);
+      setState(() {
+        controller.text = formattedTime;
+      });
+    }
   }
 
   // String formatTimeToArabicString(TimeOfDay time) {
@@ -454,7 +474,7 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                   const SizedBox(height: 10),
                   Wrap(
                     spacing: 10,
-                    runSpacing: 15,
+                    runSpacing: 10,
                     children: daysMap.entries.map((entry) {
                       return FilterChip(
                         labelPadding: const EdgeInsets.symmetric(horizontal: 4),
@@ -483,60 +503,105 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                       );
                     }).toList(),
                   ),
-                  const SizedBox(height: 40),
-                  InkWell(
-                      onTap: () => pickTime(true),
-                      child: Row(
-                        children: [
-                          Text(
-                              startTime == null
-                                  ? 'اختر ساعة البداية'
-                                  : 'ساعة البداية : ',
-                              style:
-                                  getMediumStyle(color: ColorManager.primary)),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          Text(
-                              startTime == null
-                                  ? ''
-                                  : formateTimeToArabic(startTime!),
-                              style:
-                                  getMediumStyle(color: ColorManager.primary))
-                        ],
-                      )
-                      // Text(
-                      //     startTime == null
-                      //         ? 'اختر ساعة البداية'
-                      //         : 'ساعة البداية :   ${formateTimeToArabic(startTime!)}',
-                      //     style: getMediumStyle(color: ColorManager.primary)),
-                      ),
-                  const SizedBox(height: 16),
-                  InkWell(
-                    onTap: () => pickTime(false),
-                    child: Row(
-                      children: [
-                        Text(
-                            endTime == null
-                                ? 'اختر ساعة النهاية'
-                                : 'ساعة النهاية : ',
-                            style: getMediumStyle(color: ColorManager.primary)),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        Text(
-                            endTime == null
-                                ? ''
-                                : formateTimeToArabic(endTime!),
-                            style: getMediumStyle(color: ColorManager.primary))
-                      ],
-                    ),
-                    // child: Text(
-                    //     endTime == null
-                    //         ? 'اختر ساعة النهاية'
-                    //         : 'ساعة النهاية :   ${formateTimeToArabic(endTime!)}',
-                    //     style: getMediumStyle(color: ColorManager.primary)),
+                  const SizedBox(height: 30),
+                  // InkWell(
+                  //     onTap: () => pickTime(true),
+                  //     child: Row(
+                  //       children: [
+                  // Text(
+                  //     startTime == null
+                  //         ? 'اختر ساعة البداية'
+                  //         : 'ساعة البداية : ',
+                  //     style:
+                  //         getMediumStyle(color: ColorManager.primary)),
+                  // const SizedBox(
+                  //   width: 15,
+                  // ),
+                  Text(
+                    "اختر ساعة البداية",
+                    style: getMediumStyle(color: ColorManager.primary),
                   ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  SizedBox(
+                      width: MediaQuery.of(context).size.width * .4,
+                      child: CustomTextField(
+                        backgroundColor: ColorManager.transparent,
+                        readOnly: true,
+                        onTap: () {
+                          pickTime(true);
+                          //   startTimeController.text = startTime.toString();
+                          //   _selectTime(startTimeController);
+                          //   setState(() {});
+                        },
+                        controller: startTimeController,
+                        textInputType: TextInputType.number,
+                        hintTextStyle:
+                            getRegularStyle(color: ColorManager.grey),
+                      )),
+                  // Text(
+                  //     startTime == null
+                  //         ? ''
+                  //         : FormatedDate.formateTimeToArabic(startTime!),
+                  //     style: getMediumStyle(color: ColorManager.primary)),
+                  //   ],
+                  // )
+                  // Text(
+                  //     startTime == null
+                  //         ? 'اختر ساعة البداية'
+                  //         : 'ساعة البداية :   ${formateTimeToArabic(startTime!)}',
+                  //     style: getMediumStyle(color: ColorManager.primary)),
+                  // ),
+                  // const SizedBox(height: 16),
+                  Text(
+                    "اختر ساعة النهاية",
+                    style: getMediumStyle(color: ColorManager.primary),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  SizedBox(
+                      width: MediaQuery.of(context).size.width * .4,
+                      child: CustomTextField(
+                        readOnly: true,
+                        onTap: () {
+                          // endTimeController.text = endTime.toString();
+                          // _selectTime(endTimeController);
+                          // setState(() {});
+                          pickTime(false);
+                        },
+                        backgroundColor: ColorManager.transparent,
+                        controller: endTimeController,
+                        textInputType: TextInputType.number,
+                        hintTextStyle:
+                            getRegularStyle(color: ColorManager.grey),
+                      )),
+                  // InkWell(
+                  //   onTap: () => pickTime(false),
+                  //   child: Row(
+                  //     children: [
+                  //       Text(
+                  //           endTime == null
+                  //               ? 'اختر ساعة النهاية'
+                  //               : 'ساعة النهاية : ',
+                  //           style: getMediumStyle(color: ColorManager.primary)),
+                  //       const SizedBox(
+                  //         width: 15,
+                  //       ),
+                  //       Text(
+                  //           endTime == null
+                  //               ? ''
+                  //               : FormatedDate.formateTimeToArabic(endTime!),
+                  //           style: getMediumStyle(color: ColorManager.primary))
+                  //     ],
+                  //   ),
+                  // child: Text(
+                  //     endTime == null
+                  //         ? 'اختر ساعة النهاية'
+                  //         : 'ساعة النهاية :   ${formateTimeToArabic(endTime!)}',
+                  //     style: getMediumStyle(color: ColorManager.primary)),
+                  // ),
                   const SizedBox(height: 25),
                   Text(
                     'اختر مدة الكشف',
@@ -546,7 +611,7 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                     height: 8,
                   ),
                   SizedBox(
-                      width: MediaQuery.of(context).size.width * .32,
+                      width: MediaQuery.of(context).size.width * .4,
                       child: CustomTextField(
                         hint: 'بالدقائق',
                         controller: durationController,
@@ -586,16 +651,11 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                     builder: (context, state) {
                       return Center(
                         child: SizedBox(
-                          width: MediaQuery.of(context).size.width * .5,
+                          width: MediaQuery.of(context).size.width * .6,
                           height: 40,
                           child: CustomButton(
                             backgroundColor: ColorManager.primary,
-                            onTap:
-                                // ElevatedButton(
-                                //   style: ElevatedButton.styleFrom(
-                                //     backgroundColor: ColorManager.primary,
-                                //   ),
-                                () {
+                            onTap: () {
                               if (state is! GetAppointmentLoading) {
                                 submit();
                                 context

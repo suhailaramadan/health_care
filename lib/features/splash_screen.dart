@@ -114,9 +114,9 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    // Future.delayed(const Duration(seconds: 4), () {
-    //   Navigator.pushReplacementNamed(context, Routes.onBoarding);
-    // });
+    Future.delayed(const Duration(seconds: 4), () {
+      Navigator.pushReplacementNamed(context, Routes.onBoarding);
+    });
   }
 
   @override
@@ -139,7 +139,7 @@ class _SplashScreenState extends State<SplashScreen>
               mainAxisSize: MainAxisSize.min,
               children: [
                 Image.asset(
-                  "assets/images/log.jpg",
+                  "assets/images/photo_2025-04-24_09-33-28-removebg-preview.png",
                   height: 130.w,
                   width: 130.w,
                 ),
