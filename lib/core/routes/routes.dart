@@ -10,8 +10,11 @@ import 'package:graduation_project/features/doctors/presentation/screens/create_
 import 'package:graduation_project/features/doctors/presentation/screens/doctor_booking_screen.dart';
 import 'package:graduation_project/features/doctors/presentation/screens/update_appointment_screen.dart';
 import 'package:graduation_project/features/doctors/presentation/screens/work_hours_screen.dart';
-import 'package:graduation_project/features/doctors/presentation/widgets/medical_record_screen.dart';
+import 'package:graduation_project/features/medical_record/presentation/screens/create_medical_record.dart';
+import 'package:graduation_project/features/medical_record/presentation/screens/medical_record_doctor_screen.dart';
 import 'package:graduation_project/features/medical_record/presentation/screens/patient_medical_record_screen.dart';
+import 'package:graduation_project/features/medical_record/presentation/screens/udate_medical_record.dart';
+import 'package:graduation_project/features/notification/presentiation/screens/notification_screen.dart';
 import 'package:graduation_project/features/profile/presentation/screen/doctor_profile_screen.dart';
 import 'package:graduation_project/features/profile/presentation/screen/update_doctor_profile_screen.dart';
 import 'package:graduation_project/features/profile/presentation/screen/update_profile.dart';
@@ -53,7 +56,9 @@ class Routes {
   static const patientMedicalRecord =
       PatientMedicalRecordScreen.patientMedicalRecord;
   static const doctorPatient = DoctorProfileScreen.doctorProfile;
-
+  static const addMedicalRecord = AddMedicalRecordScreen.addMedicalRecord;
   static const updateDoctorProfile =
       UpdateDoctorProfileScreen.updateDoctorProfile;
+  static const updateMedicalRecord = UpdateMedicalRecord.updatMedicalRecord;
+  static const nitification = NotificationScreen.notification;
 }

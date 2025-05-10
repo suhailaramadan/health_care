@@ -17,10 +17,14 @@ import 'package:graduation_project/features/doctors/presentation/screens/create_
 import 'package:graduation_project/features/doctors/presentation/screens/doctor_booking_screen.dart';
 import 'package:graduation_project/features/doctors/presentation/screens/update_appointment_screen.dart';
 import 'package:graduation_project/features/doctors/presentation/screens/work_hours_screen.dart';
-import 'package:graduation_project/features/doctors/presentation/widgets/medical_record_screen.dart';
 import 'package:graduation_project/features/home/presentation/screens/doctor_home_screen.dart';
+import 'package:graduation_project/features/medical_record/presentation/screens/create_medical_record.dart';
+import 'package:graduation_project/features/medical_record/presentation/screens/medical_record_doctor_screen.dart';
 import 'package:graduation_project/features/medical_record/presentation/screens/patient_medical_record_screen.dart';
 import 'package:graduation_project/features/home/presentation/screens/patient_home_screen.dart';
+import 'package:graduation_project/features/medical_record/presentation/screens/udate_medical_record.dart';
+import 'package:graduation_project/features/notification/presentiation/screens/notification_screen.dart';
+// import 'package:graduation_project/features/medical_record/presentation/screens/udate_medical_record.dart';
 import 'package:graduation_project/features/profile/data/model/profile_response/Update_request.dart';
 import 'package:graduation_project/features/profile/domain/entities/profile_doctor_entity.dart';
 import 'package:graduation_project/features/profile/domain/entities/profile_entity.dart';
@@ -28,6 +32,7 @@ import 'package:graduation_project/features/profile/presentation/screen/doctor_p
 import 'package:graduation_project/features/profile/presentation/screen/update_doctor_profile_screen.dart';
 import 'package:graduation_project/features/profile/presentation/screen/update_profile.dart';
 import 'package:graduation_project/features/splash_screen.dart';
+import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_doctor_response/booking_doctor_model.dart';
 import 'package:graduation_project/features/user/booking/data/models/doctors_appointment_response/doctors_appointment_model.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/create_appointment_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/doctor_appointments_cubit.dart';
@@ -83,10 +88,12 @@ class RouteGenerator {
       case Routes.doctorPatient:
         return _buildRoute(const DoctorProfileScreen(), isIOS);
       case Routes.medicalRecord:
-        final args = settings.arguments as String;
+        final args = settings.arguments as BookingDoctorModel;
+
         return _buildRoute(
             MedicalRecordScreen(
-              patientId: args,
+              patientId: args.patientId ?? '',
+              id: args.id ?? 0,
             ),
             isIOS);
       case Routes.updateAppointment:
@@ -109,7 +116,36 @@ class RouteGenerator {
             ),
             isIOS);
       case Routes.booking:
-        return _buildRoute(const BookingTab(), isIOS);
+        // final patientId = settings.arguments as String;
+        return _buildRoute(
+            BookingTab(
+                // patientId: patientId,
+                ),
+            isIOS);
+      case Routes.nitification:
+        return _buildRoute(const NotificationScreen(), isIOS);
+
+      case Routes.addMedicalRecord:
+        final args = settings.arguments as Map<String, dynamic>;
+        return _buildRoute(
+            AddMedicalRecordScreen(
+              bookingId: args['bookingId'],
+              firstName: args['firstName'],
+              lastName: args['lastName'],
+            ),
+            isIOS);
+      case Routes.updateMedicalRecord:
+        final args = settings.arguments as Map<String, dynamic>;
+        return _buildRoute(
+            UpdateMedicalRecord(
+              bookingId: args['bookingId'],
+              diagnosis: args['diagnosis'],
+              firstName: args['firstName'],
+              lastName: args['lastName'],
+              notes: args['notes'],
+              treatment: args['treatment'],
+            ),
+            isIOS);
       case Routes.clinicDetails:
         return _buildRoute(const ClinicDetails(), isIOS);
       case Routes.forgetPassword:
@@ -152,11 +188,6 @@ class RouteGenerator {
               email: email,
             ),
             isIOS);
-
-      // const VerifyCodeScreen(
-      //   email: '',
-      // ),
-      // isIOS);
       case Routes.doctorsDetails:
         return _buildRoute(
           const DoctorDetails(

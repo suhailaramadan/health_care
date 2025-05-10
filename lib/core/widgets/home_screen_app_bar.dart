@@ -10,9 +10,12 @@ import 'package:graduation_project/core/resources/font_manager.dart';
 import 'package:graduation_project/core/resources/image_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/resources/value_manager.dart';
+import 'package:graduation_project/core/routes/routes.dart';
 import 'package:graduation_project/core/widgets/loading_indicator.dart';
 import 'package:graduation_project/features/auth/data/data_sources/local/auth_local_data_source.dart';
 import 'package:graduation_project/features/auth/data/data_sources/local/auth_shared_pref_local_data_source.dart';
+import 'package:graduation_project/features/notification/presentiation/cubit/notification_cubit.dart';
+import 'package:graduation_project/features/notification/presentiation/cubit/notification_states.dart';
 import 'package:graduation_project/features/profile/domain/entities/profile_entity.dart';
 import 'package:graduation_project/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:graduation_project/features/profile/presentation/cubit/profile_states.dart';
@@ -151,25 +154,26 @@ class _HomeScreenAppBarState extends State<HomeScreenAppBar> {
                   // ),
                   const Spacer(),
 
-                  IconButton(
-                      onPressed: () {},
-                      icon: Badge.count(
-                        count: 2,
+                  IconButton(onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.nitification);
+                  }, icon: BlocBuilder<NotificationCubit, NotificationsStats>(
+                    builder: (context, state) {
+                      final count =
+                          context.read<NotificationCubit>().getUnReadCount();
+                      return Badge.count(
+                        count: count,
                         child: const Icon(
                           Icons.notifications_none,
                           // color: ColorManager.white,
                           size: 30,
                         ),
-                      )),
+                      );
+                    },
+                  )),
                   const SizedBox(
                     width: 10,
                   )
-                  // ]
-                  //   ],
-                  // ))
                 ])),
-            // ),
-            // ),
           ));
         }
         return const SizedBox();

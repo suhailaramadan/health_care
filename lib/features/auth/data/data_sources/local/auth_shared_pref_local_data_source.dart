@@ -52,6 +52,15 @@ class AuthSharedPrefLocalDataSource extends AuthLocalDataSource {
   }
 
   @override
+  Future<void> savePatientId(String id) async {
+    try {
+      await _sharedPref.setString(CacheConstants.patientId, id);
+    } catch (e) {
+      throw const LocalException("فشل في حفظ الرقم التعريفي للطالب");
+    }
+  }
+
+  @override
   Future<String?> getDoctorId() async {
     // try {
     return _sharedPref.getString(CacheConstants.doctorId);
@@ -60,6 +69,10 @@ class AuthSharedPrefLocalDataSource extends AuthLocalDataSource {
     // }
   }
 
+  @override
+  Future<String?> getPatientId() async {
+    return _sharedPref.getString(CacheConstants.patientId);
+  }
   // @override
   // Future<void> saveUserData(
   //     String firstName, String lastName, String userImage) async {

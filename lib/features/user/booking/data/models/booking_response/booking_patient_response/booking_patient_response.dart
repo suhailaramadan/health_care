@@ -22,4 +22,6 @@ class BookingPatientResponse {
         'message': message,
         'data': data?.map((e) => e.toJson()).toList(),
       };
+
+  where(Function(dynamic element) param0) {}
 }

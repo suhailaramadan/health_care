@@ -1,7 +1,9 @@
+import 'patient_data.dart';
+
 class PatientMedicalRecordResponse {
   bool? success;
   String? message;
-  List<dynamic>? data;
+  List<PatientData>? data;
 
   PatientMedicalRecordResponse({this.success, this.message, this.data});
 
@@ -9,13 +11,15 @@ class PatientMedicalRecordResponse {
     return PatientMedicalRecordResponse(
       success: json['success'] as bool?,
       message: json['message'] as String?,
-      data: json['data'] as List<dynamic>?,
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => PatientData.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
   }
 
   Map<String, dynamic> toJson() => {
         'success': success,
         'message': message,
-        'data': data,
+        'data': data?.map((e) => e.toJson()).toList(),
       };
 }

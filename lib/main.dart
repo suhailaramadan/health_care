@@ -14,6 +14,9 @@ import 'package:graduation_project/features/auth/presentation/cubit/change_passw
 import 'package:graduation_project/features/auth/presentation/cubit/forget_password_cubit.dart';
 import 'package:graduation_project/features/auth/presentation/cubit/reset_password_cubit.dart';
 import 'package:graduation_project/features/auth/presentation/cubit/verify_code_cubit.dart';
+import 'package:graduation_project/features/medical_record/presentation/cubit/medical_record_cubit.dart';
+import 'package:graduation_project/features/medical_record/presentation/widgets/medical_record_card.dart';
+import 'package:graduation_project/features/notification/presentiation/cubit/notification_cubit.dart';
 import 'package:graduation_project/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/appointment_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/create_appointment_cubit.dart';
@@ -120,9 +123,13 @@ class HealthCareApp extends StatelessWidget {
           BlocProvider(
               create: (context) => serviceLocator.get<BookingPatientCubit>()),
           BlocProvider(
+              create: (context) => serviceLocator.get<MedicalRecordCubit>()),
+          BlocProvider(
               create: (context) => serviceLocator.get<BookingDoctorCubit>()),
           BlocProvider(
               create: (context) => serviceLocator.get<AppointmentCubit>()),
+          BlocProvider(
+              create: (context) => serviceLocator.get<NotificationCubit>()),
 
           BlocProvider(create: (context) => profileCubit),
         ],
@@ -150,8 +157,4 @@ class HealthCareApp extends StatelessWidget {
                 onGenerateRoute: RouteGenerator.getRoute,
                 initialRoute: Routes.splash)));
   }
-//        )
-//         ;
-//   // }
-// }
 }

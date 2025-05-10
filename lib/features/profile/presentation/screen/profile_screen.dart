@@ -74,222 +74,224 @@ class _ProfileScreenState extends State<ProfileScreen> {
               } else if (state is GetProfilesError) {
                 return ErrorIndicator(message: state.message);
               } else if (state is GetProfilesSuccess) {
-                return Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: CircleAvatar(
-                            backgroundColor: ColorManager.white,
-                            radius: isLargeTablet
-                                ? screenSize.height * .08
-                                : isLandscape
-                                    ? screenSize.width * .07
-                                    : screenSize.height * .073,
-                            // radius: 60,
-                            backgroundImage: _profileImage != null
-                                ? FileImage(_profileImage!)
-                                : (state.profileEntity.imageUrl != null &&
-                                        state
-                                            .profileEntity.imageUrl!.isNotEmpty)
-                                    ? CachedNetworkImageProvider(
-                                        "${ApiConstants.imageBaseUrl}${state.profileEntity.imageUrl}")
-                                    : const AssetImage(
-                                            "assets/images/doctor_image.jpg")
-                                        as ImageProvider),
-                      ),
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: CircleAvatar(
+                              backgroundColor: ColorManager.white,
+                              radius: isLargeTablet
+                                  ? screenSize.height * .08
+                                  : isLandscape
+                                      ? screenSize.width * .07
+                                      : screenSize.height * .073,
+                              // radius: 60,
+                              backgroundImage: _profileImage != null
+                                  ? FileImage(_profileImage!)
+                                  : (state.profileEntity.imageUrl != null &&
+                                          state.profileEntity.imageUrl!
+                                              .isNotEmpty)
+                                      ? CachedNetworkImageProvider(
+                                          "${ApiConstants.imageBaseUrl}${state.profileEntity.imageUrl}")
+                                      : const AssetImage(
+                                              "assets/images/doctor_image.jpg")
+                                          as ImageProvider),
+                        ),
 
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "الإسم",
-                            style: getMediumStyle(color: ColorManager.black),
-                          ),
-                          Text(
-                            "${state.profileEntity.firstName} ${state.profileEntity.lastName}",
-                            style:
-                                getRegularStyle(color: ColorManager.textColor),
-                          ),
-                        ],
-                      ),
-                      // Text("${state.profileEntity.lastName}"),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "البريد الإلكتروني",
-                            style: getMediumStyle(color: ColorManager.black),
-                          ),
-                          Text(
-                            state.profileEntity.email ?? 'غير متوفر',
-                            style:
-                                getRegularStyle(color: ColorManager.textColor),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "رقم الهاتف",
-                            style: getMediumStyle(color: ColorManager.black),
-                          ),
-                          Text(
-                            "${state.profileEntity.phoneNumber}",
-                            style:
-                                getRegularStyle(color: ColorManager.textColor),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "الرقم القومي",
-                            style: getMediumStyle(color: ColorManager.black),
-                          ),
-                          Text(
-                            state.profileEntity.nationalId ?? 'غير متوفر',
-                            style:
-                                getRegularStyle(color: ColorManager.textColor),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "الكلية",
-                            style: getMediumStyle(color: ColorManager.black),
-                          ),
-                          Text(
-                            "${state.profileEntity.college}",
-                            style:
-                                getRegularStyle(color: ColorManager.textColor),
-                          )
-                        ],
-                      ),
-
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      const Divider(
-                        thickness: 1.5,
-                        color: ColorManager.greyDark,
-                      ),
-                      Row(
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "تعديل الحساب",
-                              style:
-                                  getMediumStyle(color: ColorManager.textColor),
+                              "الإسم",
+                              style: getMediumStyle(color: ColorManager.black),
                             ),
+                            Text(
+                              "${state.profileEntity.firstName} ${state.profileEntity.lastName}",
+                              style: getRegularStyle(
+                                  color: ColorManager.textColor),
+                            ),
+                          ],
+                        ),
+                        // Text("${state.profileEntity.lastName}"),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "البريد الإلكتروني",
+                              style: getMediumStyle(color: ColorManager.black),
+                            ),
+                            Text(
+                              state.profileEntity.email ?? 'غير متوفر',
+                              style: getRegularStyle(
+                                  color: ColorManager.textColor),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "رقم الهاتف",
+                              style: getMediumStyle(color: ColorManager.black),
+                            ),
+                            Text(
+                              "${state.profileEntity.phoneNumber}",
+                              style: getRegularStyle(
+                                  color: ColorManager.textColor),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "الرقم القومي",
+                              style: getMediumStyle(color: ColorManager.black),
+                            ),
+                            Text(
+                              state.profileEntity.nationalId ?? 'غير متوفر',
+                              style: getRegularStyle(
+                                  color: ColorManager.textColor),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "الكلية",
+                              style: getMediumStyle(color: ColorManager.black),
+                            ),
+                            Text(
+                              "${state.profileEntity.college}",
+                              style: getRegularStyle(
+                                  color: ColorManager.textColor),
+                            )
+                          ],
+                        ),
+
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        const Divider(
+                          thickness: 1.5,
+                          color: ColorManager.greyDark,
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "تعديل الحساب",
+                                style: getMediumStyle(
+                                    color: ColorManager.textColor),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed(
+                                      Routes.updateprofile,
+                                      arguments: state.profileEntity);
+                                },
+                                icon: const Icon(
+                                  Icons.edit,
+                                  color: ColorManager.primary,
+                                ),
+                                iconSize: 25,
+                              )
+                            ]),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("تغيير كلمة المرور",
+                                style: getMediumStyle(
+                                    color: ColorManager.textColor)),
                             IconButton(
                               onPressed: () {
-                                Navigator.of(context).pushNamed(
-                                    Routes.updateprofile,
-                                    arguments: state.profileEntity);
+                                Navigator.of(context)
+                                    .pushNamed(Routes.changePassword);
                               },
-                              icon: const Icon(
-                                Icons.edit,
-                                color: ColorManager.primary,
-                              ),
+                              icon: const Icon(Icons.password_sharp),
+                              color: ColorManager.primary,
                               iconSize: 25,
                             )
-                          ]),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("تغيير كلمة المرور",
-                              style: getMediumStyle(
-                                  color: ColorManager.textColor)),
-                          IconButton(
-                            onPressed: () {
-                              Navigator.of(context)
-                                  .pushNamed(Routes.changePassword);
-                            },
-                            icon: const Icon(Icons.password_sharp),
-                            color: ColorManager.primary,
-                            iconSize: 25,
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(" تسجيل الخروج",
-                              style: getMediumStyle(
-                                  color: ColorManager.textColor)),
-                          IconButton(
-                            onPressed: () {
-                              Navigator.of(context).pushNamed(Routes.login);
-                            },
-                            icon: const Icon(Icons.logout_sharp),
-                            color: ColorManager.red,
-                            iconSize: 25,
-                          )
-                        ],
-                      )
-                      // CustomButton(
-                      //   backgroundColor: ColorManager.primary,
-                      //   label: "تعديل البيانات",
-                      //   onTap: () {
-                      //     Navigator.of(context).pushNamed(Routes.updateprofile,
-                      //         arguments: state.profileEntity);
-                      //   },
-                      // ),
-                      // SizedBox(
-                      //   height: 20,
-                      // ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: [
-                      //     Text(
-                      //       "هل تريد تغيير كلمة مرورك؟",
-                      //       style: getRegularStyle(color: ColorManager.primary),
-                      //     ),
-                      //     SizedBox(
-                      //       width: 5,
-                      //     ),
-                      //     InkWell(
-                      //       onTap: () {
-                      //         Navigator.of(context)
-                      //             .pushNamed(Routes.changePassword);
-                      //       },
-                      //       splashColor: ColorManager.blue,
-                      //       child: Text(
-                      //         "تغيير",
-                      //         style:
-                      //             getSemiBoldStyle(color: ColorManager.primary),
-                      //       ),
-                      //     )
-                      //   ],
-                      // )
-                    ],
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(" تسجيل الخروج",
+                                style: getMediumStyle(
+                                    color: ColorManager.textColor)),
+                            IconButton(
+                              onPressed: () {
+                                Navigator.of(context).pushNamed(Routes.login);
+                              },
+                              icon: const Icon(Icons.logout_sharp),
+                              color: ColorManager.red,
+                              iconSize: 25,
+                            )
+                          ],
+                        )
+                        // CustomButton(
+                        //   backgroundColor: ColorManager.primary,
+                        //   label: "تعديل البيانات",
+                        //   onTap: () {
+                        //     Navigator.of(context).pushNamed(Routes.updateprofile,
+                        //         arguments: state.profileEntity);
+                        //   },
+                        // ),
+                        // SizedBox(
+                        //   height: 20,
+                        // ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     Text(
+                        //       "هل تريد تغيير كلمة مرورك؟",
+                        //       style: getRegularStyle(color: ColorManager.primary),
+                        //     ),
+                        //     SizedBox(
+                        //       width: 5,
+                        //     ),
+                        //     InkWell(
+                        //       onTap: () {
+                        //         Navigator.of(context)
+                        //             .pushNamed(Routes.changePassword);
+                        //       },
+                        //       splashColor: ColorManager.blue,
+                        //       child: Text(
+                        //         "تغيير",
+                        //         style:
+                        //             getSemiBoldStyle(color: ColorManager.primary),
+                        //       ),
+                        //     )
+                        //   ],
+                        // )
+                      ],
+                    ),
                   ),
                 );
               } else {

@@ -52,4 +52,47 @@ class FormatedDate {
   }
 
   static FormData formData = FormData.fromMap({});
+  static String formatArabicMonthYear(DateTime date) {
+    final months = [
+      'يناير',
+      "فبراير",
+      "مارس",
+      "أبريل",
+      "مايو",
+      "يونيو",
+      "يوليو",
+      "أغسطس",
+      "سبتمبر",
+      "أكتوبر",
+      "نوفمبر",
+      "ديسمبر"
+    ];
+    return "${months[date.month - 1]} - ${date.year} ";
+  }
+
+  static String formatArabicDateTime(String dateString) {
+    final date = DateTime.tryParse(dateString);
+    if (date == null) return "تاريخ غير صالح";
+    final months = [
+      'يناير',
+      "فبراير",
+      "مارس",
+      "أبريل",
+      "مايو",
+      "يونيو",
+      "يوليو",
+      "أغسطس",
+      "سبتمبر",
+      "أكتوبر",
+      "نوفمبر",
+      "ديسمبر"
+    ];
+    final day = date.day;
+    final month = months[date.month - 1];
+    final year = date.year;
+    // final hour = date.hour > 12 ? date.hour - 12 : date.hour;
+    // final minute = date.minute.toString().padLeft(2, '0');
+    // final period = date.hour >= 12 ? 'م' : "ص";
+    return "$day $month $year";
+  }
 }

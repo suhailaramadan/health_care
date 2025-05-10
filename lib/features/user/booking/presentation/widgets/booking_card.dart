@@ -199,9 +199,11 @@ class BookingCard extends StatelessWidget {
                           style:
                               getRegularStyle(color: Colors.red, fontSize: 16)),
                     ),
+
                   ],
                 ),
               ),
+                
             ],
           ),
         ),

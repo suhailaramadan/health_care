@@ -290,7 +290,7 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
                                       onPressed: () {
                                         Navigator.of(context).pushNamed(
                                             Routes.medicalRecord,
-                                            arguments: booking.patientId);
+                                            arguments: booking);
                                       },
                                       child: Text(
                                         "السجل الطبي",

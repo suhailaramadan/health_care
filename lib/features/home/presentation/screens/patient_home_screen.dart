@@ -5,6 +5,7 @@ import 'package:graduation_project/core/resources/font_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/resources/value_manager.dart';
 import 'package:graduation_project/core/widgets/home_screen_app_bar.dart';
+import 'package:graduation_project/features/medical_record/presentation/screens/patient_medical_record_screen.dart';
 import 'package:graduation_project/features/user/booking/presentation/screen/booking_screen.dart';
 import 'package:graduation_project/features/user/chatBot/presentation/screen/chat_bot_tab.dart';
 import 'package:graduation_project/features/home/presentation/widgets/home_tab.dart';
@@ -23,7 +24,8 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
   List<Widget> tabs = [
     const HomeTab(),
     const BookingTab(),
-    const ChatBotTab(),
+    // const ChatBotTab(),
+    const PatientMedicalRecordScreen(),
     const ProfileScreen()
   ];
   @override
@@ -144,12 +146,12 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
               ),
               BottomNavigationBarItem(
                   icon: Icon(
-                    Icons.chat_outlined,
+                    Icons.assignment,
                     size: isLandscape
                         ? screenSize.shortestSide * .07
                         : screenSize.shortestSide * .07,
                   ),
-                  label: "شات بوت"),
+                  label: "السجل الطبي"),
               BottomNavigationBarItem(
                   icon: Icon(Icons.person,
                       size: isLandscape

@@ -69,6 +69,7 @@ class AuthCubit extends Cubit<AuthStates> {
         profileResult.fold((failure) => emit(LoginError(failure.message)),
             (profile) async {
           await localSharedPref.saveDoctorId(profile.id ?? '');
+          await localSharedPref.savePatientId(profile.id ?? '');
         });
       });
     } catch (e) {

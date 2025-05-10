@@ -385,3 +385,233 @@ class _BookingTabState extends State<BookingTab>
     );
   }
 }
+
+// import 'package:flutter/material.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:graduation_project/core/constants.dart';
+// import 'package:graduation_project/core/resources/color_manager.dart';
+// import 'package:graduation_project/core/resources/styles_manager.dart';
+// import 'package:graduation_project/features/doctor/presentation/cubit/doctor_cubit.dart';
+// import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_patient_response/booking_patient_model.dart';
+// import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/appointment_cubit.dart';
+// import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_cubit.dart';
+// import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_patient_cubit.dart';
+// import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_states.dart';
+// import 'package:graduation_project/features/user/booking/presentation/widgets/booking_card.dart';
+// import 'package:graduation_project/features/user/booking/presentation/widgets/re_booking.dart';
+// import 'package:graduation_project/features/user/clinic/presentation/cubit/clinic_cubit.dart';
+
+// import 'package:intl/intl.dart';
+
+// class BookingTab extends StatefulWidget {
+//   // final String patientId;
+//   static const booking = "/booking";
+//   const BookingTab({
+//     Key? key,
+//   }) : super(key: key);
+
+//   @override
+//   State<BookingTab> createState() => _BookingTabState();
+// }
+
+// class _BookingTabState extends State<BookingTab> {
+//   void initState() {
+//     super.initState();
+//     context
+//         .read<BookingPatientCubit>()
+//         .getBookingPatient(CacheConstants.tokenKey);
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('مواعيدي'),
+//       ),
+//       body: BlocListener<BookingCubit, BookingStates>(
+//         listener: (context, state) {
+//           if (state is GetBookingSuccess) {
+//             ScaffoldMessenger.of(context).showSnackBar(
+//               const SnackBar(content: Text('تم إلغاء الميعاد بنجاح')),
+//             );
+//             context
+//                 .read<BookingPatientCubit>()
+//                 .getBookingPatient(CacheConstants.tokenKey);
+//           } else if (state is GetBookingError) {
+//             ScaffoldMessenger.of(context).showSnackBar(
+//               SnackBar(content: Text(state.message)),
+//             );
+//           }
+//         },
+//         child: BlocBuilder<BookingPatientCubit, BookingStates>(
+//           builder: (context, state) {
+//             if (state is GetBookingLoading) {
+//               return const Center(child: CircularProgressIndicator());
+//             } else if (state is GetBookingPatientSuccess) {
+//               return ListView.builder(
+//                 itemCount: state.bookingPatientResponse.data!.length,
+//                 itemBuilder: (context, index) {
+//                   final booking = state.bookingPatientResponse.data![index];
+//                   return BookingCard(
+//                     bookingDate: booking.date ?? '',
+//                     bookingId: booking.id ?? 0,
+//                     bookingTime: booking.time ?? '',
+//                     clinicName: booking.clinicName ?? '',
+//                     doctorFirstName: booking.doctorFirstName ?? '',
+//                     doctorImage: "",
+//                     doctorlastName: booking.doctorLastName ?? '',
+//                     onReschedule: () {
+//                       showReBooking(
+//                           context,
+//                           booking.id ?? 0,
+//                           booking.doctorId ?? '',
+//                           booking.id ?? 0,
+//                           booking.date ?? '',
+//                           booking.time ?? '');
+//                     },
+//                     clinicId: booking.id ?? 0,
+//                     doctorId: booking.doctorId ?? '',
+//                   );
+//                 },
+//               );
+//               // } else if (state is PatientB) {
+//               //   return const Center(child: Text('لا توجد حجوزات حالياً'));
+//             } else if (state is GetBookingError) {
+//               return Center(child: Text('خطأ: ${state.message}'));
+//             } else {
+//               return const SizedBox.shrink();
+//             }
+//           },
+//         ),
+//       ),
+//     );
+//   }
+
+//   void showReBooking(BuildContext context, int oldBookingId, String doctorId,
+//       int clinicId, String date, String time) {
+//     showDialog(
+//       context: context,
+//       builder: (context) {
+//         return MultiBlocProvider(
+//           providers: [
+//             BlocProvider.value(value: context.read<ClinicCubit>()),
+//             BlocProvider.value(value: context.read<DoctorsCubit>()),
+//             BlocProvider.value(value: context.read<AppointmentCubit>()),
+//             BlocProvider.value(value: context.read<BookingCubit>()),
+//             BlocProvider.value(value: context.read<DeleteBookingCubit>()),
+//           ],
+//           child: AlertDialog(
+//             shape: RoundedRectangleBorder(
+//               borderRadius: BorderRadius.circular(20),
+//             ),
+//             title: Center(
+//               child: Text(
+//                 "إعادة الحجز",
+//                 style:
+//                     getSemiBoldStyle(color: ColorManager.primary, fontSize: 18),
+//               ),
+//             ),
+//             content: ReBooking(
+//               oldBookingId: oldBookingId,
+//               initialDate: date,
+//               initialDoctorId: doctorId,
+//               initialTime: time,
+//               initialClinicId: clinicId,
+//             ),
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }
+
+// // class BookingCard extends StatelessWidget {
+// //   final BookingPatientModel booking;
+// //   const BookingCard({Key? key, required this.booking}) : super(key: key);
+// //   bool isPastAppointment(String date) {
+// //     final parsedDate = DateFormat('yyyy-MM-dd').parse(date);
+// //     return parsedDate.isBefore(DateTime.now());
+// //   }
+
+//   // @override
+//   // Widget build(BuildContext context) {
+//   //   return Card(
+//   //     margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+//   //     child: Padding(
+//   //       padding: const EdgeInsets.all(16.0),
+//   //       child: Column(
+//   //         crossAxisAlignment: CrossAxisAlignment.start,
+//   //         children: [
+//   //           Row(
+//   //             children: [
+//   //               // CircleAvatar(
+//   //               //   backgroundImage: NetworkImage(booking.),
+//   //               //   radius: 25,
+//   //               // ),
+//   //               const SizedBox(width: 10),
+//   //               Column(
+//   //                 crossAxisAlignment: CrossAxisAlignment.start,
+//   //                 children: [
+//   //                   Text(
+//   //                     'دكتور ${booking.doctorFirstName} ${booking.doctorLastName}',
+//   //                     style: const TextStyle(
+//   //                       fontSize: 16,
+//   //                       fontWeight: FontWeight.bold,
+//   //                     ),
+//   //                   ),
+//   //                   Text(
+//   //                     booking.clinicName ?? '',
+//   //                     style: const TextStyle(fontSize: 14, color: Colors.grey),
+//   //                   ),
+//   //                 ],
+//   //               ),
+//   //             ],
+//   //           ),
+//   //           const SizedBox(height: 10),
+//   //           Text(
+//   //             'التاريخ: ${booking.date}',
+//   //             style: const TextStyle(fontSize: 14),
+//   //           ),
+//   //           Text(
+//   //             'الوقت: ${booking.time}',
+//   //             style: const TextStyle(fontSize: 14),
+//   //           ),
+//   //           const SizedBox(height: 10),
+//   //           Row(
+//   //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//   //             children: [
+//   //               BlocBuilder<BookingCubit, BookingStates>(
+//   //                 builder: (context, state) {
+//   //                   return ElevatedButton(
+//   //                     onPressed: isPastAppointment(booking.date!) ||
+//   //                             state is GetBookingLoading
+//   //                         ? null
+//   //                         : () {
+//   //                             context.read().cancelBooking(booking.id);
+//   //                           },
+//   //                     child: state is GetBookingLoading
+//   //                         ? const CircularProgressIndicator()
+//   //                         : const Text('إلغاء الميعاد'),
+//   //                   );
+//   //                 },
+//   //               ),
+//   //               Text(
+//   //                 isPastAppointment(booking.date!)
+//   //                     ? 'تم الكشف'
+//   //                     : 'لم يتم الكشف',
+//   //                 style: TextStyle(
+//   //                   color: isPastAppointment(booking.date!)
+//   //                       ? Colors.green
+//   //                       : Colors.orange,
+//   //                   fontWeight: FontWeight.bold,
+//   //                 ),
+//   //               ),
+//   //             ],
+//   //           ),
+//   //         ],
+//   //       ),
+//   //     ),
+//   //   );
+//   // }
+// // }
+// //
