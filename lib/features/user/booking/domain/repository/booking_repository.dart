@@ -10,4 +10,5 @@ abstract class BookingRepository {
   Future<Either<Failure, BookingAppointment>> bookAppointment(
       BookingRequest request);
   Future<Either<Failure, DeleteBookingEntity>> deleteBooking(int bookingId);
+  Future<void> deleteDayAppointment(String date);
 }

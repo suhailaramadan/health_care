@@ -13,7 +13,7 @@ import 'package:graduation_project/features/doctors/presentation/screens/work_ho
 import 'package:graduation_project/features/medical_record/presentation/screens/create_medical_record.dart';
 import 'package:graduation_project/features/medical_record/presentation/screens/medical_record_doctor_screen.dart';
 import 'package:graduation_project/features/medical_record/presentation/screens/patient_medical_record_screen.dart';
-import 'package:graduation_project/features/medical_record/presentation/screens/udate_medical_record.dart';
+import 'package:graduation_project/features/medical_record/presentation/screens/update_medical_record.dart';
 import 'package:graduation_project/features/notification/presentiation/screens/notification_screen.dart';
 import 'package:graduation_project/features/profile/presentation/screen/doctor_profile_screen.dart';
 import 'package:graduation_project/features/profile/presentation/screen/update_doctor_profile_screen.dart';
@@ -26,6 +26,8 @@ import 'package:graduation_project/features/doctor/presentation/screen/doctor_sc
 import 'package:graduation_project/features/doctor/presentation/widgets/doctor_details.dart';
 import 'package:graduation_project/features/home/presentation/screens/doctor_home_screen.dart';
 import 'package:graduation_project/features/home/presentation/screens/patient_home_screen.dart';
+import 'package:graduation_project/features/user/news/presentation/screen/news_screen.dart';
+import 'package:graduation_project/features/user/news/presentation/widgets/news_details_screen.dart';
 import 'package:graduation_project/features/user/onBoarding/presentation/screen/on_boarding_screen.dart';
 import 'package:graduation_project/features/profile/presentation/screen/profile_screen.dart';
 
@@ -61,4 +63,6 @@ class Routes {
       UpdateDoctorProfileScreen.updateDoctorProfile;
   static const updateMedicalRecord = UpdateMedicalRecord.updatMedicalRecord;
   static const nitification = NotificationScreen.notification;
+  static const newsScreen = NewsScreen.newsScreen;
+  static const newsDetails = NewsDetailsScreen.newsDetails;
 }

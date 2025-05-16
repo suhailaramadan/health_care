@@ -38,9 +38,24 @@ class DeleteBookingCubit extends Cubit<BookingStates> {
   DeleteBookingCubit({required this.deleteBookingUseCase})
       : super(BookingInitial());
   Future<void> deleteBooking(int bookingId) async {
+    if (isClosed) {
+      return;
+    }
     emit(GetBookingLoading());
+
     final result = await deleteBookingUseCase(bookingId);
-    result.fold((failure) => emit(GetBookingError(failure.message)),
-        (entity) => emit(DeleteBookingSuccess(entity)));
+    if (isClosed) return;
+    result.fold((failure) {
+      if (!isClosed) emit(GetBookingError(failure.message));
+    }, (entity) {
+      print("success");
+      if (!isClosed) emit(DeleteBookingSuccess(entity));
+    });
+  }
+
+  @override
+  Future<void> close() {
+    print("DeleteBookingcubit is !closed");
+    return super.close();
   }
 }

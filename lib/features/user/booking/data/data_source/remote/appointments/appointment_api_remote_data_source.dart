@@ -19,22 +19,26 @@ class AppointmentApiRemoteDataSource extends AppointmentRemoteDataSource {
   @override
   Future<AppointmentByDoctorIdResponse> getAppointmentDoctorById(
       String doctorId) async {
+    final pref = await SharedPreferences.getInstance();
+    final token = pref.getString(CacheConstants.tokenKey);
     try {
-      final response = await _dio.get(
-        "https://myclinicapp.runasp.net/api/Appointment/AvailableSlots",
-        queryParameters: {"doctorId": doctorId},
-      );
+      final response = await _dio.get("Appointment/AvailableSlots",
+          queryParameters: {"doctorId": doctorId},
+          options: Options(headers: {
+            "Content-Type": 'application/json',
+            "Authorization": 'Bearer $token',
+          }));
+
       if (response.statusCode == 200) {
         return AppointmentByDoctorIdResponse.fromJson(response.data);
       } else {
         throw RemoteException("Unexpected response: ${response.statusCode}");
       }
     } catch (exception) {
-      String? message;
       if (exception is DioException) {
-        message = exception.response?.data['message'];
+        print("DioEggb   ${exception.response?.data}");
       }
-      throw const RemoteException("حدث خطأغير متوقع");
+      throw const RemoteException("حدث خطأ غير متوقع");
     }
   }
 

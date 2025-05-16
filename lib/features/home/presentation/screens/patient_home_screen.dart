@@ -10,6 +10,7 @@ import 'package:graduation_project/features/user/booking/presentation/screen/boo
 import 'package:graduation_project/features/user/chatBot/presentation/screen/chat_bot_tab.dart';
 import 'package:graduation_project/features/home/presentation/widgets/home_tab.dart';
 import 'package:graduation_project/features/profile/presentation/screen/profile_screen.dart';
+import 'package:graduation_project/features/user/news/presentation/screen/news_screen.dart';
 
 class PatientHomeScreen extends StatefulWidget {
   const PatientHomeScreen({super.key});
@@ -24,7 +25,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
   List<Widget> tabs = [
     const HomeTab(),
     const BookingTab(),
-    // const ChatBotTab(),
+    const NewsScreen(),
     const PatientMedicalRecordScreen(),
     const ProfileScreen()
   ];
@@ -145,6 +146,13 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                 label: "حجوزاتي",
               ),
               BottomNavigationBarItem(
+                icon: Icon(Icons.newspaper,
+                    size: isLandscape
+                        ? screenSize.shortestSide * .07
+                        : screenSize.shortestSide * .07),
+                label: "الأخبار",
+              ),
+              BottomNavigationBarItem(
                   icon: Icon(
                     Icons.assignment,
                     size: isLandscape
@@ -159,6 +167,23 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                           : screenSize.shortestSide * .07),
                   label: "حسابي")
             ],
+          ),
+          floatingActionButton: SizedBox(
+            height: 60,
+            width: 60,
+            child: Center(
+              child: FloatingActionButton(
+                backgroundColor: ColorManager.primary,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
+                onPressed: () {},
+                child: Icon(
+                  Icons.chat,
+                  color: ColorManager.white,
+                  size: 30,
+                ),
+              ),
+            ),
           ),
           // ]),
         ));

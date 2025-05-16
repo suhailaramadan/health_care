@@ -48,6 +48,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    context.read<ProfileCubit>().getPatientProfile();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.sizeOf(context);
     final bool isLargeTablet =
@@ -247,7 +253,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     color: ColorManager.textColor)),
                             IconButton(
                               onPressed: () {
-                                Navigator.of(context).pushNamed(Routes.login);
+                                Navigator.of(context)
+                                    .pushNamed(Routes.chooseUser);
                               },
                               icon: const Icon(Icons.logout_sharp),
                               color: ColorManager.red,

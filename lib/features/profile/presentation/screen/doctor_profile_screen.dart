@@ -251,7 +251,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                                 getMediumStyle(color: ColorManager.textColor)),
                         IconButton(
                           onPressed: () {
-                            Navigator.of(context).pushNamed(Routes.login);
+                            Navigator.of(context).pushNamed(Routes.chooseUser);
                           },
                           icon: const Icon(Icons.logout_sharp),
                           color: ColorManager.red,

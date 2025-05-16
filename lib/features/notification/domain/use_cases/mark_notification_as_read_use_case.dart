@@ -10,7 +10,7 @@ class MarkNotificationAsReadUseCase {
   Future<Either<Failure, void>> call(String token, int id) async {
     try {
       await repository.markNotification(token, id);
-      return Right(null);
+      return const Right(null);
     } catch (e) {
       return Left(Failure(e.toString()));
     }

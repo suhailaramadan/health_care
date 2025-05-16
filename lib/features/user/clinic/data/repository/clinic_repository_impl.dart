@@ -39,10 +39,23 @@ class ClinicRepositoryImpl implements ClinicRepository {
   Future<Either<Failure, List<ClinicEntity>>> search(String query) async {
     try {
       final response = await _remoteDataSource.search(query);
-      return Right(
-          response.data!.map((searchModel) => searchModel.toEntity).toList());
+      print(response.data);
+      if (response.data == null || response.data!.isEmpty) {
+        return const Left(Failure('لا توجد نتائج مطابقة'));
+      }
+      return Right(response.data!.map((searchModel) {
+        searchModel.imageUrl = getFullImageUrl(searchModel.imageUrl ?? '');
+        return searchModel.toEntity;
+      }).toList());
     } on RemoteException catch (exception) {
       return left(Failure(exception.message));
     }
+  }
+
+  String getFullImageUrl(String imageUrl) {
+    if (!imageUrl.startsWith("https")) {
+      return 'https://myclinicapp.runasp.net$imageUrl';
+    }
+    return imageUrl;
   }
 }

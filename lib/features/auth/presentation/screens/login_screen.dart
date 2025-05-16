@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/font_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
@@ -11,6 +12,7 @@ import 'package:graduation_project/core/utils/ui_utils.dart';
 import 'package:graduation_project/core/utils/validator.dart';
 import 'package:graduation_project/core/widgets/custom_botton.dart';
 import 'package:graduation_project/core/widgets/custom_text_field.dart';
+import 'package:graduation_project/core/widgets/shared_pref_handel.dart';
 import 'package:graduation_project/core/widgets/wave_clipper.dart';
 import 'package:graduation_project/features/auth/data/models/login/login_request.dart';
 import 'package:graduation_project/features/auth/presentation/cubit/auth_cubit.dart';
@@ -271,6 +273,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       LoginRequest(
                                           email: _emailController.text,
                                           password: _passwordController.text));
+                                  SharedPrefHandel.saveToken(
+                                      CacheConstants.tokenKey,
+                                      CacheConstants.roleKey);
                                 }
                               },
                             ),

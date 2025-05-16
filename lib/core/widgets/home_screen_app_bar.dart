@@ -14,11 +14,13 @@ import 'package:graduation_project/core/routes/routes.dart';
 import 'package:graduation_project/core/widgets/loading_indicator.dart';
 import 'package:graduation_project/features/auth/data/data_sources/local/auth_local_data_source.dart';
 import 'package:graduation_project/features/auth/data/data_sources/local/auth_shared_pref_local_data_source.dart';
+import 'package:graduation_project/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:graduation_project/features/notification/presentiation/cubit/notification_cubit.dart';
 import 'package:graduation_project/features/notification/presentiation/cubit/notification_states.dart';
 import 'package:graduation_project/features/profile/domain/entities/profile_entity.dart';
 import 'package:graduation_project/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:graduation_project/features/profile/presentation/cubit/profile_states.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreenAppBar extends StatefulWidget {
 // implements PreferredSizeWidget {
@@ -27,6 +29,7 @@ class HomeScreenAppBar extends StatefulWidget {
     super.key,
     this.automaticallyImplyLeading,
   });
+
   @override
   State<HomeScreenAppBar> createState() => _HomeScreenAppBarState();
 }
@@ -39,13 +42,14 @@ class _HomeScreenAppBarState extends State<HomeScreenAppBar> {
         child: Row(
           children: [
             const CircleAvatar(
-              backgroundImage: AssetImage("assets/images/logo_app.jpg"),
+              backgroundImage:
+                  AssetImage("assets/images/photo_2024-12-24_06-14-01.jpg"),
               radius: 20,
               backgroundColor: ColorManager.transparent,
             ),
             const SizedBox(width: 10),
             Text(
-              "طالب",
+              "",
               style: getSemiBoldStyle(
                 color: const Color.fromARGB(255, 65, 111, 156),
                 fontSize: FontSize.s15.sp,
@@ -66,6 +70,36 @@ class _HomeScreenAppBarState extends State<HomeScreenAppBar> {
         ),
       ),
     );
+  }
+
+  String? userrole;
+  @override
+  void initState() {
+    super.initState();
+    getUserRole();
+    // userrole == 'User'
+    //     ? context.read<ProfileCubit>().getPatientProfile()
+    //     : context.read<ProfileCubit>().getDoctorProfile();
+  }
+
+  void getUserRole() async {
+    final user = await SharedPreferences.getInstance();
+    if (!mounted) return;
+    // final local = AuthSharedPrefLocalDataSource(user);
+
+    setState(() {
+      userrole = user.getString(CacheConstants.roleKey);
+    });
+    if (userrole == 'User') {
+      context.read<ProfileCubit>().getPatientProfile();
+    } else if (userrole == "Doctor") {
+      context.read<ProfileCubit>().getDoctorProfile();
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -95,13 +129,14 @@ class _HomeScreenAppBarState extends State<HomeScreenAppBar> {
                     //         widget.automaticallyImplyLeading ?? false,
                     Row(children: [
                   CircleAvatar(
-                      radius: 30,
+                      radius: avatarRadius,
                       backgroundColor: ColorManager.transparent,
                       backgroundImage: state.profileEntity.imageUrl != null &&
                               state.profileEntity.imageUrl!.isNotEmpty
-                          ? NetworkImage(
+                          ? CachedNetworkImageProvider(
                               "${ApiConstants.imageBaseUrl}${state.profileEntity.imageUrl}")
-                          : const AssetImage("assets/images/logo_app.jpg")
+                          : const AssetImage(
+                                  "assets/images/photo_2024-12-24_06-14-01.jpg")
                               as ImageProvider
                       // state.profileEntity.imageUrl != null &&
                       //         state.profileEntity.imageUrl!.isNotEmpty
@@ -153,26 +188,33 @@ class _HomeScreenAppBarState extends State<HomeScreenAppBar> {
                   //   color: Colors.amber,
                   // ),
                   const Spacer(),
+                  (userrole == "User")
+                      ? IconButton(onPressed: () {
+                          Navigator.of(context).pushNamed(Routes.nitification);
+                        }, icon:
+                          BlocBuilder<NotificationCubit, NotificationsStats>(
+                          builder: (context, state) {
+                            // if (state is NotificaltionSuccess) {
+                            //   final unreadCount = state.notification.where((element) => !(element.isRead!=null)).length;
 
-                  IconButton(onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.nitification);
-                  }, icon: BlocBuilder<NotificationCubit, NotificationsStats>(
-                    builder: (context, state) {
-                      final count =
-                          context.read<NotificationCubit>().getUnReadCount();
-                      return Badge.count(
-                        count: count,
-                        child: const Icon(
-                          Icons.notifications_none,
-                          // color: ColorManager.white,
-                          size: 30,
-                        ),
-                      );
-                    },
-                  )),
-                  const SizedBox(
-                    width: 10,
-                  )
+                            // }
+                            final count = context
+                                .read<NotificationCubit>()
+                                .getUnReadCount();
+                            print(count);
+                            return Badge.count(
+                              count: count,
+                              child: const Icon(
+                                Icons.notifications_none,
+                                // color: ColorManager.white,
+                                size: 30,
+                              ),
+                            );
+                          },
+                        ))
+                      : SizedBox(
+                          width: 10,
+                        )
                 ])),
           ));
         }

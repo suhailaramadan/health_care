@@ -1,19 +1,27 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_project/core/app_bloc_observer.dart';
 import 'package:graduation_project/core/di/service_locator.dart';
 import 'package:graduation_project/core/routes/routes.dart';
 import 'package:graduation_project/core/routes/routes_generators.dart';
 import 'package:graduation_project/core/widgets/loading_indicator.dart';
+import 'package:graduation_project/core/widgets/shared_pref_handel.dart';
+import 'package:graduation_project/features/auth/data/data_sources/local/auth_local_data_source.dart';
+import 'package:graduation_project/features/auth/data/data_sources/local/auth_shared_pref_local_data_source.dart';
 import 'package:graduation_project/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:graduation_project/features/auth/presentation/cubit/change_password_cubit.dart';
 import 'package:graduation_project/features/auth/presentation/cubit/forget_password_cubit.dart';
 import 'package:graduation_project/features/auth/presentation/cubit/reset_password_cubit.dart';
 import 'package:graduation_project/features/auth/presentation/cubit/verify_code_cubit.dart';
+import 'package:graduation_project/features/fcm.dart';
 import 'package:graduation_project/features/medical_record/presentation/cubit/medical_record_cubit.dart';
 import 'package:graduation_project/features/medical_record/presentation/widgets/medical_record_card.dart';
 import 'package:graduation_project/features/notification/presentiation/cubit/notification_cubit.dart';
@@ -29,14 +37,61 @@ import 'package:graduation_project/features/user/clinic/presentation/cubit/clini
 import 'package:graduation_project/features/doctor/presentation/cubit/doctor_cubit.dart';
 import 'package:graduation_project/features/user/clinic/presentation/cubit/search_cubit.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:graduation_project/features/user/news/presentation/cubit/news_cubit.dart';
+import 'package:graduation_project/firebase_options.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print("handling a nessasdf : ${message.messageId}");
+}
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+      // options: DefaultFirebaseOptions.currentPlatform,
+      );
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  // final flutterLocalNotification = FlutterLocalNotificationsPlugin();
+  // const AndroidInitializationSettings initializationSettingsAndroid =
+  //     AndroidInitializationSettings("@mipmap/ic_launcher");
+  // // final iosFlutterLocalNotificationPlugin =
+  // //     IOSFlutterLocalNotificationsPlugin();
+  // // const DarwinInitializationSettings initializationSettingsDarwin =
+  // //     DarwinInitializationSettings(
+  // //   requestSoundPermission: false,
+  // //   requestBadgePermission: false,
+  // //   requestAlertPermission: false,
+  // // );
+  // const InitializationSettings initializationSettings = InitializationSettings(
+  //   android: initializationSettingsAndroid,
+  //   // iOS: initializationSettingsDarwin,
+  // );
+  // await flutterLocalNotification.initialize(initializationSettings);
+  // // await iosFlutterLocalNotificationPlugin
+  // // .initialize(initializationSettingsDarwin);
+  // FirebaseMessaging.instance.getInitialMessage().then((message) {
+  //   if (message != null) {
+  //     navigatorKey.currentState!.pushNamed(Routes.nitification);
+  //   }
+  // });
+
+  // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+  //   if (message.data['route'] != null) {
+  //     navigatorKey.currentState!.pushNamed(message.data['route']);
+  //   } else if (navigatorKey.currentState?.mounted ?? false) {
+  //     navigatorKey.currentState!.pushNamed(Routes.nitification);
+  //   }
+  // });
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   await initializeDateFormatting('ar');
   Bloc.observer = AppBlocObserver();
   await configureDependencies();
-  // await serviceLocator.init();
+
   await serviceLocator.allReady();
   final authCubit = await serviceLocator.getAsync<AuthCubit>();
   final profileCubit = await serviceLocator.getAsync<ProfileCubit>();
@@ -47,10 +102,10 @@ Future<void> main() async {
       await serviceLocator.getAsync<DoctorAppointmentsCubit>();
   final deleteBookingCubit =
       await serviceLocator.getAsync<DeleteBookingCubit>();
+  await SharedPrefHandel.init();
   runApp(DevicePreview(
-      // ignore: avoid_redundant_argument_values
       // enabled: !kReleaseMode,
-      enabled: false,
+      // enabled: false,
       builder: (context) => HealthCareApp(
             authCubit: authCubit,
             profileCubit: profileCubit,
@@ -59,9 +114,10 @@ Future<void> main() async {
             doctorAppointmentsCubit: doctorAppointmentsCubit,
             createAppointmentCubit: createAppointment,
           )));
+  await SharedPrefHandel.init();
 }
 
-class HealthCareApp extends StatelessWidget {
+class HealthCareApp extends StatefulWidget {
   final AuthCubit authCubit;
   final ProfileCubit profileCubit;
   final BookingCubit bookingCubit;
@@ -76,6 +132,26 @@ class HealthCareApp extends StatelessWidget {
       required this.deleteBookingCubit,
       required this.doctorAppointmentsCubit,
       required this.createAppointmentCubit});
+
+  @override
+  State<HealthCareApp> createState() => _HealthCareAppState();
+}
+
+class _HealthCareAppState extends State<HealthCareApp> {
+  @override
+  void initState() {
+    super.initState();
+    FirebaseMessaging.instance.requestPermission();
+
+    // FirebaseMessaging.instance.getToken().then((token) {
+    //   print("FCM Token: $token");
+    // });
+    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    //   print(
+    //       "Recive a message while in forground ${message.notification?.title}");
+    // });
+  }
+
   @override
   Widget build(BuildContext context) {
     // return
@@ -94,19 +170,23 @@ class HealthCareApp extends StatelessWidget {
     // final profileCubit = snapshot.data!;
     return MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => authCubit),
-          BlocProvider(create: (context) => deleteBookingCubit),
+          BlocProvider(create: (context) => widget.authCubit),
+          BlocProvider(create: (context) => widget.deleteBookingCubit),
           // ..getDoctors()..getDoctorsByClinicId(clinicId)),
           BlocProvider(create: (context) => serviceLocator.get<ClinicCubit>()),
           BlocProvider(
-              create: (context) => doctorAppointmentsCubit..getAppointments()),
+              create: (context) =>
+                  widget.doctorAppointmentsCubit..getAppointments()),
           BlocProvider(create: (context) => serviceLocator.get<DoctorsCubit>()),
           BlocProvider(
             create: (context) => serviceLocator.get<SearchCubit>(),
           ),
-          BlocProvider(create: (context) => bookingCubit),
           BlocProvider(
-            create: (context) => createAppointmentCubit,
+            create: (context) => serviceLocator.get<NewsCubit>(),
+          ),
+          BlocProvider(create: (context) => widget.bookingCubit),
+          BlocProvider(
+            create: (context) => widget.createAppointmentCubit,
           ),
           BlocProvider(
               create: (context) =>
@@ -128,33 +208,40 @@ class HealthCareApp extends StatelessWidget {
               create: (context) => serviceLocator.get<BookingDoctorCubit>()),
           BlocProvider(
               create: (context) => serviceLocator.get<AppointmentCubit>()),
+          // BlocProvider(
+          //     create: (context) => serviceLocator.get<NotificationCubit>()),
           BlocProvider(
               create: (context) => serviceLocator.get<NotificationCubit>()),
-
-          BlocProvider(create: (context) => profileCubit),
+          BlocProvider(create: (context) => widget.profileCubit),
         ],
-        child: const ScreenUtilInit(
-            designSize: Size(420, 874),
+        child: ScreenUtilInit(
+            designSize: const Size(420, 874),
             minTextAdapt: true,
             splitScreenMode: true,
             child: MaterialApp(
-                localizationsDelegates: [
+                localizationsDelegates: const [
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,
                   GlobalCupertinoLocalizations.delegate,
                 ],
-                supportedLocales: [
+                supportedLocales: const [
                   Locale('ar'),
                   Locale('en'),
                 ],
                 // theme: ThemeData(useMaterial3: false),
                 // ignore: deprecated_member_use
                 useInheritedMediaQuery: true,
-                locale: Locale('ar'),
+                locale: const Locale('ar'),
                 // locale: DevicePreview.locale(context),
                 builder: DevicePreview.appBuilder,
                 debugShowCheckedModeBanner: false,
                 onGenerateRoute: RouteGenerator.getRoute,
-                initialRoute: Routes.splash)));
+                initialRoute: Routes.chooseUser
+                // SharedPrefHandel.getToken().isEmpty
+                //     ? Routes.login
+                //     : SharedPrefHandel.getUserRole() == 'User'
+                //         ? Routes.patientHome
+                //         : Routes.doctorHome
+                )));
   }
 }

@@ -25,6 +25,9 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
   int _currentIndex = 0;
   final List<Widget> _screens = [
     const HomeTab(),
+    // Container(
+    //   child: Center(child: Text("الإحصائيات")),
+    // ),
     // const DoctorsTabScreen(),
     const WorksHoursScreen(),
     const DoctorAppointmentsScreen(),

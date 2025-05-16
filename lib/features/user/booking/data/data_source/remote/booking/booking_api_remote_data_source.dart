@@ -87,7 +87,7 @@ class BookingApiRemoteDataSource implements BookingRemoteDataSource {
   }
 
   @override
-  Future<BookingDoctorResponse> getBookingDoctor(String token) async {
+  Future<BookingDoctorResponse> getBookingDoctor(String date) async {
     try {
       SharedPreferences sharedPref = await SharedPreferences.getInstance();
       String? token = sharedPref.getString(CacheConstants.tokenKey);
@@ -97,7 +97,37 @@ class BookingApiRemoteDataSource implements BookingRemoteDataSource {
             "Authorization": 'Bearer $token',
           }));
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return BookingDoctorResponse.fromJson(response.data);
+        return BookingDoctorResponse.fromJson(response.data ?? []);
+      } else {
+        throw RemoteException('فشل في تحميل الحجوزات , ${response.statusCode}');
+      }
+    } catch (e) {
+      throw const RemoteException("فشل في تحميل الحجوزات");
+    }
+  }
+
+  @override
+  Future<List<BookingDoctorModel>> getBookingDayDoctor(String date) async {
+    try {
+      SharedPreferences sharedPref = await SharedPreferences.getInstance();
+      String? token = sharedPref.getString(CacheConstants.tokenKey);
+      final response = await _dio.get("Booking/DoctorBookings",
+          options: Options(headers: {
+            "Content-Type": 'application/json',
+            "Authorization": 'Bearer $token',
+          }));
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final bookings = BookingDoctorResponse.fromJson(response.data);
+        DateTime targetDate = DateTime.parse(date);
+
+        final filter = bookings.data!.where((booking) {
+          DateTime startDateTime =
+              DateTime.parse(targetDate.toIso8601String().substring(0, 10));
+          return startDateTime.year == targetDate.year &&
+              startDateTime.month == targetDate.month &&
+              startDateTime.day == targetDate.day;
+        }).toList();
+        return filter;
       } else {
         throw RemoteException('فشل في تحميل الحجوزات , ${response.statusCode}');
       }

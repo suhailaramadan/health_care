@@ -101,205 +101,204 @@ class _HomeTabState extends State<HomeTab> {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5),
         child: Scaffold(
-            backgroundColor: ColorManager.white,
-            appBar:
-                // PreferredSize(
-                //     preferredSize: Size.fromHeight(appBarHeight),
-                //     // child: AppBar(
-                //     //     backgroundColor: ColorManager.babyGreen,
-                //     //     elevation: 0,
-                //     //     surfaceTintColor: ColorManager.transparent,
-                //     //     automaticallyImplyLeading: false,
-                //     // widget.automaticallyImplyLeading ?? false,
-                //     child: SizedBox(
-                //       height: appBarHeight,
-                //       child: Row(children: [
-                //         CircleAvatar(
-                //             radius: avatarRadius,
-                //             backgroundColor: ColorManager.transparent,
-                //             backgroundImage: const AssetImage(ImageManager.profile)
-                //             // child: Image.asset("assets/images/doctor_image.jpg",
-                //             // fit: BoxFit.cover
-                //             // )
-                //             ),
+          backgroundColor: ColorManager.white,
+          appBar:
+              // PreferredSize(
+              //     preferredSize: Size.fromHeight(appBarHeight),
+              //     // child: AppBar(
+              //     //     backgroundColor: ColorManager.babyGreen,
+              //     //     elevation: 0,
+              //     //     surfaceTintColor: ColorManager.transparent,
+              //     //     automaticallyImplyLeading: false,
+              //     // widget.automaticallyImplyLeading ?? false,
+              //     child: SizedBox(
+              //       height: appBarHeight,
+              //       child: Row(children: [
+              //         CircleAvatar(
+              //             radius: avatarRadius,
+              //             backgroundColor: ColorManager.transparent,
+              //             backgroundImage: const AssetImage(ImageManager.profile)
+              //             // child: Image.asset("assets/images/doctor_image.jpg",
+              //             // fit: BoxFit.cover
+              //             // )
+              //             ),
 
-                //         const SizedBox(
-                //           width: Sizes.s12,
-                //         ),
-                //         Expanded(
-                //           child: Text(
-                //             "أهلاً, سهيله",
-                //             style: getSemiBoldStyle(
-                //                 color: const Color.fromARGB(255, 65, 111, 156),
-                //                 fontSize: FontSize.s13.sp),
-                //           ),
-                //         ),
-                //         // const Icon(
-                //         //   Icons.waving_hand,
-                //         //   color: Colors.amber,
-                //         // ),
-                //         const Spacer(),
+              //         const SizedBox(
+              //           width: Sizes.s12,
+              //         ),
+              //         Expanded(
+              //           child: Text(
+              //             "أهلاً, سهيله",
+              //             style: getSemiBoldStyle(
+              //                 color: const Color.fromARGB(255, 65, 111, 156),
+              //                 fontSize: FontSize.s13.sp),
+              //           ),
+              //         ),
+              //         // const Icon(
+              //         //   Icons.waving_hand,
+              //         //   color: Colors.amber,
+              //         // ),
+              //         const Spacer(),
 
-                //         IconButton(
-                //             onPressed: () {},
-                //             icon: Badge.count(
-                //               count: 2,
-                //               child: Icon(
-                //                 Icons.notifications_none,
-                //                 // color: ColorManager.white,
-                //                 size: isLandscape ? 40 : 30,
-                //               ),
-                //             )),
-                //         const SizedBox(
-                //           width: 10,
-                //         )
-                //         // ]
-                //         //   ],
-                //         // ))
-                //       ]),
-                //     )),
+              //         IconButton(
+              //             onPressed: () {},
+              //             icon: Badge.count(
+              //               count: 2,
+              //               child: Icon(
+              //                 Icons.notifications_none,
+              //                 // color: ColorManager.white,
+              //                 size: isLandscape ? 40 : 30,
+              //               ),
+              //             )),
+              //         const SizedBox(
+              //           width: 10,
+              //         )
+              //         // ]
+              //         //   ],
+              //         // ))
+              //       ]),
+              //     )),
+              // ),
+
+              PreferredSize(
+                  preferredSize: Size.fromHeight(appBarHeight),
+                  child: const HomeScreenAppBar()
+                  // SizedBox(height: appBarHeight, child: SizedBox()),
+                  ),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: isLandscape
+                      ? screenSize.width * .02
+                      : screenSize.height * .02,
+                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(10.0),
+                //   child: CustomTextField(
+                //     // backgroundColor: ColorManager.primary.withOpacity(0.12),
+                //     prefixIcon: const Icon(Icons.search),
+                //     hint: 'ابحث عن العيادة',
+                //     hintTextStyle: getMediumStyle(color: ColorManager.grey),
+                //   ),
                 // ),
-
-                PreferredSize(
-                    preferredSize: Size.fromHeight(appBarHeight),
-                    child: const HomeScreenAppBar()
-                    // SizedBox(height: appBarHeight, child: SizedBox()),
-                    ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: isLandscape
-                        ? screenSize.width * .02
-                        : screenSize.height * .02,
-                  ),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(10.0),
-                  //   child: CustomTextField(
-                  //     // backgroundColor: ColorManager.primary.withOpacity(0.12),
-                  //     prefixIcon: const Icon(Icons.search),
-                  //     hint: 'ابحث عن العيادة',
-                  //     hintTextStyle: getMediumStyle(color: ColorManager.grey),
-                  //   ),
-                  // ),
-                  HomeSlider(
-                    imagesPaths: _homeSlider,
-                    currentIndex: _currentIndex,
-                    timer: _timer,
-                    text: text[currentIndex],
-                  ),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(10.0),
-                  //   child: CustomTextField(
-                  //     // backgroundColor: ColorManager.primary.withOpacity(0.12),
-                  //     prefixIcon: const Icon(Icons.search),
-                  //     hint: 'ابحث عن العيادة',
-                  //     hintTextStyle: getMediumStyle(color: ColorManager.grey),
-                  //   ),
-                  // ),
-                  SizedBox(
-                    height: isLandscape
-                        ? screenSize.width * .02
-                        : screenSize.height * .018,
-                  ),
-                  CustomSectionBar(
-                    text: "العيادات المتاحة",
-                    onViewAllClicked: () {
-                      Navigator.of(context).pushNamed(Routes.clinic);
+                HomeSlider(
+                  imagesPaths: _homeSlider,
+                  currentIndex: _currentIndex,
+                  timer: _timer,
+                  text: text[currentIndex],
+                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(10.0),
+                //   child: CustomTextField(
+                //     // backgroundColor: ColorManager.primary.withOpacity(0.12),
+                //     prefixIcon: const Icon(Icons.search),
+                //     hint: 'ابحث عن العيادة',
+                //     hintTextStyle: getMediumStyle(color: ColorManager.grey),
+                //   ),
+                // ),
+                SizedBox(
+                  height: isLandscape
+                      ? screenSize.width * .02
+                      : screenSize.height * .018,
+                ),
+                CustomSectionBar(
+                  text: "العيادات المتاحة",
+                  onViewAllClicked: () {
+                    Navigator.of(context).pushNamed(Routes.clinic);
+                  },
+                ),
+                SizedBox(
+                  height: isLandscape
+                      ? screenSize.width * .01
+                      : screenSize.height * .015,
+                ),
+                BlocProvider.value(
+                  // create: (context) => serviceLocator.get<ClinicCubit>(),
+                  value: serviceLocator.get<ClinicCubit>(),
+                  child: BlocBuilder<ClinicCubit, ClinicState>(
+                    builder: (context, state) {
+                      if (state is GetClinicsLoading) {
+                        return const LoadingIndicator();
+                      } else if (state is GetClinicsError) {
+                        return ErrorIndicator(
+                          message: state.message,
+                        );
+                      } else if (state is GetClinicsSuccess) {
+                        return SizedBox(
+                            height: isLandscape
+                                ? screenSize.width * .23
+                                : screenSize.height * .18,
+                            width: MediaQuery.of(context).size.width.w,
+                            child: Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (_, index) => ClinicItem(
+                                    clinicEntity: state.clinicEntity
+                                        .take(5)
+                                        .toList()[index]
+                                    // state.clinicEntity[index],
+                                    ),
+                                // padding: EdgeInsets.all(4),
+                                itemCount: 5,
+                              ),
+                            ));
+                      }
+                      return const SizedBox();
                     },
                   ),
-                  SizedBox(
-                    height: isLandscape
-                        ? screenSize.width * .01
-                        : screenSize.height * .015,
-                  ),
-                  BlocProvider.value(
-                    // create: (context) => serviceLocator.get<ClinicCubit>(),
-                    value: serviceLocator.get<ClinicCubit>(),
-                    child: BlocBuilder<ClinicCubit, ClinicState>(
-                      builder: (context, state) {
-                        if (state is GetClinicsLoading) {
-                          return const LoadingIndicator();
-                        } else if (state is GetClinicsError) {
-                          return ErrorIndicator(
-                            message: state.message,
-                          );
-                        } else if (state is GetClinicsSuccess) {
-                          return SizedBox(
-                              height: isLandscape
-                                  ? screenSize.width * .23
-                                  : screenSize.height * .18,
-                              width: MediaQuery.of(context).size.width.w,
-                              child: Directionality(
-                                textDirection: TextDirection.rtl,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (_, index) => ClinicItem(
-                                      clinicEntity: state.clinicEntity
-                                          .take(5)
-                                          .toList()[index]
-                                      // state.clinicEntity[index],
-                                      ),
-                                  // padding: EdgeInsets.all(4),
-                                  itemCount: 5,
-                                ),
-                              ));
-                        }
-                        return const SizedBox();
-                      },
-                    ),
-                  ),
-                  // SizedBox(
+                ),
+                // SizedBox(
 
-                  //   // height: isLandscape
-                  //   //     ? screenSize.width * .01
-                  //   //     : screenSize.height * .001,
-                  // ),
-                  CustomSectionBar(
-                    text: "أطباؤنا",
-                    onViewAllClicked: () {
-                      Navigator.of(context).pushNamed(Routes.doctor);
-                    },
+                //   // height: isLandscape
+                //   //     ? screenSize.width * .01
+                //   //     : screenSize.height * .001,
+                // ),
+                CustomSectionBar(
+                  text: "أطباؤنا",
+                  onViewAllClicked: () {
+                    Navigator.of(context).pushNamed(Routes.doctor);
+                  },
+                ),
+                SizedBox(
+                  height: isLandscape
+                      ? screenSize.width * .38
+                      : screenSize.height * .3,
+                  // : screenSize.height * .312,
+                  child: BlocProvider(
+                    create: (context) => _doctorsCubit,
+                    child: BlocBuilder<DoctorsCubit, DoctorsStates>(
+                        builder: (context, state) {
+                      if (state is GetDoctorsLoading) {
+                        return const LoadingIndicator();
+                      } else if (state is GetDoctorsError) {
+                        return ErrorIndicator(
+                          message: state.message,
+                        );
+                      } else if (state is GetDoctorsSuccess) {
+                        return Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            // physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (_, index) => CustomDoctor(
+                                doctorEntity:
+                                    // state.doctorEntity[index],
+                                    state.doctorEntity.take(5).toList()[index]),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 5,
+                          ),
+                        );
+                      }
+                      return const Text("حدث خطأ ما يرجى المحاولة مرة أخرى");
+                    }),
                   ),
-                  SizedBox(
-                    height: isLandscape
-                        ? screenSize.width * .38
-                        : screenSize.height * .3,
-                    // : screenSize.height * .312,
-                    child: BlocProvider(
-                      create: (context) => _doctorsCubit,
-                      child: BlocBuilder<DoctorsCubit, DoctorsStates>(
-                          builder: (context, state) {
-                        if (state is GetDoctorsLoading) {
-                          return const LoadingIndicator();
-                        } else if (state is GetDoctorsError) {
-                          return ErrorIndicator(
-                            message: state.message,
-                          );
-                        } else if (state is GetDoctorsSuccess) {
-                          return Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              // physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (_, index) => CustomDoctor(
-                                  doctorEntity:
-                                      // state.doctorEntity[index],
-                                      state.doctorEntity
-                                          .take(5)
-                                          .toList()[index]),
-                              scrollDirection: Axis.horizontal,
-                              itemCount: 5,
-                            ),
-                          );
-                        }
-                        return const Text("حدث خطأ ما يرجى المحاولة مرة أخرى");
-                      }),
-                    ),
-                  )
-                ],
-              ),
-            )));
+                )
+              ],
+            ),
+          ),
+        ));
   }
 
   void _startImageSwitching() {

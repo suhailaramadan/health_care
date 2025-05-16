@@ -254,7 +254,7 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
             //               ),
             //               helpTextStyle: getRegularStyle(color: ColorManager.primary))),
             Directionality(
-          textDirection: ui.TextDirection.rtl,
+          textDirection: ui.TextDirection.ltr,
           child: Localizations.override(
             context: context,
             locale: const Locale('ar'),

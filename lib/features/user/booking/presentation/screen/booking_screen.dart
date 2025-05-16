@@ -353,33 +353,35 @@ class _BookingTabState extends State<BookingTab>
     showDialog(
       context: context,
       builder: (context) {
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider.value(value: context.read<ClinicCubit>()),
-            BlocProvider.value(value: context.read<DoctorsCubit>()),
-            BlocProvider.value(value: context.read<AppointmentCubit>()),
-            BlocProvider.value(value: context.read<BookingCubit>()),
-            BlocProvider.value(value: context.read<DeleteBookingCubit>()),
-          ],
-          child: AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            title: Center(
-              child: Text(
-                "إعادة الحجز",
-                style:
-                    getSemiBoldStyle(color: ColorManager.primary, fontSize: 18),
-              ),
-            ),
-            content: ReBooking(
-              oldBookingId: oldBookingId,
-              initialDate: date,
-              initialDoctorId: doctorId,
-              initialTime: time,
-              initialClinicId: clinicId,
+        return
+            //  MultiBlocProvider(
+            //   providers: [
+            //     BlocProvider.value(value: context.read<ClinicCubit>()),
+            //     BlocProvider.value(value: context.read<DoctorsCubit>()),
+            //     BlocProvider.value(value: context.read<AppointmentCubit>()),
+            //     BlocProvider.value(value: context.read<BookingCubit>()),
+            //     BlocProvider.value(value: context.read<DeleteBookingCubit>()),
+            //   ],
+            // child:
+            AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: Center(
+            child: Text(
+              "إعادة الحجز",
+              style:
+                  getSemiBoldStyle(color: ColorManager.primary, fontSize: 18),
             ),
           ),
+          content: ReBooking(
+            oldBookingId: oldBookingId,
+            initialDate: date,
+            initialDoctorId: doctorId,
+            initialTime: time,
+            initialClinicId: clinicId,
+          ),
+          // ),
         );
       },
     );

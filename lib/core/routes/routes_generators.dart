@@ -22,7 +22,7 @@ import 'package:graduation_project/features/medical_record/presentation/screens/
 import 'package:graduation_project/features/medical_record/presentation/screens/medical_record_doctor_screen.dart';
 import 'package:graduation_project/features/medical_record/presentation/screens/patient_medical_record_screen.dart';
 import 'package:graduation_project/features/home/presentation/screens/patient_home_screen.dart';
-import 'package:graduation_project/features/medical_record/presentation/screens/udate_medical_record.dart';
+import 'package:graduation_project/features/medical_record/presentation/screens/update_medical_record.dart';
 import 'package:graduation_project/features/notification/presentiation/screens/notification_screen.dart';
 // import 'package:graduation_project/features/medical_record/presentation/screens/udate_medical_record.dart';
 import 'package:graduation_project/features/profile/data/model/profile_response/Update_request.dart';
@@ -41,6 +41,9 @@ import 'package:graduation_project/features/user/clinic/presentation/screen/clin
 import 'package:graduation_project/features/user/clinic/presentation/widget/clinic_details.dart';
 import 'package:graduation_project/features/doctor/presentation/screen/doctor_screen.dart';
 import 'package:graduation_project/features/doctor/presentation/widgets/doctor_details.dart';
+import 'package:graduation_project/features/user/news/news_response/news_response.dart';
+import 'package:graduation_project/features/user/news/presentation/screen/news_screen.dart';
+import 'package:graduation_project/features/user/news/presentation/widgets/news_details_screen.dart';
 import 'package:graduation_project/features/user/onBoarding/presentation/screen/on_boarding_screen.dart';
 import 'package:graduation_project/features/profile/presentation/screen/profile_screen.dart';
 
@@ -87,6 +90,11 @@ class RouteGenerator {
         return _buildRoute(const ProfileScreen(), isIOS);
       case Routes.doctorPatient:
         return _buildRoute(const DoctorProfileScreen(), isIOS);
+      case Routes.newsScreen:
+        return _buildRoute(const NewsScreen(), isIOS);
+      case Routes.newsDetails:
+        final news = settings.arguments as NewsResponse;
+        return _buildRoute(NewsDetailsScreen(news: news), isIOS);
       case Routes.medicalRecord:
         final args = settings.arguments as BookingDoctorModel;
 

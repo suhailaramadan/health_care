@@ -378,6 +378,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                             selectedColor: Colors.grey,
                             inactiveColor: Colors.grey.shade300,
                           ),
+                          autoDismissKeyboard: false,
                           animationDuration: const Duration(milliseconds: 300),
                           onChanged: (value) => setState(() => code = value),
                           onCompleted: (value) => code = value,
@@ -417,7 +418,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                               color: ColorManager.primary,
                             )
                           : Text(
-                              "لم يصلك الكود؟ أعادة إرسال",
+                              "لم يصلك الكود؟ إعادة إرسال",
                               style:
                                   getMediumStyle(color: ColorManager.primary),
                             ),

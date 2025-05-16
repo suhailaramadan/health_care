@@ -1,12 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project/features/user/booking/data/models/doctors_appointment_response/doctors_appointment_model.dart';
 import 'package:intl/intl.dart';
 
 class FormatedDate {
   static String formateArabicDate(String date, {String? day}) {
     try {
       DateTime parsedDate = DateTime.parse(date);
+      // String formateDate = DateFormat("yyyy-MM-dd").format(parsedDate);
       // String dayName = DateFormat('EEEE', 'ar').format(parsedDate);
+
       String dayNumber = DateFormat('d', 'ar').format(parsedDate);
       String monthName = DateFormat('MMMM', 'ar').format(parsedDate);
       return "$day $dayNumber $monthName";
@@ -93,6 +96,53 @@ class FormatedDate {
     // final hour = date.hour > 12 ? date.hour - 12 : date.hour;
     // final minute = date.minute.toString().padLeft(2, '0');
     // final period = date.hour >= 12 ? 'م' : "ص";
+
     return "$day $month $year";
+  }
+
+  static void filterAppointments(List<DoctorsAppointmentModel> appointments) {
+    final now = DateTime.now();
+
+    appointments.removeWhere((appointment) {
+      final today = DateTime(now.year, now.month, now.day);
+
+      final appointmentDate =
+          DateTime(now.year, now.month, appointment.day ?? 0);
+      if (appointmentDate.isAfter(today)) return false;
+      if (appointmentDate.isAtSameMomentAs(today)) {
+        print("ميعاد انهاردة ${appointmentDate}");
+        if (appointment.startTime != null &&
+            appointment.startTime!.contains(":")) {
+          final startTimeParts = appointment.startTime!.split(":");
+          if (startTimeParts.length == 2) {
+            final startTime = TimeOfDay(
+              hour: int.parse(startTimeParts[0]),
+              minute: int.parse(startTimeParts[1]),
+            );
+            final currentTime = TimeOfDay.now();
+            print("current time: ${currentTime.hour} ${currentTime.minute}");
+            print("apppointment time ${startTime.hour}  ${startTime.minute}");
+            if (currentTime.hour < startTime.hour ||
+                (currentTime.hour == startTime.hour &&
+                    currentTime.minute < startTime.minute)) {
+              print("الميعاد لسه مجاش ");
+              return false;
+            }
+          }
+        }
+        print("الميعاد عدى وقتهو هيتشال");
+        return true;
+      }
+
+      print("Filterwsssssssssssssssssssss");
+      return appointmentDate.isBefore(today);
+    });
+
+    // بعد الفلترة، نعمل Sort حسب التاريخ
+    appointments.sort((a, b) {
+      final dateA = DateTime(now.year, now.month, a.day ?? 0);
+      final dateB = DateTime(now.year, now.month, b.day ?? 0);
+      return dateA.compareTo(dateB);
+    });
   }
 }

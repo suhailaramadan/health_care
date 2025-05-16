@@ -10,5 +10,6 @@ abstract class BookingRemoteDataSource {
   Future<BookingAppointment> bookAppointment(BookingRequest request);
   Future<BookingPatientResponse> getbookingPatient(String token);
   Future<DeleteBookingResponse> deleteBooking(int bookingId, String token);
-  Future<BookingDoctorResponse> getBookingDoctor(String token);
+  Future<BookingDoctorResponse> getBookingDoctor(String date);
+  Future<List<BookingDoctorModel>> getBookingDayDoctor(String date);
 }

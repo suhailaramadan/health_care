@@ -35,9 +35,12 @@ class _MedicalRecordScreenState extends State<MedicalRecordScreen> {
     context.read<ProfileCubit>().getPatientProfileById(widget.patientId);
     context
         .read<MedicalRecordCubit>()
-        .getMedicalRecord(widget.id)
+        .getMedicalRecord(
+          widget.id,
+        )
         .then((value) => print("Succsedddddddddddddddddd"))
         .catchError((error) => print("Ewwwwwwwwwwwwwwwwyii$error"));
+    print("ddddddddddddddddddd${widget.id}");
   }
 
   @override
@@ -235,6 +238,7 @@ class _MedicalRecordScreenState extends State<MedicalRecordScreen> {
                 } else if (state is GetMedicalRecordError) {
                   return const Center(child: ErrorIndicator());
                 } else if (state is GetMedicalRecordPatientSuccess) {
+                  print("تم بمجاححح");
                   return Expanded(
                     child: state.medicalRecord.isEmpty
                         ? Center(

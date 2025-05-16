@@ -114,9 +114,9 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    Future.delayed(const Duration(seconds: 4), () {
-      Navigator.pushReplacementNamed(context, Routes.onBoarding);
-    });
+    // Future.delayed(const Duration(seconds: 4), () {
+    // Navigator.pushReplacementNamed(context, Routes.onBoarding);
+    // });
   }
 
   @override

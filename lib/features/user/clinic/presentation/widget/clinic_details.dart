@@ -221,7 +221,13 @@ class _ClinicDetailsState extends State<ClinicDetails> {
                                         )),
                               );
                             } else {
-                              return const SizedBox();
+                              return Center(
+                                child: Text(
+                                  "لا يوجد أطباء فى العيادة",
+                                  style: getMediumStyle(
+                                      color: ColorManager.primary),
+                                ),
+                              );
                             }
                           },
                         ),

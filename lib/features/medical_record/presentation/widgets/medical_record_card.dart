@@ -24,6 +24,7 @@ class MedicalRecordCard extends StatefulWidget {
 class _MedicalRecordCardState extends State<MedicalRecordCard> {
   @override
   Widget build(BuildContext context) {
+    print("gggggggggggggggggggggggggggggggg");
     return Container(
       margin: const EdgeInsets.all(15),
       decoration: BoxDecoration(
