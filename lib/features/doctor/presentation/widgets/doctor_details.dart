@@ -10,6 +10,7 @@ import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/font_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/utils/formated.dart';
+import 'package:graduation_project/core/utils/ui_utils.dart';
 import 'package:graduation_project/core/widgets/custom_botton.dart';
 import 'package:graduation_project/core/widgets/error_indicator.dart';
 import 'package:graduation_project/core/widgets/loading_indicator.dart';
@@ -73,6 +74,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        appBar: AppBar(),
         body: SingleChildScrollView(
             // controller: _scrollController,
             // child: Column(
@@ -102,306 +104,285 @@ class _DoctorDetailsState extends State<DoctorDetails> {
             //         ),
             //       ],
             //     ),
-            child: Stack(
-          children: [
-            Positioned(
-              top: 30,
-              child: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_ios_rounded,
-                  color: ColorManager.primary,
-                ),
-                onPressed: () => Navigator.pop(context),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 18),
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              // decoration: const BoxDecoration(
-              //     // color: ColorManager.blue,
-              //     borderRadius: BorderRadius.only(
-              //         topLeft: Radius.circular(105),
-              //         topRight: Radius.circular(105))),
-              child: SingleChildScrollView(
-                child: Column(children: [
-                  const SizedBox(
-                    height: 90,
-                  ),
-                  SizedBox(
-                    height: 150,
-                    child: Card(
-                      surfaceTintColor: ColorManager.white,
-                      color: ColorManager.white,
-                      // elevation: 3,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          // border: Border.all(
-                          //     width: .1, color: ColorManager.primary)
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            // ClipRRect(
-                            //   borderRadius: const BorderRadius.vertical(
-                            //       top: Radius.circular(12),
-                            //       bottom: Radius.circular(12)),
-                            //   child: CachedNetworkImage(
-                            //       imageUrl:
-                            //           "${ApiConstants.imageBaseUrl}${args.imageUrl}",
-                            //       height: 140,
-                            //       // width: double.infinity,
-                            //       width: 160,
-                            //       fit: BoxFit.fill,
-                            //       placeholder: (context, url) => const Center(
-                            //               child: CircularProgressIndicator(
-                            //             color: ColorManager.primary,
-                            //           )),
-                            //       errorWidget: (context, url, error) {
-                            //         return Image.asset(
-                            //           "assets/images/doctor_image.png",
-                            //         );
-                            //       }),
-                            // ),
-                            // const SizedBox(
-                            //   width: 15,
-                            // ),
-                            Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "د. ${args.firstName} ${args.lastName}",
-                                    style: getBoldStyle(
-                                        color: ColorManager.primary,
-                                        fontSize: 18),
-                                  ),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    "${args.specialty}",
-                                    style: getMediumStyle(
-                                        color: ColorManager.textColor,
-                                        fontSize: 12),
-                                  ),
-                                  Text(
-                                    "${args.email}",
-                                    style: getMediumStyle(
-                                        color: ColorManager.grey, fontSize: 12),
-                                  ),
-                                ],
+            child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          // height: MediaQuery.of(context).size.height,
+          // width: MediaQuery.of(context).size.width,
+          // decoration: const BoxDecoration(
+          //     // color: ColorManager.blue,
+          //     borderRadius: BorderRadius.only(
+          //         topLeft: Radius.circular(105),
+          //         topRight: Radius.circular(105))),
+          child: SingleChildScrollView(
+            child: Column(children: [
+              SizedBox(
+                height: 200,
+                child: Card(
+                  surfaceTintColor: ColorManager.white,
+                  color: ColorManager.white,
+                  // elevation: 3,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      // border: Border.all(
+                      //     width: .1, color: ColorManager.primary)
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        // ClipRRect(
+                        //   borderRadius: const BorderRadius.vertical(
+                        //       top: Radius.circular(12),
+                        //       bottom: Radius.circular(12)),
+                        //   child: CachedNetworkImage(
+                        //       imageUrl:
+                        //           "${ApiConstants.imageBaseUrl}${args.imageUrl}",
+                        //       height: 140,
+                        //       // width: double.infinity,
+                        //       width: 160,
+                        //       fit: BoxFit.fill,
+                        //       placeholder: (context, url) => const Center(
+                        //               child: CircularProgressIndicator(
+                        //             color: ColorManager.primary,
+                        //           )),
+                        //       errorWidget: (context, url, error) {
+                        //         return Image.asset(
+                        //           "assets/images/doctor_image.png",
+                        //         );
+                        //       }),
+                        // ),
+                        // const SizedBox(
+                        //   width: 15,
+                        // ),
+                        Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "د. ${args.firstName} ${args.lastName}",
+                                style: getBoldStyle(
+                                    color: ColorManager.primary, fontSize: 18),
                               ),
-                            ),
-                            ClipRRect(
-                              borderRadius: const BorderRadius.vertical(
-                                  top: Radius.circular(12),
-                                  bottom: Radius.circular(12)),
-                              child: CachedNetworkImage(
-                                  imageUrl:
-                                      "${ApiConstants.imageBaseUrl}${args.imageUrl}",
-                                  height: 140,
-                                  // width: double.infinity,
-                                  width: 160,
-                                  fit: BoxFit.fill,
-                                  placeholder: (context, url) => const Center(
-                                          child: CircularProgressIndicator(
-                                        color: ColorManager.primary,
-                                      )),
-                                  errorWidget: (context, url, error) {
-                                    return Image.asset(
-                                      "assets/images/doctor_image.png",
-                                    );
-                                  }),
-                            ),
-                          ],
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                "${args.specialty}",
+                                style: getSemiBoldStyle(
+                                    color: ColorManager.textColor,
+                                    fontSize: 13),
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                "${args.email}",
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                style: getSemiBoldStyle(
+                                    color: ColorManager.textColor,
+                                    fontSize: 14),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                  // ClipOval(
-                  //     child: CachedNetworkImage(
-                  //   imageUrl: "${ApiConstants.imageBaseUrl}${args.imageUrl}",
-                  //   errorListener: (p0) =>
-                  //       Image.asset("assets/images/doctor_image.png"),
-                  //   height: 150,
-                  //   width: 150,
-                  //   fit: BoxFit.cover,
-                  // )),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  // Text("${args.firstName} ${args.lastName}",
-                  //     style: getSemiBoldStyle(color: ColorManager.primary
-                  //         // color: const Color.fromARGB(204, 82, 151, 221)
-                  //         )),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Align(
-                      alignment: Alignment.topRight,
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.article,
-                            color: ColorManager.primary,
-                          ),
-                          const SizedBox(
-                            width: 2,
-                          ),
-                          Text(
-                            "عن الطبيب",
-                            style: getMediumStyle(color: ColorManager.primary),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                          text: _showFullDescription
-                              ? args.description ?? ''
-                              : (args.description != null &&
-                                      args.description!.length > 80
-                                  ? args.description!.substring(0, 80)
-                                  : args.description ?? ''),
-                          style: getRegularStyle(color: ColorManager.textColor),
+                        ClipRRect(
+                          borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(12),
+                              bottom: Radius.circular(12)),
+                          child: CachedNetworkImage(
+                              imageUrl:
+                                  "${ApiConstants.imageBaseUrl}${args.imageUrl}",
+                              height: 130,
+                              // width: double.infinity,
+                              width: 150,
+                              fit: BoxFit.fill,
+                              placeholder: (context, url) => const Center(
+                                      child: CircularProgressIndicator(
+                                    color: ColorManager.primary,
+                                  )),
+                              errorWidget: (context, url, error) {
+                                return Image.asset(
+                                  "assets/images/doctor_image.png",
+                                );
+                              }),
                         ),
-                        if (args.description != null &&
-                            args.description!.length > 80)
-                          TextSpan(
-                            text: _showFullDescription
-                                ? 'عرض أقل   '
-                                : '... عرض المزيد',
-                            style: getSemiBoldStyle(
-                                color: ColorManager.primary, fontSize: 15),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                setState(() {
-                                  _showFullDescription = !_showFullDescription;
-                                });
-                                if (_showFullDescription) {
-                                  WidgetsBinding.instance
-                                      .addPostFrameCallback((timeStamp) {
-                                    _scrollController.animateTo(
-                                        _scrollController
-                                            .position.maxScrollExtent,
-                                        duration:
-                                            const Duration(milliseconds: 400),
-                                        curve: Curves.easeInOut);
-                                  });
-                                }
-                              },
-                          )
-                      ]))),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Align(
-                      alignment: Alignment.topRight,
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.access_time,
-                            color: ColorManager.primary,
-                          ),
-                          const SizedBox(
-                            width: 2,
-                          ),
-                          Text("اختر ميعاد الحجز",
-                              style:
-                                  getMediumStyle(color: ColorManager.primary)),
-                        ],
-                      ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 15),
-                  BlocBuilder<AppointmentCubit, AppointmentStates>(
-                    builder: (context, state) {
-                      if (state is GetAppointmentLoading) {
-                        return const CircularProgressIndicator(
-                          color: ColorManager.primary,
-                        );
-                      }
-                      if (state is GetAppointmentError) {
-                        return Text(state.message);
-                      }
-                      if (state is GetAppointmentSuccess) {
-                        return AppointmentList(
-                          appointments: state.appointmentEntity,
-                          onSelectionChanged: _updateSelectedAppointment,
-                        );
-                      }
-                      return const Text('لم يتم تحميل البيانات');
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  BlocListener<BookingCubit, BookingStates>(
-                    listener: (context, state) {
-                      if (state is GetBookingLoading) {
-                        setState(() => isBooking = true);
-                      } else if (state is GetBookingSuccess) {
-                        setState(() => isBooking = false);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            duration: const Duration(seconds: 3),
-                            content: Text(
-                                "تم حجز موعد يوم ${FormatedDate.formateArabicDate(state.booking.data!.date ?? '', day: '')} الساعة ${FormatedDate.formateArabicDate(state.booking.data!.time ?? '', day: '')} بنجاح"),
-                            backgroundColor: Colors.green,
-                          ),
-                        );
-                      } else if (state is GetBookingError) {
-                        setState(() => isBooking = false);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                              content: Text(state.message),
-                              backgroundColor: Colors.red),
-                        );
-                      }
-                    },
-                    child: ElevatedButton(
-                      onPressed: (selectedDay != null &&
-                              selectedTime != null &&
-                              !isBooking)
-                          ? () => _showConfirmationDialog(context)
-                          : null,
-                      style: ButtonStyle(
-                        shape: const MaterialStatePropertyAll(
-                            RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                        )),
-                        foregroundColor:
-                            const MaterialStatePropertyAll(ColorManager.white),
-                        backgroundColor:
-                            MaterialStateProperty.all(ColorManager.primary),
-                      ),
-                      child: isBooking
-                          ? const CircularProgressIndicator(
-                              color: ColorManager.white)
-                          : Text("حجز موعد",
-                              style: getMediumStyle(color: ColorManager.white)
-                                  .copyWith(fontSize: 20)),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                ]),
+                ),
               ),
-            )
-          ],
+              // ClipOval(
+              //     child: CachedNetworkImage(
+              //   imageUrl: "${ApiConstants.imageBaseUrl}${args.imageUrl}",
+              //   errorListener: (p0) =>
+              //       Image.asset("assets/images/doctor_image.png"),
+              //   height: 150,
+              //   width: 150,
+              //   fit: BoxFit.cover,
+              // )),
+              const SizedBox(
+                height: 15,
+              ),
+              // Text("${args.firstName} ${args.lastName}",
+              //     style: getSemiBoldStyle(color: ColorManager.primary
+              //         // color: const Color.fromARGB(204, 82, 151, 221)
+              //         )),
+              const SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.article,
+                        color: ColorManager.primary,
+                      ),
+                      const SizedBox(
+                        width: 2,
+                      ),
+                      Text(
+                        "عن الطبيب",
+                        style: getMediumStyle(color: ColorManager.primary),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: RichText(
+                      text: TextSpan(children: [
+                    TextSpan(
+                      text: _showFullDescription
+                          ? args.description ?? ''
+                          : (args.description != null &&
+                                  args.description!.length > 80
+                              ? args.description!.substring(0, 80)
+                              : args.description ?? ''),
+                      style: getRegularStyle(color: ColorManager.textColor),
+                    ),
+                    if (args.description != null &&
+                        args.description!.length > 80)
+                      TextSpan(
+                        text: _showFullDescription
+                            ? 'عرض أقل   '
+                            : '... عرض المزيد',
+                        style: getSemiBoldStyle(
+                            color: ColorManager.primary, fontSize: 15),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            setState(() {
+                              _showFullDescription = !_showFullDescription;
+                            });
+                            if (_showFullDescription) {
+                              WidgetsBinding.instance
+                                  .addPostFrameCallback((timeStamp) {
+                                _scrollController.animateTo(
+                                    _scrollController.position.maxScrollExtent,
+                                    duration: const Duration(milliseconds: 400),
+                                    curve: Curves.easeInOut);
+                              });
+                            }
+                          },
+                      )
+                  ]))),
+              const SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.access_time,
+                        color: ColorManager.primary,
+                      ),
+                      const SizedBox(
+                        width: 2,
+                      ),
+                      Text("اختر ميعاد الحجز",
+                          style: getMediumStyle(color: ColorManager.primary)),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 15),
+              BlocBuilder<AppointmentCubit, AppointmentStates>(
+                builder: (context, state) {
+                  if (state is GetAppointmentLoading) {
+                    return const CircularProgressIndicator(
+                      color: ColorManager.primary,
+                    );
+                  }
+                  if (state is GetAppointmentError) {
+                    return Text(state.message);
+                  }
+                  if (state is GetAppointmentSuccess) {
+                    return AppointmentList(
+                      appointments: state.appointmentEntity,
+                      onSelectionChanged: _updateSelectedAppointment,
+                    );
+                  }
+                  return const Text('لم يتم تحميل البيانات');
+                },
+              ),
+              const SizedBox(height: 20),
+              BlocListener<BookingCubit, BookingStates>(
+                listener: (context, state) {
+                  if (state is GetBookingLoading) {
+                    setState(() => isBooking = true);
+                  } else if (state is GetBookingSuccess) {
+                    setState(() => isBooking = false);
+
+                    UIUtils.showMessage(
+                        context,
+                        "تم حجز موعد يوم ${FormatedDate.formateArabicDate(state.booking.data!.date ?? '', day: '')} الساعة ${FormatedDate.formateArabicDate(state.booking.data!.time ?? '', day: '')} بنجاح",
+                        ColorManager.green);
+                  } else if (state is GetBookingError) {
+                    setState(() => isBooking = false);
+                    UIUtils.showMessage(
+                        context, state.message, ColorManager.red);
+                  }
+                },
+                child: ElevatedButton(
+                  onPressed: (selectedDay != null &&
+                          selectedTime != null &&
+                          !isBooking &&
+                          (isDateAvailableForBooking(selectedDay!)))
+                      ? () => _showConfirmationDialog(context)
+                      : null,
+                  style: ButtonStyle(
+                    shape:
+                        const MaterialStatePropertyAll(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    )),
+                    foregroundColor:
+                        const MaterialStatePropertyAll(ColorManager.white),
+                    backgroundColor:
+                        MaterialStateProperty.all(ColorManager.primary),
+                  ),
+                  child: isBooking
+                      ? const CircularProgressIndicator(
+                          color: ColorManager.white)
+                      : Text("حجز موعد",
+                          style: getMediumStyle(color: ColorManager.white)
+                              .copyWith(fontSize: 20)),
+                ),
+              ),
+              const SizedBox(height: 20),
+            ]),
+          ),
         )
             // ],
             ),
       ),
-      // ),u
     );
 
     //  Scaffold(
@@ -588,16 +569,26 @@ class _DoctorDetailsState extends State<DoctorDetails> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        // if (isDateAvailableForBooking(selectedDay!)) {
+        //   UIUtils.showMessage(context,
+        //       "لا يمكن الحجز قبل 24 ساعة من الموعد المحدد", ColorManager.red);
+        // }
         return Directionality(
           textDirection: TextDirection.rtl,
           child: AlertDialog(
             // shape: ContinuousRectangleBorder(
             //     borderRadius: BorderRadius.circular(25)),
-            title: const Center(child: Text("تأكيد الحجز")),
-            backgroundColor: ColorManager.blue,
+            title: Center(
+                child: Text(
+              "تأكيد الحجز",
+              style: getMediumStyle(color: ColorManager.textColor),
+            )),
+            backgroundColor: ColorManager.white,
 
             content: Text(
-                "هل تريد حجز موعد يوم${FormatedDate.formateArabicDate(selectedDay!, day: '')} الساعة ${FormatedDate.formateTime(selectedTime!)}؟"),
+              "هل تريد حجز موعد يوم${FormatedDate.formateArabicDate(selectedDay!, day: '')} الساعة ${FormatedDate.formateTime(selectedTime!)}؟",
+              style: getMediumStyle(color: ColorManager.textColor),
+            ),
             actions: [
               TextButton(
                 onPressed: () {
@@ -628,6 +619,17 @@ class _DoctorDetailsState extends State<DoctorDetails> {
         );
       },
     );
+  }
+
+  bool isDateAvailableForBooking(String date) {
+    try {
+      DateTime selectedDate = DateTime.parse(date);
+      DateTime now = DateTime.now();
+      Duration differense = selectedDate.difference(now);
+      return differense.inHours >= 24;
+    } catch (e) {
+      return false;
+    }
   }
 }
 

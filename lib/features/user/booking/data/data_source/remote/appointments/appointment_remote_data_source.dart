@@ -11,7 +11,12 @@ abstract class AppointmentRemoteDataSource {
   Future<List<DoctorsAppointmentModel>> getDotorsAppointment();
   Future<DoctorsAppointmentModel> createAppointment(
       CreateRequestModel request, String token);
-  Future<DeleteBookingEntity> deleteappointment(int id);
+  Future<DeleteBookingEntity> deleteappointment(int id
+      // {required int day,
+      // required String startTime,
+      // required String endTime,
+      // required int duration}
+      );
   Future<DoctorsAppointmentModel> updateAppointment(
       UpdateAppointmentRequest updateAppointmentRequest);
 }

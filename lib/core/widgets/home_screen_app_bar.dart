@@ -77,6 +77,7 @@ class _HomeScreenAppBarState extends State<HomeScreenAppBar> {
   void initState() {
     super.initState();
     getUserRole();
+    context.read<NotificationCubit>().getNotification();
     // userrole == 'User'
     //     ? context.read<ProfileCubit>().getPatientProfile()
     //     : context.read<ProfileCubit>().getDoctorProfile();
@@ -190,20 +191,21 @@ class _HomeScreenAppBarState extends State<HomeScreenAppBar> {
                   const Spacer(),
                   (userrole == "User")
                       ? IconButton(onPressed: () {
-                          Navigator.of(context).pushNamed(Routes.nitification);
+                          Navigator.of(context).pushNamed(Routes.notification);
                         }, icon:
                           BlocBuilder<NotificationCubit, NotificationsStats>(
                           builder: (context, state) {
-                            // if (state is NotificaltionSuccess) {
-                            //   final unreadCount = state.notification.where((element) => !(element.isRead!=null)).length;
+                            int unreadCount = 0;
+                            if (state is NotificaltionSuccess) {
+                              unreadCount = state.notification
+                                  .where((element) => element.isRead == false)
+                                  .length;
+                            }
 
-                            // }
-                            final count = context
-                                .read<NotificationCubit>()
-                                .getUnReadCount();
-                            print(count);
+                            // final count = context.read<NotificationCubit>().m;
+                            // print(count);
                             return Badge.count(
-                              count: count,
+                              count: unreadCount,
                               child: const Icon(
                                 Icons.notifications_none,
                                 // color: ColorManager.white,

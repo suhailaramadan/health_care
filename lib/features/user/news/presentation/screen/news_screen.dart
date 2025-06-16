@@ -41,7 +41,7 @@ class _NewsScreenState extends State<NewsScreen> {
                 child: CircularProgressIndicator(
               color: ColorManager.primary,
             ));
-          } else if (state is NewsSuccess) {
+          } else if (state is NewsSuccess && state.news.isNotEmpty) {
             final newsList = state.news;
             return ListView.builder(
               itemCount: newsList.length,
@@ -60,6 +60,13 @@ class _NewsScreenState extends State<NewsScreen> {
             );
           } else if (state is NewsError) {
             return Center(child: Text(state.message));
+          } else if (state is NewsSuccess && state.news.isEmpty) {
+            return Center(
+              child: Text(
+                "لا يوجد أخبار",
+                style: getSemiBoldStyle(color: ColorManager.kuhly),
+              ),
+            );
           }
           return const SizedBox();
         },

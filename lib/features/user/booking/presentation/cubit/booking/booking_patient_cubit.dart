@@ -1,23 +1,32 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/features/notification/presentiation/cubit/notification_cubit.dart';
 import 'package:graduation_project/features/user/booking/domain/use_cases/get_patient_booking.dart';
+import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_states.dart';
 import 'package:injectable/injectable.dart';
 
-@injectable
+@singleton
 class BookingPatientCubit extends Cubit<BookingStates> {
   final GetBookingPatient bookingPatient;
   BookingPatientCubit(this.bookingPatient) : super(BookingInitial());
-  Future<void> getBookingPatient(String token) async {
+  Future<void> getBookingPatient() async {
     emit(GetBookingLoading());
 
-    final result = await bookingPatient(token);
+    final result = await bookingPatient();
 
     result.fold(
       (failure) {
         emit(GetBookingError(failure.message));
       },
-      (booking) {
-        emit(GetBookingPatientSuccess(booking));
+      (bookingPatient) async {
+        emit(GetBookingPatientSuccess(bookingPatient));
+        // final bookings = bookingPatient.data ?? [];
+        // for (var booking in bookings) {
+        //   await deleteBookingCubit.deleteBooking(booking.id ?? 0);
+        //   await notificationCubit.getNotification();
+        //   print("تم إلغاء موعدك مع الدكتور ${booking.date}");
+        // }
       },
     );
   }

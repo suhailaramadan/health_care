@@ -45,7 +45,7 @@ class UpdateDoctorProfileRequest {
       if (nationalId != null) 'nationalID': nationalId,
       if (clinicName != null) 'clinicName': clinicName,
       if (imageUrl != null)
-        "ImageUrl": await MultipartFile.fromFile(imageUrl!,
+        "ImageFile": await MultipartFile.fromFile(imageUrl!,
             filename: imageUrl!.split('/').last)
     };
 

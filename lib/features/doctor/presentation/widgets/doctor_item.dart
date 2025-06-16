@@ -117,7 +117,7 @@ class DoctorItem extends StatelessWidget {
                               "${ApiConstants.imageBaseUrl}${doctorEntity.imageUrl}",
                           height: 140,
                           // width: double.infinity,
-                          width: 150,
+                          width: 140,
                           fit: BoxFit.fill,
                           placeholder: (context, url) => const Center(
                                   child: CircularProgressIndicator(
@@ -156,7 +156,7 @@ class DoctorItem extends StatelessWidget {
                           Text(
                             "${doctorEntity.email}",
                             style: getMediumStyle(
-                                color: ColorManager.grey, fontSize: 15),
+                                color: ColorManager.grey, fontSize: 12),
                           ),
                         ],
                       ),

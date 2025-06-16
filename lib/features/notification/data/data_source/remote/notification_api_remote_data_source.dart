@@ -23,7 +23,7 @@ class NotificationApiRemoteDataSource extends NotificationRemoteDataSource {
           .map((json) => NotificationGetResponse.fromJson(json))
           .toList();
     } else {
-      throw Exception('فشل في تحميل الإشعارات');
+      throw Exception('لا يوجد إشعارات');
     }
   }
 

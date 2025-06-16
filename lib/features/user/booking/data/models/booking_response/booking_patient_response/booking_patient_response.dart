@@ -1,4 +1,4 @@
-import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_patient_response/booking_patient_model.dart';
+import 'booking_patient_model.dart';
 
 class BookingPatientResponse {
   bool? success;
@@ -22,6 +22,4 @@ class BookingPatientResponse {
         'message': message,
         'data': data?.map((e) => e.toJson()).toList(),
       };
-
-  where(Function(dynamic element) param0) {}
 }

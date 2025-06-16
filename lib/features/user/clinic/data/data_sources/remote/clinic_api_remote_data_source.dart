@@ -43,10 +43,9 @@ class ClinicApiRemoteDataSource implements ClinicRemoteDataSource {
   @override
   Future<SearchResponse> search(String query) async {
     try {
-      final encodedQuery = Uri.encodeComponent(query);
       final response = await _dio.get("${ApiConstants.clinicEndPoint}/search",
           queryParameters: {'query': query});
-      print("object");
+
       return SearchResponse.fromJson(response.data);
     } catch (exception) {
       String? message;

@@ -205,21 +205,6 @@ class _UpdateDoctorProfileScreenState extends State<UpdateDoctorProfileScreen> {
                           maxLines: 5,
                         ),
                         const SizedBox(height: 10),
-                        // DropdownButtonFormField<String>(
-                        //   decoration:
-                        //       const InputDecoration(labelText: 'الكلية'),
-                        //   value: _selectedCollege!.isNotEmpty
-                        //       ? _selectedCollege
-                        //       : null,
-                        //   items: collegeName
-                        //       .map((college) => DropdownMenuItem(
-                        //             value: college,
-                        //             child: Text(college),
-                        //           ))
-                        //       .toList(),
-                        //   onChanged: (value) =>
-                        //       setState(() => _selectedCollege = value),
-                        // ),
                         CustomDropDown(
                             collageList: collegeName,
                             initialValue: _selectedCollege,
@@ -230,9 +215,7 @@ class _UpdateDoctorProfileScreenState extends State<UpdateDoctorProfileScreen> {
                         CustomTextField(
                             controller: _clinicNameController,
                             label: 'اسم العيادة'),
-
                         const SizedBox(height: 20),
-
                         CustomButton(
                           backgroundColor: ColorManager.primary,
                           label: "حفظ التعديلات",
@@ -256,9 +239,6 @@ class _UpdateDoctorProfileScreenState extends State<UpdateDoctorProfileScreen> {
                             }
                           },
                         )
-
-                        // },
-                        // )
                       ],
                     )),
               );

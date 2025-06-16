@@ -85,16 +85,33 @@ class AppointmentApiRemoteDataSource extends AppointmentRemoteDataSource {
     if (token == null) {
       throw const RemoteException("لا يوجد رمز توثيق");
     }
+    print("current tkeb===> $token");
     final response = await _dio.delete("Appointment/$id",
         options: Options(headers: {
           "Content-Type": 'application/json',
           "Authorization": 'Bearer $token',
         }));
+    print("token-->>>>>>> $token");
     if (response.statusCode == 200) {
       return DeleteBookingEntity.fromJson(response.data);
     } else {
       throw RemoteException(response.data['message'] ?? 'فشل في حذف الموعد');
     }
+    // SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    // String? token = sharedPref.getString(CacheConstants.tokenKey);
+    // if (token == null) {
+    //   throw const RemoteException("لا يوجد رمز توثيق");
+    // }
+    // final response = await _dio.delete("Appointment/$id",
+    //     options: Options(headers: {
+    //       "Content-Type": 'application/json',
+    //       "Authorization": 'Bearer $token',
+    //     }));
+    // if (response.statusCode == 200) {
+    //   return DeleteBookingEntity.fromJson(response.data);
+    // } else {
+    //   throw RemoteException(response.data['message'] ?? 'فشل في حذف الموعد');
+    // }
   }
 
   @override

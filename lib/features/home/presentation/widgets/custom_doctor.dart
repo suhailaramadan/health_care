@@ -15,7 +15,37 @@ class CustomDoctor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.sizeOf(context);
-    final bool isLandscape = screenSize.width > screenSize.height;
+
+    final bool isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+    //     screenSize.width > screenSize.height || isLargeTablet;
+    double getResponsiveFontSize(String itemType) {
+      switch (itemType) {
+        case 'ButtonWidth':
+          return isLandscape ? 120.w : 150.w;
+        case 'ButtonHeight':
+          return isLandscape ? 40.h : 5.h;
+        case 'ImageHeight':
+          return isLandscape ? 180.h : 150.h;
+        case 'ImageWidth':
+          return isLandscape ? 250.w : 300.w;
+        case 'IconSize':
+          return isLandscape ? 20.w : 25.w;
+        case 'Text':
+          return isLandscape ? 18.sp : 15.sp;
+        case 'Padding':
+          return isLandscape ? 8.w : 12.w;
+        case 'Hieight':
+          return isLandscape ? 180.h : 220.h;
+        case 'Width':
+          return isLandscape ? 120.w : 150.w;
+        case 'Size':
+          return isLandscape ? 30.w : 40.w;
+        default:
+          return 50.w;
+      }
+    }
+
     // return Directionality(
     //   textDirection: TextDirection.rtl,
     //   child: InkWell(
@@ -60,157 +90,152 @@ class CustomDoctor extends StatelessWidget {
     //         ),
     //       )),
     // );
-    return Container(
-      // padding: const EdgeInsets.symmetric(horizontal: 10),
-      // margin: const EdgeInsets.all(10),
-
-      height: 300,
-      // decoration: const BoxDecoration(
-      //     // color: Color.fromARGB(255, 79, 136, 198),
-      //     borderRadius: BorderRadius.all(Radius.circular(15))),
-      child: InkWell(
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => DoctorDetails(
-                  doctorId: doctorEntity.id ?? '',
-                ),
-            settings: RouteSettings(
-                arguments: DoctorArg(
-                    doctorEntity.clinicId,
-                    doctorEntity.clinicName,
-                    doctorEntity.description,
-                    doctorEntity.firstName,
-                    doctorEntity.id,
-                    doctorEntity.lastName,
-                    doctorEntity.specialty,
-                    doctorEntity.imageUrl,
-                    doctorEntity.email,
-                    doctorEntity.college)))),
-        child: Directionality(
-            textDirection: TextDirection.rtl,
-            child: SizedBox(
-              height: 150,
-              width: 200,
-              child: Card(
-                // s
-                surfaceTintColor: ColorManager.white,
-                color: ColorManager.white,
-                elevation: 3,
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border:
-                          Border.all(width: .1, color: ColorManager.primary)),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ClipRRect(
-                        borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(12),
-                            bottom: Radius.circular(12)),
-                        child: CachedNetworkImage(
-                            imageUrl:
-                                "${ApiConstants.imageBaseUrl}${doctorEntity.imageUrl}",
-                            height: 140,
-                            // width: double.infinity,
-                            width: 160,
-                            fit: BoxFit.fill,
-                            placeholder: (context, url) => const Center(
-                                    child: CircularProgressIndicator(
-                                  color: ColorManager.primary,
-                                )),
-                            errorWidget: (context, url, error) {
-                              return Image.asset(
-                                "assets/images/doctor_image.png",
-                              );
-                            }),
+    return InkWell(
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => DoctorDetails(
+                doctorId: doctorEntity.id ?? '',
+              ),
+          settings: RouteSettings(
+              arguments: DoctorArg(
+                  doctorEntity.clinicId,
+                  doctorEntity.clinicName,
+                  doctorEntity.description,
+                  doctorEntity.firstName,
+                  doctorEntity.id,
+                  doctorEntity.lastName,
+                  doctorEntity.specialty,
+                  doctorEntity.imageUrl,
+                  doctorEntity.email,
+                  doctorEntity.college)))),
+      child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: SizedBox(
+            height: getResponsiveFontSize('Height'),
+            // 150,
+            width: getResponsiveFontSize('Width'),
+            // 200,
+            child: Card(
+              // margin: EdgeInsets.symmetric(horizontal: 2),
+              // s
+              surfaceTintColor: ColorManager.white,
+              color: ColorManager.white,
+              // elevation: 3,
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(width: .1, color: ColorManager.primary)),
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ClipRRect(
+                      borderRadius: const BorderRadius.vertical(
+                          top: Radius.circular(8), bottom: Radius.circular(8)),
+                      child: CachedNetworkImage(
+                          imageUrl:
+                              "${ApiConstants.imageBaseUrl}${doctorEntity.imageUrl}",
+                          height: getResponsiveFontSize('ImageHeight'),
+                          // 140,
+                          // width: double.infinity,
+                          width: getResponsiveFontSize('ImageWidth'),
+                          // 160,
+                          fit: BoxFit.fill,
+                          placeholder: (context, url) => const Center(
+                                  child: CircularProgressIndicator(
+                                color: ColorManager.primary,
+                              )),
+                          errorWidget: (context, url, error) {
+                            return Image.asset(
+                              "assets/images/doctor_image.png",
+                            );
+                          }),
+                    ),
+                    // const SizedBox(
+                    //   width: 15,
+                    // ),
+                    Padding(
+                      padding: EdgeInsets.all(getResponsiveFontSize('Padding')),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "د. ${doctorEntity.firstName} ${doctorEntity.lastName}",
+                            style: getBoldStyle(
+                                color: ColorManager.primary,
+                                fontSize: getResponsiveFontSize('Text')),
+                          ),
+                          Text(
+                            "${doctorEntity.specialty}",
+                            overflow: TextOverflow.ellipsis,
+                            style: getMediumStyle(
+                                color: const Color.fromARGB(255, 111, 106, 106),
+                                fontSize: getResponsiveFontSize('Text')),
+                          )
+                        ],
                       ),
-                      // const SizedBox(
-                      //   width: 15,
-                      // ),
-                      Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "د. ${doctorEntity.firstName} ${doctorEntity.lastName}",
-                              style: getBoldStyle(
-                                  color: ColorManager.primary, fontSize: 18),
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "${doctorEntity.specialty}",
-                              style: getMediumStyle(
-                                  color: ColorManager.grey, fontSize: 12),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               ),
-            )
-            // Container(
-            //   margin: EdgeInsets.symmetric(horizontal: 8),
-            //   height: screenSize.height * 0.7,
-            //   width: screenSize.width * .5,
-            //   decoration: BoxDecoration(
-            //     color: ColorManager.blue,
-            //     border: Border.all(
-            //       color: ColorManager.primary.withOpacity(0.3),
-            //       width: 2,
-            //     ),
-            //     borderRadius: BorderRadius.circular(16.r),
-            //   ),
-            //   child: Column(
-            //     // mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       ClipRRect(
-            //         borderRadius: BorderRadius.circular(20),
-            //         child: CachedNetworkImage(
-            //           imageUrl:
-            //               "${ApiConstants.imageBaseUrl}${doctorEntity.imageUrl}",
-            //           height: isLandscape
-            //               ? screenSize.width * .16
-            //               : screenSize.height * .23,
-            //           width: 350,
-            //           fit: BoxFit.fitHeight,
-            //         ),
-            //       ),
-            //       // Image.asset(
-            //       //   "assets/images/doctor_image.png",
-            //       //   height:
-            //       //       isLandscape ? screenSize.width * .16 : screenSize.height * .2,
-            //       //   // width:
-            //       //   //     isLandscape ? screenSize.height * . : screenSize.width * .34,
-            //       // ),
-            //       // SizedBox(
-            //       //   height: 15,
-            //       // ),
-            //       Text(
-            //         "${doctorEntity.firstName ?? ''} ${doctorEntity.lastName}",
-            //         style: getSemiBoldStyle(
-            //             color: ColorManager.primary, fontSize: 18.sp),
-            //       ),
-            //       // const SizedBox(
-            //       //   height: 5,
-            //       // ),
-            //       Text(
-            //         doctorEntity.specialty ?? '',
-            //         style: getMediumStyle(
-            //             color: ColorManager.primary, fontSize: FontSize.s12),
-            //       ),
-            //       // const SizedBox(
-            //       //   height: 10,
-            //       // ),
-            //     ],
-            //   ),
-            // ),
             ),
-      ),
+          )
+          // Container(
+          //   margin: EdgeInsets.symmetric(horizontal: 8),
+          //   height: screenSize.height * 0.7,
+          //   width: screenSize.width * .5,
+          //   decoration: BoxDecoration(
+          //     color: ColorManager.blue,
+          //     border: Border.all(
+          //       color: ColorManager.primary.withOpacity(0.3),
+          //       width: 2,
+          //     ),
+          //     borderRadius: BorderRadius.circular(16.r),
+          //   ),
+          //   child: Column(
+          //     // mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       ClipRRect(
+          //         borderRadius: BorderRadius.circular(20),
+          //         child: CachedNetworkImage(
+          //           imageUrl:
+          //               "${ApiConstants.imageBaseUrl}${doctorEntity.imageUrl}",
+          //           height: isLandscape
+          //               ? screenSize.width * .16
+          //               : screenSize.height * .23,
+          //           width: 350,
+          //           fit: BoxFit.fitHeight,
+          //         ),
+          //       ),
+          //       // Image.asset(
+          //       //   "assets/images/doctor_image.png",
+          //       //   height:
+          //       //       isLandscape ? screenSize.width * .16 : screenSize.height * .2,
+          //       //   // width:
+          //       //   //     isLandscape ? screenSize.height * . : screenSize.width * .34,
+          //       // ),
+          //       // SizedBox(
+          //       //   height: 15,
+          //       // ),
+          //       Text(
+          //         "${doctorEntity.firstName ?? ''} ${doctorEntity.lastName}",
+          //         style: getSemiBoldStyle(
+          //             color: ColorManager.primary, fontSize: 18.sp),
+          //       ),
+          //       // const SizedBox(
+          //       //   height: 5,
+          //       // ),
+          //       Text(
+          //         doctorEntity.specialty ?? '',
+          //         style: getMediumStyle(
+          //             color: ColorManager.primary, fontSize: FontSize.s12),
+          //       ),
+          //       // const SizedBox(
+          //       //   height: 10,
+          //       // ),
+          //     ],
+          //   ),
+          // ),
+          ),
     );
   }
 }

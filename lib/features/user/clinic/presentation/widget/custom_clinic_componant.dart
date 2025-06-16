@@ -21,19 +21,21 @@ class CustomClinicComponant extends StatelessWidget {
     required this.clinicEntity,
   });
   final ClinicEntity clinicEntity;
+
   @override
   Widget build(BuildContext context) {
+    final fileName = clinicEntity.imageUrl.split('/').last;
+    final encodedFileName = Uri.encodeComponent(fileName);
+    final fullUrl = '${ApiConstants.imageBaseUrl}/images/$encodedFileName';
+
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => const ClinicDetails(),
             settings: RouteSettings(
-                arguments: ClinicDetailsArg(
-              id: clinicEntity.id,
-              name: clinicEntity.name,
-              imageUrl: clinicEntity.imageUrl,
-            ))));
-        context.read<ClinicCubit>().getClinics();
+                arguments: ClinicEntity(clinicEntity.id, clinicEntity.name,
+                    clinicEntity.imageUrl))));
+        // context.read<ClinicCubit>().getClinics();
       },
       child: Directionality(
         textDirection: TextDirection.rtl,
@@ -41,75 +43,43 @@ class CustomClinicComponant extends StatelessWidget {
           height: 150,
           width: 300,
           child: Card(
-            // height: 250,
-            // width: 100,
             elevation: 3,
             surfaceTintColor: ColorManager.white,
             color: ColorManager.white,
             margin: const EdgeInsets.all(8),
-            // padding: EdgeInsets.symmetric(horizontal: 8),
-            // decoration: BoxDecoration(
-            //     border: Border.all(width: 0.1, color: ColorManager.blue),
-            //     borderRadius: BorderRadius.circular(10),
-            //     color: ColorManager.white,
-            //     boxShadow: const [
-            //       BoxShadow(blurRadius: 10, color: ColorManager.blue)
-            //     ]),
             child: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(width: .1, color: ColorManager.primary)),
-              padding: const EdgeInsets.all(8.0),
+                  border: Border.all(width: .3, color: ColorManager.primary)),
               child: Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  // CachedNetworkImage(imageUrl:"${ApiConstants.clinicBaseUrl}${clinicEntity.imageUrl}"),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(5),
-                    child: CachedNetworkImage(
-                        imageUrl:
-                            "${ApiConstants.imageBaseUrl}${clinicEntity.imageUrl}",
-                        fit: BoxFit.fill,
-                        // height: 100,
-                        // width: 150,
-                        placeholder: (context, url) => const Center(
-                              child: CircularProgressIndicator(
-                                color: ColorManager.greyDark,
+                  SizedBox(
+                    width: 150,
+                    height: 200,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: CachedNetworkImage(
+                          imageUrl: fullUrl,
+                          // "${ApiConstants.imageBaseUrl}${clinicEntity.imageUrl}",
+                          fit: BoxFit.fill,
+                          // height: 100,
+                          // width: 150,
+                          placeholder: (context, url) => const Center(
+                                child: CircularProgressIndicator(
+                                  color: ColorManager.greyDark,
+                                ),
                               ),
-                            ),
-                        errorWidget: (context, url, error) => const Center(
-                                child: Icon(
-                              Icons.error_outline_outlined,
-                              color: ColorManager.red,
-                              size: 25,
-                            ))
-                        // Image.asset(
-                        //   "assets/images/brain_clinic.png",
-                        //   // height: 100.w,
-                        //   // width: 50,
-                        //   // width: double.infinity,
-                        //   fit: BoxFit.fill,
-                        // ),
-                        ),
-                    // child: CachedNetworkImage(
-                    //   height: 150,
-                    //   width: 150,
-                    //   imageUrl:
-                    //       "${ApiConstants.imageBaseUrl}${clinicEntity.imageUrl}",
-                    //   // height: 150.w,
-                    //   // width: 200.w,
-                    //   fit: BoxFit.fill,
-                    //   placeholder: (context, url) => const Center(
-                    //     child: LoadingIndicator(),
-                    //   ),
-                    //   errorWidget: (context, url, error) => const Center(
-                    //       child: Icon(Icons.broken_image_outlined)),
-                    // ),
+                          errorWidget: (context, url, error) => const Center(
+                                  child: Icon(
+                                Icons.error_outline_outlined,
+                                color: ColorManager.red,
+                                size: 25,
+                              ))),
+                    ),
                   ),
                   const SizedBox(
                     width: 50,
                   ),
-
                   Expanded(
                     child: Text(
                       "عيادة  ${clinicEntity.name}",
@@ -119,9 +89,6 @@ class CustomClinicComponant extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  // SizedBox(
-                  //   width: 20.w,
-                  // )
                 ],
               ),
             ),

@@ -22,6 +22,7 @@ import 'package:graduation_project/features/auth/presentation/cubit/forget_passw
 import 'package:graduation_project/features/auth/presentation/cubit/reset_password_cubit.dart';
 import 'package:graduation_project/features/auth/presentation/cubit/verify_code_cubit.dart';
 import 'package:graduation_project/features/fcm.dart';
+import 'package:graduation_project/features/feedback/presentation/cubit/feedback_cubit.dart';
 import 'package:graduation_project/features/medical_record/presentation/cubit/medical_record_cubit.dart';
 import 'package:graduation_project/features/medical_record/presentation/widgets/medical_record_card.dart';
 import 'package:graduation_project/features/notification/presentiation/cubit/notification_cubit.dart';
@@ -30,9 +31,12 @@ import 'package:graduation_project/features/user/booking/presentation/cubit/appo
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/create_appointment_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/doctor_appointments_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/update_appointment_cubit.dart';
+import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_by_id_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_doctor_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_patient_cubit.dart';
+import 'package:graduation_project/features/user/chatBot/presentation/cubit/analysis_cubit.dart';
+import 'package:graduation_project/features/user/chatBot/presentation/cubit/chat_cubit.dart';
 import 'package:graduation_project/features/user/clinic/presentation/cubit/clinic_cubit.dart';
 import 'package:graduation_project/features/doctor/presentation/cubit/doctor_cubit.dart';
 import 'package:graduation_project/features/user/clinic/presentation/cubit/search_cubit.dart';
@@ -105,7 +109,7 @@ Future<void> main() async {
   await SharedPrefHandel.init();
   runApp(DevicePreview(
       // enabled: !kReleaseMode,
-      // enabled: false,
+      enabled: false,
       builder: (context) => HealthCareApp(
             authCubit: authCubit,
             profileCubit: profileCubit,
@@ -203,35 +207,42 @@ class _HealthCareAppState extends State<HealthCareApp> {
           BlocProvider(
               create: (context) => serviceLocator.get<BookingPatientCubit>()),
           BlocProvider(
+              create: (context) => serviceLocator.get<FeedbackCubit>()),
+          BlocProvider(
               create: (context) => serviceLocator.get<MedicalRecordCubit>()),
           BlocProvider(
               create: (context) => serviceLocator.get<BookingDoctorCubit>()),
           BlocProvider(
+              create: (context) => serviceLocator.get<BookingByIdCubit>()),
+          BlocProvider(
               create: (context) => serviceLocator.get<AppointmentCubit>()),
+          BlocProvider(create: (context) => serviceLocator.get<ChatCubit>()),
+          BlocProvider(
+              create: (context) => serviceLocator.get<AnalysisCubit>()),
           // BlocProvider(
           //     create: (context) => serviceLocator.get<NotificationCubit>()),
           BlocProvider(
               create: (context) => serviceLocator.get<NotificationCubit>()),
           BlocProvider(create: (context) => widget.profileCubit),
         ],
-        child: ScreenUtilInit(
-            designSize: const Size(420, 874),
+        child: const ScreenUtilInit(
+            designSize: Size(420, 874),
             minTextAdapt: true,
             splitScreenMode: true,
             child: MaterialApp(
-                localizationsDelegates: const [
+                localizationsDelegates: [
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,
                   GlobalCupertinoLocalizations.delegate,
                 ],
-                supportedLocales: const [
+                supportedLocales: [
                   Locale('ar'),
                   Locale('en'),
                 ],
                 // theme: ThemeData(useMaterial3: false),
                 // ignore: deprecated_member_use
                 useInheritedMediaQuery: true,
-                locale: const Locale('ar'),
+                locale: Locale('ar'),
                 // locale: DevicePreview.locale(context),
                 builder: DevicePreview.appBuilder,
                 debugShowCheckedModeBanner: false,

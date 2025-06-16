@@ -10,6 +10,7 @@ import 'package:graduation_project/features/doctors/presentation/screens/create_
 import 'package:graduation_project/features/doctors/presentation/screens/doctor_booking_screen.dart';
 import 'package:graduation_project/features/doctors/presentation/screens/update_appointment_screen.dart';
 import 'package:graduation_project/features/doctors/presentation/screens/work_hours_screen.dart';
+import 'package:graduation_project/features/feedback/presentation/screen/feedback_screen.dart';
 import 'package:graduation_project/features/medical_record/presentation/screens/create_medical_record.dart';
 import 'package:graduation_project/features/medical_record/presentation/screens/medical_record_doctor_screen.dart';
 import 'package:graduation_project/features/medical_record/presentation/screens/patient_medical_record_screen.dart';
@@ -20,6 +21,7 @@ import 'package:graduation_project/features/profile/presentation/screen/update_d
 import 'package:graduation_project/features/profile/presentation/screen/update_profile.dart';
 import 'package:graduation_project/features/splash_screen.dart';
 import 'package:graduation_project/features/user/booking/presentation/screen/booking_screen.dart';
+import 'package:graduation_project/features/user/chatBot/presentation/screen/chat_screen.dart';
 import 'package:graduation_project/features/user/clinic/presentation/screen/clinic_screen.dart';
 import 'package:graduation_project/features/user/clinic/presentation/widget/clinic_details.dart';
 import 'package:graduation_project/features/doctor/presentation/screen/doctor_screen.dart';
@@ -62,7 +64,9 @@ class Routes {
   static const updateDoctorProfile =
       UpdateDoctorProfileScreen.updateDoctorProfile;
   static const updateMedicalRecord = UpdateMedicalRecord.updatMedicalRecord;
-  static const nitification = NotificationScreen.notification;
+  static const notification = NotificationScreen.notification;
   static const newsScreen = NewsScreen.newsScreen;
   static const newsDetails = NewsDetailsScreen.newsDetails;
+  static const feedback = FeedbackScreen.feedback;
+  static const chat = ChatScreen.chat;
 }

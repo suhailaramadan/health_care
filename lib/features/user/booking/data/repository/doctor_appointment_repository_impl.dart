@@ -6,6 +6,7 @@ import 'package:graduation_project/core/error/failure.dart';
 import 'package:graduation_project/features/auth/data/data_sources/local/auth_local_data_source.dart';
 import 'package:graduation_project/features/user/booking/data/data_source/remote/appointments/appointment_api_remote_data_source.dart';
 import 'package:graduation_project/features/user/booking/data/data_source/remote/appointments/appointment_remote_data_source.dart';
+import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_response/booking_data_model.dart';
 import 'package:graduation_project/features/user/booking/data/models/doctors_appointment_response/create_request_model.dart';
 import 'package:graduation_project/features/user/booking/data/models/doctors_appointment_response/doctors_appointment_model.dart';
 import 'package:graduation_project/features/user/booking/data/models/doctors_appointment_response/update_appointment_request.dart';
@@ -45,9 +46,15 @@ class DoctorAppointmentsRepositoryImpl implements DoctorAppointmentRepository {
   }
 
   @override
-  Future<Either<Failure, DeleteBookingEntity>> deleteAppointment(int id) async {
+  Future<Either<Failure, DeleteBookingEntity>> deleteAppointment(int id
+      // {required int day,
+      // required String startTime,
+      // required String endTime,
+      // required int duration}
+      ) async {
     try {
       final appointment = await remoteDataSource.deleteappointment(id);
+      // day: day, startTime: startTime, endTime: endTime, duration: duration);
       return Right(appointment);
     } catch (e) {
       return Left(Failure(e.toString()));

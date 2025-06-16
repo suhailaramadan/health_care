@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/routes/routes.dart';
@@ -33,14 +34,17 @@ class _MedicalRecordScreenState extends State<MedicalRecordScreen> {
   void initState() {
     super.initState();
     context.read<ProfileCubit>().getPatientProfileById(widget.patientId);
-    context
-        .read<MedicalRecordCubit>()
-        .getMedicalRecord(
-          widget.id,
-        )
-        .then((value) => print("Succsedddddddddddddddddd"))
-        .catchError((error) => print("Ewwwwwwwwwwwwwwwwyii$error"));
-    print("ddddddddddddddddddd${widget.id}");
+    // context
+    //     .read<MedicalRecordCubit>()
+    //     .getMedicalRecord(
+    //       widget.id,
+    //     )
+    if (CacheConstants.roleKey == 'Doctor') {
+      context
+          .read<MedicalRecordCubit>()
+          .getPatientMedicalRecord(isDoctor: true);
+    }
+    // context.read<MedicalRecordCubit>().getPatientMedicalRecord(widget.patientId);
   }
 
   @override
@@ -238,159 +242,166 @@ class _MedicalRecordScreenState extends State<MedicalRecordScreen> {
                 } else if (state is GetMedicalRecordError) {
                   return const Center(child: ErrorIndicator());
                 } else if (state is GetMedicalRecordPatientSuccess) {
-                  print("تم بمجاححح");
                   return Expanded(
                     child: state.medicalRecord.isEmpty
                         ? Center(
                             child: Text(
                               "لا يوجد سجلات",
-                              style:
-                                  getMediumStyle(color: ColorManager.primary),
+                              style: getMediumStyle(color: ColorManager.kuhly),
                             ),
                           )
-                        : ListView.builder(
-                            itemCount: state.medicalRecord.length,
-                            itemBuilder: (context, index) => MedicalRecordCard(
-                                  onDelete: () async {
-                                    final cubit =
-                                        context.read<MedicalRecordCubit>();
-                                    final recordId = state.medicalRecord[index];
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return Directionality(
-                                          textDirection: TextDirection.rtl,
-                                          child: AlertDialog(
-                                            surfaceTintColor:
-                                                ColorManager.white,
-                                            backgroundColor: ColorManager.white,
-                                            title: const Icon(
-                                              Icons.warning_amber,
-                                              color: ColorManager.red,
-                                              size: 35,
-                                            ),
-                                            content: Text(
-                                              "هل تريد حذف السجل الطبي ",
-                                              style: getBoldStyle(
-                                                  fontSize: 18,
-                                                  color:
-                                                      ColorManager.textColor),
-                                            ),
-                                            actions: [
-                                              TextButton(
-                                                  onPressed: () {
-                                                    cubit.deleteMedicalRecord(
-                                                        recordId.id ?? 0);
-                                                  },
-                                                  style: ButtonStyle(
-                                                      padding:
-                                                          const MaterialStatePropertyAll(
-                                                              EdgeInsets.all(
-                                                                  12)),
-                                                      backgroundColor:
-                                                          const MaterialStatePropertyAll(
-                                                              ColorManager.red),
-                                                      shape: MaterialStatePropertyAll(
-                                                          RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5),
-                                                              side:
-                                                                  const BorderSide(
+                        : Expanded(
+                            child: ListView.builder(
+                                itemCount: state.medicalRecord.length,
+                                itemBuilder: (context, index) =>
+                                    MedicalRecordCard(
+                                      onDelete: () async {
+                                        final cubit =
+                                            context.read<MedicalRecordCubit>();
+                                        final recordId =
+                                            state.medicalRecord[index];
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return Directionality(
+                                              textDirection: TextDirection.rtl,
+                                              child: AlertDialog(
+                                                surfaceTintColor:
+                                                    ColorManager.white,
+                                                backgroundColor:
+                                                    ColorManager.white,
+                                                title: const Icon(
+                                                  Icons.warning_amber,
+                                                  color: ColorManager.red,
+                                                  size: 35,
+                                                ),
+                                                content: Text(
+                                                  "هل تريد حذف السجل الطبي ",
+                                                  style: getBoldStyle(
+                                                      fontSize: 18,
+                                                      color: ColorManager
+                                                          .textColor),
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        cubit
+                                                            .deleteMedicalRecord(
+                                                                recordId.id ??
+                                                                    0);
+                                                      },
+                                                      style: ButtonStyle(
+                                                          padding:
+                                                              const MaterialStatePropertyAll(
+                                                                  EdgeInsets
+                                                                      .all(12)),
+                                                          backgroundColor:
+                                                              const MaterialStatePropertyAll(
+                                                                  ColorManager
+                                                                      .red),
+                                                          shape: MaterialStatePropertyAll(
+                                                              RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              5),
+                                                                  side: const BorderSide(
                                                                       width:
                                                                           .3)))),
-                                                  child: Text(
-                                                    "إلغاء السجل ",
-                                                    style: getRegularStyle(
-                                                        color:
-                                                            ColorManager.white),
-                                                  )),
-                                              SizedBox(
-                                                width: 50.w,
-                                              ),
-                                              TextButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  style: ButtonStyle(
-                                                      padding:
-                                                          const MaterialStatePropertyAll(
-                                                              EdgeInsets.all(
-                                                                  15)),
-                                                      backgroundColor:
-                                                          const MaterialStatePropertyAll(
-                                                              ColorManager
-                                                                  .transparent),
-                                                      shape: MaterialStatePropertyAll(
-                                                          RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5),
-                                                              side:
-                                                                  const BorderSide(
+                                                      child: Text(
+                                                        "إلغاء السجل ",
+                                                        style: getRegularStyle(
+                                                            color: ColorManager
+                                                                .white),
+                                                      )),
+                                                  SizedBox(
+                                                    width: 50.w,
+                                                  ),
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      style: ButtonStyle(
+                                                          padding:
+                                                              const MaterialStatePropertyAll(
+                                                                  EdgeInsets
+                                                                      .all(15)),
+                                                          backgroundColor:
+                                                              const MaterialStatePropertyAll(
+                                                                  ColorManager
+                                                                      .transparent),
+                                                          shape: MaterialStatePropertyAll(
+                                                              RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              5),
+                                                                  side: const BorderSide(
                                                                       width:
                                                                           .3)))),
-                                                  child: Text(
-                                                    "لا أريد ذلك",
-                                                    style: getRegularStyle(
-                                                        color: ColorManager
-                                                            .textColor),
-                                                  )),
-                                              //     onTap: () {
-                                              //       Navigator.of(context).pop();
+                                                      child: Text(
+                                                        "لا أريد ذلك",
+                                                        style: getRegularStyle(
+                                                            color: ColorManager
+                                                                .textColor),
+                                                      )),
+                                                  //     onTap: () {
+                                                  //       Navigator.of(context).pop();
 
-                                              //       cubit.deleteAppointment(
-                                              //           appointment.id ?? 0);
-                                              //     }),
-                                              // CustomButton(
-                                              //     label: "لا أريد ذلك",
-                                              //     backgroundColor:
-                                              //         ColorManager.transparent,
-                                              //     onTap: () {
-                                              //       Navigator.of(context).pop();
-                                              //     }),
-                                            ],
-                                          ),
+                                                  //       cubit.deleteAppointment(
+                                                  //           appointment.id ?? 0);
+                                                  //     }),
+                                                  // CustomButton(
+                                                  //     label: "لا أريد ذلك",
+                                                  //     backgroundColor:
+                                                  //         ColorManager.transparent,
+                                                  //     onTap: () {
+                                                  //       Navigator.of(context).pop();
+                                                  //     }),
+                                                ],
+                                              ),
+                                            );
+                                          },
                                         );
                                       },
-                                    );
-                                  },
-                                  onEdit: () async {
-                                    final profile =
-                                        context.read<ProfileCubit>().state;
-                                    if (profile is GetProfilesSuccess) {
-                                      final result =
-                                          await Navigator.of(context).pushNamed(
-                                        Routes.updateMedicalRecord,
-                                        arguments: {
-                                          'bookingId':
-                                              state.medicalRecord[index].id,
-                                          "diagnosis": state
-                                              .medicalRecord[index].diagnosis,
-                                          "treatment": state
-                                              .medicalRecord[index].treatment,
-                                          "notes":
-                                              state.medicalRecord[index].notes,
-                                          'firstName':
-                                              profile.profileEntity.firstName,
-                                          'lastName':
-                                              profile.profileEntity.lastName
-                                        },
-                                      );
+                                      onEdit: () async {
+                                        final profile =
+                                            context.read<ProfileCubit>().state;
+                                        if (profile is GetProfilesSuccess) {
+                                          final result =
+                                              await Navigator.of(context)
+                                                  .pushNamed(
+                                            Routes.updateMedicalRecord,
+                                            arguments: {
+                                              'bookingId':
+                                                  state.medicalRecord[index].id,
+                                              "diagnosis": state
+                                                  .medicalRecord[index]
+                                                  .diagnosis,
+                                              "treatment": state
+                                                  .medicalRecord[index]
+                                                  .treatment,
+                                              "notes": state
+                                                  .medicalRecord[index].notes,
+                                              'firstName': profile
+                                                  .profileEntity.firstName,
+                                              'lastName':
+                                                  profile.profileEntity.lastName
+                                            },
+                                          );
 
-                                      if (result == null) {
-                                        context
-                                            .read<MedicalRecordCubit>()
-                                            .getMedicalRecord(widget.id);
-                                      }
-                                    }
-                                  },
-                                  isDoctor: true,
-                                  medicalRecordPatientEntity:
-                                      state.medicalRecord[index],
-                                )),
+                                          if (result == null) {
+                                            context
+                                                .read<MedicalRecordCubit>()
+                                                .getMedicalRecord(widget.id);
+                                          }
+                                        }
+                                      },
+                                      isDoctor: true,
+                                      medicalRecordPatientEntity:
+                                          state.medicalRecord[index],
+                                    )),
+                          ),
                   );
                 } else {
                   return const SizedBox();

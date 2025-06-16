@@ -97,7 +97,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                     ),
                     // Text("${state.profileEntity.lastName}"),
                     const SizedBox(
-                      height: 30,
+                      height: 15,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -109,11 +109,13 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                         Text(
                           "${state.profileDoctorEntity.email}",
                           style: getRegularStyle(color: ColorManager.textColor),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
                         ),
                       ],
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 15,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -129,7 +131,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                       ],
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 15,
                     ),
 
                     Row(
@@ -146,7 +148,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                       ],
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 15,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -162,7 +164,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                       ],
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 15,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -193,7 +195,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                     //   ),
                     // ),
                     const SizedBox(
-                      height: 20,
+                      height: 15,
                     ),
                     const Divider(
                       thickness: 1.5,

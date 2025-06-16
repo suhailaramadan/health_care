@@ -79,7 +79,7 @@ class UpdateProfileRequest {
       if (phoneNumber != null) 'phoneNumber': phoneNumber,
       if (nationalId != null) 'nationalID': nationalId,
       if (imageUrl != null)
-        "ImageUrl": await MultipartFile.fromFile(imageUrl!,
+        "ImageFile": await MultipartFile.fromFile(imageUrl!,
             filename: imageUrl!.split('/').last)
       // "LastName": lastName ?? patientDataModel.lastName,
       // "Email": email ?? patientDataModel.email,

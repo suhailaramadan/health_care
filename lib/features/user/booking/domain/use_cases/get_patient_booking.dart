@@ -11,6 +11,6 @@ import 'package:injectable/injectable.dart';
 class GetBookingPatient {
   final BookingPatientRepository _bookingRepository;
   const GetBookingPatient(this._bookingRepository);
-  Future<Either<Failure, BookingPatientResponse>> call(String token) =>
-      _bookingRepository.getBookingpatient(token);
+  Future<Either<Failure, BookingPatientResponse>> call() =>
+      _bookingRepository.getBookingpatient();
 }

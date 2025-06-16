@@ -45,46 +45,17 @@ class _HomeTabState extends State<HomeTab> {
   int _currentIndex = 0;
   late Timer _timer;
   final List<String> _homeSlider = [
-    // "assets/images/medicine.jpg",
-    // "assets/images/medicine.jpg"
-    // "assets/images/carousel4.jpg"
     "assets/images/carousel2.jpg",
     "assets/images/carousel1.jpg"
   ];
-  // late ClinicCubit _clinicCubit;
+
   late DoctorsCubit _doctorsCubit;
   @override
   void initState() {
     super.initState();
     _startImageSwitching();
     _doctorsCubit = serviceLocator.get<DoctorsCubit>()..getDoctors();
-    // context.read<DoctorsCubit>().getDoctors();
-    // _doctorsCubit.getDoctors();.
-    // _loadUserData();
-    // _clinicCubit = serviceLocator.get<ClinicCubit>()..getClinics();
-    // serviceLocator.getDoctors();
   }
-
-  // late ProfileEntity currentUser;
-  // String firstName = '';
-  // String lastName = '';
-  // String userImage = '';
-  // Future<void> _loadUserData() async {
-  //   final localDataSource = serviceLocator.get<AuthLocalDataSource>();
-  //   var user = await localDataSource.getPatientProfile();
-  //   setState(() {
-  //     currentUser = user;
-  //     // firstName = sharedPref.getString(CacheConstants.firstNameKey) ?? "";
-  //     // lastName = sharedPref.getString(CacheConstants.lastNameKey) ?? "";
-  //     // userImage = sharedPref.getString(CacheConstants.userImageKey) ?? "";
-  //   });ز
-  // }
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   final doctorCubit = serviceLocator.get<DoctorsCubit>();
-  //   doctorCubit.getDoctors();
-  // }
 
   int currentIndex = 0;
   final List<String> text = [
@@ -224,11 +195,12 @@ class _HomeTabState extends State<HomeTab> {
                         return ErrorIndicator(
                           message: state.message,
                         );
-                      } else if (state is GetClinicsSuccess) {
+                      } else if (state is GetClinicsSuccess &&
+                          state.clinicEntity.isNotEmpty) {
                         return SizedBox(
                             height: isLandscape
                                 ? screenSize.width * .23
-                                : screenSize.height * .18,
+                                : screenSize.height * .15,
                             width: MediaQuery.of(context).size.width.w,
                             child: Directionality(
                               textDirection: TextDirection.rtl,
@@ -244,6 +216,14 @@ class _HomeTabState extends State<HomeTab> {
                                 itemCount: 5,
                               ),
                             ));
+                      } else if (state is GetClinicsSuccess &&
+                          state.clinicEntity.isEmpty) {
+                        return Center(
+                          child: Text(
+                            "لا توجد عيادات متاحة",
+                            style: getMediumStyle(color: ColorManager.kuhly),
+                          ),
+                        );
                       }
                       return const SizedBox();
                     },
@@ -276,22 +256,32 @@ class _HomeTabState extends State<HomeTab> {
                         return ErrorIndicator(
                           message: state.message,
                         );
-                      } else if (state is GetDoctorsSuccess) {
+                      } else if (state is GetDoctorsSuccess &&
+                          state.doctorEntity.isNotEmpty) {
                         return Directionality(
                           textDirection: TextDirection.rtl,
                           child: ListView.builder(
                             shrinkWrap: true,
                             // physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (_, index) => CustomDoctor(
-                                doctorEntity:
-                                    // state.doctorEntity[index],
-                                    state.doctorEntity.take(5).toList()[index]),
+                              doctorEntity: state.doctorEntity[index],
+                              // state.doctorEntity.take(5).toList()[index]
+                            ),
                             scrollDirection: Axis.horizontal,
-                            itemCount: 5,
+                            itemCount: state.doctorEntity.length,
                           ),
                         );
+                      } else if (state is GetDoctorsSuccess &&
+                          state.doctorEntity.isEmpty) {
+                        return Center(
+                          child: Text(
+                            "لا يوجد أطباء",
+                            style: getMediumStyle(color: ColorManager.kuhly),
+                          ),
+                        );
+                      } else {
+                        return const Text("حدث خطأ ما يرجى المحاولة مرة أخرى");
                       }
-                      return const Text("حدث خطأ ما يرجى المحاولة مرة أخرى");
                     }),
                   ),
                 )

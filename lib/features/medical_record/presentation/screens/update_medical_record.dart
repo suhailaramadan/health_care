@@ -53,7 +53,7 @@ class _UpdateMedicalRecordState extends State<UpdateMedicalRecord> {
       showDialog(
         context: context,
         builder: (context) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(
               color: ColorManager.primary,
             ),
@@ -88,7 +88,8 @@ class _UpdateMedicalRecordState extends State<UpdateMedicalRecord> {
           if (state is UpdateMedicalRecordSuccess) {
             UIUtils.showMessage(
                 context, "تم تحديث الفحص بنجاح", ColorManager.green);
-            Navigator.pop(context, true);
+            Navigator.pop(context);
+            context.read<MedicalRecordCubit>().getPatientMedicalRecord();
           } else if (state is GetMedicalRecordError) {
             return UIUtils.showMessage(
                 context, state.message, ColorManager.red);
@@ -96,12 +97,12 @@ class _UpdateMedicalRecordState extends State<UpdateMedicalRecord> {
         },
         builder: (context, state) {
           return Padding(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               child: Form(
                   key: formKey,
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 80,
                       ),
                       // Text("اسم المريض",
@@ -112,7 +113,7 @@ class _UpdateMedicalRecordState extends State<UpdateMedicalRecord> {
                         controller: TextEditingController(
                             text: "${widget.firstName} ${widget.lastName}"),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       // Text(
@@ -161,7 +162,7 @@ class _UpdateMedicalRecordState extends State<UpdateMedicalRecord> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       // Text(
@@ -216,7 +217,7 @@ class _UpdateMedicalRecordState extends State<UpdateMedicalRecord> {
                               // color: ColorManager.transparent,
                             ),
                           )),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       // Text("الملاحظات",
@@ -261,7 +262,7 @@ class _UpdateMedicalRecordState extends State<UpdateMedicalRecord> {
                               // color: ColorManager.transparent,
                             ),
                           )),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       CustomButton(
                           backgroundColor: ColorManager.primary,
                           onTap: () => state is GetMedicalRecordLoading

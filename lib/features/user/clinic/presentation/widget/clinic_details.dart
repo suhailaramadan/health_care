@@ -11,6 +11,7 @@ import 'package:graduation_project/core/widgets/custom_botton.dart';
 import 'package:graduation_project/core/widgets/error_indicator.dart';
 import 'package:graduation_project/core/widgets/loading_indicator.dart';
 import 'package:graduation_project/features/home/presentation/widgets/custom_doctor.dart';
+import 'package:graduation_project/features/user/clinic/domain/entities/clinic_entity.dart';
 import 'package:graduation_project/features/user/clinic/presentation/widget/custom_clinic_componant.dart';
 import 'package:graduation_project/features/doctor/domain/use_case.dart/get_doctors.dart';
 import 'package:graduation_project/features/doctor/presentation/cubit/doctor_cubit.dart';
@@ -26,47 +27,68 @@ class ClinicDetails extends StatefulWidget {
 }
 
 class _ClinicDetailsState extends State<ClinicDetails> {
-  late ClinicDetailsArg args;
+  late ClinicEntity args;
   late DoctorsCubit doctorsCubit;
+  bool isInitialized = false;
   @override
-  void initState() {
-    super.initState();
-    Future.microtask(() {
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!isInitialized) {
       final routeArgs = ModalRoute.of(context)?.settings.arguments;
-      if (routeArgs is ClinicDetailsArg) {
-        setState(() {
-          args = routeArgs;
-        });
+      if (routeArgs is ClinicEntity) {
+        args = routeArgs;
         doctorsCubit = serviceLocator.get<DoctorsCubit>()
           ..getDoctorsByClinicId(args.id);
+        isInitialized = true;
       }
-    });
+    }
   }
+
+  // void initState() {
+  //   super.initState();
+  //   Future.microtask(() {
+  //     final routeArgs = ModalRoute.of(context)?.settings.arguments;
+  //     if (routeArgs is ClinicDetailsArg) {
+  //       setState(() {
+  //         args = routeArgs;
+  //       });
+  //       doctorsCubit = serviceLocator.get<DoctorsCubit>()
+  //         ..getDoctorsByClinicId(args.id);
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
+    // final args = ModalRoute.of(context)!.settings.arguments as ClinicEntity;
+    if (!isInitialized) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(
+            color: ColorManager.primary,
+          ),
+        ),
+      );
+    }
+
+    final fileName = args.imageUrl.split('/').last;
+    final encodedFileName = Uri.encodeComponent(fileName);
+    final fullUrl = '${ApiConstants.imageBaseUrl}/images/$encodedFileName';
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: ColorManager.white,
+        ),
         backgroundColor: ColorManager.white,
         body: SingleChildScrollView(
           child: Stack(
             children: [
-              Positioned(
-                top: 30,
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back_ios_rounded,
-                    color: ColorManager.primary,
-                  ),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ),
-
               Column(
                 children: [
                   const SizedBox(
-                    height: 150,
+                    height: 120,
                   ),
                   Container(
                       height: MediaQuery.of(context).size.height,
@@ -81,7 +103,7 @@ class _ClinicDetailsState extends State<ClinicDetails> {
               //   height: 15,
               // ),
               Positioned(
-                  top: 80,
+                  top: 40,
                   // right: MediaQuery.of(context).size.width * .35,
                   // left: MediaQuery.of(context).size.width * .35,
                   child: Container(
@@ -89,60 +111,74 @@ class _ClinicDetailsState extends State<ClinicDetails> {
                     // height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
                     child: Column(children: [
-                      ClipOval(
-                          // radius: MediaQuery.of(context).size.width * 0.2,
+                      Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: ColorManager.primary, width: .4),
+                            borderRadius: BorderRadius.circular(100)),
+                        child: ClipOval(
+                            // radius: MediaQuery.of(context).size.width * 0.2,
 
-                          // borderRadius: BorderRadius.circular(150),
-                          // backgroundImage:
-                          child: CachedNetworkImage(
-                        imageUrl:
-                            "${ApiConstants.imageBaseUrl}${args.imageUrl}",
-                        errorListener: (p0) =>
-                            Image.asset("assets/images/default_clinic.png"),
-                        height: 150,
-                        width: 150,
-                        fit: BoxFit.cover,
-                      )
-                          // CachedNetworkImageProvider(
-                          //   "${ApiConstants.imageBaseUrl}${args.imageUrl}",
-                          //   errorListener: (p0) =>
-                          //       Image.asset("assets/images/default_clinic.png"),
-                          // ),
-                          // backgroundImage:
-                          //     // child:
-                          //     CachedNetworkImageProvider(
-                          //   "${ApiConstants.imageBaseUrl}${args.imageUrl}",
-
-                          //   errorListener: (p0) =>
-                          //       Image.asset("assets/images/default_clinic.png"),
-                          // )
-
-                          // child: Container(
-
-                          // width: double.infinity,
-                          // decoration: BoxDecoration(
-                          // image:
-                          //  DecorationImage(
-                          //     fit: BoxFit.fill,
-                          //     image:
-                          //  CachedNetworkImageProvider(
-                          //   "${ApiConstants.imageBaseUrl}${args.imageUrl}",
-                          //   errorListener: (p0) => Image.asset(
-                          //       "assets/images/default_clinic.png"),
-                          // ))))
-                          // CachedNetworkImage(
-                          //     height: 300,
-                          //     width: 300,
-                          //     // imageBuilder: (context, imageProvider) => ,
-                          //     imageUrl:
-                          //         "${ApiConstants.imageBaseUrl}${args.imageUrl}",
-                          //     // fit: BoxFit.fill,
-                          //     placeholder: (context, url) =>
-                          //         const CircularProgressIndicator(),
-                          //     errorWidget: (context, url, error) =>
-                          //         Image.asset("assets/images/default_clinic.png"))
-                          // ,
+                            // borderRadius: BorderRadius.circular(150),
+                            // backgroundImage:
+                            child: CachedNetworkImage(
+                          imageUrl: fullUrl,
+                          placeholder: (context, url) => const Center(
+                            child: CircularProgressIndicator(
+                              color: ColorManager.greyDark,
+                            ),
                           ),
+                          errorWidget: (context, url, error) => const Center(
+                              child: Icon(
+                            Icons.error_outline_outlined,
+                            color: ColorManager.red,
+                            size: 25,
+                          )),
+                          height: 150,
+                          width: 150,
+                          fit: BoxFit.cover,
+                        )
+                            // CachedNetworkImageProvider(
+                            //   "${ApiConstants.imageBaseUrl}${args.imageUrl}",
+                            //   errorListener: (p0) =>
+                            //       Image.asset("assets/images/default_clinic.png"),
+                            // ),
+                            // backgroundImage:
+                            //     // child:
+                            //     CachedNetworkImageProvider(
+                            //   "${ApiConstants.imageBaseUrl}${args.imageUrl}",
+
+                            //   errorListener: (p0) =>
+                            //       Image.asset("assets/images/default_clinic.png"),
+                            // )
+
+                            // child: Container(
+
+                            // width: double.infinity,
+                            // decoration: BoxDecoration(
+                            // image:
+                            //  DecorationImage(
+                            //     fit: BoxFit.fill,
+                            //     image:
+                            //  CachedNetworkImageProvider(
+                            //   "${ApiConstants.imageBaseUrl}${args.imageUrl}",
+                            //   errorListener: (p0) => Image.asset(
+                            //       "assets/images/default_clinic.png"),
+                            // ))))
+                            // CachedNetworkImage(
+                            //     height: 300,
+                            //     width: 300,
+                            //     // imageBuilder: (context, imageProvider) => ,
+                            //     imageUrl:
+                            //         "${ApiConstants.imageBaseUrl}${args.imageUrl}",
+                            //     // fit: BoxFit.fill,
+                            //     placeholder: (context, url) =>
+                            //         const CircularProgressIndicator(),
+                            //     errorWidget: (context, url, error) =>
+                            //         Image.asset("assets/images/default_clinic.png"))
+                            // ,
+                            ),
+                      ),
 
                       // IconButton(
                       //   icon: const Icon(
@@ -204,7 +240,6 @@ class _ClinicDetailsState extends State<ClinicDetails> {
                                 message: state.message,
                               );
                             } else if (state is GetDoctorsSuccess) {
-                              // print("SucccccccMessage${state.doctorEntity}");
                               return SizedBox(
                                 height: 500,
                                 width: double.infinity,

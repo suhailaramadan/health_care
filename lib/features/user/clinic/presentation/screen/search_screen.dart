@@ -35,7 +35,6 @@ class SearchScreen extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    // context.read<ClinicCubit>().searchClinic(query);
     return Container();
   }
 
@@ -52,13 +51,11 @@ class SearchScreen extends SearchDelegate {
     });
     return BlocBuilder<SearchCubit, ClinicState>(
       builder: (context, state) {
-        print("ppppppppppppp=> $query");
         if (state is GetSearchLoading) {
           return const Center(child: LoadingIndicator());
         } else if (state is GetSearchError) {
           return const ErrorIndicator();
         } else if (state is GetSearchSuccess) {
-          print("suvcccccccc-m>$query");
           final clinics = state.searchEntity;
           if (clinics.isEmpty) {
             return const Center(

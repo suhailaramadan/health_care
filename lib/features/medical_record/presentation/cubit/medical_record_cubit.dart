@@ -19,20 +19,32 @@ class MedicalRecordCubit extends Cubit<MedicalResocrdSates> {
   final AuthLocalDataSource _localDataSource;
   MedicalRecordCubit(this.medicalRecordRepository, this._localDataSource)
       : super(InitialState());
-  Future<void> getPatientMedicalRecord() async {
+  Future<void> getPatientMedicalRecord({bool isDoctor = false}) async {
     emit(GetMedicalRecordLoading());
     final patientId = await _localDataSource.getPatientId();
-    if (patientId == null) {
-      emit(GetMedicalRecordError("رقم المريض غير موجود"));
-      return;
-    }
-    final result =
-        await medicalRecordRepository.getPatientMedicalRecord(patientId);
-    result.fold((failure) => emit(GetMedicalRecordError(failure.message)),
-        (profile) {
-      allRecords = profile;
-      emit(GetMedicalRecordPatientSuccess(profile));
+
+    final response =
+        await medicalRecordRepository.getPatientMedicalRecord(patientId!);
+    response.fold((failure) => emit(GetMedicalRecordError(failure.message)),
+        (records) async {
+      if (isDoctor) {
+        final doctorId = await _localDataSource.getDoctorId();
+        final filteredRecord =
+            records.where((record) => record.doctorId == doctorId).toList();
+        emit(GetMedicalRecordPatientSuccess(filteredRecord));
+      } else {
+        allRecords = records;
+        emit(GetMedicalRecordPatientSuccess(records));
+      }
     });
+
+    // final result =
+    //     await medicalRecordRepository.getPatientMedicalRecord(patientId);
+    // result.fold((failure) => emit(GetMedicalRecordError(failure.message)),
+    //     (profile) {
+    //   allRecords = profile;
+    //   emit(GetMedicalRecordPatientSuccess(profile));
+    // });
   }
 
   Future<void> getDoctorMedicalRecord() async {

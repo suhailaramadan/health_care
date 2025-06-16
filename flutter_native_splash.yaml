@@ -4,7 +4,7 @@
   android: true
   ios: true
   android_12:
-    image: assets/images/photo_2024-12-24_06-14-01-removebg-preview (1).png
+    image: assets/images/splash_screen.png
     icon_background_color: "#ffffff"
    
 

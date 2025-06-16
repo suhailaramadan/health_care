@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:graduation_project/core/constants.dart';
@@ -27,23 +28,81 @@ class ClinicItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.sizeOf(context);
-    final bool isLandscape = screenSize.width > screenSize.height;
+    // final bool isLandscape = screenSize.width > screenSize.height;
+    // final bool isLargeTablet =
+    //     screenSize.width > 600 && screenSize.width < screenSize.height;
+    // final bool isSmallScreen = screenSize.width <= 400;
+    // final bool isMediumScreen =
+    //     screenSize.width >= 600 && screenSize.width <= 800;
+    // final isLargeScreen = screenSize.width > 800;
+    final bool isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+    //     screenSize.width > screenSize.height || isLargeTablet;
+    double getResponsiveFontSize(String itemType) {
+      switch (itemType) {
+        case 'ButtonWidth':
+          return isLandscape ? 120.w : 150.w;
+        case 'ButtonHeight':
+          return isLandscape ? 40.h : 5.h;
+        case 'ImageHeight':
+          return isLandscape ? 180.h : 220.h;
+        case 'ImageWidth':
+          return isLandscape ? 250.w : 300.w;
+        case 'IconSize':
+          return isLandscape ? 20.w : 25.w;
+        case 'Text':
+          return isLandscape ? 14.sp : 15.sp;
+        case 'Padding':
+          return isLandscape ? 8.w : 12.w;
+        case 'Hieight':
+          return isLandscape ? 180.h : 220.h;
+        case 'Width':
+          return isLandscape ? 120.w : 150.w;
+        case 'Size':
+          return isLandscape ? 30.w : 40.w;
+        default:
+          return 50.w;
+      }
+      // if (isLandscape) {
+      //   if (screenSize.width < 600) {
+      //     return 80.w;
+      //   } else if (screenSize.width < 900) {
+      //     return 100.w;
+      //   } else {
+      //     return 120.w;
+      //   }
+      // } else {
+      //   if (screenSize.width < 360) {
+      //     return 100.w;
+      //   } else if (screenSize.width < 600) {
+      //     return 120.w;
+      //   } else if (screenSize.width < 900) {
+      //     return 150.w;
+      //   } else {
+      //     return 180.w;
+      //   }
+      // }
+    }
+
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => const ClinicDetails(),
-            settings: RouteSettings(
-                arguments: ClinicDetailsArg(
-              id: clinicEntity.id,
-              name: clinicEntity.name,
-              imageUrl: clinicEntity.imageUrl,
-            ))));
+            settings: RouteSettings(arguments: clinicEntity
+                //   ClinicDetailsArg(
+                // id: clinicEntity.id,
+                // name: clinicEntity.name,
+                // imageUrl: clinicEntity.imageUrl,
+                // )
+                )));
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 4),
+        padding:
+            EdgeInsets.symmetric(horizontal: getResponsiveFontSize('Padding')),
         color: ColorManager.white,
         // height: 80,
-        width: 130,
+        width: getResponsiveFontSize('Width'),
+        // screenSize.width * .4,
         // child: Card(
         //   shape: CircleBorder(),
         //   color: ColorManager.white,
@@ -64,10 +123,17 @@ class ClinicItem extends StatelessWidget {
         child: Column(
           // mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(
-              height: isLandscape
-                  ? screenSize.width * .14
-                  : screenSize.height * .11,
+            Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: ColorManager.textColor, width: .5),
+                  borderRadius: BorderRadius.circular(15)),
+              // height: getResponsiveFontSize('Height'),
+              height: 80,
+              width: 150,
+
+              //  isLandscape
+              //     ? screenSize.width * .14
+              //     : screenSize.height * .11,
               // width: double.infinity,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
@@ -84,11 +150,11 @@ class ClinicItem extends StatelessWidget {
                                 color: ColorManager.greyDark,
                               ),
                             ),
-                        errorWidget: (context, url, error) => const Center(
+                        errorWidget: (context, url, error) => Center(
                                 child: Icon(
                               Icons.error_outline_outlined,
                               color: ColorManager.red,
-                              size: 25,
+                              size: getResponsiveFontSize('IconSize'),
                             ))
                         // Image.asset(
                         //   "assets/images/brain_clinic.png",
@@ -133,16 +199,19 @@ class ClinicItem extends StatelessWidget {
             //   ),
             // )),
             // ),
-            SizedBox(
-                height: isLandscape
-                    ? screenSize.width * .01
-                    : screenSize.height * .02),
+            // SizedBox(height: getResponsiveFontSize('Size')
+            // isLandscape
+            // ? screenSize.width * .01
+            // : screenSize.height * .02
+            // ),
             Text(
               clinicEntity.name,
               style: getBoldStyle(
                   color: ColorManager.primary,
-                  fontSize: min(screenSize.shortestSide * .03,
-                      screenSize.shortestSide * 0.05)
+                  fontSize: getResponsiveFontSize('Text')
+                  //  min(screenSize.shortestSide * .03,
+                  // screenSize.shortestSide * 0.05
+                  // )
                   // isLandscape
                   // min(screenSize.shortestSide * .024,
                   //     screenSize.shortestSide * 0.05)

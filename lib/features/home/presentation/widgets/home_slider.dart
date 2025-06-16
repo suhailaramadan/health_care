@@ -21,11 +21,43 @@ class HomeSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final Size screenSize = MediaQuery.sizeOf(context);
+    // final bool isLandscape = screenSize.width > screenSize.height;
+    // // ignore: deprecated_member_use
+    // final double textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    // final double minSize = min(screenSize.width, screenSize.height);
     final Size screenSize = MediaQuery.sizeOf(context);
-    final bool isLandscape = screenSize.width > screenSize.height;
-    // ignore: deprecated_member_use
-    final double textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    final double minSize = min(screenSize.width, screenSize.height);
+    // final bool isLargeTablet =
+    //     screenSize.width > 600 && screenSize.width < screenSize.height;
+    // final bool isSmallScreen = screenSize.width <= 400;
+    // final bool isMediumScreen =
+    //     screenSize.width >= 600 && screenSize.width <= 800;
+    // final isLargeScreen = screenSize.width > 800;
+    final bool isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+    //     screenSize.width > screenSize.height || isLargeTablet;
+    double getResponsiveFontSize() {
+      if (isLandscape) {
+        if (screenSize.width < 600) {
+          return 15.sp;
+        } else if (screenSize.width < 900) {
+          return 16.sp;
+        } else {
+          return 28.sp;
+        }
+      } else {
+        if (screenSize.width < 360) {
+          return 12.sp;
+        } else if (screenSize.width < 600) {
+          return 16.sp;
+        } else if (screenSize.width < 900) {
+          return 20.sp;
+        } else {
+          return 24.sp;
+        }
+      }
+    }
+
     return SizedBox(
       height: isLandscape ? screenSize.width * .28 : screenSize.height * .25,
       child: Padding(
@@ -59,13 +91,19 @@ class HomeSlider extends StatelessWidget {
                   text,
                   // "الإدارة الطبية\nشريككم في رحلة صحية\nآمنة داخل الحرم الجامعي",
                   style: getSemiBoldStyle(
-                    color: const Color.fromARGB(255, 79, 133, 191),
-                    // color: ColorManager.kuhly,
-                    // color: Color.fromARGB(239, 26, 101, 123),
-                    fontSize: isLandscape
-                        ? min(35, screenSize.shortestSide * 0.06)
-                        : min(22, screenSize.shortestSide * 0.035),
-                  ),
+                      color: const Color.fromARGB(255, 79, 133, 191),
+                      // color: ColorManager.kuhly,
+                      // color: Color.fromARGB(239, 26, 101, 123),
+                      fontSize: getResponsiveFontSize()
+                      // isLandscape
+                      //     ? 40.w
+                      //     : isLargeTablet
+                      //         ? 50.h
+                      //         : 16.h,
+                      // //  isLandscape
+                      // //     ? min(35, screenSize.shortestSide * 0.06)
+                      // //     : min(22, screenSize.shortestSide * 0.035),
+                      ),
                 ),
               ),
               SizedBox(

@@ -17,6 +17,7 @@ import 'package:graduation_project/features/doctors/presentation/screens/create_
 import 'package:graduation_project/features/doctors/presentation/screens/doctor_booking_screen.dart';
 import 'package:graduation_project/features/doctors/presentation/screens/update_appointment_screen.dart';
 import 'package:graduation_project/features/doctors/presentation/screens/work_hours_screen.dart';
+import 'package:graduation_project/features/feedback/presentation/screen/feedback_screen.dart';
 import 'package:graduation_project/features/home/presentation/screens/doctor_home_screen.dart';
 import 'package:graduation_project/features/medical_record/presentation/screens/create_medical_record.dart';
 import 'package:graduation_project/features/medical_record/presentation/screens/medical_record_doctor_screen.dart';
@@ -37,6 +38,7 @@ import 'package:graduation_project/features/user/booking/data/models/doctors_app
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/create_appointment_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/doctor_appointments_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/screen/booking_screen.dart';
+import 'package:graduation_project/features/user/chatBot/presentation/screen/chat_screen.dart';
 import 'package:graduation_project/features/user/clinic/presentation/screen/clinic_screen.dart';
 import 'package:graduation_project/features/user/clinic/presentation/widget/clinic_details.dart';
 import 'package:graduation_project/features/doctor/presentation/screen/doctor_screen.dart';
@@ -86,6 +88,8 @@ class RouteGenerator {
               profileDoctorEntity: args,
             ),
             isIOS);
+      case Routes.feedback:
+        return _buildRoute(const FeedbackScreen(), isIOS);
       case Routes.profile:
         return _buildRoute(const ProfileScreen(), isIOS);
       case Routes.doctorPatient:
@@ -126,13 +130,14 @@ class RouteGenerator {
       case Routes.booking:
         // final patientId = settings.arguments as String;
         return _buildRoute(
-            BookingTab(
+            const BookingTab(
                 // patientId: patientId,
                 ),
             isIOS);
-      case Routes.nitification:
+      case Routes.notification:
         return _buildRoute(const NotificationScreen(), isIOS);
-
+      case Routes.chat:
+        return _buildRoute(const ChatScreen(), isIOS);
       case Routes.addMedicalRecord:
         final args = settings.arguments as Map<String, dynamic>;
         return _buildRoute(

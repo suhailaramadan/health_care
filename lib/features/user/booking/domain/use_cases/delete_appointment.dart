@@ -8,7 +8,14 @@ import 'package:injectable/injectable.dart';
 class DeleteAppointmentUseCase {
   final DoctorAppointmentRepository repository;
   DeleteAppointmentUseCase(this.repository);
-  Future<Either<Failure, DeleteBookingEntity>> call(int id) {
+  Future<Either<Failure, DeleteBookingEntity>> call(
+    int id,
+    // {required int day,
+    // required String startTime,
+    // required String endTime,
+    // required int duration}
+  ) {
     return repository.deleteAppointment(id);
+    // day: day, startTime: startTime, endTime: endTime, duration: duration);
   }
 }

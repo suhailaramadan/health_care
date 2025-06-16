@@ -56,14 +56,10 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                   message: state.message,
                 ),
               );
-            } else if (state is GetDoctorsSuccess) {
+            } else if (state is GetDoctorsSuccess &&
+                state.doctorEntity.isNotEmpty) {
               return ListView.builder(
                 padding: const EdgeInsets.all(1),
-                // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                //     crossAxisCount: 2,
-                //     mainAxisSpacing: 6,
-                //     childAspectRatio: 0.8,
-                //     crossAxisSpacing: 6),
                 itemBuilder: (_, index) => SizedBox(
                   height: 150,
                   width: 200,
@@ -72,6 +68,14 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                   ),
                 ),
                 itemCount: state.doctorEntity.length,
+              );
+            } else if (state is GetDoctorsSuccess &&
+                state.doctorEntity.isEmpty) {
+              return Center(
+                child: Text(
+                  "لا يوجد أطباء",
+                  style: getSemiBoldStyle(color: ColorManager.kuhly),
+                ),
               );
             } else {
               return const SizedBox();

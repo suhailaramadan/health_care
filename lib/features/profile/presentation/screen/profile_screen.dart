@@ -76,7 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           body: BlocBuilder<ProfileCubit, ProfileStates>(
             builder: (context, state) {
               if (state is GetProfilesLoading) {
-                return const LoadingIndicator();
+                return const Center(child: LoadingIndicator());
               } else if (state is GetProfilesError) {
                 return ErrorIndicator(message: state.message);
               } else if (state is GetProfilesSuccess) {
@@ -102,8 +102,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               .isNotEmpty)
                                       ? CachedNetworkImageProvider(
                                           "${ApiConstants.imageBaseUrl}${state.profileEntity.imageUrl}")
-                                      : const AssetImage(
-                                              "assets/images/doctor_image.jpg")
+                                      : const NetworkImage(
+                                              "assets/images/profile.avif")
                                           as ImageProvider),
                         ),
 
@@ -126,7 +126,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         // Text("${state.profileEntity.lastName}"),
                         const SizedBox(
-                          height: 30,
+                          height: 15,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -139,11 +139,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               state.profileEntity.email ?? 'غير متوفر',
                               style: getRegularStyle(
                                   color: ColorManager.textColor),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
                             ),
                           ],
                         ),
                         const SizedBox(
-                          height: 30,
+                          height: 15,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -160,7 +162,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ],
                         ),
                         const SizedBox(
-                          height: 30,
+                          height: 15,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -177,7 +179,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ],
                         ),
                         const SizedBox(
-                          height: 30,
+                          height: 15,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -195,7 +197,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
 
                         const SizedBox(
-                          height: 30,
+                          height: 15,
                         ),
                         const Divider(
                           thickness: 1.5,
@@ -222,7 +224,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 iconSize: 25,
                               )
                             ]),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Row(
@@ -242,7 +244,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             )
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Row(

@@ -4,15 +4,68 @@ import 'package:graduation_project/features/user/booking/data/models/doctors_app
 import 'package:intl/intl.dart';
 
 class FormatedDate {
+  static String getArabicDayName(int day) {
+    switch (day) {
+      case 1:
+        return "الإثنين";
+      case 2:
+        return "الثلاثاء";
+      case 3:
+        return "الأربعاء";
+      case 4:
+        return "الخميس";
+      case 5:
+        return "الجمعة";
+      case 6:
+        return "السبت";
+      case 0:
+      default:
+        return "الأحد";
+    }
+
+    // final dayInArabic = [
+    //   "الأحد",
+    //   "الإثنين",
+    //   "الثلاثاء",
+    //   "الأربعاء",
+    //   "الخميس",
+    //   "الجمعة",
+    //   "السبت"
+    // ];
+    // if (dayIndex < 0 || dayIndex > 6) {
+    //   return "غير معروف";
+    // }
+    // return dayInArabic[dayIndex];
+  }
+
   static String formateArabicDate(String date, {String? day}) {
     try {
       DateTime parsedDate = DateTime.parse(date);
       // String formateDate = DateFormat("yyyy-MM-dd").format(parsedDate);
       // String dayName = DateFormat('EEEE', 'ar').format(parsedDate);
-
+      // String datName = dayInArabic[day ?? parsedDate.weekday % 7] ?? '';
       String dayNumber = DateFormat('d', 'ar').format(parsedDate);
       String monthName = DateFormat('MMMM', 'ar').format(parsedDate);
       return "$day $dayNumber $monthName";
+    } catch (e) {
+      return date;
+    }
+  }
+
+  static String formateArabicDay(String date, {int? day}) {
+    try {
+      DateTime parsedDate = DateTime.parse(date);
+      // String formateDate = DateFormat("yyyy-MM-dd").format(parsedDate);
+      // String dayName = DateFormat('EEEE', 'ar').format(parsedDate);
+
+      if (day == null || day == 0) {
+        day = parsedDate.weekday % 7;
+      }
+
+      String dayName = getArabicDayName(day);
+      String dayNumber = DateFormat('d', 'ar').format(parsedDate);
+      String monthName = DateFormat('MMMM', 'ar').format(parsedDate);
+      return "$dayName $dayNumber $monthName";
     } catch (e) {
       return date;
     }
@@ -110,7 +163,6 @@ class FormatedDate {
           DateTime(now.year, now.month, appointment.day ?? 0);
       if (appointmentDate.isAfter(today)) return false;
       if (appointmentDate.isAtSameMomentAs(today)) {
-        print("ميعاد انهاردة ${appointmentDate}");
         if (appointment.startTime != null &&
             appointment.startTime!.contains(":")) {
           final startTimeParts = appointment.startTime!.split(":");
@@ -120,17 +172,15 @@ class FormatedDate {
               minute: int.parse(startTimeParts[1]),
             );
             final currentTime = TimeOfDay.now();
-            print("current time: ${currentTime.hour} ${currentTime.minute}");
-            print("apppointment time ${startTime.hour}  ${startTime.minute}");
+
             if (currentTime.hour < startTime.hour ||
                 (currentTime.hour == startTime.hour &&
                     currentTime.minute < startTime.minute)) {
-              print("الميعاد لسه مجاش ");
               return false;
             }
           }
         }
-        print("الميعاد عدى وقتهو هيتشال");
+
         return true;
       }
 

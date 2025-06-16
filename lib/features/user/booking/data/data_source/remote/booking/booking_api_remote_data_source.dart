@@ -4,10 +4,14 @@ import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/error/exceptions.dart';
 import 'package:graduation_project/features/user/booking/data/data_source/remote/booking/booking_remote_data_source.dart';
 import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_appointment/booking_appointment.dart';
+import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_by_id_response/booking_by_id_model.dart';
+import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_by_id_response/booking_by_id_response.dart';
 import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_doctor_response/booking_doctor_model.dart';
 import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_doctor_response/booking_doctor_response.dart';
 import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_patient_response/booking_patient_response.dart';
 import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_request.dart';
+import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_response/booking_data_model.dart';
+import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_response/booking_response.dart';
 import 'package:graduation_project/features/user/booking/data/models/delete_booking_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -44,11 +48,10 @@ class BookingApiRemoteDataSource implements BookingRemoteDataSource {
   }
 
   @override
-  Future<BookingPatientResponse> getbookingPatient(String token) async {
+  Future<BookingPatientResponse> getbookingPatient() async {
     try {
       SharedPreferences sharedPref = await SharedPreferences.getInstance();
       String? token = sharedPref.getString(CacheConstants.tokenKey);
-      // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJzdWhhaWxhQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMmFiYjA3ZWEtYWY1ZC00YWIxLWJjN2MtMDQ1NzNmNjA5MmMzIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6InN1aGFpbGEgIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTc0NDQxNTg5MCwiaXNzIjoibXljbGluaWNhcHAiLCJhdWQiOiJteWNsaW5pY2FwcCJ9.YYVpG41OOJec2WXDRkASTYvyhJT-c9QzgmKANESKWgc";
       final response = await _dio.get(ApiConstants.bookingPatientEndPoint,
           options: Options(headers: {
             "Content-Type": 'application/json',
@@ -134,5 +137,30 @@ class BookingApiRemoteDataSource implements BookingRemoteDataSource {
     } catch (e) {
       throw const RemoteException("فشل في تحميل الحجوزات");
     }
+  }
+
+  @override
+  Future<BookingByIdResponse> getBookingById(int id) async {
+    try {
+      print("hg id    $id");
+      await Future.delayed(Duration(seconds: 2));
+      final response = await _dio.get("Booking/$id");
+      print("ResponseApi---------> ${response.data}");
+      print("iiiiiiiiid   $id");
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print("ResponseApi> ${response.data}");
+        return BookingByIdResponse.fromJson(response.data);
+      } else {
+        throw RemoteException('فشل في تحميل الحجوزات , ${response.statusCode}');
+      }
+    } catch (e) {
+      throw const RemoteException("فشل في تحميل الحجوزات");
+    }
+  }
+
+  @override
+  Future<BookingResponse> getAllBookings() async {
+    final response = await _dio.get("Booking");
+    return BookingResponse.fromJson(response.data);
   }
 }

@@ -29,6 +29,7 @@ class CustomTextField extends StatefulWidget {
     this.suffixIcon,
     this.fillColor = ColorManager.transparent,
     this.maxLength,
+    this.onSumbit,
   });
   final TextEditingController? controller;
   final FocusNode? focusNode;
@@ -51,6 +52,7 @@ class CustomTextField extends StatefulWidget {
   final Widget? suffixIcon;
   final String? Function(String?)? validation;
   final void Function()? onTap;
+  final void Function(String)? onSumbit;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -99,6 +101,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: TextFormField(
             // textDirection: _textDirection,
+            onFieldSubmitted: (value) {
+              if (widget.onSumbit != null) {
+                widget.onSumbit!(value);
+              }
+            },
             maxLength: widget.maxLength,
             maxLines: widget.maxLines ?? 1,
             controller: widget.controller,

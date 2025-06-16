@@ -20,11 +20,7 @@ class DoctorAppointmentsCubit extends Cubit<AppointmentStates> {
         (appointments) {
       print("appoimnt $appointments");
 //
-      // FormatedDate.filterAppointments(appointments);
-      if (appointments.isEmpty) {
-        return "hhhhhhhhhhhhhhhhgggggggggg";
-      }
-      print("emiiiiiiiitttttttt");
+
       try {
         emit(GetDoctorAppointmentsSuccess(appointments));
         print("suuccffffffffffffff");

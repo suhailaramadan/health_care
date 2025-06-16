@@ -433,12 +433,19 @@ class _AppointmentListState extends State<AppointmentList> {
 
   @override
   Widget build(BuildContext context) {
-    print("Appointment Date:");
-    for (var appointment in widget.appointments) {
-      print("Date: ${appointment.date} ${appointment.availableSlots}");
-    }
-    print("selected day: $selectedDay");
-    print("selected time $selectedTime");
+    DateTime today = DateTime.now();
+    DateTime todayDate = DateTime(today.year, today.month, today.day);
+    DateTime tomorrowDate = todayDate.add(Duration(days: 1));
+    List<AppointmentEntity> filterwdAppointments =
+        widget.appointments.where((appointment) {
+      DateTime appointmentDate = DateTime.parse(appointment.date ?? '');
+      DateTime appDate = DateTime(
+          appointmentDate.year, appointmentDate.month, appointmentDate.day);
+      if (appDate == todayDate || appDate == tomorrowDate) {
+        return false;
+      }
+      return true;
+    }).toList();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -454,26 +461,30 @@ class _AppointmentListState extends State<AppointmentList> {
             ),
           ),
         const SizedBox(height: 10),
-
-        // عرض الأيام (مثل: السبت، 12 مايو)
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: widget.appointments.map((appointment) {
-              bool isAvailable = appointment.availableSlots.isNotEmpty;
-              bool isSelected = selectedDay == appointment.date;
-              String formattedDate = formatArabicDate(
-                appointment.date,
-                day: appointment.day,
-              );
+            children: filterwdAppointments.map((e) {
+              bool isAvailable = e.availableSlots.isNotEmpty;
+              bool isSelected = selectedDay == e.date;
+
+              DateTime appointment = DateTime.parse(e.date);
+              DateTime appdate = DateTime(
+                  appointment.year, appointment.month, appointment.day);
+              String formattedDate;
+              if (appdate == todayDate) {
+                formattedDate = "اليوم";
+              } else {
+                formattedDate = formatArabicDate(e.date, day: e.day);
+              }
+
               return InkWell(
                 onTap: isAvailable
                     ? () {
-                        if (selectedDay == appointment.date) return;
+                        if (selectedDay == e.date) return;
                         setState(() {
-                          selectedDay = appointment.date;
-                          availableSlots =
-                              List.from(appointment.availableSlots);
+                          selectedDay = e.date;
+                          availableSlots = List.from(e.availableSlots);
                           selectedTime = null; // إعادة تعيين الوقت المحدد
                         });
                         widget.onSelectionChanged(selectedDay, null);
@@ -507,8 +518,6 @@ class _AppointmentListState extends State<AppointmentList> {
         ),
 
         const SizedBox(height: 20),
-
-        // عرض الأوقات المتاحة بعد اختيار اليوم
         if (selectedDay != null && availableSlots.isNotEmpty)
           const Padding(
             padding: EdgeInsets.only(right: 5),
@@ -521,8 +530,6 @@ class _AppointmentListState extends State<AppointmentList> {
             ),
           ),
         const SizedBox(height: 10),
-
-// عرض الأوقات المتاحة لهذا اليوم
         if (selectedDay != null && availableSlots.isNotEmpty)
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -570,11 +577,9 @@ class _AppointmentListState extends State<AppointmentList> {
     );
   }
 
-  // دالة لتنسيق التاريخ بشكل عربي
   String formatArabicDate(String date, {String? day}) {
     try {
-      DateTime parsedDate =
-          DateTime.tryParse(date) ?? DateTime(0); // التأكد من أن التاريخ صالح
+      DateTime parsedDate = DateTime.tryParse(date) ?? DateTime(0);
       String dayNumber = DateFormat('d', 'ar').format(parsedDate);
       String monthName = DateFormat('MMMM', 'ar').format(parsedDate);
       return "$day $dayNumber $monthName";
@@ -584,9 +589,7 @@ class _AppointmentListState extends State<AppointmentList> {
     }
   }
 
-  // دالة لتنسيق الوقت بشكل جيد
   String formatTime(String time) {
-    // يمكن تعديل التنسيق حسب رغبتك (مثل: "12:00 PM" أو "الساعة 12:00")
     return time;
   }
 }

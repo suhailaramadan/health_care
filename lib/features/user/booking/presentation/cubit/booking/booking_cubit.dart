@@ -32,7 +32,7 @@ class BookingCubit extends Cubit<BookingStates> {
   }
 }
 
-@lazySingleton
+@singleton
 class DeleteBookingCubit extends Cubit<BookingStates> {
   final DeleteBookingUseCase deleteBookingUseCase;
   DeleteBookingCubit({required this.deleteBookingUseCase})

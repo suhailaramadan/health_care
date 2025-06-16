@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:dartz/dartz.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/core/di/service_locator.dart';
 import 'package:graduation_project/features/auth/data/data_sources/local/auth_local_data_source.dart';
@@ -47,6 +48,11 @@ class AuthCubit extends Cubit<AuthStates> {
     }
   }
 
+  Future<void> subscribeNotificationToPatient(String patientId) async {
+    await FirebaseMessaging.instance.subscribeToTopic(patientId);
+    print("تم إلإشتراك فى الاشعارات الخاصة ب $patientId");
+  }
+
   Future<void> login(LoginRequest request) async {
     if (isClosed) return;
     emit(LoginLoading());
@@ -70,6 +76,7 @@ class AuthCubit extends Cubit<AuthStates> {
             (profile) async {
           await localSharedPref.saveDoctorId(profile.id ?? '');
           await localSharedPref.savePatientId(profile.id ?? '');
+          subscribeNotificationToPatient(profile.id ?? '');
         });
       });
     } catch (e) {

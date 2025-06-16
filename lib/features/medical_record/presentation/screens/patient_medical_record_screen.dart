@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/font_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
@@ -82,6 +83,7 @@ class _PatientMedicalRecordScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: BlocBuilder<MedicalRecordCubit, MedicalResocrdSates>(
         builder: (context, state) {
           if (state is GetMedicalRecordLoading) {
@@ -96,7 +98,7 @@ class _PatientMedicalRecordScreenState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: 180,
+                    height: 10,
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * .5,
@@ -189,6 +191,9 @@ class _PatientMedicalRecordScreenState
                         )
                       ],
                     ),
+                  ),
+                  SizedBox(
+                    height: 20,
                   ),
                   Expanded(
                     child: state.medicalRecord.isEmpty

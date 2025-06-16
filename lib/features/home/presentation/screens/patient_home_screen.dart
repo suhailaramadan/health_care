@@ -4,10 +4,11 @@ import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/font_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/resources/value_manager.dart';
+import 'package:graduation_project/core/routes/routes.dart';
 import 'package:graduation_project/core/widgets/home_screen_app_bar.dart';
 import 'package:graduation_project/features/medical_record/presentation/screens/patient_medical_record_screen.dart';
 import 'package:graduation_project/features/user/booking/presentation/screen/booking_screen.dart';
-import 'package:graduation_project/features/user/chatBot/presentation/screen/chat_bot_tab.dart';
+import 'package:graduation_project/features/user/chatBot/presentation/screen/chat_screen.dart';
 import 'package:graduation_project/features/home/presentation/widgets/home_tab.dart';
 import 'package:graduation_project/features/profile/presentation/screen/profile_screen.dart';
 import 'package:graduation_project/features/user/news/presentation/screen/news_screen.dart';
@@ -176,8 +177,10 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                 backgroundColor: ColorManager.primary,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15)),
-                onPressed: () {},
-                child: Icon(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.chat);
+                },
+                child: const Icon(
                   Icons.chat,
                   color: ColorManager.white,
                   size: 30,

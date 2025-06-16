@@ -295,7 +295,7 @@ class _ClinicScreenState extends State<ClinicScreen> {
       child: Scaffold(
         backgroundColor: ColorManager.white,
         appBar: AppBar(
-          backgroundColor: ColorManager.transparent,
+          backgroundColor: ColorManager.white,
           // shape: const ContinuousRectangleBorder(
           //   borderRadius: BorderRadius.only(
           //     bottomRight: Radius.circular(34),
@@ -308,109 +308,136 @@ class _ClinicScreenState extends State<ClinicScreen> {
             style: getBoldStyle(color: ColorManager.textColor),
           ),
         ),
-        body: MultiBlocProvider(
-          providers: [
-            BlocProvider.value(value: _clinicCubit),
-            BlocProvider.value(value: _searchCubit),
-          ],
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    height: 50,
-                    child: TextField(
-                      controller: searchController,
-                      onChanged: (value) {
-                        if (value.isEmpty) {
-                          _clinicCubit.getClinics();
-                        } else {
-                          _searchCubit.searchClinic(value);
-                        }
-                      },
-                      cursorColor: ColorManager.primary,
-                      decoration: InputDecoration(
-                        hintText: "ابحث عن العيادة...",
-                        hintStyle: getMediumStyle(color: ColorManager.grey),
-                        prefixIcon: const Icon(
-                          Icons.search,
-                          color: Color.fromARGB(255, 139, 138, 138),
-                        ),
-                        suffixIcon: searchController.text.isNotEmpty
-                            ? IconButton(
-                                icon: const Icon(Icons.close),
-                                onPressed: () {
-                                  searchController.clear();
-                                  context
-                                      .read<SearchCubit>()
-                                      .clearSearchRewsults();
+        body:
+            // MultiBlocProvider(
+            //   providers: [
+            //     BlocProvider.value(value: _clinicCubit),
+            //     BlocProvider.value(value: _searchCubit),
+            //   ],
+            // child:
+            Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: 50,
+                  child: TextField(
+                    controller: searchController,
+                    onChanged: (value) {
+                      setState(() {});
+                      if (value.isEmpty) {
+                        _clinicCubit.getClinics();
+                      } else {
+                        _searchCubit.searchClinic(value);
+                      }
+                    },
+                    onSubmitted: (value) {
+                      if (value.isNotEmpty) {
+                        _searchCubit.searchClinic(value);
+                      }
+                    },
+                    cursorColor: ColorManager.primary,
+                    decoration: InputDecoration(
+                      hintText: "ابحث عن العيادة...",
+                      hintStyle: getMediumStyle(color: ColorManager.grey),
+                      prefixIcon: const Icon(
+                        Icons.search,
+                        color: Color.fromARGB(255, 139, 138, 138),
+                      ),
+                      suffixIcon: searchController.text.isNotEmpty
+                          ? IconButton(
+                              icon: const Icon(Icons.close),
+                              onPressed: () {
+                                setState(() {});
+                                searchController.clear();
+                                context
+                                    .read<SearchCubit>()
+                                    .clearSearchRewsults();
 
-                                  context.read<ClinicCubit>().getClinics();
-                                },
-                              )
-                            : null,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.r),
-                          borderSide: const BorderSide(
-                              color: ColorManager.primary, width: 1.5),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide:
-                              const BorderSide(color: ColorManager.grey),
-                        ),
+                                context.read<ClinicCubit>().getClinics();
+                              },
+                            )
+                          : null,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.r),
+                        borderSide: const BorderSide(
+                            color: ColorManager.primary, width: 1.5),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(color: ColorManager.grey),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
-                Expanded(
-                  child: BlocBuilder<SearchCubit, ClinicState>(
-                    builder: (context, state) {
-                      // if (_searchCubit.isSearching) {
-                      // print("${_searchCubit.isSearching}");
-                      if (state is GetSearchLoading) {
-                        return const LoadingIndicator();
-                      } else if (state is GetSearchError) {
-                        return ErrorIndicator(message: state.message);
-                      } else if (state is GetSearchSuccess) {
-                        return _buildClinicList(state.searchEntity);
-                      } else if (state is GetClinicsSuccess &&
-                          state.clinicEntity.isEmpty) {
-                        return const Center(
-                          child: Text("لا توجد نتائج متطابقة"),
-                        );
-                      }
-                      // }
-
-                      return BlocBuilder<ClinicCubit, ClinicState>(
-                        builder: (context, state) {
-                          if (state is GetClinicsLoading) {
+              ),
+              const SizedBox(height: 20),
+              Expanded(
+                  child: searchController.text.isNotEmpty
+                      ? BlocBuilder<SearchCubit, ClinicState>(
+                          builder: (context, state) {
+                          // if (_searchCubit.isSearching) {
+                          // print("${_searchCubit.isSearching}");
+                          if (state is GetSearchLoading) {
                             return const Center(child: LoadingIndicator());
-                          } else if (state is GetClinicsError) {
+                          } else if (state is GetSearchError) {
                             return ErrorIndicator(message: state.message);
-                          } else if (state is GetClinicsSuccess) {
-                            return _buildClinicList(state.clinicEntity);
+                          } else if (state is GetSearchSuccess) {
+                            return _buildClinicList(state.searchEntity);
+                          } else if (state is GetClinicsSuccess &&
+                              state.clinicEntity.isEmpty) {
+                            return const Center(
+                              child: Text("لا توجد نتائج متطابقة"),
+                            );
+                          } else {
+                            return const SizedBox();
                           }
-                          return const SizedBox();
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
+                        })
+                      :
+                      // return
+                      BlocBuilder<ClinicCubit, ClinicState>(
+                          builder: (context, state) {
+                            if (state is GetClinicsLoading) {
+                              return const Center(child: LoadingIndicator());
+                            } else if (state is GetClinicsError) {
+                              return ErrorIndicator(message: state.message);
+                            } else if (state is GetClinicsSuccess &&
+                                state.clinicEntity.isNotEmpty) {
+                              return _buildClinicList(state.clinicEntity);
+                            } else if (state is GetClinicsSuccess &&
+                                state.clinicEntity.isEmpty) {
+                              return Center(
+                                child: Text(
+                                  "لا يوجد عيادات",
+                                  style: getSemiBoldStyle(
+                                      color: ColorManager.kuhly),
+                                ),
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
+                          },
+                        ))
+              // },
+              // ),
+              // ),
+            ],
           ),
         ),
+        // ),
       ),
     );
   }
 
   Widget _buildClinicList(List<ClinicEntity> clinics) {
     if (clinics.isEmpty) {
-      return const Center(child: Text('لا توجد عيادات مطابقة'));
+      return Center(
+          child: Text(
+        "لا يوجد عيادات",
+        style: getMediumStyle(color: ColorManager.kuhly),
+      ));
     }
     return ListView.builder(
       itemCount: clinics.length,

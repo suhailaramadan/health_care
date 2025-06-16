@@ -1,20 +1,3 @@
-// import 'dart:convert';
-
-// import 'package:firebase_messaging/firebase_messaging.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-// import 'package:graduation_project/core/constants.dart';
-// import 'package:graduation_project/core/routes/routes.dart';
-// import 'package:graduation_project/features/notification/data/data_source/remote/local/local_data_source_shared_pref.dart';
-// import 'package:graduation_project/features/notification/data/model/notification_get_response/notification_get_response.dart';
-// import 'package:graduation_project/features/notification/domain/use_cases/get_notifications_use_case.dart';
-// import 'package:graduation_project/features/notification/domain/use_cases/mark_notification_as_read_use_case.dart';
-// import 'package:graduation_project/features/notification/presentiation/cubit/notification_states.dart';
-// import 'package:graduation_project/main.dart';
-// import 'package:injectable/injectable.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-
 import 'dart:async';
 import 'dart:convert';
 
