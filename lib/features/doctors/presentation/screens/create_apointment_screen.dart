@@ -181,6 +181,7 @@ import 'package:graduation_project/features/user/booking/presentation/cubit/appo
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/create_appointment_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/doctor_appointments_cubit.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'dart:ui' as ui;
 
@@ -244,37 +245,82 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
       context: context,
       initialTime: TimeOfDay.now(),
       builder: (context, child) {
-        return
-            // Theme(
-            //       data: Theme.of(context).copyWith(
-            //           timePickerTheme: TimePickerThemeData(
-            //               dialTextStyle: getRegularStyle(color: ColorManager.white),
-            //               hourMinuteTextStyle: getRegularStyle(
-            //                 color: ColorManager.white,
-            //               ),
-            //               helpTextStyle: getRegularStyle(color: ColorManager.primary))),
-            Directionality(
-          textDirection: ui.TextDirection.ltr,
-          child: Localizations.override(
-            context: context,
-            locale: const Locale('ar'),
-            delegates: GlobalMaterialLocalizations.delegates,
-            child: Theme(
-                data: Theme.of(context).copyWith(
-                    timePickerTheme: TimePickerThemeData(
-                        dialTextStyle:
-                            getRegularStyle(color: ColorManager.primary),
-                        hourMinuteTextStyle:
-                            getRegularStyle(color: ColorManager.primary),
-                        helpTextStyle:
-                            getRegularStyle(color: ColorManager.primary))),
-                child: child!),
-          ),
-        );
-        // );
+        return Theme(
+            data: Theme.of(context).copyWith(
+                timePickerTheme: TimePickerThemeData(
+              backgroundColor: ColorManager.white,
+              confirmButtonStyle: ButtonStyle(
+                  foregroundColor:
+                      MaterialStatePropertyAll(ColorManager.primary),
+                  textStyle: MaterialStatePropertyAll(
+                      getMediumStyle(color: ColorManager.primary))),
+              cancelButtonStyle: ButtonStyle(
+                  foregroundColor: MaterialStatePropertyAll(ColorManager.red),
+                  textStyle: MaterialStatePropertyAll(
+                      getMediumStyle(color: ColorManager.red))),
+              helpTextStyle: getSemiBoldStyle(color: ColorManager.kuhly),
+              dialHandColor: ColorManager.kuhly,
+
+              // dialTextColor: ColorManager.white,
+              // entryModeIconColor: ColorManager.kuhly,
+              dayPeriodColor: ColorManager.blue,
+              // hourMinuteColor: Color.fromARGB(125, 255, 255, 255),
+              // hourMinuteTextColor: ColorManager.textColor,
+              // dialBackgroundColor: Color.fromARGB(255, 7, 78, 150),
+
+              //   hourMinuteTextColor: ColorManager.kuhly,
+              //   hourMinuteColor: ColorManager.primaryColor,
+              //   helpTextStyle: getMediumStyle(color: ColorManager.primary),
+              // dayPeriodTextColor: ColorManager.kuhly,
+
+              // dialTextStyle: getMediumStyle(color: ColorManager.babyGreen),
+
+              // ),
+              // textButtonTheme: TextButtonThemeData(
+              //     style: TextButton.styleFrom(
+              //         foregroundColor: ColorManager.primary,
+              //         textStyle:
+              //             getMediumStyle(color: ColorManager.textColor))
+            )),
+            child: Directionality(
+              textDirection: ui.TextDirection.rtl,
+              child: Localizations.override(
+                  context: context,
+                  locale: const Locale('ar'),
+                  delegates: GlobalMaterialLocalizations.delegates,
+                  child: child!
+                  //  Theme(
+                  //     data: Theme.of(context).copyWith(
+                  //         timePickerTheme: TimePickerThemeData(
+                  //             dialTextStyle:
+                  //                 getRegularStyle(color: ColorManager.primary),
+                  //             hourMinuteTextStyle:
+                  //                 getRegularStyle(color: ColorManager.primary),
+                  //             helpTextStyle:
+                  //                 getRegularStyle(color: ColorManager.primary))
+                  // ),
+                  // child: child!
+                  // ),
+                  ),
+            ));
       },
     );
-
+    // if (picked != null) {
+    //   setState(() {
+    //     if (isStart && startTime != null) {
+    //       final pickedMinutes = picked.hour * 60 + picked.minute;
+    //       final startMinutes = startTime!.hour * 60 + startTime!.minute;
+    //       if(pickedMinutes<=startMinutes){
+    //         UIUtils.showMessage(context, "لا يجب أن يكون وقت النهاية قبل وقت البداية", C)
+    //       }
+    //       startTime = picked;
+    //       startTimeController.text = picked.format(context);
+    //     } else {
+    //       endTime = picked;
+    //       endTimeController.text = picked.format(context);
+    //     }
+    //   });
+    // }
     if (picked != null) {
       setState(() {
         if (isStart) {
@@ -287,61 +333,6 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
       });
     }
   }
-  // Future<void> pickTime(bool isStart) async {
-  //   final TimeOfDay? picked = await showTimePicker(
-  //     context: context,
-  //     initialTime: TimeOfDay.now(),
-  //     builder: (context, child) {
-  //       return Directionality(
-  //         textDirection: ui.TextDirection.rtl,
-  //         child: Localizations.override(
-  //           context: context,
-  //           locale: const Locale('ar'),
-  //           delegates: GlobalMaterialLocalizations.delegates,
-  //           child: Theme(
-  //             data: Theme.of(context).copyWith(
-  //               timePickerTheme: const TimePickerThemeData(
-  //                 helpTextStyle: TextStyle(
-  //                     color: Colors.blue,
-  //                     fontFamily: 'Cairo'), // اسم الخط اللي بتستخدمه
-  //                 dialTextStyle: TextStyle(color: Colors.black),
-  //                 hourMinuteTextStyle: TextStyle(color: Colors.black),
-  //               ),
-  //             ),
-  //             child: child!,
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-
-  //   if (picked != null) {
-  //     setState(() {
-  //       if (isStart) {
-  //         startTime = picked;
-  //       } else {
-  //         endTime = picked;
-  //       }
-  //     });
-  //   }
-  // }
-
-  // String formateTimeToArabic(TimeOfDay time) {
-  //   int hour = time.hourOfPeriod == 0 ? 12 : time.hourOfPeriod;
-  //   int minute = time.minute;
-  //   String period = time.period == DayPeriod.am ? 'ص' : 'م';
-
-  //   String hourStr = convertToArabicNumber(hour, minDigits: 2);
-  //   String minuteStr = convertToArabicNumber(minute, minDigits: 2);
-
-  //   return '$hourStr:$minuteStr $period';
-  // }
-
-  // String convertToArabicNumber(int number, {int minDigits = 1}) {
-  //   const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-  //   final digits = number.toString().padLeft(minDigits, '0');
-  //   return digits.split('').map((e) => arabicNumbers[int.parse(e)]).join();
-  // }
 
   String getFormattedDuration() {
     final duration = int.tryParse(durationController.text);
@@ -403,24 +394,30 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
         startTime == null ||
         endTime == null ||
         durationController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('املأ جميع الحقول'),
-          backgroundColor: ColorManager.red,
-        ),
+      UIUtils.showMessage(
+        context,
+        'املأ جميع الحقول',
+        ColorManager.red,
       );
       return;
     }
 
     final duration = int.tryParse(durationController.text);
     if (duration == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('مدة غير صالحة'),
-        backgroundColor: ColorManager.red,
-      ));
+      UIUtils.showMessage(
+        context,
+        'مدة غير صالحة',
+        ColorManager.red,
+      );
       return;
     }
-
+    final startMinutes = startTime!.hour * 60 + startTime!.minute;
+    final endMinutes = endTime!.hour * 60 + endTime!.minute;
+    if (endMinutes <= startMinutes) {
+      UIUtils.showMessage(
+          context, "يجب أن يكون وقت النهاية بعد وقت البداية", ColorManager.red);
+      return;
+    }
     for (final day in selectedDays) {
       final request = CreateRequestModel(
         day: day,
@@ -540,20 +537,7 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                         hintTextStyle:
                             getRegularStyle(color: ColorManager.grey),
                       )),
-                  // Text(
-                  //     startTime == null
-                  //         ? ''
-                  //         : FormatedDate.formateTimeToArabic(startTime!),
-                  //     style: getMediumStyle(color: ColorManager.primary)),
-                  //   ],
-                  // )
-                  // Text(
-                  //     startTime == null
-                  //         ? 'اختر ساعة البداية'
-                  //         : 'ساعة البداية :   ${formateTimeToArabic(startTime!)}',
-                  //     style: getMediumStyle(color: ColorManager.primary)),
-                  // ),
-                  // const SizedBox(height: 16),
+
                   Text(
                     "اختر ساعة النهاية",
                     style: getMediumStyle(color: ColorManager.primary),

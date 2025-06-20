@@ -349,16 +349,9 @@ class WorksHoursScreen extends StatelessWidget {
             UIUtils.showMessage(
               context,
               "تم إلغاء اليوم بنجاح",
-              // state.bookingResponse.message ?? '',
               ColorManager.green,
             );
-
-            context.read<NotificationCubit>().getNotification();
-
             context.read<DoctorAppointmentsCubit>().getAppointments();
-            if (ModalRoute.of(context)?.settings.name == Routes.booking) {
-              context.read<BookingPatientCubit>().getBookingPatient();
-            }
           } else if (state is GetAppointmentError) {
             UIUtils.showMessage(
               context,
@@ -375,29 +368,7 @@ class WorksHoursScreen extends StatelessWidget {
             ),
             centerTitle: true,
           ),
-          body:
-              //  BlocBuilder<DoctorAppointmentsCubit, AppointmentStates>(
-              //   builder: (context, state) {
-              //     if (state is GetAppointmentLoading) {
-              //       return const Center(
-              //         child: CircularProgressIndicator(
-              //           color: ColorManager.primary,
-              //         ),
-              //       );
-              //     } else if (state is GetDoctorAppointmentsSuccess) {
-              //       final appointments = state.appointment;
-
-              //       if (appointments.isEmpty) {
-              //         return const Center(
-              //           child: Text(
-              //             "لا توجد مواعيد متاحة",
-              //             style: TextStyle(fontSize: 18),
-              //           ),
-              //         );
-              //       }
-
-              // return
-              Container(
+          body: Container(
             padding: const EdgeInsets.all(10),
             margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
@@ -499,36 +470,8 @@ class WorksHoursScreen extends StatelessWidget {
                                                   Navigator.of(context).pop();
 
                                                   cubit.deleteAppointment(
-                                                    // appointmentId:
                                                     appointment.id ?? 0,
-                                                    // startTime: appointment
-                                                    //         .startTime ??
-                                                    //     '',
-                                                    // endTime:
-                                                    //     appointment.endTime ??
-                                                    //         '',
-                                                    // day: appointment.day ?? 0,
-                                                    // duration: appointment
-                                                    //         .duration ??
-                                                    //     0
                                                   );
-
-                                                  // context
-                                                  //     .read<
-                                                  //         DoctorAppointmentsCubit>()
-                                                  //     .getAppointments();
-                                                  // SchedulerBinding.instance
-                                                  //     .addPostFrameCallback(
-                                                  //         (_) {
-                                                  //   context
-                                                  //       .read<
-                                                  //           NotificationCubit>()
-                                                  //       .getNotification();
-                                                  //   // context
-                                                  // });
-                                                  //     .read<BookingByIdCubit>()
-                                                  //     .getBookingById(
-                                                  //         s?? 0);
 
                                                   print(
                                                       "تم حذف موعدك يوم ${appointment.day} -- ${appointment.startTime}---${appointment.endTime} ---${appointment.duration} ${appointment.id}");

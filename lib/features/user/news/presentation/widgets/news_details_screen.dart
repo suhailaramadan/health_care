@@ -31,7 +31,7 @@ class NewsDetailsScreen extends StatelessWidget {
                   height: 200,
                   width: double.infinity,
                   child: Image.network(
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                       "https://myclinicapp.runasp.net${news.image}")),
               const SizedBox(height: 10),
               Center(

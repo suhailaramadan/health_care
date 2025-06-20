@@ -1,4 +1,4 @@
-class DoctorDashboardResponse {
+class DoctorDashBoardResponse {
   String? doctorName;
   String? profileImage;
   String? greeting;
@@ -7,7 +7,7 @@ class DoctorDashboardResponse {
   int? totalAppointments;
   int? totalBookings;
 
-  DoctorDashboardResponse({
+  DoctorDashBoardResponse({
     this.doctorName,
     this.profileImage,
     this.greeting,
@@ -17,8 +17,8 @@ class DoctorDashboardResponse {
     this.totalBookings,
   });
 
-  factory DoctorDashboardResponse.fromJson(Map<String, dynamic> json) {
-    return DoctorDashboardResponse(
+  factory DoctorDashBoardResponse.fromJson(Map<String, dynamic> json) {
+    return DoctorDashBoardResponse(
       doctorName: json['doctorName'] as String?,
       profileImage: json['profileImage'] as String?,
       greeting: json['greeting'] as String?,

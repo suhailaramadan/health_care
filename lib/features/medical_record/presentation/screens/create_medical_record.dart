@@ -218,7 +218,8 @@ class _AddMedicalRecordScreenState extends State<AddMedicalRecordScreen> {
   final formKey = GlobalKey<FormState>();
   bool isLoading = true;
   void _submitForm() {
-    if (formKey.currentState!.validate() && !isLoading) {
+    if (isLoading) return;
+    if (formKey.currentState!.validate()) {
       setState(() {
         isLoading = true;
       });
@@ -228,12 +229,6 @@ class _AddMedicalRecordScreenState extends State<AddMedicalRecordScreen> {
             treatment: treatmentController.text,
             notes: notesController.text,
           ));
-      // await Future.delayed(Duration(seconds: 2));
-
-      // UIUtils.showMessage(
-      //     context, "تم إضافة الفحص بنجاح", ColorManager.green);
-
-      // UIUtils.showMessage(context, "حدث خطأ أثناء الإضافة", ColorManager.red);
     } else {
       return;
     }
@@ -280,13 +275,13 @@ class _AddMedicalRecordScreenState extends State<AddMedicalRecordScreen> {
                       ),
                       Row(
                         children: [
-                          Icon(Icons.person, color: ColorManager.primary),
+                          const Icon(Icons.person, color: ColorManager.primary),
                           Text("اسم المريض",
                               style:
                                   getMediumStyle(color: ColorManager.primary)),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       CustomTextField(
@@ -300,11 +295,11 @@ class _AddMedicalRecordScreenState extends State<AddMedicalRecordScreen> {
                       ),
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.sticky_note_2_outlined,
                             color: ColorManager.primary,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Text(
@@ -313,7 +308,7 @@ class _AddMedicalRecordScreenState extends State<AddMedicalRecordScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       TextFormField(
@@ -364,11 +359,11 @@ class _AddMedicalRecordScreenState extends State<AddMedicalRecordScreen> {
                       ),
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.medication,
                             color: ColorManager.primary,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Text(
@@ -377,7 +372,7 @@ class _AddMedicalRecordScreenState extends State<AddMedicalRecordScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       TextFormField(
@@ -434,11 +429,11 @@ class _AddMedicalRecordScreenState extends State<AddMedicalRecordScreen> {
                       ),
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.notes,
                             color: ColorManager.primary,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Text("الملاحظات",
@@ -446,7 +441,7 @@ class _AddMedicalRecordScreenState extends State<AddMedicalRecordScreen> {
                                   getMediumStyle(color: ColorManager.primary)),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       TextField(

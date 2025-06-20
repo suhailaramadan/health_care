@@ -21,12 +21,6 @@ class BookingPatientCubit extends Cubit<BookingStates> {
       },
       (bookingPatient) async {
         emit(GetBookingPatientSuccess(bookingPatient));
-        // final bookings = bookingPatient.data ?? [];
-        // for (var booking in bookings) {
-        //   await deleteBookingCubit.deleteBooking(booking.id ?? 0);
-        //   await notificationCubit.getNotification();
-        //   print("تم إلغاء موعدك مع الدكتور ${booking.date}");
-        // }
       },
     );
   }

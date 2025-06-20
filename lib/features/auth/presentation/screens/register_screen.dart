@@ -191,6 +191,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ),
                                   SizedBox(
                                     child: CustomTextField(
+                                      nextFocus: FocusNode(),
                                       prefixIcon: const Icon(
                                         Icons.person,
                                         color: ColorManager.primary,
@@ -204,6 +205,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ),
                                   SizedBox(
                                     child: CustomTextField(
+                                      nextFocus: FocusNode(),
                                       prefixIcon: const Icon(
                                         Icons.person,
                                         color: ColorManager.primary,
@@ -216,6 +218,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     ),
                                   ),
                                   CustomTextField(
+                                    nextFocus: FocusNode(),
                                     prefixIcon: const Icon(
                                       Icons.credit_card,
                                       color: ColorManager.primary,
@@ -226,6 +229,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     controller: _nationalIdController,
                                   ),
                                   CustomTextField(
+                                    nextFocus: FocusNode(),
                                     prefixIcon: const Icon(
                                       Icons.phone,
                                       color: ColorManager.primary,
@@ -237,6 +241,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     controller: _phoneController,
                                   ),
                                   CustomTextField(
+                                    nextFocus: FocusNode(),
                                     prefixIcon: const Icon(
                                       Icons.email,
                                       color: ColorManager.primary,
@@ -248,6 +253,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     controller: _emailController,
                                   ),
                                   CustomTextField(
+                                    nextFocus: FocusNode(),
                                     prefixIcon: const Icon(
                                       Icons.lock,
                                       color: ColorManager.primary,
@@ -259,6 +265,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     controller: _passwordController,
                                   ),
                                   CustomTextField(
+                                    nextFocus: FocusNode(),
                                     prefixIcon: const Icon(
                                       Icons.lock,
                                       color: ColorManager.primary,
@@ -307,9 +314,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                 .pushReplacementNamed(
                                                     Routes.login);
                                             UIUtils.showMessage(
-                                                context,
-                                                "تم إنشاء حساب بنجاح",
-                                                ColorManager.green);
+                                              context,
+                                              "تم إنشاء حساب بنجاح",
+                                              ColorManager.green,
+                                            );
                                           } else if (state is RegisterError) {
                                             UIUtils.hideLoading(context);
                                             UIUtils.showMessage(

@@ -181,7 +181,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                   Navigator.of(context).pushNamed(Routes.chat);
                 },
                 child: const Icon(
-                  Icons.chat,
+                  Icons.support_agent_sharp,
                   color: ColorManager.white,
                   size: 30,
                 ),

@@ -60,7 +60,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                   children: [
                     Center(
                       child: CircleAvatar(
-                          backgroundColor: ColorManager.primary,
+                          backgroundColor: ColorManager.white,
                           radius: isLargeTablet
                               ? screenSize.height * .08
                               : isLandscape

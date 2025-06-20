@@ -26,7 +26,7 @@ class NotificationRepositoryImpl extends NotificationRepository {
       print("Repositirhhhhhhhh $notification");
       return notification;
     } catch (e) {
-      // print("error in  Repository $token $e");
+      print("error in  Repository         $e");
       throw const RemoteException("فشل في تحميل الإشعارات");
     }
   }

@@ -51,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: ColorManager.white,
         appBar: AppBar(
           // toolbarHeight: 100,
+
           automaticallyImplyLeading: false,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -68,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ],
           ),
-          backgroundColor: ColorManager.white,
+          backgroundColor: ColorManager.transparent,
         ),
         body: BlocConsumer<AuthCubit, AuthStates>(
           listener: (context, state) {
@@ -168,6 +169,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: Sizes.s20.h,
                       ),
                       CustomTextField(
+                        onSumbit: (p0) {
+                          if (_formKey.currentState!.validate()) {
+                            BlocProvider.of<AuthCubit>(context).login(
+                                LoginRequest(
+                                    email: _emailController.text,
+                                    password: _passwordController.text));
+                            SharedPrefHandel.saveToken(CacheConstants.tokenKey,
+                                CacheConstants.roleKey);
+                          }
+                        },
                         prefixIcon: const Icon(
                           Icons.lock,
                           color: ColorManager.primary,

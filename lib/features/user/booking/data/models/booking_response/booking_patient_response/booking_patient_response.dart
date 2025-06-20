@@ -12,8 +12,10 @@ class BookingPatientResponse {
       success: json['success'] as bool?,
       message: json['message'] as String?,
       data: (json['data'] as List<dynamic>?)
-          ?.map((e) => BookingPatientModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+              ?.map((e) =>
+                  BookingPatientModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
     );
   }
 

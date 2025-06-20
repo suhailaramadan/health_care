@@ -15,6 +15,7 @@ import 'package:graduation_project/features/auth/presentation/screens/verfiy_cod
 import 'package:graduation_project/features/auth/presentation/screens/register_screen.dart';
 import 'package:graduation_project/features/doctors/presentation/screens/create_apointment_screen.dart';
 import 'package:graduation_project/features/doctors/presentation/screens/doctor_booking_screen.dart';
+import 'package:graduation_project/features/doctors/presentation/screens/doctors_tab_screen.dart';
 import 'package:graduation_project/features/doctors/presentation/screens/update_appointment_screen.dart';
 import 'package:graduation_project/features/doctors/presentation/screens/work_hours_screen.dart';
 import 'package:graduation_project/features/feedback/presentation/screen/feedback_screen.dart';
@@ -79,6 +80,8 @@ class RouteGenerator {
         return _buildRoute(const RegisterScreen(), isIOS);
       case Routes.clinic:
         return _buildRoute(const ClinicScreen(), isIOS);
+      case Routes.doctortab:
+        return _buildRoute(const DoctorsTabScreen(), isIOS);
       case Routes.patientMedicalRecord:
         return _buildRoute(const PatientMedicalRecordScreen(), isIOS);
       case Routes.updateDoctorProfile:
@@ -92,7 +95,7 @@ class RouteGenerator {
         return _buildRoute(const FeedbackScreen(), isIOS);
       case Routes.profile:
         return _buildRoute(const ProfileScreen(), isIOS);
-      case Routes.doctorPatient:
+      case Routes.doctorProfile:
         return _buildRoute(const DoctorProfileScreen(), isIOS);
       case Routes.newsScreen:
         return _buildRoute(const NewsScreen(), isIOS);

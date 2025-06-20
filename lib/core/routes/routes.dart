@@ -8,6 +8,7 @@ import 'package:graduation_project/features/auth/presentation/screens/verfiy_cod
 import 'package:graduation_project/features/auth/presentation/screens/register_screen.dart';
 import 'package:graduation_project/features/doctors/presentation/screens/create_apointment_screen.dart';
 import 'package:graduation_project/features/doctors/presentation/screens/doctor_booking_screen.dart';
+import 'package:graduation_project/features/doctors/presentation/screens/doctors_tab_screen.dart';
 import 'package:graduation_project/features/doctors/presentation/screens/update_appointment_screen.dart';
 import 'package:graduation_project/features/doctors/presentation/screens/work_hours_screen.dart';
 import 'package:graduation_project/features/feedback/presentation/screen/feedback_screen.dart';
@@ -59,7 +60,7 @@ class Routes {
   static const medicalRecord = MedicalRecordScreen.medicalRecord;
   static const patientMedicalRecord =
       PatientMedicalRecordScreen.patientMedicalRecord;
-  static const doctorPatient = DoctorProfileScreen.doctorProfile;
+  static const doctorProfile = DoctorProfileScreen.doctorProfile;
   static const addMedicalRecord = AddMedicalRecordScreen.addMedicalRecord;
   static const updateDoctorProfile =
       UpdateDoctorProfileScreen.updateDoctorProfile;
@@ -69,4 +70,5 @@ class Routes {
   static const newsDetails = NewsDetailsScreen.newsDetails;
   static const feedback = FeedbackScreen.feedback;
   static const chat = ChatScreen.chat;
+  static const doctortab = DoctorsTabScreen.doctorTab;
 }

@@ -7,13 +7,26 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:graduation_project/core/di/service_locator.dart';
+import 'package:graduation_project/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:graduation_project/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/create_appointment_cubit.dart';
+import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/doctor_appointments_cubit.dart';
+import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_cubit.dart';
 
 import 'package:graduation_project/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const HealthCareApp());
+    await tester.pumpWidget(HealthCareApp(
+      authCubit: serviceLocator.get<AuthCubit>(),
+      bookingCubit: serviceLocator.get<BookingCubit>(),
+      deleteBookingCubit: serviceLocator.get<DeleteBookingCubit>(),
+      createAppointmentCubit: serviceLocator.get<CreateAppointmentCubit>(),
+      doctorAppointmentsCubit: serviceLocator.get<DoctorAppointmentsCubit>(),
+      profileCubit: serviceLocator.get<ProfileCubit>(),
+    ));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

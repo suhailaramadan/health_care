@@ -14,12 +14,14 @@ class NotificationApiRemoteDataSource extends NotificationRemoteDataSource {
   Future<List<NotificationGetResponse>> getNotifications(String token) async {
     // final prefs = await SharedPreferences.getInstance();
     // final token = prefs.getString(CacheConstants.tokenKey);
-    print("////////");
     final response = await dio.get("Notification",
         options: Options(headers: {'Authorization': 'Bearer $token'}));
     if (response.statusCode == 200) {
-      print("Toknec $token");
-      return (response.data as List)
+      final data = response.data;
+      if (data == null || data is! List) {
+        throw const RemoteException("لا يوجد إشعارات");
+      }
+      return data
           .map((json) => NotificationGetResponse.fromJson(json))
           .toList();
     } else {
@@ -29,8 +31,6 @@ class NotificationApiRemoteDataSource extends NotificationRemoteDataSource {
 
   @override
   Future<void> markAsRead(String token, int notificationId) async {
-    // final prefs = await SharedPreferences.getInstance();
-    // final token = prefs.getString(CacheConstants.tokenKey);
     final response = await dio.post("Notification/mark-as-read/$notificationId",
         options: Options(headers: {'Authorization': 'Bearer $token'}));
     if (response.statusCode == 200) {

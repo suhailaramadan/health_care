@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
+import 'package:graduation_project/core/resources/image_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/utils/ui_utils.dart';
 import 'package:graduation_project/core/utils/validator.dart';
@@ -165,11 +166,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             backgroundImage: imagePath != null
                                 ? FileImage(File(imagePath!))
                                 : (widget.patient.imageUrl != null
-                                        ? CachedNetworkImageProvider(
-                                            "${ApiConstants.imageBaseUrl}${widget.patient.imageUrl!}")
-                                        : const AssetImage(
-                                            "assets/images/default_profile.png"))
-                                    as ImageProvider,
+                                    ? CachedNetworkImageProvider(
+                                        "${ApiConstants.imageBaseUrl}${widget.patient.imageUrl!}")
+                                    : const AssetImage(
+                                        ImageManager.profile)) as ImageProvider,
                           ),
                         ),
                         IconButton(

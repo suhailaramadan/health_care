@@ -19,32 +19,32 @@ class CustomDoctor extends StatelessWidget {
     final bool isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
     //     screenSize.width > screenSize.height || isLargeTablet;
-    double getResponsiveFontSize(String itemType) {
-      switch (itemType) {
-        case 'ButtonWidth':
-          return isLandscape ? 120.w : 150.w;
-        case 'ButtonHeight':
-          return isLandscape ? 40.h : 5.h;
-        case 'ImageHeight':
-          return isLandscape ? 180.h : 150.h;
-        case 'ImageWidth':
-          return isLandscape ? 250.w : 300.w;
-        case 'IconSize':
-          return isLandscape ? 20.w : 25.w;
-        case 'Text':
-          return isLandscape ? 18.sp : 15.sp;
-        case 'Padding':
-          return isLandscape ? 8.w : 12.w;
-        case 'Hieight':
-          return isLandscape ? 180.h : 220.h;
-        case 'Width':
-          return isLandscape ? 120.w : 150.w;
-        case 'Size':
-          return isLandscape ? 30.w : 40.w;
-        default:
-          return 50.w;
-      }
-    }
+    // double getResponsiveFontSize(String itemType) {
+    //   switch (itemType) {
+    //     case 'ButtonWidth':
+    //       return isLandscape ? 120.w : 150.w;
+    //     case 'ButtonHeight':
+    //       return isLandscape ? 40.h : 5.h;
+    //     case 'ImageHeight':
+    //       return isLandscape ? 180.h : 150.h;
+    //     case 'ImageWidth':
+    //       return isLandscape ? 250.w : 300.w;
+    //     case 'IconSize':
+    //       return isLandscape ? 20.w : 25.w;
+    //     case 'Text':
+    //       return isLandscape ? 18.sp : 15.sp;
+    //     case 'Padding':
+    //       return isLandscape ? 8.w : 12.w;
+    //     case 'Hieight':
+    //       return isLandscape ? 180.h : 220.h;
+    //     case 'Width':
+    //       return isLandscape ? 120.w : 150.w;
+    //     case 'Size':
+    //       return isLandscape ? 30.w : 40.w;
+    //     default:
+    //       return 50.w;
+    //   }
+    // }
 
     // return Directionality(
     //   textDirection: TextDirection.rtl,
@@ -110,9 +110,8 @@ class CustomDoctor extends StatelessWidget {
       child: Directionality(
           textDirection: TextDirection.rtl,
           child: SizedBox(
-            height: getResponsiveFontSize('Height'),
-            // 150,
-            width: getResponsiveFontSize('Width'),
+            height: isLandscape ? 150 : 150,
+            width: isLandscape ? 200 : 200,
             // 200,
             child: Card(
               // margin: EdgeInsets.symmetric(horizontal: 2),
@@ -121,6 +120,7 @@ class CustomDoctor extends StatelessWidget {
               color: ColorManager.white,
               // elevation: 3,
               child: Container(
+                padding: const EdgeInsets.only(top: 5),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(width: .1, color: ColorManager.primary)),
@@ -133,10 +133,10 @@ class CustomDoctor extends StatelessWidget {
                       child: CachedNetworkImage(
                           imageUrl:
                               "${ApiConstants.imageBaseUrl}${doctorEntity.imageUrl}",
-                          height: getResponsiveFontSize('ImageHeight'),
+                          height: isLandscape ? 160 : 140,
                           // 140,
                           // width: double.infinity,
-                          width: getResponsiveFontSize('ImageWidth'),
+                          width: isLandscape ? 170 : 160,
                           // 160,
                           fit: BoxFit.fill,
                           placeholder: (context, url) => const Center(
@@ -153,23 +153,23 @@ class CustomDoctor extends StatelessWidget {
                     //   width: 15,
                     // ),
                     Padding(
-                      padding: EdgeInsets.all(getResponsiveFontSize('Padding')),
+                      padding: const EdgeInsets.all(10),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             "د. ${doctorEntity.firstName} ${doctorEntity.lastName}",
-                            style: getBoldStyle(
-                                color: ColorManager.primary,
-                                fontSize: getResponsiveFontSize('Text')),
+                            style: getSemiBoldStyle(
+                              color: ColorManager.primary,
+                            ),
                           ),
                           Text(
                             "${doctorEntity.specialty}",
                             overflow: TextOverflow.ellipsis,
                             style: getMediumStyle(
-                                color: const Color.fromARGB(255, 111, 106, 106),
-                                fontSize: getResponsiveFontSize('Text')),
+                              color: const Color.fromARGB(255, 111, 106, 106),
+                            ),
                           )
                         ],
                       ),

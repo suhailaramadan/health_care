@@ -146,7 +146,7 @@ class _UpdateDoctorProfileScreenState extends State<UpdateDoctorProfileScreen> {
                                             ? CachedNetworkImageProvider(
                                                 "${ApiConstants.imageBaseUrl}${widget.profileDoctorEntity.imageUrl!}")
                                             : const AssetImage(
-                                                "assets/images/photo_2024-12-24_06-14-01.jpg"))
+                                                "assets/images/doctor_image.jpg"))
                                         as ImageProvider,
                               ),
                               IconButton(

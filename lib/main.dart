@@ -21,6 +21,7 @@ import 'package:graduation_project/features/auth/presentation/cubit/change_passw
 import 'package:graduation_project/features/auth/presentation/cubit/forget_password_cubit.dart';
 import 'package:graduation_project/features/auth/presentation/cubit/reset_password_cubit.dart';
 import 'package:graduation_project/features/auth/presentation/cubit/verify_code_cubit.dart';
+import 'package:graduation_project/features/doctors/presentation/cubit/doctor_dashboard_cubit.dart';
 import 'package:graduation_project/features/fcm.dart';
 import 'package:graduation_project/features/feedback/presentation/cubit/feedback_cubit.dart';
 import 'package:graduation_project/features/medical_record/presentation/cubit/medical_record_cubit.dart';
@@ -193,6 +194,9 @@ class _HealthCareAppState extends State<HealthCareApp> {
             create: (context) => widget.createAppointmentCubit,
           ),
           BlocProvider(
+            create: (context) => serviceLocator.get<DoctorDashboardCubit>(),
+          ),
+          BlocProvider(
               create: (context) =>
                   serviceLocator.get<UpdateAppointmentCubit>()),
 
@@ -247,7 +251,7 @@ class _HealthCareAppState extends State<HealthCareApp> {
                 builder: DevicePreview.appBuilder,
                 debugShowCheckedModeBanner: false,
                 onGenerateRoute: RouteGenerator.getRoute,
-                initialRoute: Routes.chooseUser
+                initialRoute: Routes.onBoarding
                 // SharedPrefHandel.getToken().isEmpty
                 //     ? Routes.login
                 //     : SharedPrefHandel.getUserRole() == 'User'

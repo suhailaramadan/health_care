@@ -38,51 +38,51 @@ class ClinicItem extends StatelessWidget {
     final bool isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
     //     screenSize.width > screenSize.height || isLargeTablet;
-    double getResponsiveFontSize(String itemType) {
-      switch (itemType) {
-        case 'ButtonWidth':
-          return isLandscape ? 120.w : 150.w;
-        case 'ButtonHeight':
-          return isLandscape ? 40.h : 5.h;
-        case 'ImageHeight':
-          return isLandscape ? 180.h : 220.h;
-        case 'ImageWidth':
-          return isLandscape ? 250.w : 300.w;
-        case 'IconSize':
-          return isLandscape ? 20.w : 25.w;
-        case 'Text':
-          return isLandscape ? 14.sp : 15.sp;
-        case 'Padding':
-          return isLandscape ? 8.w : 12.w;
-        case 'Hieight':
-          return isLandscape ? 180.h : 220.h;
-        case 'Width':
-          return isLandscape ? 120.w : 150.w;
-        case 'Size':
-          return isLandscape ? 30.w : 40.w;
-        default:
-          return 50.w;
-      }
-      // if (isLandscape) {
-      //   if (screenSize.width < 600) {
-      //     return 80.w;
-      //   } else if (screenSize.width < 900) {
-      //     return 100.w;
-      //   } else {
-      //     return 120.w;
-      //   }
-      // } else {
-      //   if (screenSize.width < 360) {
-      //     return 100.w;
-      //   } else if (screenSize.width < 600) {
-      //     return 120.w;
-      //   } else if (screenSize.width < 900) {
-      //     return 150.w;
-      //   } else {
-      //     return 180.w;
-      //   }
-      // }
-    }
+    // double getResponsiveFontSize(String itemType) {
+    //   switch (itemType) {
+    //     case 'ButtonWidth':
+    //       return isLandscape ? 120.w : 150.w;
+    //     case 'ButtonHeight':
+    //       return isLandscape ? 40.h : 5.h;
+    //     case 'ImageHeight':
+    //       return isLandscape ? 180.h : 220.h;
+    //     case 'ImageWidth':
+    //       return isLandscape ? 250.w : 300.w;
+    //     case 'IconSize':
+    //       return isLandscape ? 20.w : 25.w;
+    //     case 'Text':
+    //       return isLandscape ? 14.sp : 15.sp;
+    //     case 'Padding':
+    //       return isLandscape ? 8.w : 12.w;
+    //     case 'Hieight':
+    //       return isLandscape ? 180.h : 220.h;
+    //     case 'Width':
+    //       return isLandscape ? 120.w : 150.w;
+    //     case 'Size':
+    //       return isLandscape ? 30.w : 40.w;
+    //     default:
+    //       return 50.w;
+    //   }
+    //   // if (isLandscape) {
+    //   //   if (screenSize.width < 600) {
+    //   //     return 80.w;
+    //   //   } else if (screenSize.width < 900) {
+    //   //     return 100.w;
+    //   //   } else {
+    //   //     return 120.w;
+    //   //   }
+    //   // } else {
+    //   //   if (screenSize.width < 360) {
+    //   //     return 100.w;
+    //   //   } else if (screenSize.width < 600) {
+    //   //     return 120.w;
+    //   //   } else if (screenSize.width < 900) {
+    //   //     return 150.w;
+    //   //   } else {
+    //   //     return 180.w;
+    //   //   }
+    //   // }
+    // }
 
     return GestureDetector(
       onTap: () {
@@ -97,11 +97,10 @@ class ClinicItem extends StatelessWidget {
                 )));
       },
       child: Container(
-        padding:
-            EdgeInsets.symmetric(horizontal: getResponsiveFontSize('Padding')),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         color: ColorManager.white,
         // height: 80,
-        width: getResponsiveFontSize('Width'),
+        width: isLandscape ? 120.w : 150.w,
         // screenSize.width * .4,
         // child: Card(
         //   shape: CircleBorder(),
@@ -150,12 +149,9 @@ class ClinicItem extends StatelessWidget {
                                 color: ColorManager.greyDark,
                               ),
                             ),
-                        errorWidget: (context, url, error) => Center(
-                                child: Icon(
-                              Icons.error_outline_outlined,
-                              color: ColorManager.red,
-                              size: getResponsiveFontSize('IconSize'),
-                            ))
+                        errorWidget: (context, url, error) => const Center(
+                            child: Icon(Icons.error_outline_outlined,
+                                color: ColorManager.red, size: 30))
                         // Image.asset(
                         //   "assets/images/brain_clinic.png",
                         //   // height: 100.w,
@@ -206,17 +202,17 @@ class ClinicItem extends StatelessWidget {
             // ),
             Text(
               clinicEntity.name,
-              style: getBoldStyle(
-                  color: ColorManager.primary,
-                  fontSize: getResponsiveFontSize('Text')
-                  //  min(screenSize.shortestSide * .03,
-                  // screenSize.shortestSide * 0.05
-                  // )
-                  // isLandscape
-                  // min(screenSize.shortestSide * .024,
-                  //     screenSize.shortestSide * 0.05)
-                  // : min(13, screenSize.shortestSide * 0.05),
-                  ),
+              style: getSemiBoldStyle(
+                color: ColorManager.primary,
+
+                //  min(screenSize.shortestSide * .03,
+                // screenSize.shortestSide * 0.05
+                // )
+                // isLandscape
+                // min(screenSize.shortestSide * .024,
+                //     screenSize.shortestSide * 0.05)
+                // : min(13, screenSize.shortestSide * 0.05),
+              ),
             ),
           ],
         ),

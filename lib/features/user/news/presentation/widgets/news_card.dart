@@ -39,7 +39,7 @@ class NewsCard extends StatelessWidget {
                 "https://myclinicapp.runasp.net${news.image}",
                 height: 180.h,
                 width: double.infinity,
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
                     height: 180.h,

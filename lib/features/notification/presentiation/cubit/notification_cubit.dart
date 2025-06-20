@@ -26,45 +26,54 @@ class NotificationCubit extends Cubit<NotificationsStats> {
   Future<void> getNotification() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString(CacheConstants.tokenKey);
-    print("hhhhhhhhhhhhhhhhhhhhhh");
-    emit(NotificationLoading());
-    // try {
-    //   final localNotification =
-    //       await LocalDataSourceSharedPref().getNotification();
+    try {
+      print("hhhhhhhhhhhhhhhhhhhhhh  ${token}");
 
-    //   if (localNotification.isNotEmpty) {
-    //     notifications = localNotification;
-    //     emit(NotificaltionSuccess(notifications));
-    //   }
-    // } catch (e) {
-    //   print("Error loading local $e");
-    // }
-    // int unreadNtifi =
-    //     notifications.where((element) => !(element.isRead!)).length;
-    final response = await getNotificationsUseCase(token ?? '');
-    response.fold((failure) => emit(NotificationError(failure.message)),
-        (notification) async {
-      // final newNotification = notification
-      //     .where((e) => notifications.any((element) => element.id == e.id));
-      // notifications.addAll(newNotification);
-      // // final uniqueNotification = notification.toSet().toList();
-      // final localNotification =
-      //     await LocalDataSourceSharedPref().getNotification();
-      // notifications = [...localNotification, ...notification];
-      notifications = notification;
+      emit(NotificationLoading());
+      // try {
+      //   final localNotification =
+      //       await LocalDataSourceSharedPref().getNotification();
+
+      //   if (localNotification.isNotEmpty) {
+      //     notifications = localNotification;
+      //     emit(NotificaltionSuccess(notifications));
+      //   }
+      // } catch (e) {
+      //   print("Error loading local $e");
+      // }
+      // int unreadNtifi =
+      //     notifications.where((element) => !(element.isRead!)).length;
+      final response = await getNotificationsUseCase(token ?? '');
+      response.fold((failure) {
+        print("Notification error ${failure.message}");
+        emit(NotificationError(failure.message));
+      }, (notification) async {
+        // final newNotification = notification
+        //     .where((e) => notifications.any((element) => element.id == e.id));
+        // notifications.addAll(newNotification);
+        // // final uniqueNotification = notification.toSet().toList();
+        // final localNotification =
+        //     await LocalDataSourceSharedPref().getNotification();
+        // notifications = [...localNotification, ...notification];
+        // notifications = notification;
 //       unreadNtifi = notifications.where((element) => !element.isRead!).length;
 //       final ids = <int>{};
-      // notifications.retainWhere((notifi) => ids.add(notifi.id ?? 0));
+        // notifications.retainWhere((notifi) => ids.add(notifi.id ?? 0));
 
-      // for (var notif in notification) {
-      // //   if (!(notif.isRead != null)) {
-      //     sendLocalNotigication(NotificationGetResponse(
-      //         title: notif.title ?? '', body: notif.body ?? ''));
-      //   }
-      // }
-
-      emit(NotificaltionSuccess(notification));
-    });
+        // for (var notif in notification) {
+        // //   if (!(notif.isRead != null)) {
+        //     sendLocalNotigication(NotificationGetResponse(
+        //         title: notif.title ?? '', body: notif.body ?? ''));
+        //   }
+        // }
+        print("Notification ${notification.length}");
+        notifications = notification;
+        emit(NotificaltionSuccess(notification));
+      });
+    } catch (e) {
+      print("Notification unexpected error $e");
+      emit(NotificationError("خطأ غير متوقع"));
+    }
   }
   // Future<List<NotificationGetResponse>> getNotification() async {
   //   final pref = await SharedPreferences.getInstance();

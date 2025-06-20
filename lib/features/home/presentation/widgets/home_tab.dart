@@ -200,7 +200,7 @@ class _HomeTabState extends State<HomeTab> {
                         return SizedBox(
                             height: isLandscape
                                 ? screenSize.width * .23
-                                : screenSize.height * .15,
+                                : screenSize.height * .17,
                             width: MediaQuery.of(context).size.width.w,
                             child: Directionality(
                               textDirection: TextDirection.rtl,
@@ -243,7 +243,7 @@ class _HomeTabState extends State<HomeTab> {
                 ),
                 SizedBox(
                   height: isLandscape
-                      ? screenSize.width * .38
+                      ? screenSize.width * .3
                       : screenSize.height * .3,
                   // : screenSize.height * .312,
                   child: BlocProvider(
@@ -264,11 +264,11 @@ class _HomeTabState extends State<HomeTab> {
                             shrinkWrap: true,
                             // physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (_, index) => CustomDoctor(
-                              doctorEntity: state.doctorEntity[index],
-                              // state.doctorEntity.take(5).toList()[index]
-                            ),
+                                doctorEntity:
+                                    // state.doctorEntity[index],
+                                    state.doctorEntity.take(5).toList()[index]),
                             scrollDirection: Axis.horizontal,
-                            itemCount: state.doctorEntity.length,
+                            itemCount: 5,
                           ),
                         );
                       } else if (state is GetDoctorsSuccess &&

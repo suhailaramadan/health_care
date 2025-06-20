@@ -11,7 +11,7 @@ class GetNotificationsUseCase {
   GetNotificationsUseCase(this.repository);
   Future<Either<Failure, List<NotificationGetResponse>>> call(
       String token) async {
-    print("object=======");
+    print("object=======$token");
     try {
       final notifications = await repository.getNotifications(token);
       return Right(notifications);

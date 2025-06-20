@@ -15,4 +15,5 @@ class ColorManager {
   static const babyPink = Color(0xffFAEEDE);
   static const red = Color.fromRGBO(175, 7, 7, 1);
   static const transparent = Colors.transparent;
+  static const babyRed = Color.fromARGB(255, 255, 217, 217);
 }
