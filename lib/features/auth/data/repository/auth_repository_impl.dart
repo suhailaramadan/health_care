@@ -26,6 +26,8 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<Either<Failure, UserEntity>> register(RegisterRequest request) async {
     try {
       final response = await remoteDataSource.register(request);
+      print("Register response: ${response}");
+      print("Token after register: ${response.token}");
       return right(response);
     } on AppException catch (exception) {
       return left(Failure(exception.message));
@@ -37,6 +39,8 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       final response = await remoteDataSource.login(request);
       await localDataSource.saveToken(response.token!, response.role!);
+      print("Login response: ${response}");
+      print("Token after Login    : ${response.token}");
       return Right(response);
     } on AppException catch (exception) {
       return left(Failure(exception.message));

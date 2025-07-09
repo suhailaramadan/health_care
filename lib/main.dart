@@ -30,6 +30,7 @@ import 'package:graduation_project/features/notification/presentiation/cubit/not
 import 'package:graduation_project/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/appointment_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/create_appointment_cubit.dart';
+import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/delete_appointment_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/doctor_appointments_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/update_appointment_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_by_id_cubit.dart';
@@ -59,7 +60,8 @@ Future<void> main() async {
       // options: DefaultFirebaseOptions.currentPlatform,
       );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  NotificationSettings settings = await messaging.requestPermission();
   // final flutterLocalNotification = FlutterLocalNotificationsPlugin();
   // const AndroidInitializationSettings initializationSettingsAndroid =
   //     AndroidInitializationSettings("@mipmap/ic_launcher");
@@ -159,20 +161,6 @@ class _HealthCareAppState extends State<HealthCareApp> {
 
   @override
   Widget build(BuildContext context) {
-    // return
-    // FutureBuilder<ProfileCubit>(
-    //     future: serviceLocator.getAsync<ProfileCubit>(),
-    //     builder: (context, snapshot) {
-    //       if (!snapshot.hasData) {
-    //         return const MaterialApp(
-    //           home: Scaffold(
-    //             body: Center(
-    //               child: LoadingIndicator(),
-    //             ),
-    //           ),
-    //         );
-    //       }
-    // final profileCubit = snapshot.data!;
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => widget.authCubit),
@@ -229,24 +217,25 @@ class _HealthCareAppState extends State<HealthCareApp> {
               create: (context) => serviceLocator.get<NotificationCubit>()),
           BlocProvider(create: (context) => widget.profileCubit),
         ],
-        child: const ScreenUtilInit(
-            designSize: Size(420, 874),
+        child: ScreenUtilInit(
+            designSize: const Size(420, 874),
             minTextAdapt: true,
             splitScreenMode: true,
             child: MaterialApp(
-                localizationsDelegates: [
+                navigatorKey: navigatorKey,
+                localizationsDelegates: const [
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,
                   GlobalCupertinoLocalizations.delegate,
                 ],
-                supportedLocales: [
+                supportedLocales: const [
                   Locale('ar'),
                   Locale('en'),
                 ],
                 // theme: ThemeData(useMaterial3: false),
                 // ignore: deprecated_member_use
                 useInheritedMediaQuery: true,
-                locale: Locale('ar'),
+                locale: const Locale('ar'),
                 // locale: DevicePreview.locale(context),
                 builder: DevicePreview.appBuilder,
                 debugShowCheckedModeBanner: false,

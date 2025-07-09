@@ -38,6 +38,8 @@ class BookingApiRemoteDataSource implements BookingRemoteDataSource {
             "Authorization": 'Bearer $token',
           }));
       if (response.statusCode == 200 || response.statusCode == 201) {
+        print("Booking request: ${request.toJson()}");
+        print("Booking response: ${response.data}");
         return BookingAppointment.fromJson(response.data);
       } else {
         throw RemoteException('فشل الحجز , ${response.statusCode}');

@@ -93,6 +93,8 @@ class AppointmentApiRemoteDataSource extends AppointmentRemoteDataSource {
         }));
     print("token-->>>>>>> $token");
     if (response.statusCode == 200) {
+      print("Doctor cancelled appointment ID: $id");
+      print("Delete appointment response: ${response.data}");
       return DeleteBookingEntity.fromJson(response.data);
     } else {
       throw RemoteException(response.data['message'] ?? 'فشل في حذف الموعد');

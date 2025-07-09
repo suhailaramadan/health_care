@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_charts/flutter_charts.dart';
 import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
@@ -11,9 +12,10 @@ import 'package:graduation_project/core/widgets/loading_indicator.dart';
 import 'package:graduation_project/features/doctors/data/model/doctor_dash_board_response.dart';
 import 'package:graduation_project/features/doctors/presentation/cubit/doctor_dashboard_cubit.dart';
 import 'package:graduation_project/features/doctors/presentation/cubit/doctor_dashboard_states.dart';
-import 'package:flutter_charts/flutter_charts.dart';
 import 'package:intl/intl.dart';
 import 'dart:ui' as ui;
+
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class DoctorsTabScreen extends StatefulWidget {
   static const doctorTab = "/doctorTab";
@@ -40,17 +42,26 @@ class _DoctorsTabScreenState extends State<DoctorsTabScreen> {
         ),
       );
     }
+
     final dataRows = [totalAppointments, totalBookings];
     final xLabels = ['المواعيد', 'الحجوزات'];
-
+// // return
     LabelLayoutStrategy? xContainerLabelLayoutStrategy;
-    ChartOptions chartOptions = const ChartOptions();
+    ChartOptions chartOptions = ChartOptions();
+//     final chartData = ChartData(
+//         dataRows: [dataRows],
+//         xUserLabels: xLabels,
+//         dataRowsLegends: const [''],
+//         chartOptions: chartOptions,
+//         dataRowsColors:
+// //         );
     final chartData = ChartData(
-        dataRows: [dataRows],
-        xUserLabels: xLabels,
-        dataRowsLegends: const [''],
-        chartOptions: chartOptions);
-
+      dataRows: [dataRows],
+      xUserLabels: xLabels,
+      dataRowsLegends: const [''],
+      // lineColors: const [ColorManager.primary],
+      chartOptions: chartOptions,
+    );
     var lineChartContainer = LineChartTopContainer(
       chartData: chartData,
       xContainerLabelLayoutStrategy: xContainerLabelLayoutStrategy,
@@ -84,29 +95,17 @@ class _DoctorsTabScreenState extends State<DoctorsTabScreen> {
             return Scaffold(
               backgroundColor: ColorManager.white,
               appBar: AppBar(
-                backgroundColor: Color.fromARGB(255, 65, 130, 195),
+                backgroundColor: const Color.fromARGB(255, 65, 130, 195),
                 toolbarHeight: 130,
                 leadingWidth: double.infinity,
 
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius:
-                        BorderRadius.only(bottomLeft: Radius.circular(200))),
-                leading:
-                    // Container(
-                    //   height: 150,
-                    //   // color: const Color.fromARGB(255, 11, 84, 158),
-
-                    //   decoration: const BoxDecoration(
-                    //       color: Color.fromARGB(255, 97, 129, 184),
-                    //       borderRadius: BorderRadius.only(
-                    //           bottomRight: Radius.circular(10),
-                    //           bottomLeft: Radius.circular(120))),
-                    //   padding: const EdgeInsets.all(8),
-                    //   child:
-                    Row(
+                        BorderRadius.only(bottomLeft: Radius.circular(120))),
+                leading: Row(
                   children: [
-                    SizedBox(
-                      width: 8,
+                    const SizedBox(
+                      width: 5,
                     ),
                     if (data.profileImage != null)
                       Center(
@@ -114,10 +113,10 @@ class _DoctorsTabScreenState extends State<DoctorsTabScreen> {
                           decoration: BoxDecoration(
                               border: Border.all(
                                   width: .3, color: ColorManager.white),
-                              borderRadius: BorderRadius.circular(40)),
+                              borderRadius: BorderRadius.circular(45)),
                           child: CircleAvatar(
                             backgroundColor: ColorManager.white,
-                            radius: 40,
+                            radius: 45,
                             backgroundImage: NetworkImage(
                                 "${ApiConstants.imageBaseUrl}${data.profileImage!}"),
                           ),
@@ -134,20 +133,24 @@ class _DoctorsTabScreenState extends State<DoctorsTabScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              data.doctorName ?? '',
+                              "د. ${data.doctorName ?? ''}",
+                              overflow: TextOverflow.visible,
+                              softWrap: true,
                               style: getSemiBoldStyle(
                                   fontSize: 18, color: ColorManager.white),
                             ),
                             const SizedBox(
-                              height: 8,
+                              height: 10,
                             ),
-                            Text(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              data.greeting ?? '',
-                              style: getRegularStyle(
-                                  // fontSize: 22,
-                                  color: ColorManager.greyDark),
+                            Expanded(
+                              child: Text(
+                                overflow: TextOverflow.visible,
+                                softWrap: true,
+                                data.greeting ?? '',
+                                style: getRegularStyle(
+                                    // fontSize: 22,
+                                    color: ColorManager.greyDark),
+                              ),
                             ),
                           ],
                         ),
@@ -167,9 +170,14 @@ class _DoctorsTabScreenState extends State<DoctorsTabScreen> {
                     const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text('الإحصائيات',
-                          style: getBoldStyle(
-                              fontSize: 18, color: ColorManager.textColor)),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.stacked_line_chart_sharp),
+                          Text('الإحصائيات',
+                              style: getBoldStyle(
+                                  fontSize: 18, color: ColorManager.textColor)),
+                        ],
+                      ),
                     ),
 
                     const SizedBox(height: 12),
@@ -184,22 +192,22 @@ class _DoctorsTabScreenState extends State<DoctorsTabScreen> {
                       children: [
                         _doctorDashboardCard(context,
                             title: "إجمالي المواعيد",
-                            color: ColorManager.babyPink,
+                            color: ColorManager.white,
                             value: data.totalAppointments.toString(),
                             icon: Icons.calendar_today),
                         _doctorDashboardCard(context,
                             title: "إجمالى الحجوزات",
-                            color: ColorManager.blue,
+                            color: ColorManager.white,
                             value: data.totalBookings.toString(),
                             icon: Icons.book_online),
                         _doctorDashboardCard(context,
                             title: "مواعيد اليوم",
-                            color: ColorManager.babyGreen,
+                            color: ColorManager.white,
                             value: data.todayAppointmentsCount.toString(),
                             icon: Icons.today),
                         _doctorDashboardCard(context,
                             title: "الميعاد القادم",
-                            color: ColorManager.babyRed,
+                            color: ColorManager.white,
                             value: data.nextAppointmentTime ?? 'لا يوجد',
                             icon: Icons.access_time)
                       ],
@@ -243,18 +251,19 @@ class _DoctorsTabScreenState extends State<DoctorsTabScreen> {
       required String value,
       required IconData icon,
       required Color color}) {
-    return Container(
-      decoration: BoxDecoration(
-          color: color,
-          border: Border.all(width: .2, color: ColorManager.kuhly),
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-                color: ColorManager.grey.withOpacity(.2),
-                blurRadius: 10,
-                offset: const Offset(0, 5))
-          ]),
-      padding: const EdgeInsets.all(15),
+    return Card(
+      color: color,
+      // decoration: BoxDecoration(
+      //     color: color,
+      //     border: Border.all(width: .2, color: ColorManager.kuhly),
+      //     borderRadius: BorderRadius.circular(16),
+      //     boxShadow: [
+      //       BoxShadow(
+      //           color: ColorManager.grey.withOpacity(.2),
+      //           blurRadius: 10,
+      //           offset: const Offset(0, 5))
+      //     ]),
+      // padding: const EdgeInsets.all(15),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -352,22 +361,6 @@ class _DoctorsTabScreenState extends State<DoctorsTabScreen> {
     double appointmentsRatio,
     double bookingsRatio,
   ) {
-    // DoctorDashBoardResponse dashboard = DoctorDashBoardResponse();
-    // final total = dashboard.totalAppointments??0 + dashboard.totalAppointments??0;
-    // final total = appointmentsRatio + bookingsRatio;
-
-    // if (total == 0.0) {
-    //   return Center(
-    //       child: Text(
-    //     "لا توجد بيانات كافية لعمل الإحصائيات",
-    //     style: getMediumStyle(color: ColorManager.kuhly),
-    //   ));
-    // }
-    // total = appointmentsRatio + bookingsRatio;
-    // print(total);
-    // appointmentsRatio = (dashboard.totalAppointments ?? 0) / total * 100;
-    // bookingsRatio = (dashboard.totalBookings ?? 0) / total * 100;
-    // total = appointmentsRatio + bookingsRatio;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -376,175 +369,7 @@ class _DoctorsTabScreenState extends State<DoctorsTabScreen> {
               borderRadius: BorderRadius.circular(12)),
           height: 200,
           width: double.infinity,
-          child: chartToRun(appointmentsRatio, bookingsRatio)
-          //  PieChart(
-          //   PieChartData(
-          //     sectionsSpace: 4,
-          //     centerSpaceRadius: 40,
-          //     sections: [
-          //       PieChartSectionData(
-          //         value: appointmentsRatio,
-          //         color: Colors.blue,
-          //         title: 'مواعيد\n${appointmentsRatio.toStringAsFixed(1)}%',
-          //         titleStyle: getRegularStyle(color: Colors.white),
-          //         radius: 50,
-          //       ),
-          //       PieChartSectionData(
-          //         value: bookingsRatio,
-          //         color: Colors.green,
-          //         title: 'حجوزات\n${bookingsRatio.toStringAsFixed(1)}%',
-          //         titleStyle: getRegularStyle(color: Colors.white),
-          //         radius: 50,
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          ),
+          child: chartToRun(appointmentsRatio, bookingsRatio)),
     );
-    // }
-    //  Scaffold(
-    //     // backgroundColor: Colors.amber,
-    //     appBar: AppBar(
-    //   automaticallyImplyLeading: false,
-    //   // backgroundColor: ColorManager.white,
-    // ) //     body: BlocBuilder<DoctorDashboardCubit, DoctorDashboardStates>(
-    // //       builder: (context, state) {
-    //         if (state is DoctorDashboardLoading) {
-    //           return const Center(
-    //             child: LoadingIndicator(),
-    //           );
-    //         } else if (state is DoctorDashboardError) {
-    //           return Center(
-    //             child: Text(state.message),
-    //           );
-    //         } else if (state is DoctorDashboardSuccess) {
-    //           final data = state.response;
-    //           return SingleChildScrollView(
-    //             child: RefreshIndicator(
-    //               onRefresh: () async {
-    //                 context.read<DoctorDashboardCubit>().getDoctorDashboard();
-    //               },
-    //               child: Padding(
-    //                 padding: const EdgeInsets.only(right: 5, left: 5),
-    //                 child: Column(
-    //                   children: [
-    //                     Container(
-    //                       decoration: BoxDecoration(
-    //                           borderRadius: BorderRadius.circular(70),
-    //                           border: Border.all(
-    //                               width: .5, color: ColorManager.primary)),
-    //                       child: CircleAvatar(
-    //                         radius: 70,
-    //                         backgroundColor: ColorManager.white,
-    //                         backgroundImage: NetworkImage(
-    //                             "${ApiConstants.imageBaseUrl}${data.profileImage}"),
-    //                       ),
-    //                     ),
-    //                     const SizedBox(
-    //                       height: 16,
-    //                     ),
-    //                     Text(
-    //                       data.doctorName ?? '',
-    //                       style: getSemiBoldStyle(color: ColorManager.textColor),
-    //                     ),
-    //                     const SizedBox(
-    //                       height: 10,
-    //                     ),
-    //                     Text(
-    //                       data.greeting ?? '',
-    //                       textAlign: TextAlign.center,
-    //                       style: getSemiBoldStyle(color: ColorManager.textColor),
-    //                     ),
-    //                     const SizedBox(
-    //                       height: 20,
-    //                     ),
-    //                     GridView.count(
-    //                       padding: const EdgeInsets.all(8),
-    //                       crossAxisCount: 2,
-    //                       shrinkWrap: true,
-    //                       physics: const NeverScrollableScrollPhysics(),
-    //                       crossAxisSpacing: 16,
-    //                       mainAxisSpacing: 16,
-    //                       children: [
-    //                         _doctorDashboardCard(context,
-    //                             title: "إجمالي المواعيد",
-    //                             color: ColorManager.babyGreen,
-    //                             value: data.totalAppointments.toString(),
-    //                             icon: Icons.calendar_today),
-    //                         _doctorDashboardCard(context,
-    //                             title: "إجمالى الحجوزات",
-    //                             color: ColorManager.blue,
-    //                             value: data.totalBookings.toString(),
-    //                             icon: Icons.book_online),
-    //                         _doctorDashboardCard(context,
-    //                             title: "مواعيد اليوم",
-    //                             color: ColorManager.babyRed,
-    //                             value: data.todayAppointmentsCount.toString(),
-    //                             icon: Icons.today),
-    //                         _doctorDashboardCard(context,
-    //                             title: "الميعاد القادم",
-    //                             color: ColorManager.babyPink,
-    //                             value: data.nextAppointmentTime ?? 'لا يوجد',
-    //                             icon: Icons.access_time)
-    //                       ],
-    //                     ),
-    //                     const SizedBox(
-    //                       height: 30,
-    //                     ),
-    //                   ],
-    //                 ),
-    //               ),
-    //             ),
-    //           );
-    //         }
-    //         return const SizedBox();
-    //       },
-    //     ),
-    //   );
   }
-
-  // Widget _doctorDashboardCard(BuildContext context,
-  //     {required String title,
-  //     required String value,
-  //     required IconData icon,
-  //     required Color color}) {
-  //   return Container(
-  //     decoration: BoxDecoration(
-  //         color: color,
-  //         border: Border.all(width: .2, color: ColorManager.kuhly),
-  //         borderRadius: BorderRadius.circular(16),
-  //         boxShadow: [
-  //           BoxShadow(
-  //               color: ColorManager.grey.withOpacity(.2),
-  //               blurRadius: 10,
-  //               offset: const Offset(0, 5))
-  //         ]),
-  //     padding: const EdgeInsets.all(15),
-  //     child: Column(
-  //       mainAxisAlignment: MainAxisAlignment.center,
-  //       children: [
-  //         Icon(
-  //           icon,
-  //           size: 30,
-  //           color: ColorManager.primary,
-  //         ),
-  //         const SizedBox(
-  //           height: 8,
-  //         ),
-  //         Text(
-  //           value,
-  //           style: getSemiBoldStyle(color: ColorManager.textColor),
-  //         ),
-  //         const SizedBox(
-  //           height: 8,
-  //         ),
-  //         Text(
-  //           title,
-  //           textAlign: TextAlign.center,
-  //           style: getSemiBoldStyle(color: ColorManager.textColor),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 }

@@ -170,87 +170,32 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
             ],
           ),
           floatingActionButton: SizedBox(
-            height: 60,
-            width: 60,
+            height: 70,
+            width: 70,
             child: Center(
-              child: FloatingActionButton(
-                backgroundColor: ColorManager.primary,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.chat);
-                },
-                child: const Icon(
-                  Icons.support_agent_sharp,
-                  color: ColorManager.white,
-                  size: 30,
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(width: .5, color: ColorManager.blue),
+                    borderRadius: BorderRadius.circular(12)),
+                height: 70,
+                width: 75,
+                child: FloatingActionButton(
+                  backgroundColor: ColorManager.primary,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.chat);
+                  },
+                  child: const Icon(
+                    Icons.support_agent_sharp,
+                    color: ColorManager.white,
+                    size: 45,
+                  ),
                 ),
               ),
             ),
           ),
           // ]),
         ));
-
-    // bottomNavigationBar: ClipRRect(
-    //   borderRadius: const BorderRadiusDirectional.only(
-    //     topStart: Radius.circular(15),
-    //     topEnd: Radius.circular(15),
-    //   ),
-    //   child: SizedBox(
-    //     height: MediaQuery.sizeOf(context).height * 0.09,
-    //     child: BottomNavigationBar(
-    //       currentIndex: currentIndex,
-    //       onTap: (value) => changeSelectedIndex(value),
-    //       backgroundColor: ColorManager.primary,
-    //       type: BottomNavigationBarType.fixed,
-    //       selectedItemColor: ColorManager.primary,
-    //       unselectedItemColor: ColorManager.white,
-    //       showSelectedLabels: false,
-    //       showUnselectedLabels: false,
-    //       items: const [
-    //         BottomNavigationBarItem(
-    //           icon: Icon(Icons.home),
-    //           label: "الصفحة الرئيسية",
-    //         ),
-    //         // BottomNavigationBarItem(
-    //         //     icon: Icon(Icons.local_hospital), label: "العيادات"),
-    //         BottomNavigationBarItem(
-    //           icon: Icon(Icons.calendar_month_outlined),
-    //           label: "حجوزاتي",
-    //         ),
-    //         BottomNavigationBarItem(
-    //             icon: Icon(Icons.chat), label: "شات بوت"),
-    //         BottomNavigationBarItem(
-    //             icon: Icon(Icons.person), label: "الحساب")
-    //       ],
-    //     ),
-    //   ),
-    // ),
-    // )
   }
-
-  // void changeSelectedIndex(int selectedIndex) =>
-  //     setState(() => currentIndex = selectedIndex);
 }
-
-// class CustomBottomNavBarItem extends BottomNavigationBarItem {
-//   final Icon icon;
-//   final String title;
-
-//   CustomBottomNavBarItem(this.icon, this.title)
-//       : super(
-//           label: title,
-//           icon: Icon(
-//             icon as IconData,
-//             color: ColorManager.white,
-//           ),
-//           activeIcon: CircleAvatar(
-//               radius: 12,
-//               backgroundColor: ColorManager.white,
-//               child: Icon(
-//                 icon as IconData,
-//                 color: ColorManager.primary,
-//                 size: 14,
-//               )),
-//         );
-// }

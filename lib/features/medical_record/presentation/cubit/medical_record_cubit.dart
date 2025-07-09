@@ -19,19 +19,21 @@ class MedicalRecordCubit extends Cubit<MedicalResocrdSates> {
   final AuthLocalDataSource _localDataSource;
   MedicalRecordCubit(this.medicalRecordRepository, this._localDataSource)
       : super(InitialState());
-  Future<void> getPatientMedicalRecord({bool isDoctor = false}) async {
+  Future<void> getPatientMedicalRecord(
+      {bool isDoctor = false, String? patientid}) async {
     emit(GetMedicalRecordLoading());
-    final patientId = await _localDataSource.getPatientId();
+    final id = isDoctor ? patientid : await _localDataSource.getPatientId();
+    // final patientId = await _localDataSource.getPatientId();
 
-    final response =
-        await medicalRecordRepository.getPatientMedicalRecord(patientId!);
+    final response = await medicalRecordRepository.getPatientMedicalRecord(id!);
     response.fold((failure) => emit(GetMedicalRecordError(failure.message)),
         (records) async {
       if (isDoctor) {
         final doctorId = await _localDataSource.getDoctorId();
-        final filteredRecord =
-            records.where((record) => record.doctorId == doctorId).toList();
-        emit(GetMedicalRecordPatientSuccess(filteredRecord));
+
+        // final filteredRecord =
+        //     records.where((record) => record.doctorId == doctorId).toList();
+        emit(GetMedicalRecordPatientSuccess(records));
       } else {
         allRecords = records;
         emit(GetMedicalRecordPatientSuccess(records));

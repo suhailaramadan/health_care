@@ -1,9 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/font_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
-import 'package:graduation_project/features/user/news/news_response/news_response.dart';
+import 'package:graduation_project/features/user/news/data/model/news_response.dart';
 
 class NewsCard extends StatelessWidget {
   final NewsResponse news;
@@ -35,16 +36,27 @@ class NewsCard extends StatelessWidget {
                 topLeft: Radius.circular(15.r),
                 topRight: Radius.circular(15.r),
               ),
-              child: Image.network(
-                "https://myclinicapp.runasp.net${news.image}",
-                height: 180.h,
+              child: CachedNetworkImage(
+                imageUrl: "https://myclinicapp.runasp.net${news.image}",
+                // height: 200.h,
                 width: double.infinity,
                 fit: BoxFit.fill,
-                errorBuilder: (context, error, stackTrace) {
+                errorWidget: (context, error, stackTrace) {
                   return Container(
                     height: 180.h,
-                    color: ColorManager.grey,
-                    child: const Icon(Icons.broken_image, size: 50),
+                    color: ColorManager.greyDark,
+                    child: const Icon(Icons.warning_amber_rounded,
+                        color: ColorManager.red, size: 50),
+                  );
+                },
+                placeholder: (context, url) {
+                  return const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: ColorManager.primary,
+                      ),
+                    ),
                   );
                 },
               ),

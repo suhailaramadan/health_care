@@ -172,8 +172,8 @@ class _PatientMedicalRecordScreenState
                   ),
                   // ),
                   Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: ColorManager.blue,
@@ -187,12 +187,14 @@ class _PatientMedicalRecordScreenState
                         ),
                         Text(
                           ' السجل الطبي لشهر ${selectedMonth != null ? FormatedDate.formatArabicMonthYear(selectedMonth!) : ''}',
+                          softWrap: true,
+                          overflow: TextOverflow.visible,
                           style: getSemiBoldStyle(color: ColorManager.primary),
                         )
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Expanded(
@@ -200,6 +202,8 @@ class _PatientMedicalRecordScreenState
                         ? Center(
                             child: Text(
                               "لا يوجد سجلات لهذا الشهر",
+                              softWrap: true,
+                              overflow: TextOverflow.visible,
                               style:
                                   getMediumStyle(color: ColorManager.primary),
                             ),
@@ -207,8 +211,8 @@ class _PatientMedicalRecordScreenState
                         : ListView.builder(
                             itemCount: state.medicalRecord.length,
                             itemBuilder: (context, index) => MedicalRecordCard(
-                                  onDelete: () {},
-                                  onEdit: () {},
+                                  // onDelete: () {},
+                                  // onEdit: () {},
                                   isDoctor: false,
                                   medicalRecordPatientEntity:
                                       state.medicalRecord[index],

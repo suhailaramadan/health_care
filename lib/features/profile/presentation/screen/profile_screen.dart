@@ -102,7 +102,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               .isNotEmpty)
                                       ? CachedNetworkImageProvider(
                                           "${ApiConstants.imageBaseUrl}${state.profileEntity.imageUrl}")
-                                      : const NetworkImage(
+                                      : const AssetImage(
                                               "assets/images/profile.avif")
                                           as ImageProvider),
                         ),
@@ -110,6 +110,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         const SizedBox(
                           height: 16,
                         ),
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

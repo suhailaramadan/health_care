@@ -72,6 +72,8 @@ class DeleteAppointmentCubit extends Cubit<AppointmentStates> {
     result.fold((failure) => emit(GetAppointmentError(failure.message)),
         (_) async {
       emit(DeleteAppointmentSuccess());
+      print("Doctor cancelled appointment ID: $appointmentId");
+
       // await bookingsUseCase.bookingPatientRepository.getBookingpatient();
     });
   }

@@ -69,7 +69,7 @@ class _UpdateMedicalRecordState extends State<UpdateMedicalRecord> {
                   notes: notesController.text),
               widget.bookingId)
           .then((value) => Navigator.pop(context));
-      context.read<MedicalRecordCubit>().getPatientMedicalRecord();
+      // context.read<MedicalRecordCubit>().getPatientMedicalRecord();
     }
   }
 

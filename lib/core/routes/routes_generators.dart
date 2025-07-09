@@ -44,7 +44,7 @@ import 'package:graduation_project/features/user/clinic/presentation/screen/clin
 import 'package:graduation_project/features/user/clinic/presentation/widget/clinic_details.dart';
 import 'package:graduation_project/features/doctor/presentation/screen/doctor_screen.dart';
 import 'package:graduation_project/features/doctor/presentation/widgets/doctor_details.dart';
-import 'package:graduation_project/features/user/news/news_response/news_response.dart';
+import 'package:graduation_project/features/user/news/data/model/news_response.dart';
 import 'package:graduation_project/features/user/news/presentation/screen/news_screen.dart';
 import 'package:graduation_project/features/user/news/presentation/widgets/news_details_screen.dart';
 import 'package:graduation_project/features/user/onBoarding/presentation/screen/on_boarding_screen.dart';

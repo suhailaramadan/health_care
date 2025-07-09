@@ -79,7 +79,9 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: ColorManager.white,
         appBar: AppBar(
+          backgroundColor: ColorManager.white,
           title: Text(
             "مواعيدي",
             style: getSemiBoldStyle(color: ColorManager.textColor),
@@ -187,7 +189,7 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
                         borderRadius: BorderRadius.circular(8)),
                     padding: const EdgeInsets.all(10.0),
                     margin: const EdgeInsets.all(10),
-                    child: Column(
+                    child: ListView(
                       children: [
                         const SizedBox(
                           height: 20,
@@ -247,7 +249,10 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
                                   ],
                                 ),
                               ),
-                        Expanded(
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * .8,
+                          // child:
+                          // Expanded(
                           child: ListView.separated(
                             itemCount: filtered.length,
                             separatorBuilder: (_, __) => const Divider(),
@@ -303,6 +308,7 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
                               );
                             },
                           ),
+                          // ),
                         ),
                       ],
                       // ),

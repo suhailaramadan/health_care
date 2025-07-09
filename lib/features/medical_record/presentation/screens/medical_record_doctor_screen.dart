@@ -42,7 +42,7 @@ class _MedicalRecordScreenState extends State<MedicalRecordScreen> {
     if (CacheConstants.roleKey == 'Doctor') {
       context
           .read<MedicalRecordCubit>()
-          .getPatientMedicalRecord(isDoctor: true);
+          .getPatientMedicalRecord(isDoctor: true, patientid: widget.patientId);
     }
     // context.read<MedicalRecordCubit>().getPatientMedicalRecord(widget.patientId);
   }
@@ -113,6 +113,8 @@ class _MedicalRecordScreenState extends State<MedicalRecordScreen> {
                                   children: [
                                     Text(
                                       "الاسم : ",
+                                      softWrap: true,
+                                      overflow: TextOverflow.visible,
                                       style: getMediumStyle(
                                           color: ColorManager.primary),
                                     ),
@@ -131,12 +133,16 @@ class _MedicalRecordScreenState extends State<MedicalRecordScreen> {
                                   children: [
                                     Text(
                                       "الكلية : ",
+                                      softWrap: true,
+                                      overflow: TextOverflow.visible,
                                       style: getMediumStyle(
                                           color: ColorManager.primary),
                                     ),
                                     const Spacer(),
                                     Text(
                                       state.profileEntity.college ?? '',
+                                      softWrap: true,
+                                      overflow: TextOverflow.visible,
                                       style: getRegularStyle(
                                           color: ColorManager.textColor),
                                     )
@@ -149,6 +155,8 @@ class _MedicalRecordScreenState extends State<MedicalRecordScreen> {
                                   children: [
                                     Text(
                                       "الرقم القومي : ",
+                                      softWrap: true,
+                                      overflow: TextOverflow.visible,
                                       style: getMediumStyle(
                                           color: ColorManager.primary),
                                     ),
@@ -165,12 +173,16 @@ class _MedicalRecordScreenState extends State<MedicalRecordScreen> {
                                   children: [
                                     Text(
                                       "رقم الهاتف : ",
+                                      softWrap: true,
+                                      overflow: TextOverflow.visible,
                                       style: getMediumStyle(
                                           color: ColorManager.primary),
                                     ),
                                     const Spacer(),
                                     Text(
                                       state.profileEntity.phoneNumber ?? '',
+                                      softWrap: true,
+                                      overflow: TextOverflow.visible,
                                       style: getRegularStyle(
                                           color: ColorManager.textColor),
                                     )
@@ -180,12 +192,16 @@ class _MedicalRecordScreenState extends State<MedicalRecordScreen> {
                                   children: [
                                     Text(
                                       "البريد الإلكتروني : ",
+                                      softWrap: true,
+                                      overflow: TextOverflow.visible,
                                       style: getMediumStyle(
                                           color: ColorManager.primary),
                                     ),
                                     const Spacer(),
                                     Text(
                                       state.profileEntity.email ?? '',
+                                      softWrap: true,
+                                      overflow: TextOverflow.visible,
                                       style: getRegularStyle(
                                           color: ColorManager.textColor),
                                     )
@@ -223,190 +239,187 @@ class _MedicalRecordScreenState extends State<MedicalRecordScreen> {
                   ),
                   Text(
                     "السجلات الطبية للمريض",
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
                     style:
                         getBoldStyle(fontSize: 16, color: ColorManager.primary),
                   )
                 ])),
-            BlocBuilder<MedicalRecordCubit, MedicalResocrdSates>(
-              builder: (context, state) {
-                if (state is GetMedicalRecordLoading) {
-                  return const Center(
-                      child: Column(
-                    children: [
-                      SizedBox(
-                        height: 30,
-                      ),
-                      LoadingIndicator(),
-                    ],
-                  ));
-                } else if (state is GetMedicalRecordError) {
-                  return const Center(child: ErrorIndicator());
-                } else if (state is GetMedicalRecordPatientSuccess) {
-                  return Expanded(
-                    child: state.medicalRecord.isEmpty
+            Expanded(
+              child: BlocBuilder<MedicalRecordCubit, MedicalResocrdSates>(
+                builder: (context, state) {
+                  if (state is GetMedicalRecordLoading) {
+                    return const Center(
+                        child: Column(
+                      children: [
+                        SizedBox(
+                          height: 30,
+                        ),
+                        LoadingIndicator(),
+                      ],
+                    ));
+                  } else if (state is GetMedicalRecordError) {
+                    return const Center(child: ErrorIndicator());
+                  } else if (state is GetMedicalRecordPatientSuccess) {
+                    return state.medicalRecord.isEmpty
                         ? Center(
                             child: Text(
                               "لا يوجد سجلات",
+                              softWrap: true,
+                              overflow: TextOverflow.visible,
                               style: getMediumStyle(color: ColorManager.kuhly),
                             ),
                           )
-                        : Expanded(
-                            child: ListView.builder(
-                                itemCount: state.medicalRecord.length,
-                                itemBuilder: (context, index) =>
-                                    MedicalRecordCard(
-                                      onDelete: () async {
-                                        final cubit =
-                                            context.read<MedicalRecordCubit>();
-                                        final recordId =
-                                            state.medicalRecord[index];
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return Directionality(
-                                              textDirection: TextDirection.rtl,
-                                              child: AlertDialog(
-                                                surfaceTintColor:
-                                                    ColorManager.white,
-                                                backgroundColor:
-                                                    ColorManager.white,
-                                                title: const Icon(
-                                                  Icons.warning_amber,
-                                                  color: ColorManager.red,
-                                                  size: 35,
-                                                ),
-                                                content: Text(
-                                                  "هل تريد حذف السجل الطبي ",
-                                                  style: getBoldStyle(
-                                                      fontSize: 18,
-                                                      color: ColorManager
-                                                          .textColor),
-                                                ),
-                                                actions: [
-                                                  TextButton(
-                                                      onPressed: () {
-                                                        cubit
-                                                            .deleteMedicalRecord(
-                                                                recordId.id ??
-                                                                    0);
-                                                      },
-                                                      style: ButtonStyle(
-                                                          padding:
-                                                              const MaterialStatePropertyAll(
-                                                                  EdgeInsets
-                                                                      .all(12)),
-                                                          backgroundColor:
-                                                              const MaterialStatePropertyAll(
-                                                                  ColorManager
-                                                                      .red),
-                                                          shape: MaterialStatePropertyAll(
-                                                              RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5),
-                                                                  side: const BorderSide(
-                                                                      width:
-                                                                          .3)))),
-                                                      child: Text(
-                                                        "إلغاء السجل ",
-                                                        style: getRegularStyle(
-                                                            color: ColorManager
-                                                                .white),
-                                                      )),
-                                                  SizedBox(
-                                                    width: 50.w,
-                                                  ),
-                                                  TextButton(
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                      style: ButtonStyle(
-                                                          padding:
-                                                              const MaterialStatePropertyAll(
-                                                                  EdgeInsets
-                                                                      .all(15)),
-                                                          backgroundColor:
-                                                              const MaterialStatePropertyAll(
-                                                                  ColorManager
-                                                                      .transparent),
-                                                          shape: MaterialStatePropertyAll(
-                                                              RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5),
-                                                                  side: const BorderSide(
-                                                                      width:
-                                                                          .3)))),
-                                                      child: Text(
-                                                        "لا أريد ذلك",
-                                                        style: getRegularStyle(
-                                                            color: ColorManager
-                                                                .textColor),
-                                                      )),
-                                                  //     onTap: () {
-                                                  //       Navigator.of(context).pop();
+                        : ListView.builder(
+                            itemCount: state.medicalRecord.length,
+                            itemBuilder: (context, index) => MedicalRecordCard(
+                                  // onDelete: () async {
+                                  //   final cubit =
+                                  //       context.read<MedicalRecordCubit>();
+                                  //   final recordId = state.medicalRecord[index];
+                                  //   showDialog(
+                                  //     context: context,
+                                  //     builder: (context) {
+                                  //       return Directionality(
+                                  //         textDirection: TextDirection.rtl,
+                                  //         child: AlertDialog(
+                                  //           surfaceTintColor:
+                                  //               ColorManager.white,
+                                  //           backgroundColor: ColorManager.white,
+                                  //           title: const Icon(
+                                  //             Icons.warning_amber,
+                                  //             color: ColorManager.red,
+                                  //             size: 35,
+                                  //           ),
+                                  //           content: Text(
+                                  //             "هل تريد حذف السجل الطبي ",
+                                  //             softWrap: true,
+                                  //             overflow: TextOverflow.visible,
+                                  //             style: getBoldStyle(
+                                  //                 fontSize: 18,
+                                  //                 color:
+                                  //                     ColorManager.textColor),
+                                  //           ),
+                                  //           actions: [
+                                  //             TextButton(
+                                  //                 onPressed: () {
+                                  //                   cubit.deleteMedicalRecord(
+                                  //                       recordId.id ?? 0);
+                                  //                 },
+                                  //                 style: ButtonStyle(
+                                  //                     padding:
+                                  //                         const MaterialStatePropertyAll(
+                                  //                             EdgeInsets.all(
+                                  //                                 12)),
+                                  //                     backgroundColor:
+                                  //                         const MaterialStatePropertyAll(
+                                  //                             ColorManager.red),
+                                  //                     shape: MaterialStatePropertyAll(
+                                  //                         RoundedRectangleBorder(
+                                  //                             borderRadius:
+                                  //                                 BorderRadius
+                                  //                                     .circular(
+                                  //                                         5),
+                                  //                             side:
+                                  //                                 const BorderSide(
+                                  //                                     width:
+                                  //                                         .3)))),
+                                  //                 child: Text(
+                                  //                   "إلغاء السجل ",
+                                  //                   style: getRegularStyle(
+                                  //                       color:
+                                  //                           ColorManager.white),
+                                  //                 )),
+                                  //             SizedBox(
+                                  //               width: 50.w,
+                                  //             ),
+                                  //             TextButton(
+                                  //                 onPressed: () {
+                                  //                   Navigator.pop(context);
+                                  //                 },
+                                  //                 style: ButtonStyle(
+                                  //                     padding:
+                                  //                         const MaterialStatePropertyAll(
+                                  //                             EdgeInsets.all(
+                                  //                                 15)),
+                                  //                     backgroundColor:
+                                  //                         const MaterialStatePropertyAll(
+                                  //                             ColorManager
+                                  //                                 .transparent),
+                                  //                     shape: MaterialStatePropertyAll(
+                                  //                         RoundedRectangleBorder(
+                                  //                             borderRadius:
+                                  //                                 BorderRadius
+                                  //                                     .circular(
+                                  //                                         5),
+                                  //                             side:
+                                  //                                 const BorderSide(
+                                  //                                     width:
+                                  //                                         .3)))),
+                                  //                 child: Text(
+                                  //                   "لا أريد ذلك",
+                                  //                   style: getRegularStyle(
+                                  //                       color: ColorManager
+                                  //                           .textColor),
+                                  //                 )),
+                                  //             //     onTap: () {
+                                  //             //       Navigator.of(context).pop();
 
-                                                  //       cubit.deleteAppointment(
-                                                  //           appointment.id ?? 0);
-                                                  //     }),
-                                                  // CustomButton(
-                                                  //     label: "لا أريد ذلك",
-                                                  //     backgroundColor:
-                                                  //         ColorManager.transparent,
-                                                  //     onTap: () {
-                                                  //       Navigator.of(context).pop();
-                                                  //     }),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                      onEdit: () async {
-                                        final profile =
-                                            context.read<ProfileCubit>().state;
-                                        if (profile is GetProfilesSuccess) {
-                                          final result =
-                                              await Navigator.of(context)
-                                                  .pushNamed(
-                                            Routes.updateMedicalRecord,
-                                            arguments: {
-                                              'bookingId':
-                                                  state.medicalRecord[index].id,
-                                              "diagnosis": state
-                                                  .medicalRecord[index]
-                                                  .diagnosis,
-                                              "treatment": state
-                                                  .medicalRecord[index]
-                                                  .treatment,
-                                              "notes": state
-                                                  .medicalRecord[index].notes,
-                                              'firstName': profile
-                                                  .profileEntity.firstName,
-                                              'lastName':
-                                                  profile.profileEntity.lastName
-                                            },
-                                          );
+                                  //             //       cubit.deleteAppointment(
+                                  //             //           appointment.id ?? 0);
+                                  //             //     }),
+                                  //             // CustomButton(
+                                  //             //     label: "لا أريد ذلك",
+                                  //             //     backgroundColor:
+                                  //             //         ColorManager.transparent,
+                                  //             //     onTap: () {
+                                  //             //       Navigator.of(context).pop();
+                                  //             //     }),
+                                  //           ],
+                                  //         ),
+                                  //       );
+                                  //     },
+                                  //   );
+                                  // },
+                                  // onEdit: () async {
+                                  //   final profile =
+                                  //       context.read<ProfileCubit>().state;
+                                  //   if (profile is GetProfilesSuccess) {
+                                  //     final result =
+                                  //         await Navigator.of(context).pushNamed(
+                                  //       Routes.updateMedicalRecord,
+                                  //       arguments: {
+                                  //         'bookingId':
+                                  //             state.medicalRecord[index].id,
+                                  //         "diagnosis": state
+                                  //             .medicalRecord[index].diagnosis,
+                                  //         "treatment": state
+                                  //             .medicalRecord[index].treatment,
+                                  //         "notes":
+                                  //             state.medicalRecord[index].notes,
+                                  //         'firstName':
+                                  //             profile.profileEntity.firstName,
+                                  //         'lastName':
+                                  //             profile.profileEntity.lastName
+                                  //       },
+                                  //     );
 
-                                          if (result == null) {
-                                            context
-                                                .read<MedicalRecordCubit>()
-                                                .getMedicalRecord(widget.id);
-                                          }
-                                        }
-                                      },
-                                      isDoctor: true,
-                                      medicalRecordPatientEntity:
-                                          state.medicalRecord[index],
-                                    )),
-                          ),
-                  );
-                } else {
-                  return const SizedBox();
-                }
-              },
+                                  //     if (result == null) {
+                                  //       context
+                                  //           .read<MedicalRecordCubit>()
+                                  //           .getMedicalRecord(widget.id);
+                                  //     }
+                                  //   }
+                                  // },
+                                  isDoctor: true,
+                                  medicalRecordPatientEntity:
+                                      state.medicalRecord[index],
+                                ));
+                  } else {
+                    return const SizedBox();
+                  }
+                },
+              ),
             )
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,55 +19,12 @@ class DoctorItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.sizeOf(context);
     final bool isLandscape = screenSize.width > screenSize.height;
-    // return Directionality(
-    //   textDirection: TextDirection.rtl,
-    //   child: InkWell(
-    //       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-    //           builder: (context) => const DoctorDetails(),
-    //           settings: RouteSettings(
-    //               arguments: DoctorArg(
-    //                   doctorEntity.clinicId,
-    //                   doctorEntity.clinicName,
-    //                   doctorEntity.description,
-    //                   doctorEntity.firstName,
-    //                   doctorEntity.id,
-    //                   doctorEntity.lastName,
-    //                   doctorEntity.specialty,
-    //                   doctorEntity.imageUrl)))),
-    //       child: Container(
-    //         margin: EdgeInsets.symmetric(horizontal: 8),
-    //         height: screenSize.height * 0.7,
-    //         width: screenSize.width * .5,
-    //         decoration: BoxDecoration(
-    //           border: Border.all(
-    //             color: ColorManager.primary.withOpacity(0.3),
-    //             width: 2,
-    //           ),
-    //           borderRadius: BorderRadius.circular(16.r),
-    //         ),
-    //         child: Column(
-    //           children: [
-    //             ClipRRect(
-    //               borderRadius: BorderRadius.circular(20),
-    //               child: CachedNetworkImage(
-    //                 imageUrl:
-    //                     "${ApiConstants.imageBaseUrl}${doctorEntity.imageUrl}",
-    //                 height: isLandscape
-    //                     ? screenSize.width * .2
-    //                     : screenSize.height * .24,
-    //                 fit: BoxFit.cover,
-    //               ),
-    //             ),
-    //             Text("${doctorEntity.firstName} ${doctorEntity.lastName}")
-    //           ],
-    //         ),
-    //       )),
-    // );
+
     return Container(
       // padding: const EdgeInsets.symmetric(horizontal: 10),
       margin: const EdgeInsets.all(8),
 
-      height: 300,
+      height: 350,
       // decoration: const BoxDecoration(
       //     // color: Color.fromARGB(255, 79, 136, 198),
       //     borderRadius: BorderRadius.all(Radius.circular(15))),
@@ -92,7 +50,7 @@ class DoctorItem extends StatelessWidget {
           child: SizedBox(
             // decoration: BoxDecoration(
             // border: Border.all(color: ColorManager.primary, width: .2)),
-            height: 150,
+            height: 160,
             width: 300,
             child: Card(
               // shape: RoundedRectangleBorder(
@@ -125,40 +83,44 @@ class DoctorItem extends StatelessWidget {
                               )),
                           errorWidget: (context, url, error) {
                             return Image.asset(
-                              "assets/images/doctor_image.png",
+                              "assets/images/OIP.jpg",
                             );
                           }),
                     ),
                     // const SizedBox(
                     //   width: 15,
                     // ),
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "د. ${doctorEntity.firstName} ${doctorEntity.lastName}",
-                            style: getBoldStyle(
-                                color: ColorManager.primary, fontSize: 18),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "${doctorEntity.specialty}",
-                            style: getMediumStyle(
-                                color: ColorManager.textColor, fontSize: 12),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "${doctorEntity.email}",
-                            style: getMediumStyle(
-                                color: ColorManager.grey, fontSize: 12),
-                          ),
-                        ],
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "د. ${doctorEntity.firstName} ${doctorEntity.lastName}",
+                              style: getBoldStyle(
+                                  color: ColorManager.primary, fontSize: 17),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "${doctorEntity.specialty}",
+                              style: getMediumStyle(
+                                  color: Color.fromARGB(255, 155, 151, 151),
+                                  fontSize: 12),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "${doctorEntity.email}",
+                              style: getMediumStyle(
+                                  color: Color.fromARGB(255, 135, 132, 132),
+                                  fontSize: 14),
+                            ),
+                          ],
+                        ),
                       ),
                     )
                   ],

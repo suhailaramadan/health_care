@@ -59,24 +59,35 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Center(
-                      child: CircleAvatar(
-                          backgroundColor: ColorManager.white,
-                          radius: isLargeTablet
-                              ? screenSize.height * .08
-                              : isLandscape
-                                  ? screenSize.width * .07
-                                  : screenSize.height * .073,
-                          // radius: 60,
-                          backgroundImage: _profileImage != null
-                              ? FileImage(_profileImage!)
-                              : (state.profileDoctorEntity.imageUrl != null &&
-                                      state.profileDoctorEntity.imageUrl!
-                                          .isNotEmpty)
-                                  ? CachedNetworkImageProvider(
-                                      "${ApiConstants.imageBaseUrl}${state.profileDoctorEntity.imageUrl}")
-                                  : const AssetImage(
-                                          "assets/images/doctor_image.jpg")
-                                      as ImageProvider),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: .3, color: ColorManager.primary),
+                            borderRadius: BorderRadius.circular(
+                              isLargeTablet
+                                  ? screenSize.height * .08
+                                  : isLandscape
+                                      ? screenSize.width * .07
+                                      : screenSize.height * .073,
+                            )),
+                        child: CircleAvatar(
+                            backgroundColor: ColorManager.white,
+                            radius: isLargeTablet
+                                ? screenSize.height * .08
+                                : isLandscape
+                                    ? screenSize.width * .07
+                                    : screenSize.height * .073,
+                            // radius: 60,
+                            backgroundImage: _profileImage != null
+                                ? FileImage(_profileImage!)
+                                : (state.profileDoctorEntity.imageUrl != null &&
+                                        state.profileDoctorEntity.imageUrl!
+                                            .isNotEmpty)
+                                    ? CachedNetworkImageProvider(
+                                        "${ApiConstants.imageBaseUrl}${state.profileDoctorEntity.imageUrl}")
+                                    : const AssetImage("assets/images/OIP.jpg")
+                                        as ImageProvider),
+                      ),
                     ),
 
                     const SizedBox(
@@ -109,8 +120,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                         Text(
                           "${state.profileDoctorEntity.email}",
                           style: getRegularStyle(color: ColorManager.textColor),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
+                          overflow: TextOverflow.visible,
                         ),
                       ],
                     ),

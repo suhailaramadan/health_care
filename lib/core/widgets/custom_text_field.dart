@@ -106,6 +106,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 widget.onSumbit!(value);
               }
             },
+                
             maxLength: widget.maxLength,
             maxLines: widget.maxLines ?? 1,
             controller: widget.controller,

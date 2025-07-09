@@ -57,6 +57,8 @@ class CustomSectionBar extends StatelessWidget {
         children: [
           Text(
             text,
+            overflow: TextOverflow.visible,
+            softWrap: true,
             style: getBoldStyle(
               fontSize: getResponsiveFontSize(),
               // isLandscape
@@ -64,6 +66,7 @@ class CustomSectionBar extends StatelessWidget {
               //     : isLargeTablet
               //         ? 33.h
               //         : 16.h,
+
               color: ColorManager.textColor,
             ),
           ),

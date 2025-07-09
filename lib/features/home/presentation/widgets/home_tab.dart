@@ -59,7 +59,7 @@ class _HomeTabState extends State<HomeTab> {
 
   int currentIndex = 0;
   final List<String> text = [
-    // "نحن هنا نقدم لكم رعاية طبية\nموثوقة ومتكاملة\nاحجز موعدك اليوم وابدأرحلتك\n نحو صحةأفضل"
+    // "نحن هنا نقدم لكم رعاية طبية\nموثوقة ومتكاملة\nاحجز موعدك اليوم وابدأرحلتك\n نحو صحةأفضل",
     "الإدارة الطبية جامعة طنطا\nرفيقكم في رحلة صحية آمنة\nداخل الحرم الجامعي",
     // "رعايتكم مسؤوليتنا! خدمات "
   ];
@@ -159,15 +159,7 @@ class _HomeTabState extends State<HomeTab> {
                   timer: _timer,
                   text: text[currentIndex],
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.all(10.0),
-                //   child: CustomTextField(
-                //     // backgroundColor: ColorManager.primary.withOpacity(0.12),
-                //     prefixIcon: const Icon(Icons.search),
-                //     hint: 'ابحث عن العيادة',
-                //     hintTextStyle: getMediumStyle(color: ColorManager.grey),
-                //   ),
-                // ),
+
                 SizedBox(
                   height: isLandscape
                       ? screenSize.width * .02
@@ -229,12 +221,7 @@ class _HomeTabState extends State<HomeTab> {
                     },
                   ),
                 ),
-                // SizedBox(
 
-                //   // height: isLandscape
-                //   //     ? screenSize.width * .01
-                //   //     : screenSize.height * .001,
-                // ),
                 CustomSectionBar(
                   text: "أطباؤنا",
                   onViewAllClicked: () {
@@ -243,8 +230,8 @@ class _HomeTabState extends State<HomeTab> {
                 ),
                 SizedBox(
                   height: isLandscape
-                      ? screenSize.width * .3
-                      : screenSize.height * .3,
+                      ? screenSize.width * .2.w
+                      : screenSize.height * .32.h,
                   // : screenSize.height * .312,
                   child: BlocProvider(
                     create: (context) => _doctorsCubit,

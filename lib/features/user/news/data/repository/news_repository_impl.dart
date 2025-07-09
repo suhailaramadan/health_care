@@ -1,6 +1,7 @@
 import 'package:graduation_project/core/error/exceptions.dart';
+import 'package:graduation_project/features/user/news/data/model/news_response.dart';
 import 'package:graduation_project/features/user/news/data/remote/news_remote_data_source.dart';
-import 'package:graduation_project/features/user/news/news_response/news_response.dart';
+
 import 'package:graduation_project/features/user/news/domain/repository/reposirory.dart';
 import 'package:injectable/injectable.dart';
 

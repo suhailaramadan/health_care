@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/core/constants.dart';
@@ -104,6 +105,7 @@ class _UpdateDoctorProfileScreenState extends State<UpdateDoctorProfileScreen> {
     }
   }
 
+  String selectedCountryCode = '+20';
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -187,8 +189,79 @@ class _UpdateDoctorProfileScreenState extends State<UpdateDoctorProfileScreen> {
                           controller: _phoneController,
                           validation: Validator.validatePhoneNumber,
                           label: 'رقم الهاتف',
+                          maxLength: 11,
                           textInputType: TextInputType.phone,
                         ),
+                        // TextFormField(
+                        //     controller: _phoneController,
+                        //     // onSaved: (val) {
+                        //     //   email = val;
+                        //     // },
+                        //     validator: (value) {
+                        //       const String phonePattern =
+                        //           r'^(?:[1-9])?[0-9]{11}$';
+                        //       final regExp = RegExp(phonePattern);
+                        //       if (value == null || value.isEmpty) {
+                        //         return "Enter your phone number";
+                        //       } else if (!regExp.hasMatch(value)) {
+                        //         return "Enter a correct number";
+                        //       }
+
+                        //       return null;
+                        //     },
+                        //     maxLength: 11,
+                        //     decoration: InputDecoration(
+                        //         prefixIcon: Container(
+                        //             padding: const EdgeInsets.only(left: 5),
+                        //             child: Row(
+                        //                 mainAxisSize: MainAxisSize.min,
+                        //                 children: [
+                        //                   CountryCodePicker(
+                        //                     textStyle:
+                        //                         TextStyle(color: Colors.black),
+                        //                     backgroundColor: Colors.white,
+                        //                     searchDecoration: InputDecoration(
+                        //                       hintText: "ابحث عن البلد",
+                        //                       border:
+                        //                           const OutlineInputBorder(),
+                        //                       focusedBorder: OutlineInputBorder(
+                        //                         borderSide: BorderSide(
+                        //                           color: const Color.fromARGB(
+                        //                               255, 57, 50, 50),
+                        //                         ),
+                        //                         borderRadius:
+                        //                             BorderRadius.circular(20),
+                        //                       ),
+                        //                       enabledBorder: OutlineInputBorder(
+                        //                         borderSide: BorderSide(
+                        //                             color: ColorManager.grey),
+                        //                         borderRadius:
+                        //                             BorderRadius.circular(20),
+                        //                       ),
+                        //                     ),
+                        //                     dialogSize: const Size(500, 700),
+                        //                     closeIcon: const Icon(
+                        //                         Icons.close_sharp,
+                        //                         color: Colors.red),
+                        //                     boxDecoration: BoxDecoration(
+                        //                       color: Colors.white,
+                        //                       borderRadius:
+                        //                           BorderRadius.circular(20),
+                        //                     ),
+                        //                     initialSelection: 'EG',
+                        //                     favorite: const ['EG', 'SA', 'AE'],
+                        //                     showCountryOnly: false,
+                        //                     showOnlyCountryWhenClosed: false,
+                        //                     alignLeft: false,
+                        //                     onChanged:
+                        //                         (CountryCode countryCode) {
+                        //                       setState(() {
+                        //                         selectedCountryCode =
+                        //                             countryCode.dialCode!;
+                        //                       });
+                        //                     },
+                        //                   )
+                        //                 ])))),
                         const SizedBox(height: 10),
                         CustomTextField(
                             controller: _nationalIdController,

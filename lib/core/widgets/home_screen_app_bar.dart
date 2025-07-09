@@ -136,8 +136,7 @@ class _HomeScreenAppBarState extends State<HomeScreenAppBar> {
                               state.profileEntity.imageUrl!.isNotEmpty
                           ? CachedNetworkImageProvider(
                               "${ApiConstants.imageBaseUrl}${state.profileEntity.imageUrl}")
-                          : const AssetImage(
-                                  "assets/images/photo_2024-12-24_06-14-01.jpg")
+                          : const AssetImage("assets/images/profile.avif")
                               as ImageProvider
                       // state.profileEntity.imageUrl != null &&
                       //         state.profileEntity.imageUrl!.isNotEmpty

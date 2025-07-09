@@ -36,6 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     userType = widget.userType;
+    context.read<ProfileCubit>().getPatientProfile();
+    context.read<ProfileCubit>().getDoctorProfile();
   }
 
   @override
@@ -69,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ],
           ),
-          backgroundColor: ColorManager.transparent,
+          backgroundColor: ColorManager.white,
         ),
         body: BlocConsumer<AuthCubit, AuthStates>(
           listener: (context, state) {

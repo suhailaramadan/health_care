@@ -22,7 +22,7 @@ class RegisterRequest {
       required this.confirmPassword,
       required this.phoneNumber});
   Future<FormData> toFormData() async {
-    return FormData.fromMap({
+    final formDataMap = {
       "FirstName": firstName,
       "LastName": lastName,
       "Email": email,
@@ -31,8 +31,32 @@ class RegisterRequest {
       "ConfirmPassword": confirmPassword,
       "PhoneNumber": phoneNumber,
       "College": collage,
-      "ImageFile":
-          MultipartFile.fromFile(imageUrl, filename: ImageManager.profile),
-    });
+    };
+
+    final formData = FormData.fromMap(formDataMap);
+
+    if (imageUrl.isNotEmpty) {
+      formData.files.add(MapEntry(
+        "ImageFile",
+        await MultipartFile.fromFile(imageUrl,
+            filename: imageUrl.split('/').last),
+      ));
+    }
+
+    return formData;
   }
+  // return FormData.fromMap({
+  //   "FirstName": firstName,
+  //   "LastName": lastName,
+  //   "Email": email,
+  //   "NationalID": nationalId,
+  //   "Password": password,
+  //   "ConfirmPassword": confirmPassword,
+  //   "PhoneNumber": phoneNumber,
+  //   "College": collage,
+  //   if(imageUrl.isNotEmpty)
+  //   "ImageFile":
+  //      await MultipartFile.fromFile(imageUrl, filename: ImageManager.profile),
+  // });
 }
+// }

@@ -223,6 +223,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           controller: phoneController,
                           validation: Validator.validatePhoneNumber,
                           label: "رقم الهاتف",
+                          maxLength: 11,
                           textInputType: TextInputType.phone),
                     ),
                     const SizedBox(height: 10),

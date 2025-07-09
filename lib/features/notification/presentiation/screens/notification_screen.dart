@@ -25,28 +25,15 @@ class _NotificationScreenState extends State<NotificationScreen> {
     // context.read<NotificationCubit>().initializeFirebaseNotifications();
     context.read<NotificationCubit>().getNotification();
 
-    // context.read<NotificationCubit>().loadNotifications();
-
-    // FirebaseMessaging.instance.requestPermission();
-    // FirebaseMessaging.instance
-    //     .getToken()
-    //     .then((token) => print("FireBase token : $token"));
-    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    //   print("Receve a messafek ");
-    //   print("Resssssssssssss=> ${message.data}");
-    //   if (message.notification != null) {
-    //     print("message also a notification ${message.notification}");
-    //   }
-    // });
-    // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    //   print("!clicked");
-    // });
+    context.read<NotificationCubit>().initializeFirebaseNotifications();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorManager.white,
       appBar: AppBar(
+        backgroundColor: ColorManager.white,
         title: Text(
           "الإشعارات",
           style: getSemiBoldStyle(color: ColorManager.textColor),
@@ -57,11 +44,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
         builder: (context, state) {
           if (state is NotificationLoading) {
             return const Center(child: LoadingIndicator());
-          } else if (state is NotificationError) {
-            return Center(
-              child: Text(state.message),
-            );
-          } else if (state is NotificaltionSuccess &&
+          }
+          // else if (state is NotificationError) {
+          //   return Center(
+          //     child: Text(state.message),
+          //   );
+          // }
+          else if (state is NotificaltionSuccess &&
               state.notification.isNotEmpty) {
             final notifications = state.notification;
             if (notifications.isEmpty) {
@@ -127,6 +116,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     // : null,
                     title: Text(
                       notification.title ?? 'بدون عنوان',
+                      softWrap: true,
+                      overflow: TextOverflow.visible,
                       style: getMediumStyle(
                           color: notification.isRead!
                               ? ColorManager.textColor
@@ -137,11 +128,15 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       children: [
                         Text(
                           notification.body ?? 'بدون تفاصيل',
+                          softWrap: true,
+                          overflow: TextOverflow.visible,
                           style: getRegularStyle(color: ColorManager.textColor),
                         ),
                         Text(
                           dateTime,
-                          style: getRegularStyle(color: ColorManager.grey),
+                          softWrap: true,
+                          overflow: TextOverflow.visible,
+                          style: getRegularStyle(color: ColorManager.black),
                         )
                       ],
                     ),
@@ -152,26 +147,38 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           : ColorManager.grey,
                     ),
                     onTap: () async {
-                      if (!(notification.isRead == false)) {
+                      if (notification.isRead == false) {
                         await context
                             .read<NotificationCubit>()
                             .markAsRead(notification.id ?? 0);
                       }
-                      setState(() {
-                        notification.isRead = true;
-                      });
+//                       if (notification.isRead == false) {
+//   await context.read<NotificationCubit>().markAsRead(notification.id ?? 0);
+// }
+//                       setState(() {
+//                         notification.isRead = true;
+//                       });
                     },
                   ),
                 );
               },
             );
-          } else if (state is NotificaltionSuccess &&
-              state.notification.isEmpty) {
-            return Center(
-                child: Text("لا توجدإشعارات للعرض",
-                    style: getMediumStyle(color: ColorManager.primary)));
           }
-          return const SizedBox();
+          // else if (state is NotificaltionSuccess &&
+          //     state.notification.isEmpty) {
+          return Center(
+            child:
+                // Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                // children: [
+                Image.asset("assets/images/Push notifications.gif"),
+            // Text("لا توجدإشعارات للعرض",
+            //     style: getSStyle(color: ColorManager.kuhly)),
+            // ],
+            // )
+          );
+          // }
+          // return const SizedBox();
         },
       ),
     );

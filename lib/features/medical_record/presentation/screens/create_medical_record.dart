@@ -1,175 +1,3 @@
-// // import 'package:flutter/material.dart';
-// // import 'package:flutter_bloc/flutter_bloc.dart';
-// // import 'package:graduation_project/features/medical_record/data/model/medical_record_add_response/add_medical_record_model.dart';
-// // import 'package:graduation_project/features/medical_record/presentation/cubit/medical_record_cubit.dart';
-// // import 'package:graduation_project/features/medical_record/presentation/cubit/medical_record_states.dart';
-
-// // class AddMedicalRecordScreen extends StatefulWidget {
-// //   static const addMedicalRecord = "/addMedical";
-// //   final int bookingId;
-// //   final String firstName;
-// //   final String lastName;
-// //   // final String doctorToken;
-
-// //   const AddMedicalRecordScreen({
-// //     super.key,
-// //     required this.bookingId,
-// //     required this.firstName,
-// //     required this.lastName,
-// //     // required this.doctorToken,
-// //   });
-
-// //   @override
-// //   State<AddMedicalRecordScreen> createState() => _AddMedicalRecordScreenState();
-// // }
-
-// // class _AddMedicalRecordScreenState extends State<AddMedicalRecordScreen> {
-// //   final _formKey = GlobalKey<FormState>();
-// //   final diagnosisController = TextEditingController();
-// //   final treatmentController = TextEditingController();
-// //   final notesController = TextEditingController();
-
-// //   @override
-// //   Widget build(BuildContext context) {
-// //     return BlocConsumer<MedicalRecordCubit, MedicalResocrdSates>(
-// //       listener: (context, state) {
-// //         if (state is AddMedicalRecordSuccess) {
-// //           ScaffoldMessenger.of(context).showSnackBar(
-// //             SnackBar(content: Text('تم الإضافة بنجاح')),
-// //           );
-// //           Navigator.pop(context);
-// //         } else if (state is GetMedicalRecordError) {
-// //           ScaffoldMessenger.of(context).showSnackBar(
-// //             SnackBar(content: Text(state.message)),
-// //           );
-// //         }
-// //       },
-// //       builder: (context, state) {
-// //         final cubit = context.read<MedicalRecordCubit>();
-
-// //         return Scaffold(
-// //           appBar: AppBar(title: const Text("إضافة تشخيص")),
-// //           body: Padding(
-// //             padding: const EdgeInsets.all(16.0),
-// //             child: Form(
-// //               key: _formKey,
-// //               child: ListView(
-// //                 children: [
-// //                   Text("اسم المريض: ${widget.firstName} ${widget.lastName}"),
-// //                   const SizedBox(height: 16),
-// //                   TextFormField(
-// //                     controller: diagnosisController,
-// //                     decoration: const InputDecoration(labelText: 'التشخيص'),
-// //                     validator: (value) =>
-// //                         value!.isEmpty ? 'أدخل التشخيص' : null,
-// //                   ),
-// //                   const SizedBox(height: 16),
-// //                   TextFormField(
-// //                     controller: treatmentController,
-// //                     decoration: const InputDecoration(labelText: 'العلاج'),
-// //                     validator: (value) => value!.isEmpty ? 'أدخل العلاج' : null,
-// //                   ),
-// //                   const SizedBox(height: 16),
-// //                   TextFormField(
-// //                     controller: notesController,
-// //                     decoration: const InputDecoration(labelText: 'الملاحظات'),
-// //                     validator: (value) =>
-// //                         value!.isEmpty ? 'أدخل الملاحظات' : null,
-// //                     maxLines: 3,
-// //                   ),
-// //                   const SizedBox(height: 24),
-// //                   state is GetMedicalRecordLoading
-// //                       ? const Center(child: CircularProgressIndicator())
-// //                       : ElevatedButton(
-// //                           onPressed: () {
-// //                             if (_formKey.currentState!.validate()) {
-// //                               final model = AddMedicalRecordModel(
-// //                                 bookingsId: widget.bookingId,
-// //                                 diagnosis: diagnosisController.text.trim(),
-// //                                 treatment: treatmentController.text.trim(),
-// //                                 notes: notesController.text.trim(),
-// //                               );
-// //                               cubit.addMedicalRecord(model);
-// //                             }
-// //                           },
-// //                           child: const Text('إرسال'),
-// //                         ),
-// //                 ],
-// //               ),
-// //             ),
-// //           ),
-// //         );
-// //       },
-// //     );
-// //   }
-// // }
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:graduation_project/core/resources/color_manager.dart';
-// import 'package:graduation_project/features/medical_record/data/model/medical_record_add_response/add_medical_record_model.dart';
-// import 'package:graduation_project/features/medical_record/presentation/cubit/medical_record_cubit.dart';
-// import 'package:graduation_project/features/profile/data/model/profile_response/profile_data_model.dart';
-
-// class AddMedicalRecordScreen extends StatelessWidget {
-//   final TextEditingController diagnosisController = TextEditingController();
-//   final TextEditingController notesController = TextEditingController();
-//   final TextEditingController treatmentController = TextEditingController();
-//   static const addMedicalRecord = "/addMedical";
-
-//   AddMedicalRecordScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final args = ModalRoute.of(context)!.settings.arguments as ProfileDataModel;
-//     final firstName = args.firstName;
-//     final lastName = args.lastName;
-//     final id = args.id;
-
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text("إضافة سجل طبي"),
-//         backgroundColor: ColorManager.primary,
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: ListView(
-//           children: [
-//             Text("اسم المريض: $firstName $lastName"),
-//             const SizedBox(height: 20),
-//             TextField(
-//               controller: diagnosisController,
-//               decoration: const InputDecoration(labelText: "التشخيص"),
-//             ),
-//             TextField(
-//               controller: notesController,
-//               decoration: const InputDecoration(labelText: "الملاحظات"),
-//             ),
-//             TextField(
-//               controller: treatmentController,
-//               decoration: const InputDecoration(labelText: "العلاج"),
-//             ),
-//             const SizedBox(height: 20),
-//             ElevatedButton(
-//               onPressed: () {
-//                 // Call Cubit here to add the record
-//                 context
-//                     .read<MedicalRecordCubit>()
-//                     .addMedicalRecord(AddMedicalRecordModel(
-//                       diagnosis: diagnosisController.text,
-//                       notes: notesController.text,
-//                       treatment: treatmentController.text,
-//                     ));
-//                 Navigator.pop(context); // نرجع بعد الإضافة
-//               },
-//               child: const Text("إضافة"),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -216,13 +44,13 @@ class _AddMedicalRecordScreenState extends State<AddMedicalRecordScreen> {
   final TextEditingController treatmentController = TextEditingController();
   final TextEditingController notesController = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  bool isLoading = true;
+  bool isLoading = false;
   void _submitForm() {
-    if (isLoading) return;
+    // if (isLoading) return;
     if (formKey.currentState!.validate()) {
-      setState(() {
-        isLoading = true;
-      });
+      // setState(() {
+      //   isLoading = true;
+      // });
       context.read<MedicalRecordCubit>().addMedicalRecord(AddMedicalRecordModel(
             bookingsId: widget.bookingId,
             diagnosis: diagnosisController.text,
@@ -249,15 +77,16 @@ class _AddMedicalRecordScreenState extends State<AddMedicalRecordScreen> {
           if (state is AddMedicalRecordSuccess) {
             UIUtils.showMessage(
                 context, "تم إضافة الفحص بنجاح", ColorManager.green);
-            setState(() {
-              isLoading = false;
-            });
+            // setState(() {
+            //   isLoading = false;
+            // });
             Navigator.of(context).pop();
+            context.read<MedicalRecordCubit>().getPatientMedicalRecord();
           } else if (state is GetMedicalRecordError) {
             UIUtils.showMessage(context, "تعذر إضافة الفحص", ColorManager.red);
-            setState(() {
-              isLoading = false;
-            });
+            // setState(() {
+            //   isLoading = false;
+            // });
           }
         }, builder: (context, state) {
           return SingleChildScrollView(
@@ -277,6 +106,8 @@ class _AddMedicalRecordScreenState extends State<AddMedicalRecordScreen> {
                         children: [
                           const Icon(Icons.person, color: ColorManager.primary),
                           Text("اسم المريض",
+                              softWrap: true,
+                              overflow: TextOverflow.visible,
                               style:
                                   getMediumStyle(color: ColorManager.primary)),
                         ],
@@ -304,6 +135,8 @@ class _AddMedicalRecordScreenState extends State<AddMedicalRecordScreen> {
                           ),
                           Text(
                             "التشخيص",
+                            softWrap: true,
+                            overflow: TextOverflow.visible,
                             style: getMediumStyle(color: ColorManager.primary),
                           ),
                         ],
@@ -368,6 +201,8 @@ class _AddMedicalRecordScreenState extends State<AddMedicalRecordScreen> {
                           ),
                           Text(
                             "العلاج",
+                            softWrap: true,
+                            overflow: TextOverflow.visible,
                             style: getMediumStyle(color: ColorManager.primary),
                           ),
                         ],
@@ -437,6 +272,8 @@ class _AddMedicalRecordScreenState extends State<AddMedicalRecordScreen> {
                             width: 5,
                           ),
                           Text("الملاحظات",
+                              softWrap: true,
+                              overflow: TextOverflow.visible,
                               style:
                                   getMediumStyle(color: ColorManager.primary)),
                         ],

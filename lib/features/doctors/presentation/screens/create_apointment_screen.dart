@@ -1,173 +1,3 @@
-// import 'package:flutter/material.dart';
-
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:graduation_project/features/user/booking/data/models/doctors_appointment_response/create_request_model.dart';
-// import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/appointment_states.dart';
-// import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/create_appointment_cubit.dart';
-// import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/doctor_appointments_cubit.dart';
-// import 'package:intl/intl.dart';
-
-// class CreateAppointmentScreen extends StatefulWidget {
-//   static const createAppointment = "/createAppointment";
-//   final String doctorId;
-//   const CreateAppointmentScreen({super.key, required this.doctorId});
-
-//   @override
-//   State<CreateAppointmentScreen> createState() =>
-//       _CreateAppointmentScreenState();
-// }
-
-// class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
-//   final List<int> selectedDays = [];
-//   TimeOfDay? startTime;
-//   TimeOfDay? endTime;
-//   final TextEditingController durationController = TextEditingController();
-
-//   final Map<String, int> daysMap = {
-//     'السبت': 0,
-//     'الأحد': 1,
-//     'الإثنين': 2,
-//     'الثلاثاء': 3,
-//     'الأربعاء': 4,
-//     'الخميس': 5,
-//     'الجمعة': 6,
-//   };
-
-//   Future<void> pickTime(bool isStart) async {
-//     final TimeOfDay? picked = await showTimePicker(
-//       context: context,
-//       initialTime: TimeOfDay.now(),
-//     );
-//     if (picked != null) {
-//       setState(() {
-//         if (isStart) {
-//           startTime = picked;
-//         } else {
-//           endTime = picked;
-//         }
-//       });
-//     }
-//   }
-
-//   String formatTimeOfDay(TimeOfDay time) {
-//     final now = DateTime.now();
-//     final dt = DateTime(now.year, now.month, now.day, time.hour, time.minute);
-//     return DateFormat.Hms().format(dt);
-//   }
-
-//   void submit() {
-//     if (selectedDays.isEmpty ||
-//         startTime == null ||
-//         endTime == null ||
-//         durationController.text.isEmpty) {
-//       ScaffoldMessenger.of(context)
-//           .showSnackBar(const SnackBar(content: Text('املأ جميع الحقول')));
-//       return;
-//     }
-
-//     final duration = int.tryParse(durationController.text);
-//     if (duration == null) {
-//       ScaffoldMessenger.of(context)
-//           .showSnackBar(const SnackBar(content: Text('مدة غير صالحة')));
-//       return;
-//     }
-
-//     for (final day in selectedDays) {
-//       final request = CreateRequestModel(
-//         day: day,
-//         startTime: formatTimeOfDay(startTime!),
-//         endTime: formatTimeOfDay(endTime!),
-//         duration: duration,
-//         doctorId: widget.doctorId,
-//       );
-
-//       context.read<CreateAppointmentCubit>().createAppointment(request);
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Directionality(
-//       textDirection: TextDirection.rtl,
-//       child: Scaffold(
-//         appBar: AppBar(title: const Text('إنشاء ميعاد جديد')),
-//         body: Padding(
-//           padding: const EdgeInsets.all(16.0),
-//           child: SingleChildScrollView(
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 const Text('اختر أيام العمل'),
-//                 Wrap(
-//                   children: daysMap.entries.map((entry) {
-//                     return CheckboxListTile(
-//                       title: Text(entry.key),
-//                       value: selectedDays.contains(entry.value),
-//                       onChanged: (val) {
-//                         setState(() {
-//                           if (val == true) {
-//                             selectedDays.add(entry.value);
-//                           } else {
-//                             selectedDays.remove(entry.value);
-//                           }
-//                         });
-//                       },
-//                     );
-//                   }).toList(),
-//                 ),
-//                 const SizedBox(height: 16),
-//                 TextButton(
-//                   onPressed: () => pickTime(true),
-//                   child: Text(startTime == null
-//                       ? 'اختر ساعة البداية'
-//                       : 'ساعة البداية: ${startTime!.format(context)}'),
-//                 ),
-//                 TextButton(
-//                   onPressed: () => pickTime(false),
-//                   child: Text(endTime == null
-//                       ? 'اختر ساعة النهاية'
-//                       : 'ساعة النهاية: ${endTime!.format(context)}'),
-//                 ),
-//                 TextField(
-//                   controller: durationController,
-//                   keyboardType: TextInputType.number,
-//                   decoration:
-//                       const InputDecoration(labelText: 'اختر مدة الكشف بالدقائق'),
-//                 ),
-//                 const SizedBox(height: 24),
-//                 BlocConsumer<CreateAppointmentCubit, AppointmentStates>(
-//                   listener: (context, state) {
-//                     if (state is CreateAppointmentSuccess) {
-//                       ScaffoldMessenger.of(context).showSnackBar(
-//                         const SnackBar(content: Text('تم إنشاء الموعد بنجاح')),
-//                       );
-//                       Navigator.pop(context);
-//                     } else if (state is GetAppointmentError) {
-//                       ScaffoldMessenger.of(context).showSnackBar(
-//                         SnackBar(content: Text(state.message)),
-//                       );
-//                     }
-//                   },
-//                   builder: (context, state) {
-//                     return ElevatedButton(
-//                       onPressed: () {
-//                         state is GetAppointmentLoading ? null : submit;
-//                         context.read<DoctorAppointmentsCubit>().getAppointments();
-//                       },
-//                       child: const Text('إنشاء'),
-//                     );
-//                   },
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-/////////////////////////////////////////
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
@@ -241,47 +71,56 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
 //   //     },
 //   //   );
 //   // }
+
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
       builder: (context, child) {
         return Theme(
-            data: Theme.of(context).copyWith(
-                timePickerTheme: TimePickerThemeData(
-              backgroundColor: ColorManager.white,
-              confirmButtonStyle: ButtonStyle(
-                  foregroundColor:
-                      MaterialStatePropertyAll(ColorManager.primary),
-                  textStyle: MaterialStatePropertyAll(
-                      getMediumStyle(color: ColorManager.primary))),
-              cancelButtonStyle: ButtonStyle(
-                  foregroundColor: MaterialStatePropertyAll(ColorManager.red),
-                  textStyle: MaterialStatePropertyAll(
-                      getMediumStyle(color: ColorManager.red))),
-              helpTextStyle: getSemiBoldStyle(color: ColorManager.kuhly),
-              dialHandColor: ColorManager.kuhly,
+            data: ThemeData.light().copyWith(
+                primaryColor: ColorManager.primary,
+                colorScheme: ColorScheme.light(
+                  primary: ColorManager.primary,
+                ),
+                dialogBackgroundColor: ColorManager.white,
+                timePickerTheme:
+                    TimePickerThemeData(dayPeriodColor: ColorManager.blue)),
+            //  Theme.of(context).copyWith(
+            //     timePickerTheme: TimePickerThemeData(
+            //   backgroundColor: ColorManager.white,
+            //   confirmButtonStyle: ButtonStyle(
+            //       foregroundColor:
+            //           MaterialStatePropertyAll(ColorManager.primary),
+            //       textStyle: MaterialStatePropertyAll(
+            //           getMediumStyle(color: ColorManager.primary))),
+            //   cancelButtonStyle: ButtonStyle(
+            //       foregroundColor: MaterialStatePropertyAll(ColorManager.red),
+            //       textStyle: MaterialStatePropertyAll(
+            //           getMediumStyle(color: ColorManager.red))),
+            //   helpTextStyle: getSemiBoldStyle(color: ColorManager.kuhly),
+            //   dialHandColor: ColorManager.kuhly,
 
-              // dialTextColor: ColorManager.white,
-              // entryModeIconColor: ColorManager.kuhly,
-              dayPeriodColor: ColorManager.blue,
-              // hourMinuteColor: Color.fromARGB(125, 255, 255, 255),
-              // hourMinuteTextColor: ColorManager.textColor,
-              // dialBackgroundColor: Color.fromARGB(255, 7, 78, 150),
+            //   // dialTextColor: ColorManager.white,
+            //   // entryModeIconColor: ColorManager.kuhly,
+            //   dayPeriodColor: ColorManager.blue,
+            //   // hourMinuteColor: Color.fromARGB(125, 255, 255, 255),
+            //   // hourMinuteTextColor: ColorManager.textColor,
+            //   // dialBackgroundColor: Color.fromARGB(255, 7, 78, 150),
 
-              //   hourMinuteTextColor: ColorManager.kuhly,
-              //   hourMinuteColor: ColorManager.primaryColor,
-              //   helpTextStyle: getMediumStyle(color: ColorManager.primary),
-              // dayPeriodTextColor: ColorManager.kuhly,
+            //   //   hourMinuteTextColor: ColorManager.kuhly,
+            //   //   hourMinuteColor: ColorManager.primaryColor,
+            //   //   helpTextStyle: getMediumStyle(color: ColorManager.primary),
+            //   // dayPeriodTextColor: ColorManager.kuhly,
 
-              // dialTextStyle: getMediumStyle(color: ColorManager.babyGreen),
+            //   // dialTextStyle: getMediumStyle(color: ColorManager.babyGreen),
 
-              // ),
-              // textButtonTheme: TextButtonThemeData(
-              //     style: TextButton.styleFrom(
-              //         foregroundColor: ColorManager.primary,
-              //         textStyle:
-              //             getMediumStyle(color: ColorManager.textColor))
-            )),
+            //   // ),
+            //   // textButtonTheme: TextButtonThemeData(
+            //   //     style: TextButton.styleFrom(
+            //   //         foregroundColor: ColorManager.primary,
+            //   //         textStyle:
+            //   //             getMediumStyle(color: ColorManager.textColor))
+            // )),
             child: Directionality(
               textDirection: ui.TextDirection.rtl,
               child: Localizations.override(

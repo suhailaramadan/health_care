@@ -8,14 +8,15 @@ import 'package:graduation_project/features/medical_record/domain/entity/medical
 
 class MedicalRecordCard extends StatefulWidget {
   final bool isDoctor;
-  final VoidCallback onEdit;
-  final VoidCallback onDelete;
-  const MedicalRecordCard(
-      {super.key,
-      required this.medicalRecordPatientEntity,
-      required this.isDoctor,
-      required this.onEdit,
-      required this.onDelete});
+  // final VoidCallback onEdit;
+  // final VoidCallback onDelete;
+  const MedicalRecordCard({
+    super.key,
+    required this.medicalRecordPatientEntity,
+    required this.isDoctor,
+    // required this.onEdit,
+    // required this.onDelete
+  });
   final MedicalRecordPatientEntity medicalRecordPatientEntity;
   @override
   State<MedicalRecordCard> createState() => _MedicalRecordCardState();
@@ -70,12 +71,16 @@ class _MedicalRecordCardState extends State<MedicalRecordCard> {
                       ),
                       Text(
                         "اسم الدكتور : ",
+                        softWrap: true,
+                        overflow: TextOverflow.visible,
                         style: getMediumStyle(color: ColorManager.primary),
                       ),
                     ],
                   ),
                   Text(
                     " ${widget.medicalRecordPatientEntity.doctorName}",
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
                     style: getMediumStyle(color: ColorManager.textColor),
                   ),
                 ],
@@ -97,12 +102,16 @@ class _MedicalRecordCardState extends State<MedicalRecordCard> {
                       ),
                       Text(
                         "التشخيص : ",
+                        softWrap: true,
+                        overflow: TextOverflow.visible,
                         style: getMediumStyle(color: ColorManager.primary),
                       ),
                     ],
                   ),
                   Text(
                     "${widget.medicalRecordPatientEntity.diagnosis}",
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
                     style: getMediumStyle(color: ColorManager.textColor),
                   ),
                 ],
@@ -124,12 +133,16 @@ class _MedicalRecordCardState extends State<MedicalRecordCard> {
                       ),
                       Text(
                         "العلاج : ",
+                        softWrap: true,
+                        overflow: TextOverflow.visible,
                         style: getMediumStyle(color: ColorManager.primary),
                       ),
                     ],
                   ),
                   Text(
                     "${widget.medicalRecordPatientEntity.treatment}",
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
                     style: getMediumStyle(color: ColorManager.textColor),
                   ),
                 ],
@@ -151,35 +164,39 @@ class _MedicalRecordCardState extends State<MedicalRecordCard> {
                       ),
                       Text(
                         "الملاحظات : ",
+                        softWrap: true,
+                        overflow: TextOverflow.visible,
                         style: getMediumStyle(color: ColorManager.primary),
                       ),
                     ],
                   ),
                   Text(
                     "${widget.medicalRecordPatientEntity.notes}",
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
                     style: getMediumStyle(color: ColorManager.textColor),
                   ),
                 ],
               ),
-              if (widget.isDoctor == true) ...[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                        onPressed: widget.onDelete,
-                        child: Text(
-                          "حذف",
-                          style: getMediumStyle(color: ColorManager.red),
-                        )),
-                    TextButton(
-                        onPressed: widget.onEdit,
-                        child: Text(
-                          "تعديل",
-                          style: getMediumStyle(color: ColorManager.primary),
-                        ))
-                  ],
-                )
-              ]
+              //   if (widget.isDoctor == true) ...[
+              //     Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         TextButton(
+              //             onPressed: widget.onDelete,
+              //             child: Text(
+              //               "حذف",
+              //               style: getMediumStyle(color: ColorManager.red),
+              //             )),
+              //         TextButton(
+              //             onPressed: widget.onEdit,
+              //             child: Text(
+              //               "تعديل",
+              //               style: getMediumStyle(color: ColorManager.primary),
+              //             ))
+              //       ],
+              //     )
+              //   ]
             ],
           ),
         ),

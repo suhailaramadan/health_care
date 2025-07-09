@@ -10,6 +10,8 @@ import 'package:graduation_project/features/user/booking/presentation/cubit/appo
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/doctor_appointments_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/update_appointment_cubit.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'dart:ui' as ui;
 
 class UpdateAppointmentScreen extends StatefulWidget {
   static const updateAppointment = "/updateAppointment";
@@ -40,8 +42,30 @@ class _UpdateAppointmentScreenState extends State<UpdateAppointmentScreen> {
   }
 
   Future<void> _selectTime(TextEditingController controller) async {
-    final TimeOfDay? picked =
-        await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    final TimeOfDay? picked = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+        builder: (context, child) {
+          return Theme(
+              data: ThemeData.light().copyWith(
+                  primaryColor: ColorManager.white,
+                  colorScheme: const ColorScheme.light(
+                    primary: ColorManager.primary,
+                  ),
+                  dialogBackgroundColor: ColorManager.white,
+                  timePickerTheme: const TimePickerThemeData(
+                      dayPeriodColor: ColorManager.blue)),
+              child: Directionality(
+                  textDirection: ui.TextDirection.rtl,
+                  child: Localizations.override(
+                    context: context,
+                    locale: const Locale('ar'),
+                    delegates: GlobalMaterialLocalizations.delegates,
+                    child: child!,
+                  )));
+        });
+    // await showTimePicker(context: context, initialTime: TimeOfDay.now()
+    // );
 
     if (picked != null) {
       final now = DateTime.now();
@@ -62,18 +86,6 @@ class _UpdateAppointmentScreenState extends State<UpdateAppointmentScreen> {
     super.dispose();
   }
 
-  // String _getDayName(int dayNumber) {
-  //   const days = [
-  //     'الأحد',
-  //     'الاثنين',
-  //     'الثلاثاء',
-  //     'الأربعاء',
-  //     'الخميس',
-  //     'الجمعة',
-  //     'السبت'
-  //   ];
-  //   return days[dayNumber % 7];
-  // }
   final Map<String, int> daysMap = {
     'الأحد': 0,
     'الإثنين': 1,

@@ -101,24 +101,7 @@ class ClinicItem extends StatelessWidget {
         color: ColorManager.white,
         // height: 80,
         width: isLandscape ? 120.w : 150.w,
-        // screenSize.width * .4,
-        // child: Card(
-        //   shape: CircleBorder(),
-        //   color: ColorManager.white,
-        //   borderOnForeground: false,
-        // surfaceTintColor: Colors.white,
-        // width: isLandscape ? screenSize.width * .25 : screenSize.height * .22,
-        // height: isLandscape ? screenSize.width * .28 : screenSize.height * .2,
-        // decoration: const BoxDecoration(
-        //   borderRadius: BorderRadius.all(Radius.circular(20)),
-        //   border: Border(
-        //       top: BorderSide(width: 2, color: ColorManager.greyDark),
-        //       bottom: BorderSide(width: 2, color: ColorManager.greyDark),
-        //       left: BorderSide(width: 2, color: ColorManager.greyDark),
-        //       right: BorderSide(width: 2, color: ColorManager.greyDark)),
-        //   // color: Color.fromARGB(255, 54, 151, 255)
-        //   // color: Color.fromARGB(255, 79, 136, 198)
-        // ),
+
         child: Column(
           // mainAxisSize: MainAxisSize.min,
           children: [
@@ -162,56 +145,12 @@ class ClinicItem extends StatelessWidget {
                         ),
               ),
             ),
-            // Container(
-            //     // height: 80.h,
-            //     // width: 100.w,
-            //     // margin: const EdgeInsets.symmetric(horizontal: Sizes.s10),
-            //     height: MediaQuery.of(context).size.width *
-            //         0.10.w, // نسبة من عرض الشاشة
-            //     width: MediaQuery.of(context).size.width *
-            //         0.10.w, // نسبة من عرض الشاشة
-            //     decoration: const BoxDecoration(
-            //       shape: BoxShape.circle,
-            //       color: ColorManager.blue,
-            //     ),
-            // child:
-            // Center(
-            // child:
-            // SizedBox(
-            //     // height: Sizes.s50.h,
-            //     // width: Sizes.s50.w,
-            //     child: CircleAvatar(
-            //   radius: 70,
-            //   backgroundImage: AssetImage(
-
-            //     child: Image.asset(
-            //       //  SvgPicture.asset(
-            //       image,
-            //       fit: BoxFit.contain,
-            //     width: Sizes.s40,
-            //     height: Sizes.s40,
-            //     ),
-            //   ),
-            //   ),
-            // )),
-            // ),
-            // SizedBox(height: getResponsiveFontSize('Size')
-            // isLandscape
-            // ? screenSize.width * .01
-            // : screenSize.height * .02
-            // ),
             Text(
               clinicEntity.name,
+              softWrap: true,
+              overflow: TextOverflow.visible,
               style: getSemiBoldStyle(
                 color: ColorManager.primary,
-
-                //  min(screenSize.shortestSide * .03,
-                // screenSize.shortestSide * 0.05
-                // )
-                // isLandscape
-                // min(screenSize.shortestSide * .024,
-                //     screenSize.shortestSide * 0.05)
-                // : min(13, screenSize.shortestSide * 0.05),
               ),
             ),
           ],

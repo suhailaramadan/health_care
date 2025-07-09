@@ -89,6 +89,8 @@ class HomeSlider extends StatelessWidget {
                     : screenSize.height * .02,
                 child: Text(
                   text,
+                  softWrap: true,
+                  overflow: TextOverflow.visible,
                   // "الإدارة الطبية\nشريككم في رحلة صحية\nآمنة داخل الحرم الجامعي",
                   style: getSemiBoldStyle(
                       color: const Color.fromARGB(255, 79, 133, 191),
