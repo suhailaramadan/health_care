@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/di/service_locator.dart';
+import 'package:graduation_project/core/widgets/shared_pref_handel.dart';
 import 'package:graduation_project/features/notification/presentiation/cubit/notification_cubit.dart';
 import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_appointment/data.dart';
 import 'package:graduation_project/features/user/booking/data/models/booking_response/booking_patient_response/booking_patient_model.dart';
@@ -18,6 +19,7 @@ import 'package:graduation_project/features/user/booking/domain/use_cases/get_bo
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/appointment_states.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_by_id_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_cubit.dart';
+import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_doctor_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_patient_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_states.dart';
 import 'package:injectable/injectable.dart';
@@ -73,8 +75,6 @@ class DeleteAppointmentCubit extends Cubit<AppointmentStates> {
         (_) async {
       emit(DeleteAppointmentSuccess());
       print("Doctor cancelled appointment ID: $appointmentId");
-
-      // await bookingsUseCase.bookingPatientRepository.getBookingpatient();
     });
   }
 }

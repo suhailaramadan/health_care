@@ -86,11 +86,13 @@ class AppointmentApiRemoteDataSource extends AppointmentRemoteDataSource {
       throw const RemoteException("لا يوجد رمز توثيق");
     }
     print("current tkeb===> $token");
-    final response = await _dio.delete("Appointment/$id",
-        options: Options(headers: {
-          "Content-Type": 'application/json',
-          "Authorization": 'Bearer $token',
-        }));
+    // final response = await _dio.delete("Appointmen/$id",
+    final response =
+        await _dio.delete("https://myclinicapp.runasp.net/api/Appointment/$id",
+            options: Options(headers: {
+              "Content-Type": 'application/json',
+              "Authorization": 'Bearer $token',
+            }));
     print("token-->>>>>>> $token");
     if (response.statusCode == 200) {
       print("Doctor cancelled appointment ID: $id");

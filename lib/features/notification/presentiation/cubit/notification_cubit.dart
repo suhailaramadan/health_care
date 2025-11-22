@@ -70,9 +70,12 @@ class NotificationCubit extends Cubit<NotificationsStats> {
         //         title: notif.title ?? '', body: notif.body ?? ''));
         //   }
         // }
-        print("Notification ${notifications.length}");
-        this.notifications = notification;
+        print("Notification ${notification.length}");
+        notifications = notification;
         emit(NotificaltionSuccess(notifications));
+        for (var notif in notification) {
+          print("🟡 ${notif.id} | ${notif.title} | ${notif.isRead}");
+        }
       });
     } catch (e) {
       print("Notification unexpected error $e");

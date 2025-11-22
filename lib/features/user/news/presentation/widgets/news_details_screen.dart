@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/utils/formated.dart';
@@ -44,7 +45,7 @@ class NewsDetailsScreen extends StatelessWidget {
                   // height: 200,
                   width: double.infinity,
                   child: CachedNetworkImage(
-                    imageUrl: "https://myclinicapp.runasp.net${news.image}",
+                    imageUrl: "${ApiConstants.imageBaseUrl}${news.image}",
                     // height: 200.h,
                     width: double.infinity,
                     fit: BoxFit.fill,
@@ -77,11 +78,12 @@ class NewsDetailsScreen extends StatelessWidget {
               const SizedBox(height: 10),
               Text(
                 news.content ?? '',
-                style: getRegularStyle(color: ColorManager.textColor),
+                style:
+                    getMediumStyle(color: ColorManager.textColor, fontSize: 15),
               ),
               const SizedBox(height: 10),
               Text(
-                "تاريخ الخبر: ${news.createdAt?.toLocal()}",
+                "تاريخ الخبر:  ${news.createdAt?.toLocal()}",
                 style: getRegularStyle(color: ColorManager.grey),
               ),
             ],

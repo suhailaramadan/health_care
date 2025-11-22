@@ -55,8 +55,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
             final notifications = state.notification;
             if (notifications.isEmpty) {
               return const Center(
-                child: CircularProgressIndicator(
-                  color: ColorManager.primary,
+                child: Text(
+                  "لا توجد إشعارات حالياً",
+                  style: TextStyle(color: Colors.grey),
                 ),
               );
             }

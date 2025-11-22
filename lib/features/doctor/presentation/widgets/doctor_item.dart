@@ -50,7 +50,7 @@ class DoctorItem extends StatelessWidget {
           child: SizedBox(
             // decoration: BoxDecoration(
             // border: Border.all(color: ColorManager.primary, width: .2)),
-            height: 160,
+            height: 200,
             width: 300,
             child: Card(
               // shape: RoundedRectangleBorder(
@@ -111,7 +111,7 @@ class DoctorItem extends StatelessWidget {
                                   fontSize: 12),
                             ),
                             const SizedBox(
-                              height: 5,
+                              height: 3,
                             ),
                             Text(
                               "${doctorEntity.email}",

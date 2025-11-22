@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/font_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
@@ -15,7 +16,6 @@ class NewsCard extends StatelessWidget {
     required this.news,
     required this.onTap,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -37,7 +37,7 @@ class NewsCard extends StatelessWidget {
                 topRight: Radius.circular(15.r),
               ),
               child: CachedNetworkImage(
-                imageUrl: "https://myclinicapp.runasp.net${news.image}",
+                imageUrl: "${ApiConstants.imageBaseUrl}${news.image}",
                 // height: 200.h,
                 width: double.infinity,
                 fit: BoxFit.fill,
@@ -82,7 +82,7 @@ class NewsCard extends StatelessWidget {
                         : news.content ?? '',
                     style: getRegularStyle(
                       color: ColorManager.textColor,
-                      fontSize: FontSize.s14.sp,
+                      fontSize: FontSize.s16.sp,
                     ),
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,

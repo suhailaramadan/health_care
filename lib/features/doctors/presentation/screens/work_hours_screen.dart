@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_project/core/constants.dart';
 import 'package:graduation_project/core/di/service_locator.dart';
@@ -8,12 +9,14 @@ import 'package:graduation_project/core/resources/color_manager.dart';
 import 'package:graduation_project/core/resources/styles_manager.dart';
 import 'package:graduation_project/core/routes/routes.dart';
 import 'package:graduation_project/core/utils/ui_utils.dart';
+import 'package:graduation_project/core/widgets/shared_pref_handel.dart';
 import 'package:graduation_project/features/notification/presentiation/cubit/notification_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/appointment_states.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/delete_appointment_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/appointment/doctor_appointments_cubit.dart';
 import 'package:graduation_project/features/doctors/presentation/widgets/appointment_item.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_by_id_cubit.dart';
+import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_doctor_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_patient_cubit.dart';
 import 'package:graduation_project/features/user/booking/presentation/cubit/booking/booking_states.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,8 +31,8 @@ class WorksHoursScreen extends StatelessWidget {
         BlocProvider.value(
           value: serviceLocator.get<DeleteAppointmentCubit>(),
         ),
-        BlocProvider.value(value: serviceLocator.get<BookingPatientCubit>()),
-        BlocProvider.value(value: serviceLocator.get<NotificationCubit>()),
+        // BlocProvider.value(value: serviceLocator.get<BookingPatientCubit>()),
+        // BlocProvider.value(value: serviceLocator.get<NotificationCubit>()),
       ],
       child: BlocListener<DeleteAppointmentCubit, AppointmentStates>(
         listener: (context, state) {
@@ -39,8 +42,10 @@ class WorksHoursScreen extends StatelessWidget {
               "تم إلغاء اليوم بنجاح",
               ColorManager.green,
             );
+            final token = SharedPrefHandel.getToken();
             context.read<DoctorAppointmentsCubit>().getAppointments();
-            // context.read<BookingPatientCubit>().getBookingPatient();
+            context.read<BookingDoctorCubit>().getBookingDoctor(token);
+            print("doctor tojen ${token}");
           } else if (state is GetAppointmentError) {
             UIUtils.showMessage(
               context,

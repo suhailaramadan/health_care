@@ -20,6 +20,7 @@ class BookingPatientCubit extends Cubit<BookingStates> {
 
     result.fold(
       (failure) {
+        print("BookingPatient error: ${failure.message}");
         emit(GetBookingError(failure.message));
       },
       (bookingPatient) async {

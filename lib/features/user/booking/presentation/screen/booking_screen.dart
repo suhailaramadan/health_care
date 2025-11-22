@@ -48,6 +48,7 @@ class _BookingTabState extends State<BookingTab>
   }
 
   void didPopNext() {
+    print("رجعنا لشاشة الحجوزات");
     context.read<BookingPatientCubit>().getBookingPatient();
     context.read<MedicalRecordCubit>().getPatientMedicalRecord();
   }
@@ -132,61 +133,6 @@ class _BookingTabState extends State<BookingTab>
                   );
                 }
 
-                // else if (bookingState is GetBookingPatientSuccess &&
-                //     recordState is GetMedicalRecordPatientSuccess) {
-                //   // final data = state.bookingPatientResponse.data;
-                //   final bookings =
-                //       bookingState.bookingPatientResponse.data ?? [];
-
-                //   final records = recordState.medicalRecord;
-
-                //   bool datesMatch(String? bookingDate, String? recordDate) {
-                //     if (bookingDate == null || recordDate == null) return false;
-                //     final bDate = DateTime.tryParse(bookingDate);
-                //     final rDate = DateTime.tryParse(recordDate);
-                //     if (bDate == null || rDate == null) {
-                //       return false;
-                //     }
-                //     return bDate.year == rDate.year &&
-                //         bDate.month == rDate.month &&
-                //         bDate.day == rDate.day;
-                //   }
-
-                //   List<BookingPatientModel> upComingBookings =
-                //       bookings.where((e) {
-                //     // b.dateOfVisit == e.date);
-
-                //     return _isUpComing(e);
-                //   }).toList();
-
-                //   // }
-                //   List<BookingPatientModel> completedBookings =
-                //       bookings.where((e) {
-                //     final hasRecord =
-                //         records.any((b) => b.dateOfVisit == e.date);
-                //     return hasRecord && !_isUpComing(e);
-                //   }).toList();
-                //   final upComingNotCompleted = bookings.where((e) {
-                //     bool hasRecord =
-                //         records.any((r) => datesMatch(e.date, r.dateOfVisit));
-
-                //     return !_isUpComing(e) && !hasRecord;
-                //   }).toList();
-
-                //   return TabBarView(
-                //     controller: _tabController,
-                //     children: [
-                //       _buildBookingList(upComingBookings, "لا توجد حجوزات",
-                //           BookingStatus.upComming),
-                //       _buildBookingList(completedBookings,
-                //           "لا توجد حجوزات مكتملة", BookingStatus.completed),
-                //       _buildBookingList(
-                //           upComingNotCompleted,
-                //           "لا توجد حجوزات غير مكتملة",
-                //           BookingStatus.notCompleted)
-                //     ],
-                //   );
-                // }
                 return const Center(child: Text("لم يتم تحميل البيانات"));
               },
             );

@@ -61,7 +61,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
               return ListView.builder(
                 padding: const EdgeInsets.all(1),
                 itemBuilder: (_, index) => SizedBox(
-                  height: 150,
+                  height: 190,
                   width: 200,
                   child: DoctorItem(
                     doctorEntity: state.doctorEntity[index],

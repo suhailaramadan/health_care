@@ -1,6 +1,8 @@
 class ApiConstants {
-  static const String baseUrl = "https://myclinicapp.runasp.net/api/";
-  static const String imageBaseUrl = "https://myclinicapp.runasp.net";
+  // static const String baseUrl = "https://myclinicapp.runasp.net/api/";
+  static const String baseUrl = "https://medical.tanta.edu.eg/api/";
+  // static const String imageBaseUrl = "https://myclinicapp.runasp.net";
+  static const String imageBaseUrl = "https://medical.tanta.edu.eg";
   static const String clinicEndPoint = "${baseUrl}Clinic";
   static const String getdoctorsEndPoint = "Doctor";
   static const String registerPatientEndPoint =
